@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aniket — Video Editor & AI Storyteller</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #080808; --bg2: #0f0f0f; --bg3: #161616; --surface: #1a1a1a;
+  --accent: #e8c97a; --accent2: #c4a84f;
+  --text: #f0ede6; --muted: #888880; --border: rgba(255,255,255,0.08);
+  --ai: #7c6cfc; --ai2: #5b4de0;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+
+/* ── CURSOR ── */
+.cursor { position: fixed; width: 12px; height: 12px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s; mix-blend-mode: difference; }
+.cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(232,201,122,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: left 0.08s ease, top 0.08s ease, width 0.3s, height 0.3s; }
+
+/* ── NAV ── */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent); backdrop-filter: blur(8px); }
+.nav-logo { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 2px; color: var(--accent); text-decoration: none; }
+.nav-links { display: flex; gap: 2.5rem; }
+.nav-links a { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent); }
+
+/* ── HERO ── */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 4rem 5rem; position: relative; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 70% 40%, rgba(232,201,122,0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 20% 60%, rgba(232,201,122,0.03) 0%, transparent 60%); pointer-events: none; }
+.hero-grid { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+.hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--accent); }
+.hero-title { font-family: var(--font-display); font-size: clamp(4rem, 10vw, 9rem); line-height: 0.92; letter-spacing: 0.01em; color: var(--text); position: relative; z-index: 1; }
+.hero-title .accent { color: var(--accent); }
+.hero-sub { margin-top: 2rem; font-size: 1.1rem; color: var(--muted); max-width: 480px; line-height: 1.7; }
+.hero-meta { margin-top: 3rem; display: flex; gap: 3rem; align-items: center; }
+.hero-stat span { display: block; font-family: var(--font-display); font-size: 2.2rem; color: var(--accent); }
+.hero-stat p { font-size: 0.75rem; color: var(--muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; }
+.hero-cta { margin-top: 3rem; display: inline-flex; align-items: center; gap: 0.75rem; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bg); background: var(--accent); padding: 0.85rem 2rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+.hero-cta:hover { background: var(--accent2); transform: translateY(-2px); }
+.hero-scroll { position: absolute; bottom: 2rem; right: 4rem; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; display: flex; align-items: center; gap: 0.75rem; }
+.hero-scroll::after { content: ''; display: block; width: 1px; height: 60px; background: var(--muted); animation: scrollLine 1.8s ease-in-out infinite; }
+@keyframes scrollLine { 0%,100% { opacity:1; transform:scaleY(1); } 50% { opacity:0.3; transform:scaleY(0.5); } }
+
+/* ── MARQUEE ── */
+.marquee-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: 1rem 0; background: var(--bg2); }
+.marquee { display: flex; width: max-content; animation: marquee 20s linear infinite; }
+.marquee-item { font-family: var(--font-display); font-size: 1.4rem; color: rgba(255,255,255,0.15); padding: 0 2rem; letter-spacing: 0.05em; }
+.marquee-item.gold { color: var(--accent); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── ABOUT ── */
+.about { padding: 8rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; border-top: 1px solid var(--border); }
+.about-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+.about-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.95; color: var(--text); margin-bottom: 2rem; }
+.about-text { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+.about-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+.pill { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--border); padding: 0.4rem 0.9rem; color: var(--muted); }
+.about-visual { position: relative; height: 500px; background: var(--surface); overflow: hidden; }
+.about-visual-inner { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(232,201,122,0.08) 0%, transparent 70%); display: flex; align-items: center; justify-content: center; }
+.about-visual-text { font-family: var(--font-display); font-size: 7rem; color: rgba(255,255,255,0.03); text-align: center; line-height: 1; }
+.about-visual-badge { position: absolute; font-family: var(--font-display); color: var(--accent); }
+.ab1 { top: 2rem; left: 2rem; font-size: 1.1rem; }
+.ab2 { bottom: 2rem; right: 2rem; font-size: 1.1rem; text-align: right; }
+.ab3 { top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 4rem; opacity: 0.3; }
+
+/* ── SECTION HEADER ── */
+.section-header { padding: 6rem 4rem 3rem; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--border); }
+.section-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.95; color: var(--text); }
+.section-num { font-family: var(--font-display); font-size: 6rem; color: rgba(255,255,255,0.04); line-height: 1; }
+
+/* ── WORK TABS ── */
+.work-tabs { padding: 0 4rem; display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+.tab-btn { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: none; border: none; padding: 1rem 2rem 1rem 0; cursor: none; transition: color 0.2s; position: relative; }
+.tab-btn::after { content: ''; position: absolute; bottom: 0; left: 0; right: 2rem; height: 2px; background: var(--accent); transform: scaleX(0); transition: transform 0.25s ease; }
+.tab-btn.active { color: var(--accent); }
+.tab-btn.active::after { transform: scaleX(1); }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.ai-tab::after { background: var(--ai); }
+.tab-btn.ai-tab.active { color: var(--ai); }
+.ai-badge { display: inline-block; margin-left: 0.4rem; font-size: 0.5rem; background: var(--ai); color: white; padding: 0.15rem 0.4rem; vertical-align: middle; letter-spacing: 0.05em; }
+
+/* ── WORK SECTIONS ── */
+.work-section { padding: 3rem 4rem 6rem; display: none; }
+.work-section.active { display: block; }
+
+/* SHORT-FORM */
+.shortform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.short-card { position: relative; overflow: hidden; background: var(--surface); aspect-ratio: 9/16; max-height: 380px; cursor: pointer; transition: transform 0.3s ease; }
+.short-card:hover { transform: scale(1.02); }
+.short-card-inner { width: 100%; height: 100%; position: relative; }
+.short-card-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.short-card-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 4rem; color: rgba(255,255,255,0.08); }
+.short-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.25rem; }
+.short-card-tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+.short-card-title { font-size: 0.9rem; font-weight: 500; line-height: 1.3; }
+
+/* LONG-FORM */
+.longform-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+.long-card { display: grid; grid-template-columns: 340px 1fr; background: var(--surface); overflow: hidden; cursor: pointer; transition: background 0.25s; }
+.long-card:hover { background: #202020; }
+.long-card-thumb { overflow: hidden; background: var(--bg3); position: relative; min-height: 190px; }
+.long-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.long-card-thumb-placeholder { width: 100%; height: 100%; min-height: 190px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 3rem; color: rgba(255,255,255,0.06); }
+.long-card-body { padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; }
+.long-card-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+.long-card-title { font-size: 1.2rem; font-weight: 500; margin-bottom: 0.75rem; }
+.long-card-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+.long-card-meta { display: flex; gap: 2rem; margin-top: 1.5rem; }
+.long-meta-item { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.long-meta-item strong { color: var(--accent); font-weight: 400; display: block; font-size: 1rem; }
+
+/* THUMBNAILS */
+.thumb-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.thumb-card { aspect-ratio: 16/9; overflow: hidden; background: var(--surface); position: relative; cursor: pointer; transition: transform 0.3s ease; }
+.thumb-card:hover { transform: scale(1.03); z-index: 2; }
+.thumb-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb-card-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2rem; color: rgba(255,255,255,0.06); }
+
+/* AI STORYTELLING */
+.ai-section-intro { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+.ai-badge-pill { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; background: rgba(124,108,252,0.12); color: var(--ai); border: 1px solid rgba(124,108,252,0.3); padding: 0.4rem 0.9rem; }
+.ai-intro-text { font-size: 0.88rem; color: var(--muted); }
+.ai-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.ai-card { position: relative; overflow: hidden; background: var(--surface); cursor: pointer; transition: transform 0.3s ease; aspect-ratio: 16/9; }
+.ai-card:hover { transform: scale(1.015); }
+.ai-card::before { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(135deg, rgba(124,108,252,0.08) 0%, transparent 60%); pointer-events: none; }
+.ai-card.featured { grid-column: span 2; aspect-ratio: 21/9; }
+.ai-card-inner { width: 100%; height: 100%; position: relative; }
+.ai-card-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ai-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.ai-ph-1 { background: linear-gradient(135deg, #0d0d1a 0%, #1a0f2e 40%, #0a1628 100%); }
+.ai-ph-2 { background: linear-gradient(135deg, #0a1a0a 0%, #0d2b1a 40%, #051410 100%); }
+.ai-ph-3 { background: linear-gradient(135deg, #1a0a0a 0%, #2b0d1a 40%, #100508 100%); }
+.ai-ph-label { font-family: var(--font-display); font-size: 5rem; color: rgba(255,255,255,0.04); z-index: 0; }
+.ai-ph-glow { position: absolute; width: 120px; height: 120px; border-radius: 50%; filter: blur(40px); opacity: 0.25; }
+.ai-card-overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; }
+.ai-card-tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ai); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+.ai-card-tag::before { content: '✦'; font-size: 0.5rem; }
+.ai-card-title { font-size: 1rem; font-weight: 500; line-height: 1.3; margin-bottom: 0.5rem; }
+.ai-card.featured .ai-card-title { font-size: 1.3rem; }
+.ai-card-tools { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.ai-tool-tag { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(124,108,252,0.2); color: var(--ai); border: 1px solid rgba(124,108,252,0.25); padding: 0.2rem 0.5rem; }
+.ai-note { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(124,108,252,0.4); margin-top: 2rem; }
+
+/* ── SERVICES ── */
+.services { padding: 6rem 4rem; border-top: 1px solid var(--border); }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 4rem; }
+.service-card { padding: 2.5rem; border: 1px solid var(--border); background: var(--bg2); transition: border-color 0.25s, background 0.25s; }
+.service-card:hover { border-color: rgba(232,201,122,0.3); background: var(--surface); }
+.service-num { font-family: var(--font-display); font-size: 3rem; color: rgba(232,201,122,0.15); margin-bottom: 1.5rem; }
+.service-name { font-family: var(--font-display); font-size: 1.6rem; color: var(--text); margin-bottom: 1rem; }
+.service-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+.service-tools { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+.tool-tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(232,201,122,0.2); padding: 0.3rem 0.7rem; }
+
+/* ── CONTACT ── */
+.contact { padding: 8rem 4rem; border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+.contact-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(232,201,122,0.05) 0%, transparent 60%); pointer-events: none; }
+.contact-inner { max-width: 700px; position: relative; z-index: 1; }
+.contact-title { font-family: var(--font-display); font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.92; margin-bottom: 2rem; }
+.contact-title .accent { color: var(--accent); }
+.contact-sub { color: var(--muted); max-width: 420px; margin-bottom: 3rem; line-height: 1.8; }
+.contact-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.contact-link { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); padding: 0.85rem 1.5rem; transition: color 0.2s, border-color 0.2s, background 0.2s; }
+.contact-link:hover { color: var(--accent); border-color: rgba(232,201,122,0.4); background: rgba(232,201,122,0.04); }
+.contact-link.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.contact-link.primary:hover { background: var(--accent2); border-color: var(--accent2); }
+
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+.footer-name { font-family: var(--font-display); font-size: 1.2rem; color: var(--muted); }
+.footer-note { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+
+/* ── ADMIN PANEL ── */
+#admin-panel {
+  display: none;
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 8000;
+  width: 420px; background: #0d0d0d;
+  border: 1px solid rgba(232,201,122,0.3);
+  box-shadow: 0 0 60px rgba(0,0,0,0.8);
+  font-family: var(--font-mono);
+}
+#admin-panel.open { display: flex; flex-direction: column; }
+.admin-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(232,201,122,0.05);
+}
+.admin-title { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+.admin-close { background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; line-height: 1; }
+.admin-close:hover { color: var(--text); }
+.admin-tabs { display: flex; border-bottom: 1px solid var(--border); }
+.admin-tab { flex: 1; padding: 0.6rem; background: none; border: none; border-bottom: 2px solid transparent; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); cursor: pointer; transition: color 0.2s; }
+.admin-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.admin-tab.ai-t.active { color: var(--ai); border-bottom-color: var(--ai); }
+.admin-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; }
+.admin-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.admin-label { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.admin-input {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--font-mono); font-size: 0.75rem;
+  padding: 0.55rem 0.8rem; outline: none; width: 100%;
+  transition: border-color 0.2s;
+}
+.admin-input:focus { border-color: rgba(232,201,122,0.5); }
+.admin-input.ai { }
+.admin-input.ai:focus { border-color: rgba(124,108,252,0.5); }
+.admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.admin-tool-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.admin-tool-btn { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.07em; text-transform: uppercase; border: 1px solid rgba(124,108,252,0.25); color: var(--muted); padding: 0.3rem 0.65rem; cursor: pointer; background: none; transition: all 0.15s; }
+.admin-tool-btn.sel { border-color: var(--ai); color: var(--ai); background: rgba(124,108,252,0.08); }
+.admin-size-row { display: flex; gap: 0.4rem; }
+.admin-size-btn { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.07em; text-transform: uppercase; border: 1px solid rgba(124,108,252,0.25); color: var(--muted); padding: 0.3rem 0.65rem; cursor: pointer; background: none; transition: all 0.15s; flex: 1; text-align: center; }
+.admin-size-btn.sel { border-color: var(--ai); color: var(--ai); background: rgba(124,108,252,0.08); }
+.admin-submit {
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em;
+  text-transform: uppercase; background: var(--accent); color: var(--bg);
+  border: none; padding: 0.75rem; cursor: pointer;
+  transition: background 0.2s; width: 100%; margin-top: 0.25rem;
+}
+.admin-submit:hover { background: var(--accent2); }
+.admin-submit.ai { background: var(--ai); color: white; }
+.admin-submit.ai:hover { background: var(--ai2); }
+.admin-hint { font-size: 0.55rem; color: rgba(255,255,255,0.2); letter-spacing: 0.05em; line-height: 1.6; margin-top: 0.25rem; }
+.admin-toast {
+  display: none; padding: 0.6rem 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); background: rgba(232,201,122,0.05);
+}
+.admin-toast.visible { display: block; }
+
+/* ── ADMIN INDICATOR (tiny dot when admin mode on) ── */
+#admin-indicator {
+  display: none;
+  position: fixed; bottom: 1rem; left: 1rem; z-index: 7999;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); opacity: 0.5;
+}
+#admin-indicator.on { display: block; }
+
+/* ── DELETE BUTTON (visible only in admin mode) ── */
+.del-btn {
+  display: none;
+  position: absolute; top: 0.5rem; right: 0.5rem; z-index: 10;
+  background: rgba(220,50,50,0.85); border: none; color: white;
+  font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.05em;
+  padding: 0.25rem 0.5rem; cursor: pointer; text-transform: uppercase;
+}
+body.admin-mode .del-btn { display: block; }
+body.admin-mode .short-card,
+body.admin-mode .long-card,
+body.admin-mode .thumb-card,
+body.admin-mode .ai-card { position: relative; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="admin-indicator" title="Admin mode ON"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">ANIKET</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">Video Editor & AI Storyteller</div>
+  <h1 class="hero-title">CRAFTING<br>STORIES THAT<br><span class="accent">STOP THE</span><br>SCROLL</h1>
+  <p class="hero-sub">Long-form YouTube, Short-form Reels, AI-generated storytelling — from Kolkata, editing for creators with 1M+ combined audience.</p>
+  <div class="hero-meta">
+    <div class="hero-stat"><span>2.6M+</span><p>Best video views</p></div>
+    <div class="hero-stat"><span>2+</span><p>Years experience</p></div>
+    <div class="hero-stat"><span>1M+</span><p>Combined audience</p></div>
+  </div>
+  <a href="#work" class="hero-cta">View My Work ↓</a>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="marquee-item">Long-form YouTube</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Short-form Reels</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">AI Storytelling</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Higgsfield AI</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Kling AI</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Thumbnails</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Long-form YouTube</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Short-form Reels</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">AI Storytelling</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Higgsfield AI</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Kling AI</span><span class="marquee-item gold">●</span>
+    <span class="marquee-item">Thumbnails</span><span class="marquee-item gold">●</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <div class="about-label">Who I Am</div>
+    <h2 class="about-title">EDITOR.<br>STORYTELLER.<br>AI PIONEER.</h2>
+    <p class="about-text">I'm Aniket — a freelance video editor based in Kolkata with 2+ years of experience turning raw footage into content that actually gets watched. I specialize in long-form YouTube videos and short-form Reels/Shorts.</p>
+    <p class="about-text">What sets me apart: I leverage AI tools like Higgsfield AI and Kling AI to create cinematic AI-generated storytelling sequences that most editors simply can't offer.</p>
+    <div class="about-pills">
+      <span class="pill">Premiere Pro</span>
+      <span class="pill">After Effects</span>
+      <span class="pill">Higgsfield AI</span>
+      <span class="pill">Kling AI</span>
+      <span class="pill">DaVinci Resolve</span>
+      <span class="pill">Photoshop</span>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-visual-inner"><div class="about-visual-text">AK</div></div>
+    <div class="about-visual-badge ab1">⬛ Kolkata, India</div>
+    <div class="about-visual-badge ab2">10K–100K creators ➔</div>
+    <div class="about-visual-badge ab3">✦</div>
+  </div>
+</section>
+
+<!-- WORK -->
+<div id="work">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Selected Work</div>
+      <h2 class="section-title">THE REEL</h2>
+    </div>
+    <div class="section-num">02</div>
+  </div>
+
+  <div class="work-tabs">
+    <button class="tab-btn active" onclick="switchTab('shortform', this)">Short-form</button>
+    <button class="tab-btn" onclick="switchTab('longform', this)">Long-form</button>
+    <button class="tab-btn" onclick="switchTab('thumbnails', this)">Thumbnails</button>
+    <button class="tab-btn ai-tab" onclick="switchTab('ai', this)">AI Storytelling <span class="ai-badge">NEW</span></button>
+  </div>
+
+  <!-- SHORT-FORM -->
+  <div class="work-section active" id="tab-shortform">
+    <div class="shortform-grid" id="shortform-grid">
+      <!-- Cards injected here by JS / DATA below -->
+    </div>
+  </div>
+
+  <!-- LONG-FORM -->
+  <div class="work-section" id="tab-longform">
+    <div class="longform-grid" id="longform-grid">
+    </div>
+  </div>
+
+  <!-- THUMBNAILS -->
+  <div class="work-section" id="tab-thumbnails">
+    <div class="thumb-grid" id="thumb-grid">
+    </div>
+  </div>
+
+  <!-- AI STORYTELLING -->
+  <div class="work-section" id="tab-ai">
+    <div class="ai-section-intro">
+      <span class="ai-badge-pill">✦ Signature Service</span>
+      <span class="ai-intro-text">AI-generated cinematic sequences using Higgsfield AI &amp; Kling AI — my edge no traditional editor can replicate.</span>
+    </div>
+    <div class="ai-grid" id="ai-grid">
+    </div>
+    <p class="ai-note">✦ All videos in this section feature AI-generated visuals</p>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header" style="padding:0;border:none;margin-bottom:0;">
+    <div><div class="section-label">What I Offer</div><h2 class="section-title">SERVICES</h2></div>
+    <div class="section-num">03</div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">LONG-FORM YOUTUBE</div>
+      <div class="service-desc">Full editing pipeline for YouTube videos — pacing, B-roll, color grading, sound design, and retention hooks. Built to keep viewers watching till the end.</div>
+      <div class="service-tools"><span class="tool-tag">Premiere Pro</span><span class="tool-tag">After Effects</span><span class="tool-tag">DaVinci</span></div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">SHORT-FORM REELS</div>
+      <div class="service-desc">Scroll-stopping Reels and Shorts with punchy cuts, trending audio sync, and hooks that demand attention in the first 2 seconds.</div>
+      <div class="service-tools"><span class="tool-tag">Premiere Pro</span><span class="tool-tag">CapCut Pro</span></div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">AI STORYTELLING</div>
+      <div class="service-desc">My signature differentiator. I create AI-generated cinematic sequences using Higgsfield AI and Kling AI — visuals that no traditional editor can produce.</div>
+      <div class="service-tools"><span class="tool-tag">Higgsfield AI</span><span class="tool-tag">Kling AI</span><span class="tool-tag">Runway</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-bg"></div>
+  <div class="contact-inner">
+    <div class="section-label" style="margin-bottom:1.5rem;">Let's Work Together</div>
+    <h2 class="contact-title">GOT A<br>CHANNEL?<br>LET'S MAKE IT <span class="accent">FIRE.</span></h2>
+    <p class="contact-sub">I'm currently taking on new long-term clients. If you're a YouTube creator in the 10K–100K range looking to level up your content — let's talk.</p>
+    <div class="contact-links">
+      <!-- ★ REPLACE with your actual links -->
+      <a href="mailto:youremail@gmail.com" class="contact-link primary">✉ Email Me</a>
+      <a href="https://instagram.com/yourusername" target="_blank" rel="noopener" class="contact-link">Instagram</a>
+      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener" class="contact-link">LinkedIn</a>
+      <a href="https://youtube.com/@yourchannel" target="_blank" rel="noopener" class="contact-link">YouTube</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">ANIKET — VIDEO EDITOR</div>
+  <div class="footer-note">Kolkata, India · 2025 · Available for work</div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     ADMIN PANEL  (hidden from visitors)
+     Toggle: press  Shift + A + K  together
+     ════════════════════════════════════════════ -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <span class="admin-title">⬛ Admin — Add Work</span>
+    <button class="admin-close" onclick="closeAdmin()">×</button>
+  </div>
+  <div class="admin-tabs">
+    <button class="admin-tab active" onclick="switchAdminTab('shortform',this)">Short</button>
+    <button class="admin-tab" onclick="switchAdminTab('longform',this)">Long</button>
+    <button class="admin-tab" onclick="switchAdminTab('thumbnail',this)">Thumb</button>
+    <button class="admin-tab ai-t" onclick="switchAdminTab('ai',this)">AI ✦</button>
+  </div>
+
+  <!-- Short-form fields -->
+  <div class="admin-body" id="af-shortform">
+    <div class="admin-field">
+      <label class="admin-label">YouTube / Reel URL</label>
+      <input class="admin-input" id="af-short-url" type="text" placeholder="https://youtu.be/...">
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">Title</label>
+      <input class="admin-input" id="af-short-title" type="text" placeholder="Video title">
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">Tag (e.g. Reel · 45s)</label>
+      <input class="admin-input" id="af-short-tag" type="text" placeholder="Reel · 45s">
+    </div>
+    <button class="admin-submit" onclick="addShort()">Add Short-form →</button>
+    <p class="admin-hint">Tip: YouTube links auto-load thumbnail. For Reels paste a direct image URL as the URL field and leave title.</p>
+  </div>
+
+  <!-- Long-form fields -->
+  <div class="admin-body" id="af-longform" style="display:none;">
+    <div class="admin-field">
+      <label class="admin-label">YouTube URL</label>
+      <input class="admin-input" id="af-long-url" type="text" placeholder="https://youtube.com/watch?v=...">
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">Title</label>
+      <input class="admin-input" id="af-long-title" type="text" placeholder="Video title">
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">Description</label>
+      <input class="admin-input" id="af-long-desc" type="text" placeholder="Short description of the project">
+    </div>
+    <div class="admin-row">
+      <div class="admin-field">
+        <label class="admin-label">Views</label>
+        <input class="admin-input" id="af-long-views" type="text" placeholder="2.6M+">
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Duration</label>
+        <input class="admin-input" id="af-long-dur" type="text" placeholder="18 min">
+      </div>
+    </div>
+    <button class="admin-submit" onclick="addLong()">Add Long-form →</button>
+  </div>
+
+  <!-- Thumbnail fields -->
+  <div class="admin-body" id="af-thumbnail" style="display:none;">
+    <div class="admin-field">
+      <label class="admin-label">Image URL (direct link)</label>
+      <input class="admin-input" id="af-thumb-url" type="text" placeholder="https://i.imgur.com/...">
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">Alt text / project name</label>
+      <input class="admin-input" id="af-thumb-alt" type="text" placeholder="Channel name thumbnail">
+    </div>
+    <button class="admin-submit" onclick="addThumb()">Add Thumbnail →</button>
+    <p class="admin-hint">Use Imgur, ImgBB, or any direct image URL. Google Drive links won't display.</p>
+  </div>
+
+  <!-- AI fields -->
+  <div class="admin-body" id="af-ai" style="display:none;">
+    <div class="admin-field">
+      <label class="admin-label">Video URL</label>
+      <input class="admin-input ai" id="af-ai-url" type="text" placeholder="https://youtu.be/...">
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">Title</label>
+      <input class="admin-input ai" id="af-ai-title" type="text" placeholder="AI project title">
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">Tag line</label>
+      <input class="admin-input ai" id="af-ai-tag" type="text" placeholder="AI Cinematic · 60s">
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">AI Tools Used</label>
+      <div class="admin-tool-row" id="ai-tool-btns">
+        <button class="admin-tool-btn" onclick="toggleAdminTool(this)">Higgsfield AI</button>
+        <button class="admin-tool-btn" onclick="toggleAdminTool(this)">Kling AI</button>
+        <button class="admin-tool-btn" onclick="toggleAdminTool(this)">Runway</button>
+        <button class="admin-tool-btn" onclick="toggleAdminTool(this)">Premiere Pro</button>
+        <button class="admin-tool-btn" onclick="toggleAdminTool(this)">After Effects</button>
+      </div>
+    </div>
+    <div class="admin-field">
+      <label class="admin-label">Card Size</label>
+      <div class="admin-size-row">
+        <button class="admin-size-btn" id="sz-regular" onclick="setAISize('regular',this)">Regular</button>
+        <button class="admin-size-btn sel" id="sz-featured" onclick="setAISize('featured',this)">Featured (wide)</button>
+      </div>
+    </div>
+    <button class="admin-submit ai" onclick="addAI()">Add AI Video ✦ →</button>
+    <p class="admin-hint">Featured = spans full width. Use for your best AI piece.</p>
+  </div>
+
+  <div class="admin-toast" id="admin-toast"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════
+   PORTFOLIO DATA
+   — Edit this object to pre-populate
+     your work before going live.
+   ══════════════════════════════════
+
+   SHORTFORM items:
+     { url, title, tag, thumb }
+     - url   : link that opens on click
+     - title : card title
+     - tag   : e.g. "Reel · 45s"
+     - thumb : optional direct image URL
+               (if url is a YT link, thumb auto-loads)
+
+   LONGFORM items:
+     { url, title, desc, views, duration }
+
+   THUMBNAILS items:
+     { imgUrl, alt }
+
+   AI items:
+     { url, title, tag, tools: [], featured, thumb }
+     - featured: true → wide card
+*/
+const PORTFOLIO = {
+  shortform: [
+    // { url: 'https://youtu.be/YOUR_ID', title: 'Your Reel Title', tag: 'Reel · 30s' },
+  ],
+  longform: [
+    // { url: 'https://youtube.com/watch?v=YOUR_ID', title: 'Video Title', desc: 'Project description.', views: '2.6M+', duration: '18 min' },
+  ],
+  thumbnails: [
+    // { imgUrl: 'https://i.imgur.com/YOUR_IMG.jpg', alt: 'Thumbnail description' },
+  ],
+  ai: [
+    // { url: 'https://youtu.be/YOUR_ID', title: 'AI Project Title', tag: 'AI Cinematic · 60s', tools: ['Higgsfield AI', 'Kling AI'], featured: true },
+  ]
+};
+/* ══════════════════════════════════ */
+
+/* ── HELPERS ── */
+function ytId(url) {
+  if (!url) return null;
+  var m = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+function ytThumb(id) { return 'https://img.youtube.com/vi/' + id + '/maxresdefault.jpg'; }
+function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ── RENDER FROM DATA ── */
+function renderAll() {
+  PORTFOLIO.shortform.forEach(function(item) { renderShort(item); });
+  PORTFOLIO.longform.forEach(function(item) { renderLong(item); });
+  PORTFOLIO.thumbnails.forEach(function(item) { renderThumb(item); });
+  PORTFOLIO.ai.forEach(function(item) { renderAI(item); });
+}
+
+function renderShort(item) {
+  var grid = document.getElementById('shortform-grid');
+  var id = ytId(item.url);
+  var thumb = item.thumb || (id ? ytThumb(id) : '');
+  var card = document.createElement('div');
+  card.className = 'short-card';
+  card.innerHTML =
+    '<button class="del-btn" onclick="deleteCard(event,this,\'shortform\')">✕ Remove</button>' +
+    '<div class="short-card-inner">' +
+      (thumb ? '<img src="' + esc(thumb) + '" alt="' + esc(item.title) + '" loading="lazy" onerror="this.style.display=\'none\'">' : '<div class="short-card-placeholder">▶</div>') +
+    '</div>' +
+    '<div class="short-card-overlay">' +
+      '<div class="short-card-tag">' + esc(item.tag || 'Reel') + '</div>' +
+      '<div class="short-card-title">' + esc(item.title) + '</div>' +
+    '</div>';
+  if (item.url) { card.addEventListener('click', function(e){ if(!e.target.classList.contains('del-btn')) window.open(item.url,'_blank'); }); }
+  grid.appendChild(card);
+}
+
+function renderLong(item) {
+  var grid = document.getElementById('longform-grid');
+  var id = ytId(item.url);
+  var thumb = id ? ytThumb(id) : '';
+  var card = document.createElement('div');
+  card.className = 'long-card';
+  card.innerHTML =
+    '<button class="del-btn" onclick="deleteCard(event,this,\'longform\')">✕ Remove</button>' +
+    '<div class="long-card-thumb">' +
+      (thumb ? '<img src="' + esc(thumb) + '" alt="' + esc(item.title) + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=long-card-thumb-placeholder>▶</div>\'">' : '<div class="long-card-thumb-placeholder">▶</div>') +
+    '</div>' +
+    '<div class="long-card-body">' +
+      '<div>' +
+        '<div class="long-card-tag">YouTube · Long-form</div>' +
+        '<div class="long-card-title">' + esc(item.title) + '</div>' +
+        '<div class="long-card-desc">' + esc(item.desc || '') + '</div>' +
+      '</div>' +
+      '<div class="long-card-meta">' +
+        (item.views ? '<div class="long-meta-item"><strong>' + esc(item.views) + '</strong>Views</div>' : '') +
+        (item.duration ? '<div class="long-meta-item"><strong>' + esc(item.duration) + '</strong>Duration</div>' : '') +
+      '</div>' +
+    '</div>';
+  if (item.url) { card.addEventListener('click', function(e){ if(!e.target.classList.contains('del-btn')) window.open(item.url,'_blank'); }); }
+  grid.appendChild(card);
+}
+
+function renderThumb(item) {
+  var grid = document.getElementById('thumb-grid');
+  var card = document.createElement('div');
+  card.className = 'thumb-card';
+  card.innerHTML =
+    '<button class="del-btn" onclick="deleteCard(event,this,\'thumbnail\')">✕ Remove</button>' +
+    '<img src="' + esc(item.imgUrl) + '" alt="' + esc(item.alt || 'Thumbnail') + '" loading="lazy" onerror="this.style.display=\'none\'">';
+  grid.appendChild(card);
+}
+
+function renderAI(item) {
+  var grid = document.getElementById('ai-grid');
+  var id = ytId(item.url);
+  var thumb = item.thumb || (id ? ytThumb(id) : '');
+  var card = document.createElement('div');
+  card.className = 'ai-card' + (item.featured ? ' featured' : '');
+  var toolTags = (item.tools && item.tools.length)
+    ? item.tools.map(function(t){ return '<span class="ai-tool-tag">'+esc(t)+'</span>'; }).join('')
+    : '<span class="ai-tool-tag">AI Generated</span>';
+  card.innerHTML =
+    '<button class="del-btn" onclick="deleteCard(event,this,\'ai\')">✕ Remove</button>' +
+    '<div class="ai-card-inner">' +
+      (thumb
+        ? '<img src="' + esc(thumb) + '" alt="' + esc(item.title) + '" loading="lazy" onerror="this.style.display=\'none\'">'
+        : '<div class="ai-placeholder ai-ph-1"><div class="ai-ph-glow" style="background:#7c6cfc;top:30%;left:30%;"></div><div class="ai-ph-label">✦</div></div>') +
+    '</div>' +
+    '<div class="ai-card-overlay">' +
+      '<div class="ai-card-tag">' + esc(item.tag || 'AI Cinematic') + '</div>' +
+      '<div class="ai-card-title">' + esc(item.title) + '</div>' +
+      '<div class="ai-card-tools">' + toolTags + '</div>' +
+    '</div>';
+  if (item.url) { card.addEventListener('click', function(e){ if(!e.target.classList.contains('del-btn')) window.open(item.url,'_blank'); }); }
+  grid.appendChild(card);
+}
+
+/* ── DELETE (admin mode only) ── */
+function deleteCard(e, btn, type) {
+  e.stopPropagation();
+  if (!confirm('Remove this item?')) return;
+  var card = btn.parentElement;
+  card.remove();
+  toast('Item removed. Remember to also delete it from PORTFOLIO data in the HTML.');
+}
+
+/* ── TAB SWITCHING ── */
+function switchTab(tab, btn) {
+  document.querySelectorAll('.work-section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── ADMIN PANEL ── */
+var adminOpen = false;
+var aiCardSize = 'featured';
+
+function openAdmin() {
+  adminOpen = true;
+  document.getElementById('admin-panel').classList.add('open');
+  document.getElementById('admin-indicator').classList.add('on');
+  document.body.classList.add('admin-mode');
+}
+function closeAdmin() {
+  adminOpen = false;
+  document.getElementById('admin-panel').classList.remove('open');
+  document.getElementById('admin-indicator').classList.remove('on');
+  document.body.classList.remove('admin-mode');
+}
+
+/* Secret shortcut: Shift + A + K simultaneously */
+var keysHeld = {};
+document.addEventListener('keydown', function(e) {
+  keysHeld[e.key] = true;
+  if (keysHeld['A'] && keysHeld['K'] && keysHeld['Shift']) {
+    if (adminOpen) { closeAdmin(); } else { openAdmin(); }
+    keysHeld = {};
+  }
+});
+document.addEventListener('keyup', function(e) { delete keysHeld[e.key]; });
+
+function switchAdminTab(tab, btn) {
+  ['shortform','longform','thumbnail','ai'].forEach(function(t){
+    var el = document.getElementById('af-' + t);
+    if (el) el.style.display = 'none';
+  });
+  document.querySelectorAll('.admin-tab').forEach(function(b){ b.classList.remove('active'); });
+  var target = document.getElementById('af-' + tab);
+  if (target) target.style.display = 'flex';
+  btn.classList.add('active');
+}
+
+function toggleAdminTool(btn) { btn.classList.toggle('sel'); }
+
+function setAISize(size, btn) {
+  aiCardSize = size;
+  document.querySelectorAll('.admin-size-btn').forEach(function(b){ b.classList.remove('sel'); });
+  btn.classList.add('sel');
+}
+
+function getAdminTools() {
+  return Array.from(document.querySelectorAll('#ai-tool-btns .admin-tool-btn.sel')).map(function(b){ return b.textContent.trim(); });
+}
+
+function toast(msg) {
+  var t = document.getElementById('admin-toast');
+  t.textContent = msg;
+  t.classList.add('visible');
+  setTimeout(function(){ t.classList.remove('visible'); }, 3000);
+}
+
+function clearField() {
+  ['af-short-url','af-short-title','af-short-tag',
+   'af-long-url','af-long-title','af-long-desc','af-long-views','af-long-dur',
+   'af-thumb-url','af-thumb-alt',
+   'af-ai-url','af-ai-title','af-ai-tag'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.querySelectorAll('.admin-tool-btn').forEach(function(b){ b.classList.remove('sel'); });
+  setAISize('featured', document.getElementById('sz-featured'));
+}
+
+function addShort() {
+  var url = document.getElementById('af-short-url').value.trim();
+  var title = document.getElementById('af-short-title').value.trim();
+  var tag = document.getElementById('af-short-tag').value.trim() || 'Reel';
+  if (!title) { toast('Please enter a title.'); return; }
+  var item = { url: url, title: title, tag: tag };
+  PORTFOLIO.shortform.push(item);
+  renderShort(item);
+  toast('Short-form added! ✓');
+  clearField();
+}
+
+function addLong() {
+  var url = document.getElementById('af-long-url').value.trim();
+  var title = document.getElementById('af-long-title').value.trim();
+  var desc = document.getElementById('af-long-desc').value.trim();
+  var views = document.getElementById('af-long-views').value.trim();
+  var dur = document.getElementById('af-long-dur').value.trim();
+  if (!title) { toast('Please enter a title.'); return; }
+  var item = { url: url, title: title, desc: desc, views: views, duration: dur };
+  PORTFOLIO.longform.push(item);
+  renderLong(item);
+  toast('Long-form video added! ✓');
+  clearField();
+}
+
+function addThumb() {
+  var imgUrl = document.getElementById('af-thumb-url').value.trim();
+  var alt = document.getElementById('af-thumb-alt').value.trim();
+  if (!imgUrl) { toast('Please enter an image URL.'); return; }
+  var item = { imgUrl: imgUrl, alt: alt };
+  PORTFOLIO.thumbnails.push(item);
+  renderThumb(item);
+  toast('Thumbnail added! ✓');
+  clearField();
+}
+
+function addAI() {
+  var url = document.getElementById('af-ai-url').value.trim();
+  var title = document.getElementById('af-ai-title').value.trim();
+  var tag = document.getElementById('af-ai-tag').value.trim() || 'AI Cinematic';
+  var tools = getAdminTools();
+  var featured = aiCardSize === 'featured';
+  if (!title) { toast('Please enter a title.'); return; }
+  var item = { url: url, title: title, tag: tag, tools: tools, featured: featured };
+  PORTFOLIO.ai.push(item);
+  renderAI(item);
+  toast('AI video added! ✓');
+  clearField();
+}
+
+/* ── CURSOR ── */
+var cursor = document.getElementById('cursor');
+var ring = document.getElementById('cursorRing');
+var mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+function animateRing() { ringX += (mouseX - ringX) * 0.12; ringY += (mouseY - ringY) * 0.12; ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px'; requestAnimationFrame(animateRing); }
+animateRing();
+document.querySelectorAll('a, button, .short-card, .thumb-card, .long-card, .ai-card').forEach(function(el) {
+  el.addEventListener('mouseenter', function(){ cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='52px'; ring.style.height='52px'; });
+  el.addEventListener('mouseleave', function(){ cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+/* ── INIT ── */
+renderAll();
+</script>
+</body>
+</html>
