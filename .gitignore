@@ -1,0 +1,18 @@
+# ── Large source video files ───────────────────────────────────────────
+# Never commit these — GitHub rejects files >100 MB (your long-form is ~2.1 GB).
+# Host finished videos on YouTube/Vimeo and link them via VIDEO_LINKS instead.
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+
+# ── Personal working notes (kept private, not part of the site) ──────────
+mydetail.md
+Aniket_Shaw_Resume.*
+
+# ── Tooling / OS ─────────────────────────────────────────────────────────
+.vercel/
+node_modules/
+Thumbs.db
+.DS_Store

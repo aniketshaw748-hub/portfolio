@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aniket // AI-Native Video Editor &amp; GenAI Storyteller</title>
+<meta name="description" content="Aniket — AI-native video editor and GenAI storyteller. Cinematic AI shorts, fast internet-native edits, and motion graphics built with generative tools. Selected work + experimental lab." />
+<meta name="color-scheme" content="dark" />
+
+<!-- Open Graph (optional, harmless if unused) -->
+<meta property="og:title" content="Aniket // AI-Native Video Editor & GenAI Storyteller" />
+<meta property="og:description" content="Cinematic AI shorts, internet-native edits, and motion graphics built with generative tools." />
+<meta property="og:type" content="website" />
+
+<!-- Fonts: JetBrains Mono (HUD/terminal) + Inter (body). Site works fine if blocked. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+/* =========================================================================
+   STYLE 4 — "EXPERIMENTAL AI-NATIVE"  (single-file portfolio)
+   Sections: tokens · base · overlays · nav · hero · work · lab · about ·
+             contact/footer · lightbox · responsive · reduced-motion
+   ========================================================================= */
+
+/* ---- Design tokens ---------------------------------------------------- */
+:root{
+  --bg:        #05060a;
+  --bg-2:      #0a0b14;
+  --panel:     rgba(255,255,255,.025);
+  --panel-2:   rgba(255,255,255,.04);
+
+  --cyan:      #22d3ee;
+  --magenta:   #ec4899;
+  --purple:    #a855f7;
+  --violet:    #d946ef;
+
+  --text:      #e8eef5;
+  --muted:     #9aa6b8;
+  --dim:       #5d6b7e;
+  --dim-2:     #38414f;
+
+  --line:      rgba(148,163,184,.14);
+  --line-soft: rgba(148,163,184,.08);
+
+  --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --maxw: 1320px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+/* ---- Reset / base ----------------------------------------------------- */
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body.no-scroll{ overflow:hidden; }
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+::selection{ background:rgba(34,211,238,.28); color:#fff; }
+
+:focus-visible{
+  outline:2px solid var(--cyan);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+.mono{ font-family:var(--mono); }
+.cy{ color:var(--cyan); }
+.mg{ color:var(--magenta); }
+.pu{ color:var(--purple); }
+.dim{ color:var(--dim); }
+.muted{ color:var(--muted); }
+
+/* ---- Global ambient overlays (scanlines · grid · vignette) ------------ */
+.fx{
+  position:fixed; inset:0; pointer-events:none; z-index:1;
+}
+.fx-grid{
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size:64px 64px;
+  opacity:.5;
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 35%, #000 30%, transparent 90%);
+}
+.fx-scan{
+  background:repeating-linear-gradient(
+    to bottom, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);
+  opacity:.5;
+}
+.fx-vignette{
+  background:radial-gradient(ellipse 120% 100% at 50% 30%, transparent 40%, rgba(0,0,0,.55) 100%);
+}
+.fx-noise{ /* faint colour wash so pure black never feels flat */
+  background:
+    radial-gradient(60% 50% at 80% 8%, rgba(168,85,247,.07), transparent 60%),
+    radial-gradient(50% 45% at 12% 70%, rgba(34,211,238,.06), transparent 60%);
+}
+
+/* ---- Shared layout helpers ------------------------------------------- */
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:clamp(20px,5vw,72px); }
+.section{ position:relative; z-index:2; padding-block:clamp(72px,10vw,140px); }
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--cyan);
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.eyebrow::before{
+  content:""; width:34px; height:1px; background:var(--cyan); opacity:.7;
+}
+.section-head{ margin-bottom:clamp(34px,5vw,64px); }
+.section-head h2{
+  font-family:var(--mono);
+  font-weight:800;
+  font-size:clamp(28px,4.4vw,52px);
+  letter-spacing:-.01em;
+  line-height:1.05;
+  margin-top:18px;
+}
+.section-head h2 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:.04em; }
+
+/* Corner crosshair "+" decorations */
+.plus{ position:absolute; width:13px; height:13px; pointer-events:none; opacity:.5; }
+.plus::before,.plus::after{ content:""; position:absolute; background:var(--dim); }
+.plus::before{ left:50%; top:0; width:1px; height:100%; transform:translateX(-.5px); }
+.plus::after{ top:50%; left:0; height:1px; width:100%; transform:translateY(-.5px); }
+
+/* =======================================================================
+   NAV
+   ======================================================================= */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:18px;
+  padding:18px clamp(20px,5vw,56px);
+  background:linear-gradient(180deg, rgba(5,6,10,.86), rgba(5,6,10,.2) 70%, transparent);
+  backdrop-filter:blur(8px);
+  transition:background .3s var(--ease), border-color .3s;
+  border-bottom:1px solid transparent;
+}
+.nav.scrolled{
+  background:rgba(5,6,10,.9);
+  border-bottom:1px solid var(--line);
+}
+.brand{
+  font-family:var(--mono); font-weight:800; font-size:18px; letter-spacing:.02em;
+  display:flex; align-items:center; gap:8px; white-space:nowrap;
+}
+.brand .slash{ background:linear-gradient(90deg,var(--cyan),var(--magenta)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.brand .tag{ color:var(--cyan); font-weight:500; font-size:15px; }
+.brand .blink{ color:var(--cyan); }
+
+.nav-links{
+  display:flex; align-items:center; gap:clamp(14px,2.4vw,34px);
+  font-family:var(--mono); font-size:14px;
+}
+.nav-links a{ color:var(--muted); transition:color .2s; position:relative; padding:4px 0; }
+.nav-links a .idx{ color:var(--dim); margin-right:5px; }
+.nav-links a:hover{ color:var(--text); }
+.nav-links a:hover .idx{ color:var(--cyan); }
+.nav-links a::after{
+  content:""; position:absolute; left:0; bottom:-2px; height:1px; width:0;
+  background:var(--cyan); transition:width .25s var(--ease);
+}
+.nav-links a:hover::after{ width:100%; }
+
+.nav-cta{
+  font-family:var(--mono); font-size:14px; color:var(--cyan);
+  border:1px solid rgba(34,211,238,.4);
+  padding:9px 16px; border-radius:4px;
+  transition:.22s var(--ease);
+}
+.nav-cta:hover{ background:rgba(34,211,238,.12); box-shadow:0 0 22px rgba(34,211,238,.25); border-color:var(--cyan); }
+
+.nav-dots{ display:grid; grid-template-columns:repeat(3,3px); gap:3px; }
+.nav-dots i{ width:3px; height:3px; background:var(--magenta); border-radius:1px; opacity:.7; }
+
+/* Mobile hamburger */
+.hamburger{ display:none; width:40px; height:40px; border:1px solid var(--line); border-radius:5px; position:relative; }
+.hamburger span{ position:absolute; left:9px; right:9px; height:1.5px; background:var(--text); transition:.25s var(--ease); }
+.hamburger span:nth-child(1){ top:14px; }
+.hamburger span:nth-child(2){ top:19px; }
+.hamburger span:nth-child(3){ top:24px; }
+.hamburger[aria-expanded="true"] span:nth-child(1){ top:19px; transform:rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+.hamburger[aria-expanded="true"] span:nth-child(3){ top:19px; transform:rotate(-45deg); }
+
+/* =======================================================================
+   HERO
+   ======================================================================= */
+.hero{
+  position:relative; z-index:2;
+  min-height:100vh;
+  padding:120px clamp(20px,5vw,56px) 56px;
+  display:flex; align-items:center;
+  overflow:hidden;
+}
+
+/* Left vertical HUD rail */
+.rail{
+  position:absolute; left:0; top:0; bottom:0; width:64px;
+  display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+  padding:96px 0 28px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; color:var(--dim);
+  z-index:4;
+}
+.rail .tick{ width:1px; flex:1; background:linear-gradient(var(--line), transparent 50%, var(--line)); margin:6px 0; }
+.rail .rlabel{ writing-mode:vertical-rl; transform:rotate(180deg); padding:8px 0; color:var(--muted); }
+.rail .rlabel.on{ color:var(--cyan); }
+.rail .fps{ text-align:center; line-height:1.2; color:var(--cyan); }
+.rail .cross{ position:relative; width:14px; height:14px; }
+.rail .cross::before,.rail .cross::after{ content:""; position:absolute; background:var(--dim); }
+.rail .cross::before{ left:50%; top:0; width:1px; height:100%; transform:translateX(-.5px); }
+.rail .cross::after{ top:50%; left:0; height:1px; width:100%; transform:translateY(-.5px); }
+
+/* Hero grid */
+.hero-inner{
+  width:100%; max-width:var(--maxw); margin-inline:auto;
+  padding-left:54px;
+  display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:clamp(24px,4vw,56px); align-items:center;
+}
+
+/* --- Hero content (left) --- */
+.whoami{ font-family:var(--mono); font-size:13.5px; line-height:1.7; margin-bottom:clamp(22px,3.5vw,40px); }
+.whoami .prompt{ color:var(--cyan); }
+.whoami .id{ color:var(--text); letter-spacing:.06em; }
+.whoami .uc{ color:var(--cyan); animation:blink 1.1s steps(1) infinite; }
+
+.headline{
+  font-family:var(--mono); font-weight:800;
+  font-size:clamp(44px,8.4vw,108px);
+  line-height:.96; letter-spacing:-.02em;
+  margin-bottom:26px;
+}
+.headline .sep1{ color:var(--cyan); }
+.headline .sep2{ color:var(--magenta); }
+.headline .cursor{
+  display:inline-block; width:.52em; height:.86em; vertical-align:-.07em;
+  background:#fff; margin-left:.06em;
+  animation:blink 1.05s steps(1) infinite;
+}
+@keyframes blink{ 0%,49%{ opacity:1 } 50%,100%{ opacity:0 } }
+
+.render-line{
+  font-family:var(--mono); font-size:clamp(15px,2vw,21px);
+  color:var(--cyan); margin-bottom:clamp(22px,3vw,34px);
+  min-height:1.4em;
+}
+.render-line .tc{ color:var(--cyan); }
+.render-line .cur{ display:inline-block; width:.55em; height:1em; background:var(--cyan); vertical-align:-.12em; animation:blink 1s steps(1) infinite; }
+
+.hero-body{ color:var(--muted); max-width:40ch; font-size:clamp(14.5px,1.6vw,16.5px); margin-bottom:clamp(24px,3.4vw,34px); }
+.hero-body b{ color:var(--text); font-weight:600; }
+
+.chips{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:clamp(30px,4vw,46px); }
+.chip{
+  font-family:var(--mono); font-size:12.5px; letter-spacing:.05em;
+  padding:7px 13px; border-radius:4px; border:1px solid var(--line); color:var(--muted);
+  transition:.22s var(--ease);
+}
+.chip.c1{ border-color:rgba(34,211,238,.45); color:var(--cyan); }
+.chip.c2{ border-color:rgba(236,72,153,.45); color:var(--magenta); }
+.chip.c3{ border-color:rgba(34,211,238,.3); color:var(--cyan); }
+.chip.c4{ border-color:rgba(168,85,247,.45); color:var(--purple); }
+
+/* System feed mini-panel under hero copy */
+.sysfeed{
+  font-family:var(--mono); font-size:11.5px; color:var(--dim);
+  border-top:1px solid var(--line); padding-top:18px;
+  display:grid; grid-template-columns:auto 1fr; gap:6px 26px; align-items:start;
+  max-width:560px;
+}
+.sysfeed .label{ color:var(--muted); letter-spacing:.14em; }
+.sysfeed .rows{ display:grid; gap:3px; }
+.sysfeed .rows div{ display:flex; gap:8px; }
+.sysfeed .rows span:first-child{ color:var(--dim); width:96px; }
+.sysfeed .rows span:last-child{ color:var(--muted); }
+.sysfeed .wave{ grid-column:1 / -1; margin-top:8px; }
+.sysfeed .wave svg{ width:100%; height:46px; display:block; opacity:.85; }
+
+/* --- Hero visual (right): blob + HUD panels --- */
+.hero-visual{ position:relative; min-height:min(64vh,560px); }
+
+/* generative blob, pure CSS */
+.blob-stage{ position:absolute; inset:-8% -4% 0 -4%; display:grid; place-items:center; }
+.blob{
+  position:relative; width:min(46vw,520px); aspect-ratio:1/1.06;
+  filter:blur(2px) saturate(115%);
+}
+.blob .lobe{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(38% 30% at 62% 30%, rgba(236,72,153,.95), transparent 70%),
+    radial-gradient(46% 40% at 38% 64%, rgba(34,211,238,.9), transparent 72%),
+    radial-gradient(40% 42% at 64% 74%, rgba(168,85,247,.85), transparent 74%),
+    conic-gradient(from 200deg at 50% 50%, #22d3ee, #a855f7, #ec4899, #22d3ee);
+  mix-blend-mode:screen;
+  border-radius:58% 42% 55% 45% / 48% 56% 44% 52%;
+  filter:blur(14px);
+  animation:morph 16s ease-in-out infinite, spin 40s linear infinite;
+}
+.blob .lobe.b2{
+  inset:14%;
+  background:
+    radial-gradient(50% 50% at 50% 45%, rgba(217,70,239,.9), transparent 70%),
+    conic-gradient(from 30deg at 50% 50%, #ec4899, #22d3ee, #a855f7, #ec4899);
+  border-radius:46% 54% 40% 60% / 58% 42% 60% 40%;
+  filter:blur(20px);
+  animation:morph 13s ease-in-out infinite reverse, spin 30s linear infinite reverse;
+  opacity:.9;
+}
+.blob .core{
+  position:absolute; inset:30%;
+  background:radial-gradient(circle at 50% 45%, #fff, rgba(34,211,238,.35) 40%, transparent 70%);
+  border-radius:50%;
+  filter:blur(10px);
+  animation:pulse 6s ease-in-out infinite;
+  opacity:.55;
+}
+@keyframes morph{
+  0%,100%{ border-radius:58% 42% 55% 45% / 48% 56% 44% 52%; transform:scale(1) translateY(0); }
+  33%{ border-radius:42% 58% 48% 52% / 60% 44% 56% 40%; transform:scale(1.06) translateY(-2%); }
+  66%{ border-radius:55% 45% 60% 40% / 42% 58% 46% 54%; transform:scale(.97) translateY(2%); }
+}
+@keyframes spin{ to{ rotate:360deg; } }
+@keyframes pulse{ 0%,100%{ opacity:.5; transform:scale(1);} 50%{ opacity:.75; transform:scale(1.08);} }
+
+/* WebGL blob canvas fills the stage, sits behind the HUD panels (z-index:3) */
+#blobCanvas{
+  position:absolute; inset:0; width:100%; height:100%; display:block;
+  z-index:1; pointer-events:auto;
+  touch-action:pan-y; -webkit-tap-highlight-color:transparent;
+}
+/* once WebGL is confirmed working, JS adds .webgl and we hide the CSS fallback */
+.blob-stage.webgl .blob{ display:none; }
+
+/* prompt label near blob */
+.prompt-tag{
+  position:absolute; left:2%; top:16%; z-index:3;
+  font-family:var(--mono); font-size:12.5px; color:var(--muted);
+  border-left:1px solid var(--line); padding-left:12px; max-width:170px;
+}
+.prompt-tag .k{ color:var(--cyan); letter-spacing:.12em; display:block; margin-bottom:6px; }
+.prompt-tag .q{ color:var(--text); }
+
+/* DATA STREAM panel (top-right) */
+.datastream{
+  position:absolute; right:0; top:0; z-index:3;
+  font-family:var(--mono); font-size:11px; color:var(--dim); text-align:right;
+}
+.datastream .h{ color:var(--cyan); letter-spacing:.16em; margin-bottom:8px; }
+.datastream .row{ color:var(--muted); }
+.datastream .row b{ color:var(--magenta); font-weight:500; }
+
+/* VIEWPORT mini box (mid-right) */
+.viewport{
+  position:absolute; right:2%; top:38%; z-index:3;
+  width:108px; height:108px;
+  border:1px solid var(--line);
+  display:grid; place-items:center;
+}
+.viewport .vp-c{ position:absolute; width:8px; height:8px; border:1px solid var(--cyan); }
+.viewport .vp-c.tl{ left:-1px; top:-1px; border-right:0; border-bottom:0; }
+.viewport .vp-c.tr{ right:-1px; top:-1px; border-left:0; border-bottom:0; }
+.viewport .vp-c.bl{ left:-1px; bottom:-1px; border-right:0; border-top:0; }
+.viewport .vp-c.br{ right:-1px; bottom:-1px; border-left:0; border-top:0; }
+.viewport .mesh{ width:64%; height:64%; border-radius:50% 40% 55% 45%; background:repeating-radial-gradient(circle at 50% 50%, rgba(148,163,184,.4) 0 1px, transparent 1px 6px); animation:spin 24s linear infinite; opacity:.6; }
+.viewport .vp-l{ position:absolute; bottom:-20px; right:0; font-family:var(--mono); font-size:10px; color:var(--dim); letter-spacing:.12em; }
+.viewport .vp-l b{ color:var(--muted); font-weight:500; }
+
+/* OUTPUT panel (bottom-right) */
+.output{
+  position:absolute; right:0; bottom:0; z-index:3;
+  font-family:var(--mono); width:min(260px,46%);
+}
+.output .h{ color:var(--magenta); font-size:11px; letter-spacing:.16em; margin-bottom:10px; }
+.output .timecode{ font-size:clamp(22px,3vw,34px); font-weight:700; color:var(--text); letter-spacing:.02em; }
+.output .meta{ font-size:11px; color:var(--dim); margin:8px 0 16px; display:grid; gap:3px; }
+.output .meta span b{ color:var(--cyan); font-weight:500; }
+.output .meta .st b{ color:var(--magenta); }
+
+.bars{ display:grid; gap:9px; }
+.bar{ display:grid; grid-template-columns:74px 1fr 36px; align-items:center; gap:9px; font-size:10.5px; color:var(--dim); }
+.bar .track{ height:3px; background:rgba(148,163,184,.16); border-radius:2px; overflow:hidden; }
+.bar .fill{ height:100%; width:0; border-radius:2px; transition:width 1.6s var(--ease); }
+.bar.llm .fill{ background:var(--cyan); box-shadow:0 0 8px rgba(34,211,238,.6); }
+.bar.dif .fill{ background:var(--magenta); box-shadow:0 0 8px rgba(236,72,153,.6); }
+.bar.com .fill{ background:var(--purple); box-shadow:0 0 8px rgba(168,85,247,.6); }
+.bar .pct{ text-align:right; color:var(--muted); }
+.bars.run .bar.llm .fill{ width:98%; }
+.bars.run .bar.dif .fill{ width:94%; }
+.bars.run .bar.com .fill{ width:89%; }
+
+/* scroll hint */
+.scroll-hint{
+  position:absolute; left:50%; bottom:22px; transform:translateX(-50%);
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.22em; color:var(--dim);
+  display:flex; flex-direction:column; align-items:center; gap:8px; z-index:4;
+}
+.scroll-hint .ln{ width:1px; height:34px; background:linear-gradient(var(--cyan), transparent); animation:drop 1.8s ease-in-out infinite; }
+@keyframes drop{ 0%{ transform:scaleY(0); transform-origin:top; } 50%{ transform:scaleY(1); transform-origin:top; } 51%{ transform:scaleY(1); transform-origin:bottom; } 100%{ transform:scaleY(0); transform-origin:bottom; } }
+
+/* =======================================================================
+   SCROLL REVEAL
+   ======================================================================= */
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal.d1{ transition-delay:.07s; }
+.reveal.d2{ transition-delay:.14s; }
+.reveal.d3{ transition-delay:.21s; }
+
+/* =======================================================================
+   WORK
+   ======================================================================= */
+.work{ background:linear-gradient(180deg, transparent, rgba(10,11,20,.5) 12%, rgba(10,11,20,.5) 88%, transparent); }
+
+.filters{
+  display:flex; flex-wrap:wrap; gap:6px;
+  font-family:var(--mono); font-size:13px;
+  border:1px solid var(--line); border-radius:6px; padding:6px;
+  width:fit-content; max-width:100%;
+}
+.filter{
+  padding:9px 16px; border-radius:4px; color:var(--muted); letter-spacing:.04em;
+  transition:.2s var(--ease); white-space:nowrap;
+}
+.filter:hover{ color:var(--text); background:var(--panel); }
+.filter.active{ color:var(--bg); background:var(--cyan); font-weight:600; }
+.filter .cnt{ opacity:.6; font-size:.85em; margin-left:5px; }
+.filter.active .cnt{ opacity:.8; }
+
+.work-meta{ font-family:var(--mono); font-size:12px; color:var(--dim); margin-top:14px; }
+.work-meta b{ color:var(--cyan); font-weight:500; }
+
+.work-grid{
+  margin-top:clamp(28px,4vw,44px);
+  display:grid; grid-template-columns:repeat(4,1fr);
+  grid-auto-flow:dense; gap:clamp(12px,1.6vw,20px);
+}
+
+.card{
+  position:relative; overflow:hidden; border-radius:8px;
+  border:1px solid var(--line); background:var(--bg-2);
+  cursor:pointer;
+  transition:transform .4s var(--ease), border-color .3s, box-shadow .4s, opacity .35s, filter .35s;
+}
+.card.landscape{ grid-column:span 2; aspect-ratio:16/9; }
+.card.portrait{ grid-column:span 1; aspect-ratio:9/16; }
+
+.card img{
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .6s var(--ease), filter .4s;
+  filter:saturate(.92) brightness(.82);
+}
+.card:hover{ border-color:rgba(34,211,238,.5); box-shadow:0 14px 40px -16px rgba(34,211,238,.4); transform:translateY(-4px); }
+.card:hover img{ transform:scale(1.06); filter:saturate(1.05) brightness(.95); }
+
+/* HUD overlay on card */
+.card .scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(5,6,10,.05) 30%, rgba(5,6,10,.55) 70%, rgba(5,6,10,.92)); }
+.card .corner{ position:absolute; width:11px; height:11px; border:1px solid rgba(34,211,238,.0); transition:border-color .3s; pointer-events:none; }
+.card .corner.tl{ left:9px; top:9px; border-right:0; border-bottom:0; }
+.card .corner.br{ right:9px; bottom:9px; border-left:0; border-top:0; }
+.card:hover .corner{ border-color:rgba(34,211,238,.7); }
+
+.card .ctag{
+  position:absolute; top:11px; left:11px;
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+  padding:4px 9px; border-radius:3px;
+  background:rgba(5,6,10,.6); border:1px solid var(--line); color:var(--cyan);
+  backdrop-filter:blur(4px);
+}
+.card .ratio{
+  position:absolute; top:11px; right:11px;
+  font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.08em;
+  background:rgba(5,6,10,.55); padding:3px 7px; border-radius:3px; backdrop-filter:blur(4px);
+}
+.card .cbody{ position:absolute; left:13px; right:13px; bottom:13px; }
+.card .ctitle{ font-family:var(--mono); font-weight:600; font-size:14px; line-height:1.25; color:#fff; }
+.card .cfoot{ display:flex; align-items:center; gap:8px; margin-top:9px; font-family:var(--mono); font-size:11px; color:var(--muted); }
+.card .play{
+  width:30px; height:30px; border-radius:50%; flex:none;
+  border:1px solid rgba(255,255,255,.35); display:grid; place-items:center;
+  transition:.25s var(--ease);
+}
+.card:hover .play{ border-color:var(--cyan); background:rgba(34,211,238,.18); box-shadow:0 0 18px rgba(34,211,238,.4); }
+.card .play svg{ width:11px; height:11px; margin-left:1px; fill:#fff; }
+
+/* filtered-out state */
+.card.hide{ display:none; }
+
+/* =======================================================================
+   LAB BAND
+   ======================================================================= */
+.lab{ position:relative; }
+.lab .lab-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,2vw,22px); margin-top:clamp(28px,4vw,44px); }
+.lab-card{
+  border:1px solid var(--line); border-radius:8px; padding:26px 24px;
+  background:var(--panel); position:relative; overflow:hidden;
+  transition:border-color .3s, transform .35s var(--ease);
+}
+.lab-card:hover{ border-color:rgba(168,85,247,.45); transform:translateY(-4px); }
+.lab-card .num{ font-family:var(--mono); font-size:12px; color:var(--purple); letter-spacing:.12em; }
+.lab-card h3{ font-family:var(--mono); font-size:18px; margin:14px 0 10px; font-weight:700; }
+.lab-card p{ color:var(--muted); font-size:14.5px; }
+.lab-card .glow{ position:absolute; right:-30px; top:-30px; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle, rgba(168,85,247,.22), transparent 70%); filter:blur(8px); }
+
+/* =======================================================================
+   ABOUT
+   ======================================================================= */
+.about-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(34px,5vw,72px); align-items:start; }
+.bio p{ font-size:clamp(16px,2vw,20px); line-height:1.7; color:var(--text); margin-bottom:18px; }
+.bio p.lead{ font-size:clamp(18px,2.4vw,24px); }
+.bio p .hl{ color:var(--cyan); }
+.bio p b{ color:var(--text); }
+
+.stack-head{ font-family:var(--mono); font-size:12px; letter-spacing:.16em; color:var(--magenta); margin:30px 0 14px; }
+.stack{ display:flex; flex-wrap:wrap; gap:9px; }
+.stack .t{
+  font-family:var(--mono); font-size:12.5px; padding:8px 13px; border-radius:5px;
+  border:1px solid var(--line); color:var(--muted); background:var(--panel);
+  transition:.22s var(--ease);
+}
+.stack .t:hover{ color:var(--text); border-color:rgba(34,211,238,.4); box-shadow:0 0 16px rgba(34,211,238,.12); }
+.stack .t.key{ color:var(--cyan); border-color:rgba(34,211,238,.5); box-shadow:0 0 16px rgba(34,211,238,.14); }
+.bio-meta{ font-family:var(--mono); font-size:12px; color:var(--dim); letter-spacing:.04em; margin-top:8px; }
+
+.caps{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.cap{
+  border:1px solid var(--line); border-radius:8px; padding:22px 20px; background:var(--panel);
+  transition:border-color .3s, transform .35s var(--ease);
+}
+.cap:hover{ border-color:rgba(34,211,238,.4); transform:translateY(-3px); }
+.cap .ic{ font-family:var(--mono); font-size:12px; color:var(--cyan); letter-spacing:.1em; }
+.cap h4{ font-family:var(--mono); font-size:15.5px; margin:12px 0 8px; font-weight:700; }
+.cap p{ font-size:13.5px; color:var(--muted); line-height:1.55; }
+
+/* =======================================================================
+   CONTACT / FOOTER
+   ======================================================================= */
+.contact{ text-align:center; }
+.contact .eyebrow{ justify-content:center; }
+.contact .eyebrow::before{ display:none; }
+.contact h2{
+  font-family:var(--mono); font-weight:800;
+  font-size:clamp(34px,7vw,82px); line-height:1; letter-spacing:-.02em; margin:18px 0 26px;
+}
+.contact h2 .g{ background:linear-gradient(90deg,var(--cyan),var(--magenta)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.contact .lead{ color:var(--muted); max-width:54ch; margin:0 auto 34px; font-size:clamp(15px,2vw,18px); }
+.mailbtn{
+  display:inline-flex; align-items:center; gap:12px;
+  font-family:var(--mono); font-size:clamp(15px,2.4vw,20px);
+  border:1px solid rgba(34,211,238,.45); color:var(--cyan);
+  padding:15px 26px; border-radius:6px;
+  transition:.25s var(--ease);
+}
+.mailbtn:hover{ background:rgba(34,211,238,.1); box-shadow:0 0 30px rgba(34,211,238,.3); border-color:var(--cyan); transform:translateY(-2px); }
+.mailbtn .ar{ transition:transform .25s var(--ease); }
+.mailbtn:hover .ar{ transform:translate(3px,-3px); }
+
+/* contact social icon buttons (email shown first, these sit below) */
+.contact-socials{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:24px; }
+.contact-socials a{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:var(--mono); font-size:13px; color:var(--muted);
+  border:1px solid var(--line); border-radius:6px; padding:10px 15px;
+  transition:.22s var(--ease);
+}
+.contact-socials a svg{ width:17px; height:17px; fill:currentColor; flex:none; }
+.contact-socials a:hover{ color:var(--cyan); border-color:rgba(34,211,238,.45); box-shadow:0 0 18px rgba(34,211,238,.16); transform:translateY(-2px); }
+
+.footer{
+  position:relative; z-index:2;
+  border-top:1px solid var(--line);
+  margin-top:clamp(60px,8vw,100px);
+  padding:30px clamp(20px,5vw,56px);
+  display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:12.5px; color:var(--dim);
+}
+.socials{ display:flex; gap:8px; }
+.socials a{
+  padding:7px 11px; border:1px solid var(--line); border-radius:4px; color:var(--muted);
+  transition:.22s var(--ease);
+}
+.socials a:hover{ color:var(--cyan); border-color:rgba(34,211,238,.45); box-shadow:0 0 14px rgba(34,211,238,.18); }
+
+/* =======================================================================
+   LIGHTBOX / MODAL
+   ======================================================================= */
+.lb{
+  position:fixed; inset:0; z-index:100;
+  display:none; align-items:center; justify-content:center;
+  padding:clamp(16px,4vw,48px);
+  background:rgba(3,4,8,.86); backdrop-filter:blur(10px);
+  opacity:0; transition:opacity .3s var(--ease);
+}
+.lb.open{ display:flex; opacity:1; }
+.lb-inner{
+  position:relative; width:100%; max-width:1040px;
+  border:1px solid var(--line); border-radius:10px; overflow:hidden;
+  background:var(--bg-2);
+  transform:scale(.96) translateY(10px); transition:transform .35s var(--ease);
+  box-shadow:0 40px 120px -30px rgba(0,0,0,.8);
+}
+.lb.open .lb-inner{ transform:none; }
+.lb-bar{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:13px 16px; border-bottom:1px solid var(--line);
+  font-family:var(--mono); font-size:12.5px; color:var(--muted);
+}
+.lb-bar .lb-tag{ color:var(--cyan); letter-spacing:.08em; }
+.lb-bar .lb-title{ color:var(--text); }
+.lb-dots{ display:flex; gap:6px; }
+.lb-dots i{ width:9px; height:9px; border-radius:50%; border:1px solid var(--line); }
+.lb-dots i:nth-child(1){ background:rgba(236,72,153,.6); border:0; }
+.lb-dots i:nth-child(2){ background:rgba(34,211,238,.6); border:0; }
+.lb-close{
+  position:absolute; top:10px; right:12px; z-index:5;
+  width:34px; height:34px; border:1px solid var(--line); border-radius:5px;
+  display:grid; place-items:center; color:var(--text); background:rgba(5,6,10,.6);
+  transition:.2s var(--ease); font-family:var(--mono);
+}
+.lb-close:hover{ border-color:var(--magenta); color:var(--magenta); }
+
+.lb-stage{ position:relative; background:#000; display:grid; place-items:center; }
+.lb-stage.is-portrait{ max-height:80vh; }
+.lb-media{ width:100%; }
+.lb-media.portrait{ width:auto; max-width:min(420px,90vw); margin-inline:auto; }
+.lb-media iframe, .lb-media video{ width:100%; height:100%; display:block; border:0; }
+.lb-media.land .frame{ aspect-ratio:16/9; width:100%; }
+.lb-media.portrait .frame{ aspect-ratio:9/16; max-height:78vh; }
+
+/* poster fallback (no video yet) */
+.lb-fallback{ position:relative; }
+.lb-fallback img{ width:100%; height:100%; object-fit:contain; max-height:78vh; }
+.lb-fallback.portrait img{ max-width:min(420px,90vw); margin-inline:auto; }
+.lb-soon{
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:12px; text-align:center;
+  background:linear-gradient(180deg, rgba(5,6,10,.35), rgba(5,6,10,.78));
+  font-family:var(--mono);
+}
+.lb-soon .ring{
+  width:60px; height:60px; border-radius:50%;
+  border:1px solid rgba(34,211,238,.4); border-top-color:var(--cyan);
+  animation:spin 2.4s linear infinite;
+  display:grid; place-items:center; color:var(--cyan);
+}
+.lb-soon .ring svg{ width:18px; height:18px; fill:var(--cyan); margin-left:2px; }
+.lb-soon .msg{ color:var(--text); font-size:14px; letter-spacing:.04em; }
+.lb-soon .sub{ color:var(--dim); font-size:11.5px; letter-spacing:.06em; max-width:34ch; }
+
+/* =======================================================================
+   RESPONSIVE
+   ======================================================================= */
+@media (max-width:1100px){
+  .hero-inner{ padding-left:48px; }
+  .work-grid{ grid-template-columns:repeat(3,1fr); }
+  /* portraits 1 col, landscapes span 2 of 3 */
+}
+@media (max-width:980px){
+  .nav-links, .nav-cta{ display:none; }
+  .hamburger{ display:block; }
+  .nav.menu-open .nav-links{
+    display:flex; flex-direction:column; align-items:flex-start; gap:4px;
+    position:absolute; top:100%; left:0; right:0;
+    background:rgba(5,6,10,.97); border-bottom:1px solid var(--line);
+    padding:16px clamp(20px,5vw,56px) 22px;
+  }
+  .nav.menu-open .nav-links a{ padding:10px 0; font-size:16px; width:100%; }
+  .nav.menu-open .nav-cta{ display:inline-block; margin-top:8px; }
+
+  .hero{ min-height:auto; padding-top:120px; }
+  .rail{ display:none; }
+  .hero-inner{ grid-template-columns:1fr; padding-left:0; gap:48px; }
+  .hero-visual{ min-height:420px; order:2; }
+  .datastream{ display:none; }
+  .viewport{ display:none; }
+  .output{ position:static; width:100%; max-width:320px; margin-top:30px; }
+  .blob-stage{ position:relative; inset:auto; }
+  .blob{ width:min(72vw,400px); }
+  .prompt-tag{ top:4%; }
+  .scroll-hint{ display:none; }
+
+  .about-grid{ grid-template-columns:1fr; }
+  .lab .lab-grid{ grid-template-columns:1fr; }
+}
+@media (max-width:760px){
+  .work-grid{ grid-template-columns:repeat(2,1fr); }
+  .card.landscape{ grid-column:span 2; }
+  .card.portrait{ grid-column:span 1; }
+}
+@media (max-width:560px){
+  .work-grid{ grid-template-columns:1fr; }
+  .card.landscape, .card.portrait{ grid-column:span 1; }
+  .caps{ grid-template-columns:1fr; }
+  .output{ max-width:100%; }
+  .hero-visual{ min-height:340px; }
+  .blob{ width:min(82vw,330px); }
+}
+
+/* =======================================================================
+   MOBILE-DYNAMIC HERO  (phones only — PC/tablet layout above is untouched)
+   Home ≈ top two-thirds of the screen; the Work ("My Works") section peeks
+   into the bottom third. The blob becomes an ambient backdrop and the
+   heavy HUD panels are dropped so the essentials fit.
+   ======================================================================= */
+@media (max-width:640px){
+  .hero{
+    min-height:66vh; min-height:66svh;   /* dynamic viewport unit for mobile */
+    padding:78px 22px 14px;
+    align-items:center;
+  }
+  .hero-inner{
+    grid-template-columns:1fr; padding-left:0; gap:0;
+    position:relative; z-index:2;
+  }
+  .hero-content{ position:relative; z-index:2; }
+
+  /* blob → full-bleed ambient backdrop behind the text (crams everything in) */
+  .hero-visual{
+    position:absolute; inset:-2% -8%; min-height:0; order:0;
+    z-index:0; opacity:.5; pointer-events:none;
+  }
+  .blob-stage{ position:absolute; inset:0; }
+  .blob{ width:104vw; }
+
+  /* drop HUD clutter on phones only */
+  .sysfeed, .output, .datastream, .viewport, .prompt-tag, .scroll-hint, .hero-body{ display:none; }
+
+  /* compact type so the home page fits the top two-thirds */
+  .whoami{ font-size:11.5px; margin-bottom:14px; }
+  .headline{ font-size:clamp(32px,12vw,52px); margin-bottom:14px; }
+  .render-line{ font-size:14.5px; margin-bottom:14px; }
+  .chips{ gap:7px; margin-bottom:0; }
+  .chip{ font-size:11px; padding:5px 9px; }
+
+  /* the Work section is the visible 'My Works' peek under the hero */
+  .work .section-head{ margin-bottom:22px; }
+}
+
+/* =======================================================================
+   REDUCED MOTION
+   ======================================================================= */
+@media (prefers-reduced-motion:reduce){
+  *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  .reveal{ opacity:1 !important; transform:none !important; }
+  .blob .lobe,.blob .b2,.blob .core,.viewport .mesh,.scroll-hint .ln{ animation:none !important; }
+  .headline .cursor,.render-line .cur,.whoami .uc{ animation:none !important; opacity:1; }
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient FX layers -->
+<div class="fx fx-noise" aria-hidden="true"></div>
+<div class="fx fx-grid" aria-hidden="true"></div>
+<div class="fx fx-scan" aria-hidden="true"></div>
+<div class="fx fx-vignette" aria-hidden="true"></div>
+
+<!-- ============================== NAV ============================== -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand" aria-label="Aniket — home">
+    ANIKET <span class="slash">//</span> <span class="tag">ai_native</span><span class="blink"> _</span>
+  </a>
+
+  <nav class="nav-links" id="navLinks" aria-label="Primary">
+    <a href="#work"><span class="idx">[01]</span>work</a>
+    <a href="#about"><span class="idx">[02]</span>about</a>
+    <a href="#contact" class="nav-cta">[CONTACT]</a>
+  </nav>
+
+  <div class="nav-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ============================== HERO ============================== -->
+<main id="top">
+<section class="hero" aria-label="Intro">
+  <!-- Left vertical HUD rail -->
+  <aside class="rail" aria-hidden="true">
+    <div class="cross"></div>
+    <div class="rlabel on">SYS</div>
+    <div class="tick"></div>
+    <div class="rlabel">VID</div>
+    <div class="tick"></div>
+    <div class="rlabel">LAB</div>
+    <div class="tick"></div>
+    <div class="fps">210<br>FPS</div>
+    <div class="cross"></div>
+  </aside>
+
+  <div class="hero-inner">
+    <!-- ---- Hero content ---- -->
+    <div class="hero-content">
+      <div class="whoami">
+        <span class="prompt">~/ai_native&gt;</span> whoami<br>
+        <span class="id">AI-NATIVE VIDEO EDITOR</span><br>
+        <span class="id">GENAI STORYTELLER</span> <span class="uc">_</span>
+      </div>
+
+      <h1 class="headline">
+        gen <span class="sep1">/</span> visual <span class="sep2">/</span><br>
+        storyteller<span class="cursor" aria-hidden="true"></span>
+      </h1>
+
+      <p class="render-line" aria-label="Rendering reel 001">
+        <span id="renderText" class="tc"></span><span class="cur" aria-hidden="true"></span>
+      </p>
+
+      <p class="hero-body">
+        I edit <b>AI-powered videos</b>, fast internet-native shorts, and motion systems
+        built from scratch with generative tools. From prompt to final cut —
+        <b>ideas, frames, rhythm, intelligence.</b>
+      </p>
+
+      <div class="chips" aria-label="Focus areas">
+        <span class="chip c1">[AI]</span>
+        <span class="chip c2">[MOGRAPH]</span>
+        <span class="chip c3">[GENERATIVE]</span>
+        <span class="chip c4">[EXPERIMENTAL]</span>
+      </div>
+
+      <!-- System feed mini-panel -->
+      <div class="sysfeed" aria-hidden="true">
+        <div class="label">SYSTEM<br>FEED</div>
+        <div class="rows">
+          <div><span>MODEL</span><span>: ANIKET / VISION v2.4</span></div>
+          <div><span>STATUS</span><span>: RUNNING</span></div>
+          <div><span>MODE</span><span>: GENERATIVE</span></div>
+          <div><span>RESOLUTION</span><span>: 3840x2160</span></div>
+          <div><span>FPS</span><span>: 24.00</span></div>
+        </div>
+        <div class="wave">
+          <svg viewBox="0 0 360 46" preserveAspectRatio="none" aria-hidden="true">
+            <polyline fill="none" stroke="#22d3ee" stroke-width="1" opacity=".8"
+              points="0,30 30,18 60,34 90,12 120,28 150,8 180,30 210,16 240,32 270,14 300,26 330,10 360,24"/>
+            <polyline fill="none" stroke="#ec4899" stroke-width="1" opacity=".6"
+              points="0,22 30,32 60,16 90,30 120,18 150,34 180,20 210,30 240,14 270,28 300,18 330,30 360,16"/>
+            <polyline fill="none" stroke="#a855f7" stroke-width="1" opacity=".4"
+              points="0,36 40,26 80,38 120,24 160,36 200,26 240,38 280,24 320,36 360,28"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- Hero visual ---- -->
+    <div class="hero-visual">
+      <div class="blob-stage" aria-hidden="true">
+        <canvas id="blobCanvas" aria-hidden="true"></canvas>
+        <div class="blob">
+          <div class="lobe"></div>
+          <div class="lobe b2"></div>
+          <div class="core"></div>
+        </div>
+      </div>
+
+      <div class="prompt-tag" aria-hidden="true">
+        <span class="k">PROMPT_</span>
+        <span class="q">" a neon future in motion "</span> _
+      </div>
+
+      <div class="datastream" aria-hidden="true">
+        <div class="h">DATA STREAM</div>
+        <div class="row" id="ds0">&gt; 0xA3 0xF7 0x1C</div>
+        <div class="row" id="ds1">&gt; 0xB8 0x2E 0x9D</div>
+        <div class="row" id="ds2">&gt; 0x7C 0x11 0x4A</div>
+        <div class="row" id="ds3">&gt; 0xD1 0x6B 0x2F</div>
+      </div>
+
+      <div class="viewport" aria-hidden="true">
+        <span class="vp-c tl"></span><span class="vp-c tr"></span>
+        <span class="vp-c bl"></span><span class="vp-c br"></span>
+        <div class="mesh"></div>
+        <div class="vp-l">VIEWPORT <b>CAM_01</b></div>
+      </div>
+
+      <div class="output" aria-hidden="true">
+        <div class="h">// OUTPUT</div>
+        <div class="timecode" id="timecode">00:00:07:12</div>
+        <div class="meta">
+          <span>FRAMES&nbsp;&nbsp;/ <b id="frames">01092</b></span>
+          <span class="st">STATUS&nbsp;&nbsp;/ <b>RENDERING</b></span>
+        </div>
+        <div class="bars" id="bars">
+          <div class="bar llm"><span>LLM</span><div class="track"><div class="fill"></div></div><span class="pct">98%</span></div>
+          <div class="bar dif"><span>DIFFUSION</span><div class="track"><div class="fill"></div></div><span class="pct">94%</span></div>
+          <div class="bar com"><span>COMPOSITE</span><div class="track"><div class="fill"></div></div><span class="pct">89%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">SCROLL<div class="ln"></div></div>
+</section>
+
+<!-- ============================== WORK ============================== -->
+<section class="section work" id="work" aria-labelledby="work-h">
+  <span class="plus" style="left:18px;top:24px"></span>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">[ WORK ]</p>
+      <h2 id="work-h">selected_output <span class="sub">// reel · client · motion</span></h2>
+    </div>
+
+    <!-- Filter tab bar -->
+    <div class="reveal d1">
+      <div class="filters" id="filters" role="tablist" aria-label="Filter work by category">
+        <button class="filter active" data-filter="all"  role="tab" aria-selected="true">ALL <span class="cnt">[12]</span></button>
+        <button class="filter" data-filter="ai"        role="tab" aria-selected="false">AI <span class="cnt">[3]</span></button>
+        <button class="filter" data-filter="shorts"    role="tab" aria-selected="false">SHORTS <span class="cnt">[3]</span></button>
+        <button class="filter" data-filter="motion"    role="tab" aria-selected="false">MOTION <span class="cnt">[3]</span></button>
+        <button class="filter" data-filter="narrative" role="tab" aria-selected="false">NARRATIVE <span class="cnt">[3]</span></button>
+      </div>
+      <p class="work-meta">&gt; showing <b id="shownCount">12</b> of <span id="totalCount">12</span> outputs · click any tile to preview</p>
+    </div>
+
+    <!-- Work grid -->
+    <!--
+      ┌─────────────────────────────────────────────────────────────────────┐
+      │  ADD / UPDATE WORK                                                     │
+      │  • Publish a video on a card → add its URL to VIDEO_LINKS (in <script>)│
+      │  • Add a NEW piece → copy any <article> block below, then:             │
+      │     1. drop the thumbnail in  assets/posters/  (16:9 or 9:16)          │
+      │     2. data-category = ai | shorts | motion | narrative                │
+      │     3. update data-poster + <img src> + data-title + alt               │
+      │     4. set BOTH the class and data-orientation (landscape | portrait)  │
+      │  Filter counts + the "showing X of N" line update automatically.       │
+      │  Full step-by-step: HOW-TO-EDIT.md                                     │
+      └─────────────────────────────────────────────────────────────────────┘
+    -->
+    <div class="work-grid" id="workGrid">
+
+      <!-- ============ AI (cinematic, from scratch) ============ -->
+      <article class="card landscape reveal" data-category="ai" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/ai-cinematic-01.jpg"
+        data-title="Cinematic AI Short — From Scratch" data-tag="AI" data-orientation="landscape"
+        aria-label="Play preview: Cinematic AI Short — From Scratch">
+        <img src="assets/posters/ai-cinematic-01.jpg" alt="Cinematic AI short — moody office scene rendered entirely with AI tools" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">AI</span><span class="ratio">16:9</span>
+        <div class="cbody"><div class="ctitle">Cinematic AI Short — From Scratch</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> reel_001 · text-to-video</div></div>
+      </article>
+
+      <article class="card landscape reveal d1" data-category="ai" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/ai-cinematic-02.jpg"
+        data-title="Cinematic AI Short II — Refined" data-tag="AI" data-orientation="landscape"
+        aria-label="Play preview: Cinematic AI Short II — Refined">
+        <img src="assets/posters/ai-cinematic-02.jpg" alt="Refined cinematic AI short, second iteration" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">AI</span><span class="ratio">16:9</span>
+        <div class="cbody"><div class="ctitle">Cinematic AI Short II — Refined</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> reel_002 · generative</div></div>
+      </article>
+
+      <article class="card portrait reveal d2" data-category="ai" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/ai-cinematic-03.jpg"
+        data-title="AI Concept Short" data-tag="AI" data-orientation="portrait"
+        aria-label="Play preview: AI Concept Short">
+        <img src="assets/posters/ai-cinematic-03.jpg" alt="Vertical AI concept short" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">AI</span><span class="ratio">9:16</span>
+        <div class="cbody"><div class="ctitle">AI Concept Short</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> concept · vertical</div></div>
+      </article>
+
+      <!-- ============ SHORTS (client / Avinash Mada) ============ -->
+      <article class="card portrait reveal" data-category="shorts" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/client-short-01.jpg"
+        data-title="News Short — Cybersecurity Selloff" data-tag="SHORTS" data-orientation="portrait"
+        aria-label="Play preview: News Short — Cybersecurity Selloff">
+        <img src="assets/posters/client-short-01.jpg" alt="Finance/tech news short about a cybersecurity selloff" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
+        <div class="cbody"><div class="ctitle">News Short — Cybersecurity Selloff</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> client · caption anim</div></div>
+      </article>
+
+      <article class="card portrait reveal d1" data-category="shorts" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/client-short-02.jpg"
+        data-title="News Short — Markets" data-tag="SHORTS" data-orientation="portrait"
+        aria-label="Play preview: News Short — Markets">
+        <img src="assets/posters/client-short-02.jpg" alt="Fast-paced markets news short" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
+        <div class="cbody"><div class="ctitle">News Short — Markets</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> client · fast-cut</div></div>
+      </article>
+
+      <article class="card portrait reveal d2" data-category="shorts" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/client-short-03.jpg"
+        data-title="News Short — Tech" data-tag="SHORTS" data-orientation="portrait"
+        aria-label="Play preview: News Short — Tech">
+        <img src="assets/posters/client-short-03.jpg" alt="Tech news short with bold caption animation" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
+        <div class="cbody"><div class="ctitle">News Short — Tech</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> client · internet-native</div></div>
+      </article>
+
+      <!-- ============ MOTION (motion graphics) ============ -->
+      <article class="card portrait reveal" data-category="motion" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/motion-01.jpg"
+        data-title="Motion Graphics — 01" data-tag="MOTION" data-orientation="portrait"
+        aria-label="Play preview: Motion Graphics 01">
+        <img src="assets/posters/motion-01.jpg" alt="Motion-graphics short, design 01" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">MOTION</span><span class="ratio">9:16</span>
+        <div class="cbody"><div class="ctitle">Motion Graphics — 01</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> mograph · kinetic</div></div>
+      </article>
+
+      <article class="card portrait reveal d1" data-category="motion" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/motion-02.jpg"
+        data-title="Motion Graphics — 02" data-tag="MOTION" data-orientation="portrait"
+        aria-label="Play preview: Motion Graphics 02">
+        <img src="assets/posters/motion-02.jpg" alt="Motion-graphics short, design 02" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">MOTION</span><span class="ratio">9:16</span>
+        <div class="cbody"><div class="ctitle">Motion Graphics — 02</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> mograph · type</div></div>
+      </article>
+
+      <article class="card portrait reveal d2" data-category="motion" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/motion-03.jpg"
+        data-title="Motion Graphics — 03" data-tag="MOTION" data-orientation="portrait"
+        aria-label="Play preview: Motion Graphics 03">
+        <img src="assets/posters/motion-03.jpg" alt="Motion-graphics short, design 03" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">MOTION</span><span class="ratio">9:16</span>
+        <div class="cbody"><div class="ctitle">Motion Graphics — 03</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> mograph · loop</div></div>
+      </article>
+
+      <!-- ============ NARRATIVE (editing / storytelling) ============ -->
+      <article class="card landscape reveal" data-category="narrative" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/narrative-longform.jpg"
+        data-title="Long-form — Motion + AI B-roll" data-tag="NARRATIVE" data-orientation="landscape"
+        aria-label="Play preview: Long-form — Motion plus AI B-roll">
+        <img src="assets/posters/narrative-longform.jpg" alt="Long-form edit combining motion graphics and AI-generated b-roll" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">NARRATIVE</span><span class="ratio">16:9</span>
+        <div class="cbody"><div class="ctitle">Long-form — Motion + AI B-roll</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> long-form · mograph</div></div>
+      </article>
+
+      <article class="card landscape reveal d1" data-category="narrative" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/narrative-shortform.jpg"
+        data-title="Short-form — Real B-roll, Text Anim & Color Grade" data-tag="NARRATIVE" data-orientation="landscape"
+        aria-label="Play preview: Short-form — Real B-roll, Text Animation and Color Grade">
+        <img src="assets/posters/narrative-shortform.jpg" alt="Short-form edit with real b-roll, text animation and color grading" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">NARRATIVE</span><span class="ratio">16:9</span>
+        <div class="cbody"><div class="ctitle">Short-form — Real B-roll, Text Anim &amp; Color Grade</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> edit · grade</div></div>
+      </article>
+
+      <article class="card portrait reveal d2" data-category="narrative" role="button" tabindex="0"
+        data-video="" data-poster="assets/posters/narrative-gaming.jpg"
+        data-title="Gaming News Short" data-tag="NARRATIVE" data-orientation="portrait"
+        aria-label="Play preview: Gaming News Short">
+        <img src="assets/posters/narrative-gaming.jpg" alt="Gaming news short, vertical format" loading="lazy" />
+        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
+        <span class="ctag">NARRATIVE</span><span class="ratio">9:16</span>
+        <div class="cbody"><div class="ctitle">Gaming News Short</div>
+          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> gaming · vertical</div></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ABOUT ============================== -->
+<section class="section" id="about" aria-labelledby="about-h">
+  <span class="plus" style="left:18px;bottom:24px"></span>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">[ ABOUT ]</p>
+      <h2 id="about-h">whoami <span class="sub">// the operator</span></h2>
+    </div>
+
+    <div class="about-grid">
+      <!-- bio + stack -->
+      <div class="bio reveal">
+        <p class="lead">I'm <b>Aniket</b> — an <span class="hl">AI-native video editor</span> &amp; AI filmmaker who builds fast, internet-native edits and cinematic shorts end-to-end.</p>
+        <p>I live inside generative image and video tools and obsess over <b>pacing, rhythm, and storytelling</b> — the stuff that makes a cut actually hit. When the shot doesn't exist, I generate it; when it needs energy, I add motion graphics.</p>
+        <p>I also <b>love to code</b>. I build my own tools, automations, and sites — this one included — with <span class="hl">Claude Code</span>. Prompt-first, terminal-native, always experimenting.</p>
+        <p class="bio-meta">Based in Kolkata, IST · works in English &amp; Hindi</p>
+
+        <div class="stack-head">// AI STACK</div>
+        <div class="stack" aria-label="AI tools">
+          <span class="t">Seedance</span>
+          <span class="t">Kling</span>
+          <span class="t">Veo</span>
+          <span class="t">Higgsfield</span>
+          <span class="t">Google Flow</span>
+          <span class="t">Nano Banana</span>
+          <span class="t">GPT Image</span>
+          <span class="t">ElevenLabs</span>
+          <span class="t">Suno</span>
+          <span class="t">Topaz</span>
+        </div>
+
+        <div class="stack-head">// EDIT / MOTION</div>
+        <div class="stack" aria-label="Editing and motion tools">
+          <span class="t">Premiere Pro</span>
+          <span class="t">After Effects</span>
+        </div>
+
+        <div class="stack-head">// CODE</div>
+        <div class="stack" aria-label="Code tooling">
+          <span class="t key">Claude Code</span>
+        </div>
+      </div>
+
+      <!-- capability cards -->
+      <div class="caps reveal d1" aria-label="Capabilities">
+        <div class="cap">
+          <div class="ic">[ AI ]</div>
+          <h4>Generative Video</h4>
+          <p>Text-to-video, image-to-video, and AI b-roll directed into finished, cohesive sequences.</p>
+        </div>
+        <div class="cap">
+          <div class="ic">[ EDIT ]</div>
+          <h4>Fast-Paced Editing</h4>
+          <p>Internet-native shorts with tight pacing, punchy cuts, and hook-first storytelling.</p>
+        </div>
+        <div class="cap">
+          <div class="ic">[ MOGRAPH ]</div>
+          <h4>Motion Graphics</h4>
+          <p>Kinetic type, caption animation, and clean graphic systems that lift the edit.</p>
+        </div>
+        <div class="cap">
+          <div class="ic">[ GRADE ]</div>
+          <h4>Color &amp; Finish</h4>
+          <p>Mood-driven color grading and final polish that gives every frame a consistent look.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CONTACT ============================== -->
+<section class="section contact" id="contact" aria-labelledby="contact-h">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">[ CONTACT ]</p>
+      <h2 id="contact-h">let's build <span class="g">something</span>_</h2>
+      <p class="lead">Got a reel, a campaign, or a wild generative idea? I turn prompts into polished, scroll-stopping video. Let's make it.</p>
+      <a class="mailbtn" href="mailto:aniketshaw748@gmail.com">
+        aniketshaw748@gmail.com <span class="ar">↗</span>
+      </a>
+
+      <div class="contact-socials" aria-label="Find me on social">
+        <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07zm0 1.62c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.4-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.16.42-.35 1.04-.4 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.4 2.19.21.55.47.94.88 1.35.41.41.8.67 1.35.88.42.16 1.04.35 2.19.4 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.4.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.16-.42.35-1.04.4-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.4-2.19-.21-.55-.47-.94-.88-1.35-.41-.41-.8-.67-1.35-.88-.42-.16-1.04-.35-2.19-.4-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.3 5.3 0 110 10.6 5.3 5.3 0 010-10.6zm0 1.62a3.68 3.68 0 100 7.36 3.68 3.68 0 000-7.36zm5.5-2.69a1.24 1.24 0 110 2.48 1.24 1.24 0 010-2.48z"/></svg>
+          <span>Instagram</span>
+        </a>
+        <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 002.5 6 2.5 2.5 0 005 8.48 2.5 2.5 0 007.5 6 2.5 2.5 0 004.98 3.5zM3 9.75h4v11H3v-11zm6.5 0H13v1.5h.05c.49-.93 1.7-1.9 3.5-1.9 3.74 0 4.45 2.46 4.45 5.66v5.74h-4v-5.09c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68v5.18h-4v-11z"/></svg>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 00.5 6.2 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.8 3.02 3.02 0 002.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 002.12-2.14A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+          <span>YouTube</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="footer">
+  <span>© <span id="year">2026</span> ANIKET // ai_native</span>
+  <div class="socials" aria-label="Social links">
+    <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">[IG]</a>
+    <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">[LI]</a>
+    <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">[YT]</a>
+  </div>
+</footer>
+
+<!-- ============================== LIGHTBOX ============================== -->
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Video preview" aria-hidden="true">
+  <div class="lb-inner" role="document">
+    <div class="lb-bar">
+      <span><span class="lb-tag" id="lbTag">AI</span> &nbsp;/&nbsp; <span class="lb-title" id="lbTitle">Title</span></span>
+      <div class="lb-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
+    <button class="lb-close" id="lbClose" aria-label="Close preview">✕</button>
+    <div class="lb-stage" id="lbStage"><!-- media injected by JS --></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   STYLE 4 — interactions
+   ========================================================================= */
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Year ---- */
+  var y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear();
+
+  /* =======================================================================
+     ▶ EDIT ME — VIDEO LINKS
+     To publish a video on a card, paste its URL next to the matching key.
+     The key is the poster's filename (without ".jpg"). Works with YouTube,
+     Vimeo, or a direct .mp4 URL. Leave '' to keep the "coming soon" poster.
+        'ai-cinematic-01': 'https://youtu.be/XXXXXXXXXXX',
+     ======================================================================= */
+  var VIDEO_LINKS = {
+    'ai-cinematic-01': '',
+    'ai-cinematic-02': '',
+    'ai-cinematic-03': '',
+    'client-short-01': '',
+    'client-short-02': '',
+    'client-short-03': '',
+    'motion-01': '',
+    'motion-02': '',
+    'motion-03': '',
+    'narrative-longform': '',
+    'narrative-shortform': '',
+    'narrative-gaming': ''
+  };
+
+  /* Apply the links above onto the cards (matches by poster filename). */
+  (function applyVideoLinks(){
+    document.querySelectorAll('#workGrid .card').forEach(function(card){
+      var poster = card.getAttribute('data-poster') || '';
+      var key = poster.split('/').pop().replace(/\.[a-z0-9]+$/i, '');
+      if(VIDEO_LINKS[key]) card.setAttribute('data-video', VIDEO_LINKS[key]);
+    });
+  })();
+
+  /* Auto-count cards per category so filter labels + totals never go stale. */
+  (function updateWorkCounts(){
+    var cards = document.querySelectorAll('#workGrid .card');
+    var counts = { all: cards.length };
+    cards.forEach(function(c){ var k=c.getAttribute('data-category'); counts[k]=(counts[k]||0)+1; });
+    document.querySelectorAll('#filters .filter').forEach(function(b){
+      var f=b.getAttribute('data-filter'); var cnt=b.querySelector('.cnt');
+      if(cnt) cnt.textContent='['+(counts[f]||0)+']';
+    });
+    var sc=document.getElementById('shownCount'); if(sc) sc.textContent=cards.length;
+    var tc=document.getElementById('totalCount'); if(tc) tc.textContent=cards.length;
+  })();
+
+  /* ---- Nav: scrolled state + mobile menu ---- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  var burger = document.getElementById('hamburger');
+  burger.addEventListener('click', function(){
+    var open = nav.classList.toggle('menu-open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  // close mobile menu after clicking a link
+  document.getElementById('navLinks').addEventListener('click', function(e){
+    if(e.target.closest('a')){ nav.classList.remove('menu-open'); burger.setAttribute('aria-expanded','false'); }
+  });
+
+  /* ---- Typing effect: > rendering reel_001…_ ---- */
+  var renderEl = document.getElementById('renderText');
+  var renderStr = '> rendering reel_001…';
+  if(renderEl){
+    if(reduceMotion){ renderEl.textContent = renderStr; }
+    else{
+      var i = 0;
+      (function type(){
+        if(i <= renderStr.length){ renderEl.textContent = renderStr.slice(0,i); i++; setTimeout(type, 55); }
+      })();
+    }
+  }
+
+  /* ---- Progress bars: animate to % when hero in view ---- */
+  var bars = document.getElementById('bars');
+  if(bars){
+    if(reduceMotion){ bars.classList.add('run'); }
+    else{
+      var bo = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ if(en.isIntersecting){ bars.classList.add('run'); bo.disconnect(); } });
+      }, {threshold:.4});
+      bo.observe(bars);
+    }
+  }
+
+  /* ---- Timecode + frame counters tick ---- */
+  if(!reduceMotion){
+    var tcEl = document.getElementById('timecode'), frEl = document.getElementById('frames');
+    var totalFrames = 1092; // start
+    var pad = function(n,l){ n=String(n); while(n.length<(l||2)) n='0'+n; return n; };
+    setInterval(function(){
+      totalFrames++;
+      var f = totalFrames % 24;
+      var totalSec = Math.floor(totalFrames / 24);
+      var s = totalSec % 60, m = Math.floor(totalSec/60) % 60, h = Math.floor(totalSec/3600);
+      if(tcEl) tcEl.textContent = pad(h)+':'+pad(m)+':'+pad(s)+':'+pad(f);
+      if(frEl) frEl.textContent = pad(totalFrames,5);
+    }, 1000/12); // half-speed for a calm tick
+  }
+
+  /* ---- DATA STREAM hex cycling ---- */
+  if(!reduceMotion){
+    var hex = function(){ return '0x'+pad(Math.floor(Math.random()*256).toString(16).toUpperCase(),2); };
+    var dsRows = [document.getElementById('ds0'),document.getElementById('ds1'),document.getElementById('ds2'),document.getElementById('ds3')];
+    setInterval(function(){
+      var r = dsRows[Math.floor(Math.random()*dsRows.length)];
+      if(r) r.innerHTML = '&gt; '+hex()+' '+hex()+' <b>'+hex()+'</b>';
+    }, 900);
+  }
+
+  /* ---- Scroll reveal (IntersectionObserver, no CDN dependency) ---- */
+  var reveals = document.querySelectorAll('.reveal');
+  if(reduceMotion || !('IntersectionObserver' in window)){
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ro.unobserve(en.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){ ro.observe(el); });
+  }
+
+  /* ---- WORK filters ---- */
+  var filterBar = document.getElementById('filters');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#workGrid .card'));
+  var shownCount = document.getElementById('shownCount');
+  filterBar.addEventListener('click', function(e){
+    var btn = e.target.closest('.filter'); if(!btn) return;
+    var f = btn.getAttribute('data-filter');
+    // active state
+    filterBar.querySelectorAll('.filter').forEach(function(b){
+      var on = b===btn; b.classList.toggle('active', on); b.setAttribute('aria-selected', on?'true':'false');
+    });
+    var n = 0;
+    cards.forEach(function(c){
+      var match = (f==='all' || c.getAttribute('data-category')===f);
+      c.classList.toggle('hide', !match);
+      if(match) n++;
+    });
+    if(shownCount) shownCount.textContent = n;
+  });
+
+  /* ---- LIGHTBOX ---- */
+  var lb = document.getElementById('lightbox');
+  var lbStage = document.getElementById('lbStage');
+  var lbTag = document.getElementById('lbTag');
+  var lbTitle = document.getElementById('lbTitle');
+  var lbClose = document.getElementById('lbClose');
+  var lastFocus = null;
+
+  function isYouTube(u){ return /youtube\.com|youtu\.be/i.test(u); }
+  function isVimeo(u){ return /vimeo\.com/i.test(u); }
+  function ytEmbed(u){
+    var id = '';
+    var m = u.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{6,})/);
+    if(m) id = m[1];
+    return 'https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0';
+  }
+  function vimeoEmbed(u){
+    var m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    return 'https://player.vimeo.com/video/'+(m?m[1]:'')+'?autoplay=1';
+  }
+
+  function openLightbox(card){
+    var video = card.getAttribute('data-video') || '';
+    var poster = card.getAttribute('data-poster') || '';
+    var title = card.getAttribute('data-title') || 'Preview';
+    var tag = card.getAttribute('data-tag') || '';
+    var orient = card.getAttribute('data-orientation') || 'landscape';
+    var portrait = orient === 'portrait';
+
+    lbTag.textContent = tag;
+    lbTitle.textContent = title;
+
+    var html = '';
+    if(video){
+      if(isYouTube(video)){
+        html = '<div class="lb-media '+(portrait?'portrait':'land')+'"><div class="frame"><iframe src="'+ytEmbed(video)+'" title="'+title+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>';
+      } else if(isVimeo(video)){
+        html = '<div class="lb-media '+(portrait?'portrait':'land')+'"><div class="frame"><iframe src="'+vimeoEmbed(video)+'" title="'+title+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>';
+      } else {
+        // treat as direct video file
+        html = '<div class="lb-media '+(portrait?'portrait':'land')+'"><div class="frame"><video src="'+video+'" poster="'+poster+'" controls autoplay playsinline></video></div></div>';
+      }
+    } else {
+      // No video yet → poster + tasteful "coming soon" overlay
+      html =
+        '<div class="lb-fallback'+(portrait?' portrait':'')+'">'+
+          '<img src="'+poster+'" alt="'+title+' — preview poster" />'+
+          '<div class="lb-soon">'+
+            '<div class="ring"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></div>'+
+            '<div class="msg">Preview coming soon</div>'+
+            '<div class="sub">video link to be added — paste a URL into data-video on this card</div>'+
+          '</div>'+
+        '</div>';
+    }
+    lbStage.innerHTML = html;
+    lbStage.classList.toggle('is-portrait', portrait);
+
+    lastFocus = document.activeElement;
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden','false');
+    document.body.classList.add('no-scroll');
+    lbClose.focus();
+  }
+
+  function closeLightbox(){
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll');
+    // stop any playing media by clearing
+    setTimeout(function(){ lbStage.innerHTML = ''; }, 300);
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  // open handlers on cards (click + Enter/Space)
+  cards.forEach(function(card){
+    card.addEventListener('click', function(){ openLightbox(card); });
+    card.addEventListener('keydown', function(e){
+      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openLightbox(card); }
+    });
+  });
+
+  // close handlers
+  lbClose.addEventListener('click', closeLightbox);
+  lb.addEventListener('click', function(e){ if(e.target === lb) closeLightbox(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' && lb.classList.contains('open')) closeLightbox();
+    // minimal focus trap: keep Tab inside the dialog
+    if(e.key==='Tab' && lb.classList.contains('open')){
+      var f = lb.querySelectorAll('button, [href], iframe, video, [tabindex]:not([tabindex="-1"])');
+      if(!f.length) return;
+      var first = f[0], last = f[f.length-1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+})();
+</script>
+
+<!-- ===================== INTERACTIVE WEBGL BLOB ===================== -->
+<!-- Self-contained neon generative blob. Vanilla Three.js r128 (global build, no modules). -->
+<script>
+(function () {
+  'use strict';
+
+  var THREE_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+
+  // ---- bootstrapping: ensure DOM ready, then ensure THREE is loaded, then init ----
+  function onReady(fn){
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
+  function ensureThree(cb){
+    if (window.THREE) { cb(); return; }                 // host page already has THREE
+    var s = document.createElement('script');
+    s.src = THREE_SRC; s.async = true;
+    s.onload  = function(){ cb(); };
+    s.onerror = function(){ /* CDN blocked -> do nothing, CSS .blob fallback stays visible */ };
+    (document.head || document.documentElement).appendChild(s);
+  }
+  onReady(function(){
+    ensureThree(function(){
+      try { initBlob(); }
+      catch (e) { /* any failure -> leave the CSS .blob fallback in place */ }
+    });
+  });
+
+  // ================================================================= //
+  function initBlob(){
+    if (!window.THREE) return;
+
+    var container = document.querySelector('.blob-stage');
+    var canvas    = document.getElementById('blobCanvas');
+    if (!container || !canvas) return;
+
+    var reducedMotion = false;
+    try { reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    // ---- renderer (transparent). Bail to CSS fallback if WebGL is unavailable ----
+    var renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas: canvas, alpha: true, antialias: true, premultipliedAlpha: true,
+        powerPreference: 'high-performance'
+      });
+    } catch (err) { return; }
+    if (!renderer || !renderer.getContext()) return;
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75)); // cap DPR
+    renderer.setClearColor(0x000000, 0);                                  // fully transparent
+
+    // ---- scene / camera ----
+    var scene  = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(0, 0, 4.3);
+
+    // ---- tunables (tweak to taste) ----
+    var coarse = false;
+    try { coarse = window.matchMedia('(pointer: coarse)').matches; } catch (e) {}
+    var DETAIL     = coarse ? 26 : 40;   // IcosahedronGeometry detail (~17k pts @40). Raise for denser grain (costs perf).
+    var POINT_SIZE = 0.012;              // world-space point radius -> fine dots
+    var AMP        = 0.42;               // displacement amplitude (lumpiness)
+
+    // ---- shared uniforms (referenced by both materials) ----
+    var uniforms = {
+      uTime:        { value: 0 },
+      uAmp:         { value: AMP },
+      uProj:        { value: 1 },        // projection scale for screen-correct point size
+      uPointSize:   { value: POINT_SIZE },
+      uExposure:    { value: 0.62 },     // overall point brightness (additive builds up the core)
+      uGlowStrength:{ value: 0.45 },     // fresnel body-mesh strength
+      uCyan:        { value: new THREE.Color(0x22d3ee) },
+      uMagenta:     { value: new THREE.Color(0xec4899) },
+      uPurple:      { value: new THREE.Color(0xa855f7) }
+    };
+
+    // ---- GLSL: Ashima 3D simplex noise + time-animated displacement ----
+    var DISP_GLSL = [
+      'vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}',
+      'vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}',
+      'vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}',
+      'vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}',
+      'float snoise(vec3 v){',
+      '  const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);',
+      '  vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);',
+      '  vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g;',
+      '  vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);',
+      '  vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;',
+      '  i=mod289(i);',
+      '  vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));',
+      '  float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;',
+      '  vec4 j=p-49.0*floor(p*ns.z*ns.z);',
+      '  vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);',
+      '  vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);',
+      '  vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);',
+      '  vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));',
+      '  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;',
+      '  vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);',
+      '  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));',
+      '  p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;',
+      '  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;',
+      '  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));',
+      '}',
+      // big slow lobes + finer ripples -> the lumpy, slowly-morphing silhouette
+      'float computeDisp(vec3 dir){',
+      '  float t=uTime;',
+      '  float n1=snoise(dir*1.1+vec3(0.0,t*0.12,0.0));',
+      '  float n2=snoise(dir*2.3+vec3(t*0.10,0.0,t*0.05));',
+      '  float n3=snoise(dir*4.7-vec3(0.0,0.0,t*0.08));',
+      '  return n1*0.55+n2*0.30+n3*0.15;',
+      '}'
+    ].join('\n');
+
+    // ---- POINTS material (the grainy glowing dots) ----
+    var pointsVert = [
+      'uniform float uTime; uniform float uAmp; uniform float uProj; uniform float uPointSize;',
+      'uniform vec3 uCyan; uniform vec3 uMagenta; uniform vec3 uPurple; uniform float uExposure;',
+      'varying vec3 vColor; varying float vAlpha;',
+      DISP_GLSL,
+      'void main(){',
+      '  vec3 dir=normalize(normal);',
+      '  float disp=computeDisp(dir);',
+      '  vec3 transformed=position+normal*disp*uAmp;',     // displace along normal
+      '  vec4 mv=modelViewMatrix*vec4(transformed,1.0);',
+      '  vec3 nVS=normalize(normalMatrix*normal);',
+      '  vec3 viewDir=normalize(-mv.xyz);',
+      '  float facing=clamp(dot(nVS,viewDir),0.0,1.0);',
+      '  float fres=pow(1.0-facing,2.5);',                 // silhouette rim
+      '  float h=clamp(dir.y*0.5+0.5,0.0,1.0);',           // vertical band (coherent on the surface)
+      // magenta mass -> purple mid -> cyan cap near the top
+      '  vec3 col=mix(uMagenta,uPurple,smoothstep(0.15,0.6,h));',
+      '  col=mix(col,uCyan,smoothstep(0.6,0.95,h));',
+      '  col+=uCyan*fres*0.9;',                            // cyan rim everywhere
+      '  float glow=1.0+max(disp,0.0)*1.4+fres*0.7;',      // brighten peaks + edges (glowing core/rim)
+      '  col*=glow*uExposure;',
+      '  vColor=col;',
+      '  vAlpha=clamp(0.22+facing*0.5+fres*0.6,0.0,1.0);', // front + rim contribute most -> sense of form
+      '  gl_Position=projectionMatrix*mv;',
+      '  gl_PointSize=max(1.0,uPointSize*(uProj/-mv.z));', // screen-correct, distance-attenuated
+      '}'
+    ].join('\n');
+
+    var pointsFrag = [
+      'precision highp float;',
+      'varying vec3 vColor; varying float vAlpha;',
+      'void main(){',
+      '  vec2 uv=gl_PointCoord-0.5;',
+      '  float d=dot(uv,uv);',                 // squared radius
+      '  if(d>0.25) discard;',                 // round sprite (0.5^2)
+      '  float a=smoothstep(0.25,0.0,d);',     // soft falloff
+      '  gl_FragColor=vec4(vColor,a*vAlpha);', // additive: alpha modulates intensity
+      '}'
+    ].join('\n');
+
+    // ---- FRESNEL BODY material (faint translucent glow behind the dots) ----
+    var meshVert = [
+      'uniform float uTime; uniform float uAmp;',
+      'varying float vFres; varying float vH;',
+      DISP_GLSL,
+      'void main(){',
+      '  vec3 dir=normalize(normal);',
+      '  float disp=computeDisp(dir);',
+      '  vec3 transformed=position+normal*disp*uAmp;',
+      '  vec4 mv=modelViewMatrix*vec4(transformed,1.0);',
+      '  vec3 nVS=normalize(normalMatrix*normal);',
+      '  vec3 viewDir=normalize(-mv.xyz);',
+      '  vFres=pow(1.0-clamp(dot(nVS,viewDir),0.0,1.0),3.0);',
+      '  vH=clamp(dir.y*0.5+0.5,0.0,1.0);',
+      '  gl_Position=projectionMatrix*mv;',
+      '}'
+    ].join('\n');
+
+    var meshFrag = [
+      'precision highp float;',
+      'uniform vec3 uCyan; uniform vec3 uMagenta; uniform vec3 uPurple; uniform float uGlowStrength;',
+      'varying float vFres; varying float vH;',
+      'void main(){',
+      '  vec3 col=mix(uMagenta,uPurple,smoothstep(0.2,0.6,vH));',
+      '  col=mix(col,uCyan,smoothstep(0.6,0.95,vH));',
+      '  col=mix(col,uCyan,vFres*0.6);',                 // edges pull toward cyan
+      '  float a=vFres*uGlowStrength;',
+      '  gl_FragColor=vec4(col*(0.6+vFres),a);',
+      '}'
+    ].join('\n');
+
+    var pointsMat = new THREE.ShaderMaterial({
+      uniforms: uniforms, vertexShader: pointsVert, fragmentShader: pointsFrag,
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false
+    });
+    var meshMat = new THREE.ShaderMaterial({
+      uniforms: uniforms, vertexShader: meshVert, fragmentShader: meshFrag,
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false,
+      side: THREE.FrontSide
+    });
+
+    // ---- geometry (shared) + objects ----
+    var geometry = new THREE.IcosahedronGeometry(1, DETAIL);
+
+    var glowMesh = new THREE.Mesh(geometry, meshMat);
+    glowMesh.scale.setScalar(0.99);            // sit just inside the dot shell
+    glowMesh.renderOrder = 1;
+
+    var points = new THREE.Points(geometry, pointsMat);
+    points.renderOrder = 2;
+
+    var group = new THREE.Group();
+    group.scale.set(0.92, 1.20, 0.92);         // gentle vertical stretch -> taller organic form
+    group.rotation.z = 0.10;                    // slight lean (matches the reference)
+    group.add(glowMesh);
+    group.add(points);
+    scene.add(group);
+
+    // ---- rotation / parallax state ----
+    var dragging = false, lastX = 0, lastY = 0;
+    var targetX = 0.12, targetY = -0.30;        // base tilt + drag accumulation
+    var curX = targetX, curY = targetY;
+    var parX = 0, parY = 0, pcurX = 0, pcurY = 0; // hover parallax
+
+    // ---- sizing ----
+    function updateProj(){
+      var hPx = container.clientHeight * renderer.getPixelRatio();
+      uniforms.uProj.value = (0.5 * hPx) / Math.tan(camera.fov * 0.5 * Math.PI / 180.0);
+    }
+    function resize(){
+      var w = container.clientWidth, h = container.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);            // false: don't touch canvas CSS (handled by stylesheet)
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      updateProj();
+      if (reducedMotion) renderFrame();
+    }
+
+    function renderFrame(){ renderer.render(scene, camera); }
+
+    // ================= reduced motion: one static frame, no loop =================
+    if (reducedMotion){
+      uniforms.uTime.value = 1.7;               // a pleasing frozen morph
+      resize();
+      renderFrame();
+      container.classList.add('webgl');         // success -> hide CSS fallback
+      window.addEventListener('resize', resize);
+      if (window.ResizeObserver){ try { new ResizeObserver(resize).observe(container); } catch (e) {} }
+      return;
+    }
+
+    // ================= animated path =================
+    // interactivity ----------------------------------------------------------
+    function onPointerDown(e){
+      dragging = true; lastX = e.clientX; lastY = e.clientY;
+      try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+    function onPointerMove(e){
+      var r = container.getBoundingClientRect();
+      // hover parallax (only while the pointer is over the stage)
+      if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom){
+        var nx = ((e.clientX - r.left) / r.width)  * 2 - 1;
+        var ny = ((e.clientY - r.top)  / r.height) * 2 - 1;
+        parX = ny * 0.10;
+        parY = nx * 0.16;
+      }
+      if (dragging){
+        targetY += (e.clientX - lastX) * 0.005;
+        targetX += (e.clientY - lastY) * 0.005;
+        targetX = Math.max(-1.0, Math.min(1.0, targetX)); // clamp pitch (no flip-over)
+        lastX = e.clientX; lastY = e.clientY;
+      }
+    }
+    function onPointerUp(){ dragging = false; }
+
+    // pointerdown only starts on the canvas; move/up on window so drags continue off-canvas.
+    // We never preventDefault -> touch-action:pan-y lets vertical page scroll pass through.
+    canvas.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+
+    // loop / pause -----------------------------------------------------------
+    var running = false, rafId = 0, last = 0, elapsed = 0;
+    var visible = !document.hidden, onscreen = true;
+
+    function update(dt){
+      if (!dragging) targetY += 0.0014;          // slow idle auto-rotation
+      curX  += (targetX - curX)  * 0.06;          // damped follow
+      curY  += (targetY - curY)  * 0.06;
+      pcurX += (parX  - pcurX)   * 0.05;
+      pcurY += (parY  - pcurY)   * 0.05;
+      group.rotation.x = curX + pcurX;
+      group.rotation.y = curY + pcurY;
+      uniforms.uTime.value = elapsed;
+    }
+    function animate(){
+      rafId = requestAnimationFrame(animate);
+      var now = performance.now();
+      var dt = Math.min((now - last) / 1000, 0.05); // clamp (tab restore etc.)
+      last = now; elapsed += dt;
+      update(dt);
+      renderFrame();
+    }
+    function setActive(on){
+      if (on && !running){ running = true; last = performance.now(); rafId = requestAnimationFrame(animate); }
+      else if (!on && running){ running = false; cancelAnimationFrame(rafId); }
+    }
+    function refresh(){ setActive(visible && onscreen); }
+
+    // pause when offscreen or tab hidden
+    document.addEventListener('visibilitychange', function(){ visible = !document.hidden; refresh(); });
+    if (window.IntersectionObserver){
+      try {
+        new IntersectionObserver(function(entries){
+          onscreen = entries[0].isIntersecting; refresh();
+        }, { threshold: 0.01 }).observe(container);
+      } catch (e) {}
+    }
+    if (window.ResizeObserver){ try { new ResizeObserver(resize).observe(container); } catch (e) {} }
+    window.addEventListener('resize', resize);
+
+    // go ---------------------------------------------------------------------
+    resize();
+    renderFrame();                       // ensure a valid first frame before revealing
+    container.classList.add('webgl');    // success -> hide CSS .blob fallback
+    refresh();                           // start the loop (respects offscreen/hidden)
+  }
+})();
+</script>
+</body>
+</html>
