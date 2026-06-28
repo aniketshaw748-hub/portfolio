@@ -1,0 +1,12 @@
+# Keep the Vercel upload tiny + private — exclude big videos, notes, and repo cruft.
+# (The Vercel CLI does NOT read .gitignore, so these must be listed separately.)
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+mydetail.md
+Aniket_Shaw_Resume.*
+mockups
+node_modules
+.git
