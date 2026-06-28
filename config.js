@@ -12,6 +12,7 @@ window.PORTFOLIO_CONFIG = {
 
   /* ── CONTACT ──────────────────────────────────────────────────────────── */
   email: "aniketshaw748@gmail.com",
+  calendly: "https://calendly.com/aniketshaw748/let-s-meet",  // "Book a call" button — set "" to hide it
   socials: {
     instagram: "https://www.instagram.com/aniikettt_3/",
     linkedin:  "https://www.linkedin.com/in/aniket-shaw-a10478368/",
@@ -27,6 +28,8 @@ window.PORTFOLIO_CONFIG = {
     "I also <b>love to code</b>. I build my own tools, automations, and sites — this one included — with <span class='hl'>Claude Code</span>. Prompt-first, terminal-native, always experimenting."
   ],
   bioMeta: "Based in Kolkata, IST · works in English &amp; Hindi",
+  experience: "3+ yrs editing · 1.5 yrs in GenAI",  // small credibility line under the bio
+  tagline: "Let my work do the talking.",           // shown near the contact CTAs
 
   /* ── TOOLS (chips, grouped) ───────────────────────────────────────────────
      Each "GROUP NAME": [ list of tools ]. The first tool in the "CODE"
@@ -73,12 +76,12 @@ window.PORTFOLIO_CONFIG = {
       magenta: "#ff0180",   // core mass
       purple:  "#8400ff"    // mid blend
     },
-    size:      1.0,         // overall scale   (1 = default, 1.3 = bigger, 0.8 = smaller)
+    size:      2,         // overall scale   (1 = default, 1.3 = bigger, 0.8 = smaller)
     stretch:   1.20,        // vertical stretch (1 = round, >1 = taller)
-    position:  { x: 0, y: 0 }, // nudge: x = right(+)/left(-), y = up(+)/down(-)  (try ±0.5)
+    position:  { x: 0, y: 1 }, // nudge: x = right(+)/left(-), y = up(+)/down(-)  (try ±0.5)
     density:   40,          // dot count / grain (20–56; higher = denser but heavier)
     lumpiness: 0.42,        // how much it morphs (0.2–0.7)
-    brightness:0.62,        // dot glow (0.4–1.0)
+    brightness:0.4,        // dot glow (0.4–1.0)
     rimGlow:   0.45,        // edge halo (0.2–0.8)
     autoRotate:true,        // slow idle spin (set false to stop)
 

@@ -264,11 +264,8 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 .render-line .tc{ color:var(--cyan); }
 .render-line .cur{ display:inline-block; width:.55em; height:1em; background:var(--cyan); vertical-align:-.12em; animation:blink 1s steps(1) infinite; }
 
-/* Terminal carets stay solid (no blink) until the first click, then blink. */
+/* Terminal carets: solid, no blinking. */
 .headline .cursor, .render-line .cur, .whoami .uc{ animation:none; }
-body.cursors-live .headline .cursor{ animation:blink 1.05s steps(1) infinite; }
-body.cursors-live .render-line .cur{ animation:blink 1s steps(1) infinite; }
-body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
 
 .hero-body{ color:var(--muted); max-width:40ch; font-size:clamp(14.5px,1.6vw,16.5px); margin-bottom:clamp(24px,3.4vw,34px); }
 .hero-body b{ color:var(--text); font-weight:600; }
@@ -300,10 +297,11 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
 .sysfeed .wave svg{ width:100%; height:46px; display:block; opacity:.85; }
 
 /* --- Hero visual (right): blob + HUD panels --- */
+.hero-content{ position:relative; z-index:2; }   /* keep text above the blob canvas */
 .hero-visual{ position:relative; min-height:min(64vh,560px); }
 
 /* generative blob, pure CSS */
-.blob-stage{ position:absolute; inset:-8% -4% 0 -4%; display:grid; place-items:center; }
+.blob-stage{ position:absolute; inset:-78% -10% 28% -8%; display:grid; place-items:center; }
 .blob{
   position:relative; width:min(46vw,520px); aspect-ratio:1/1.06;
   filter:blur(2px) saturate(115%);
@@ -588,6 +586,20 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
 }
 .contact-socials a svg{ width:17px; height:17px; fill:currentColor; flex:none; }
 .contact-socials a:hover{ color:var(--cyan); border-color:rgba(34,211,238,.45); box-shadow:0 0 18px rgba(34,211,238,.16); transform:translateY(-2px); }
+
+/* contact tagline + CTA row (Book a call + email) */
+.contact-tagline{ font-family:var(--mono); color:var(--cyan); letter-spacing:.04em; font-size:clamp(14px,2vw,17px); margin:-8px 0 26px; }
+.contact-cta{ display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:14px; }
+.callbtn{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--mono); font-size:clamp(15px,2.4vw,20px); font-weight:600;
+  background:var(--cyan); color:#04141a; border:1px solid var(--cyan);
+  padding:15px 26px; border-radius:6px; transition:.25s var(--ease);
+}
+.callbtn .cal-ic{ width:18px; height:18px; fill:currentColor; flex:none; }
+.callbtn .ar{ transition:transform .25s var(--ease); }
+.callbtn:hover{ box-shadow:0 0 34px rgba(34,211,238,.5); transform:translateY(-2px); filter:brightness(1.06); }
+.callbtn:hover .ar{ transform:translate(3px,-3px); }
 
 .footer{
   position:relative; z-index:2;
@@ -1168,9 +1180,17 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
       <p class="eyebrow">[ CONTACT ]</p>
       <h2 id="contact-h">let's build <span class="g">something</span>_</h2>
       <p class="lead">Got a reel, a campaign, or a wild generative idea? I turn prompts into polished, scroll-stopping video. Let's make it.</p>
-      <a class="mailbtn" href="mailto:aniketshaw748@gmail.com">
-        aniketshaw748@gmail.com <span class="ar">↗</span>
-      </a>
+      <p class="contact-tagline" id="contactTagline">Let my work do the talking.</p>
+
+      <div class="contact-cta">
+        <a class="callbtn" id="callBtn" href="https://calendly.com/aniketshaw748/let-s-meet" target="_blank" rel="noopener">
+          <svg class="cal-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 00-2 2v13a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2V2h-2v2H9V2H7zm12 7v10H5V9h14zM7 11v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2z"/></svg>
+          Book a call <span class="ar">↗</span>
+        </a>
+        <a class="mailbtn" href="mailto:aniketshaw748@gmail.com">
+          aniketshaw748@gmail.com <span class="ar">↗</span>
+        </a>
+      </div>
 
       <div class="contact-socials" aria-label="Find me on social">
         <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -1267,6 +1287,7 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
     var html = '';
     if(CFG.bio && CFG.bio.length){ CFG.bio.forEach(function(p,i){ html += '<p'+(i===0?' class="lead"':'')+'>'+p+'</p>'; }); }
     if(CFG.bioMeta){ html += '<p class="bio-meta">'+CFG.bioMeta+'</p>'; }
+    if(CFG.experience){ html += '<p class="bio-meta exp">'+esc(CFG.experience)+'</p>'; }
     if(CFG.tools){
       Object.keys(CFG.tools).forEach(function(group){
         html += '<div class="stack-head">// '+esc(group)+'</div><div class="stack">';
@@ -1285,6 +1306,10 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
       var mb = document.querySelector('.mailbtn');
       if(mb){ mb.setAttribute('href','mailto:'+CFG.email); mb.innerHTML = esc(CFG.email)+' <span class="ar">↗</span>'; }
     }
+    var cb = document.getElementById('callBtn');           // "Book a call" (Calendly)
+    if(cb && typeof CFG.calendly === 'string'){ if(CFG.calendly){ cb.setAttribute('href', CFG.calendly); cb.style.display=''; } else { cb.style.display='none'; } }
+    var tg = document.getElementById('contactTagline');    // tagline
+    if(tg && typeof CFG.tagline === 'string'){ if(CFG.tagline){ tg.textContent = CFG.tagline; tg.style.display=''; } else { tg.style.display='none'; } }
     var s = CFG.socials || {};
     var map = { 'Instagram':s.instagram, 'LinkedIn':s.linkedin, 'YouTube':s.youtube };
     document.querySelectorAll('.contact-socials a, .footer .socials a').forEach(function(a){
@@ -1310,8 +1335,7 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
   try { renderContact(); }   catch(e){}
   try { updateWorkCounts(); }catch(e){}
 
-  /* Cursors stay solid and only start blinking after the first click. */
-  document.addEventListener('click', function(){ document.body.classList.add('cursors-live'); }, { once:true });
+  /* (Terminal carets are solid, no blinking — handled in CSS.) */
 
   /* ---- Nav: scrolled state + mobile menu ---- */
   var nav = document.getElementById('nav');
@@ -1748,10 +1772,23 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
 
     function applyLayout(){
       var m    = (MQ_MOBILE.matches && BCFG.mobile) ? BCFG.mobile : null; // phone overrides
-      var size = bnum(m && m.size, bnum(BCFG.size, 1));                    // overall scale
+      var size = bnum(m && m.size, bnum(BCFG.size, 1));                    // how much of the frame it fills
       var pos  = (m && m.position) || BCFG.position || {};                 // x/y nudge
-      group.scale.set(0.92 * size, STRETCH * size, 0.92 * size);
-      group.position.set(bnum(pos.x, 0), bnum(pos.y, 0), 0);
+      // Fixed-world blob; the camera distance does the "sizing", so it can never clip.
+      group.scale.set(0.92, STRETCH, 0.92);
+      var R    = Math.max(0.92, STRETCH) * 1.5;                 // approx bounding radius (incl. displacement)
+      var fill = Math.max(0.35, Math.min(0.95, size * 0.5));   // capped so the blob always stays fully in frame
+      var tanH = Math.tan(camera.fov * Math.PI / 360);
+      var dist = R / (fill * tanH);
+      camera.position.z = dist;
+      // clamp the nudge to the leftover margin so an offset blob can't go off-screen
+      var halfH = tanH * dist, halfW = halfH * (camera.aspect || 1);
+      var mY = Math.max(0, halfH - R), mX = Math.max(0, halfW - R);
+      group.position.set(
+        Math.max(-mX, Math.min(mX, bnum(pos.x, 0))),
+        Math.max(-mY, Math.min(mY, bnum(pos.y, 0))),
+        0
+      );
     }
     applyLayout();
     try { MQ_MOBILE.addEventListener('change', applyLayout); }

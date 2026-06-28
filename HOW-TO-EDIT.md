@@ -23,8 +23,8 @@ Wait ~30–60 seconds, then refresh your Vercel URL.
 
 | Section | What it controls |
 |---|---|
-| `email`, `socials` | Contact email + Instagram / LinkedIn / YouTube links |
-| `bio`, `bioMeta` | Your About paragraphs (use `<b>…</b>` and `<span class='hl'>…</span>`) |
+| `email`, `calendly`, `socials` | Contact email, Book-a-call (Calendly) link, and Instagram / LinkedIn / YouTube |
+| `bio`, `bioMeta`, `experience`, `tagline` | About paragraphs, a small experience line, and the tagline near the contact CTAs |
 | `tools` | The skill chips, grouped (first chip in **CODE** is highlighted) |
 | `works` | Every video card (see below) |
 | `blob` | The 3D object (see below) |
@@ -44,9 +44,9 @@ Wait ~30–60 seconds, then refresh your Vercel URL.
 
 ### The 3D blob (`blob`)
 - `colors.cyan / magenta / purple` — hex colors (e.g. `"#22d3ee"`)
-- `size` — overall scale (`1` = default, `1.3` bigger, `0.8` smaller)
+- `size` — how much of the frame the blob fills. It **auto-frames so it can never get cut off** (~`2` fills it nicely; going higher just caps, it won't clip). `1` ≈ half-size.
 - `stretch` — vertical stretch (`1` round, `>1` taller)
-- `position: { x, y }` — nudge: x = right(+)/left(−), y = up(+)/down(−). Try `±0.5`.
+- `position: { x, y }` — nudge right(+)/left(−), up(+)/down(−). Auto-clamped so the blob can't leave the frame, so big numbers just push it to the edge.
 - `density` — grain (20–56; higher = denser, heavier) · `lumpiness` (0.2–0.7) · `brightness` (0.4–1.0) · `rimGlow` (0.2–0.8)
 - `autoRotate` — `true`/`false`
 - **`mobile: { size, position }`** — separate size & position **for phones (≤640px)**. Delete the whole `mobile` block to reuse the desktop values on phones too.
