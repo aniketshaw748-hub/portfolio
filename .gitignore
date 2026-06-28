@@ -18,3 +18,7 @@ Thumbs.db
 .DS_Store
 
 .vercel
+
+# Loose screenshots / shared images (keep them out of the public repo)
+WhatsApp Image*
+*.jpeg
