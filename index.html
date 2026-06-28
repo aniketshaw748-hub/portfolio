@@ -741,9 +741,9 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
    ======================================================================= */
 @media (max-width:640px){
   .hero{
-    min-height:66vh; min-height:66svh;   /* dynamic viewport unit for mobile */
-    padding:78px 22px 14px;
-    align-items:center;
+    min-height:auto;                 /* natural height — kills the empty bands above/below */
+    padding:80px 22px 22px;
+    align-items:flex-start;
   }
   .hero-inner{
     grid-template-columns:1fr; padding-left:0; gap:0;
@@ -751,10 +751,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
   }
   .hero-content{ position:relative; z-index:2; text-shadow:0 1px 18px rgba(5,6,10,.7); }
 
-  /* blob → big, visible backdrop that fills the hero behind the text */
+  /* blob → big, bright element hugging the top-right (like the mockup) */
   .hero-visual{
-    position:absolute; inset:-6% -10%; min-height:0; order:0;
-    z-index:0; opacity:.9; pointer-events:none;
+    position:absolute; top:46px; right:-12%; width:74%; height:330px;
+    min-height:0; order:0; z-index:0; opacity:.95; pointer-events:none;
   }
   .blob-stage{ position:absolute; inset:0; }
   .blob{ width:104vw; }
@@ -769,8 +769,13 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
   .chips{ gap:7px; margin-bottom:0; }
   .chip{ font-size:11px; padding:5px 9px; }
 
-  /* the Work section is the visible 'My Works' peek under the hero */
   .work .section-head{ margin-bottom:22px; }
+
+  /* filter / sort component on a single line */
+  .filters{ flex-wrap:nowrap; overflow-x:auto; width:100%; gap:2px; padding:5px; scrollbar-width:none; -ms-overflow-style:none; }
+  .filters::-webkit-scrollbar{ display:none; }
+  .filter{ padding:7px 8px; font-size:10px; }
+  .filter .cnt{ margin-left:3px; }
 }
 
 /* =======================================================================
@@ -1772,6 +1777,9 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       var R    = Math.max(0.92, STRETCH) * 1.5;                 // approx bounding radius (incl. displacement)
       var fill = Math.max(0.35, Math.min(0.95, size * 0.5));   // capped so the blob always stays fully in frame
       if (MQ_MOBILE.matches) fill = Math.max(fill, 0.92);      // on phones the blob is a big, visible backdrop
+      uniforms.uExposure.value = MQ_MOBILE.matches               // brighten on phones (desktop brightness may be low)
+        ? Math.max(bnum(BCFG.brightness, 0.62), 0.85)
+        : bnum(BCFG.brightness, 0.62);
       var tanH = Math.tan(camera.fov * Math.PI / 360);
       var dist = R / (fill * tanH);
       camera.position.z = dist;
