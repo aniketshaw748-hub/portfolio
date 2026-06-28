@@ -22,3 +22,6 @@ Thumbs.db
 # Loose screenshots / shared images (keep them out of the public repo)
 WhatsApp Image*
 *.jpeg
+
+# Local mobile render previews (not for the repo)
+mobile-preview*
