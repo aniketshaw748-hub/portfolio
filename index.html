@@ -186,18 +186,11 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 }
 .nav-cta:hover{ background:rgba(34,211,238,.12); box-shadow:0 0 22px rgba(34,211,238,.25); border-color:var(--cyan); }
 
-.nav-dots{ display:grid; grid-template-columns:repeat(3,3px); gap:3px; }
-.nav-dots i{ width:3px; height:3px; background:var(--magenta); border-radius:1px; opacity:.7; }
-
-/* Mobile hamburger */
-.hamburger{ display:none; width:40px; height:40px; border:1px solid var(--line); border-radius:5px; position:relative; }
-.hamburger span{ position:absolute; left:9px; right:9px; height:1.5px; background:var(--text); transition:.25s var(--ease); }
-.hamburger span:nth-child(1){ top:14px; }
-.hamburger span:nth-child(2){ top:19px; }
-.hamburger span:nth-child(3){ top:24px; }
-.hamburger[aria-expanded="true"] span:nth-child(1){ top:19px; transform:rotate(45deg); }
-.hamburger[aria-expanded="true"] span:nth-child(2){ opacity:0; }
-.hamburger[aria-expanded="true"] span:nth-child(3){ top:19px; transform:rotate(-45deg); }
+/* Grid-dots button — decorative on desktop, the menu toggle on mobile */
+.nav-dots{ display:grid; grid-template-columns:repeat(3,3px); gap:3px; place-content:center; padding:11px; margin:-11px; cursor:pointer; }
+.nav-dots i{ width:3px; height:3px; background:var(--magenta); border-radius:1px; opacity:.7; transition:.2s var(--ease); }
+.nav-dots:hover i{ opacity:1; }
+.nav-dots[aria-expanded="true"] i{ background:var(--cyan); opacity:1; }
 
 /* =======================================================================
    HERO
@@ -699,7 +692,6 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 }
 @media (max-width:980px){
   .nav-links, .nav-cta{ display:none; }
-  .hamburger{ display:block; }
   .nav.menu-open .nav-links{
     display:flex; flex-direction:column; align-items:flex-start; gap:4px;
     position:absolute; top:100%; left:0; right:0;
@@ -730,12 +722,15 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
   .card.portrait{ grid-column:span 1; }
 }
 @media (max-width:560px){
-  .work-grid{ grid-template-columns:1fr; }
-  .card.landscape, .card.portrait{ grid-column:span 1; }
+  /* Work: tidy 2-col bento — smaller, nicer tiles */
+  .work-grid{ grid-template-columns:repeat(2,1fr); gap:10px; }
+  .card.landscape{ grid-column:span 2; }
+  .card.portrait{ grid-column:span 1; }
+  .card .ctitle{ font-size:12.5px; }
+  .card .cfoot{ font-size:10px; }
+  .card .ctag{ font-size:9.5px; padding:3px 7px; }
   .caps{ grid-template-columns:1fr; }
   .output{ max-width:100%; }
-  .hero-visual{ min-height:340px; }
-  .blob{ width:min(82vw,330px); }
 }
 
 /* =======================================================================
@@ -754,12 +749,12 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
     grid-template-columns:1fr; padding-left:0; gap:0;
     position:relative; z-index:2;
   }
-  .hero-content{ position:relative; z-index:2; }
+  .hero-content{ position:relative; z-index:2; text-shadow:0 1px 18px rgba(5,6,10,.7); }
 
-  /* blob → full-bleed ambient backdrop behind the text (crams everything in) */
+  /* blob → big, visible backdrop that fills the hero behind the text */
   .hero-visual{
-    position:absolute; inset:-2% -8%; min-height:0; order:0;
-    z-index:0; opacity:.5; pointer-events:none;
+    position:absolute; inset:-6% -10%; min-height:0; order:0;
+    z-index:0; opacity:.9; pointer-events:none;
   }
   .blob-stage{ position:absolute; inset:0; }
   .blob{ width:104vw; }
@@ -809,11 +804,7 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
     <a href="#contact" class="nav-cta">[CONTACT]</a>
   </nav>
 
-  <div class="nav-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-dots" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></button>
 </header>
 
 <!-- ============================== HERO ============================== -->
@@ -1342,14 +1333,16 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
   var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 24); };
   onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
 
-  var burger = document.getElementById('hamburger');
-  burger.addEventListener('click', function(){
-    var open = nav.classList.toggle('menu-open');
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
+  var burger = document.getElementById('navToggle');
+  if(burger){
+    burger.addEventListener('click', function(){
+      var open = nav.classList.toggle('menu-open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
   // close mobile menu after clicking a link
   document.getElementById('navLinks').addEventListener('click', function(e){
-    if(e.target.closest('a')){ nav.classList.remove('menu-open'); burger.setAttribute('aria-expanded','false'); }
+    if(e.target.closest('a')){ nav.classList.remove('menu-open'); if(burger) burger.setAttribute('aria-expanded','false'); }
   });
 
   /* ---- Typing effect: > rendering reel_001…_ ---- */
@@ -1778,6 +1771,7 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       group.scale.set(0.92, STRETCH, 0.92);
       var R    = Math.max(0.92, STRETCH) * 1.5;                 // approx bounding radius (incl. displacement)
       var fill = Math.max(0.35, Math.min(0.95, size * 0.5));   // capped so the blob always stays fully in frame
+      if (MQ_MOBILE.matches) fill = Math.max(fill, 0.92);      // on phones the blob is a big, visible backdrop
       var tanH = Math.tan(camera.fov * Math.PI / 360);
       var dist = R / (fill * tanH);
       camera.position.z = dist;
