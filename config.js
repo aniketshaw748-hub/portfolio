@@ -52,11 +52,11 @@ window.PORTFOLIO_CONFIG = {
     { category:"ai", orientation:"landscape", poster:"ai-cinematic-02", title:"Cinematic AI Short II — Refined", foot:"reel_002 · generative", video:"", alt:"Refined cinematic AI short, second iteration" },
     { category:"ai", orientation:"portrait",  poster:"ai-cinematic-03", title:"AI Concept Short", foot:"concept · vertical", video:"https://youtube.com/shorts/6mYB7DWObDM?feature=share", alt:"Vertical AI concept short" },
 
-    { category:"shorts", orientation:"portrait", poster:"client-short-01", title:"News Short — Cybersecurity Selloff", foot:"client · caption anim", video:"", alt:"Finance/tech news short about a cybersecurity selloff" },
+    { category:"shorts", orientation:"portrait", poster:"client-short-01", title:"News Short — Cybersecurity Selloff", foot:"client · caption anim", video:"https://www.instagram.com/reel/DVQpMnpEZME/", alt:"Finance/tech news short about a cybersecurity selloff" },
     { category:"shorts", orientation:"portrait", poster:"client-short-02", title:"News Short — Markets", foot:"client · fast-cut", video:"", alt:"Fast-paced markets news short" },
     { category:"shorts", orientation:"portrait", poster:"client-short-03", title:"News Short — Tech", foot:"client · internet-native", video:"", alt:"Tech news short with bold caption animation" },
 
-    { category:"motion", orientation:"portrait", poster:"motion-01", title:"Motion Graphics — 01", foot:"mograph · kinetic", video:"", alt:"Motion-graphics short, design 01" },
+    { category:"motion", orientation:"portrait", poster:"motion-01", title:"Motion Graphics — 01", foot:"mograph · kinetic", video:"https://youtube.com/shorts/5EVEY_-eApM?feature=share", alt:"Motion-graphics short, design 01" },
     { category:"motion", orientation:"portrait", poster:"motion-02", title:"Motion Graphics — 02", foot:"mograph · type", video:"", alt:"Motion-graphics short, design 02" },
     { category:"motion", orientation:"portrait", poster:"motion-03", title:"Motion Graphics — 03", foot:"mograph · loop", video:"", alt:"Motion-graphics short, design 03" },
 

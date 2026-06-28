@@ -649,6 +649,13 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
 .lb-media iframe, .lb-media video{ width:100%; height:100%; display:block; border:0; }
 .lb-media.land .frame{ aspect-ratio:16/9; width:100%; }
 .lb-media.portrait .frame{ aspect-ratio:9/16; max-height:78vh; }
+/* Instagram embeds — fixed card (IG brings its own chrome, so no forced aspect) */
+.lb-media.ig-wrap{ display:flex; justify-content:center; width:auto; }
+.lb-media.ig-wrap .frame.ig{ width:min(400px,94vw); height:min(80vh,760px); background:#000; }
+.lb-media.ig-wrap .frame.ig iframe{ width:100%; height:100%; border:0; }
+/* "Watch ↗" button fallback for other hosts (TikTok, Drive, etc.) */
+.lb-openbtn{ display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:14px; color:var(--cyan); border:1px solid rgba(34,211,238,.5); padding:12px 20px; border-radius:6px; transition:.22s var(--ease); }
+.lb-openbtn:hover{ background:rgba(34,211,238,.12); box-shadow:0 0 22px rgba(34,211,238,.25); transform:translateY(-2px); }
 
 /* poster fallback (no video yet) */
 .lb-fallback{ position:relative; }
@@ -1410,17 +1417,24 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
   var lbClose = document.getElementById('lbClose');
   var lastFocus = null;
 
-  function isYouTube(u){ return /youtube\.com|youtu\.be/i.test(u); }
+  function isYouTube(u){ return /(?:youtube\.com|youtu\.be)/i.test(u); }
   function isVimeo(u){ return /vimeo\.com/i.test(u); }
+  function isInstagram(u){ return /instagram\.com/i.test(u); }
+  function isDirectVideo(u){ return /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(u); }
   function ytEmbed(u){
-    var id = '';
-    var m = u.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{6,})/);
-    if(m) id = m[1];
-    return 'https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0';
+    // handles watch?v=, youtu.be/, /embed/, /shorts/, /live/, or a bare 11-char id
+    var m = u.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/);
+    var id = m ? m[1] : (/^[A-Za-z0-9_-]{11}$/.test(u.trim()) ? u.trim() : '');
+    return 'https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1';
   }
   function vimeoEmbed(u){
     var m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
     return 'https://player.vimeo.com/video/'+(m?m[1]:'')+'?autoplay=1';
+  }
+  function igEmbed(u){
+    var m = u.match(/instagram\.com\/(reels?|p|tv)\/([A-Za-z0-9_-]+)/i);
+    var type = m ? (/^reels?$/i.test(m[1]) ? 'reel' : m[1]) : 'p';
+    return 'https://www.instagram.com/'+type+'/'+(m?m[2]:'')+'/embed/';
   }
 
   function openLightbox(card){
@@ -1436,13 +1450,25 @@ body.cursors-live .whoami .uc{ animation:blink 1.1s steps(1) infinite; }
 
     var html = '';
     if(video){
+      var fc = 'lb-media ' + (portrait ? 'portrait' : 'land');
       if(isYouTube(video)){
-        html = '<div class="lb-media '+(portrait?'portrait':'land')+'"><div class="frame"><iframe src="'+ytEmbed(video)+'" title="'+title+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>';
+        html = '<div class="'+fc+'"><div class="frame"><iframe src="'+ytEmbed(video)+'" title="'+esc(title)+'" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div></div>';
       } else if(isVimeo(video)){
-        html = '<div class="lb-media '+(portrait?'portrait':'land')+'"><div class="frame"><iframe src="'+vimeoEmbed(video)+'" title="'+title+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>';
+        html = '<div class="'+fc+'"><div class="frame"><iframe src="'+vimeoEmbed(video)+'" title="'+esc(title)+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>';
+      } else if(isInstagram(video)){
+        html = '<div class="lb-media ig-wrap"><div class="frame ig"><iframe src="'+igEmbed(video)+'" title="'+esc(title)+'" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" scrolling="no" allowfullscreen></iframe></div></div>';
+      } else if(isDirectVideo(video)){
+        html = '<div class="'+fc+'"><div class="frame"><video src="'+esc(video)+'" poster="'+esc(poster)+'" controls autoplay playsinline></video></div></div>';
       } else {
-        // treat as direct video file
-        html = '<div class="lb-media '+(portrait?'portrait':'land')+'"><div class="frame"><video src="'+video+'" poster="'+poster+'" controls autoplay playsinline></video></div></div>';
+        // unknown host → don't risk a broken embed; show poster + open-in-new-tab
+        html =
+          '<div class="lb-fallback'+(portrait?' portrait':'')+'">'+
+            '<img src="'+esc(poster)+'" alt="'+esc(title)+' — preview poster" />'+
+            '<div class="lb-soon">'+
+              '<a class="lb-openbtn" href="'+esc(video)+'" target="_blank" rel="noopener">▶ Watch video ↗</a>'+
+              '<div class="sub">opens in a new tab</div>'+
+            '</div>'+
+          '</div>';
       }
     } else {
       // No video yet → poster + tasteful "coming soon" overlay
