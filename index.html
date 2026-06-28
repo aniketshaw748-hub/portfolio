@@ -741,19 +741,19 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
    ======================================================================= */
 @media (max-width:640px){
   .hero{
-    min-height:auto;                 /* natural height — kills the empty bands above/below */
-    padding:80px 22px 22px;
+    min-height:auto;
+    padding:128px 22px 44px;         /* breathing room up top (shared with the blob) + taller hero */
     align-items:flex-start;
   }
   .hero-inner{
     grid-template-columns:1fr; padding-left:0; gap:0;
-    position:relative; z-index:2;
   }
   .hero-content{ position:relative; z-index:2; text-shadow:0 1px 18px rgba(5,6,10,.7); }
 
-  /* blob → big, bright element hugging the top-right (like the mockup) */
+  /* blob → big, bright element up in the top-right, fills part of the top space
+     (anchored to .hero so it sits up in the top breathing room) */
   .hero-visual{
-    position:absolute; top:46px; right:-12%; width:74%; height:330px;
+    position:absolute; top:54px; right:-8%; width:84%; height:300px;
     min-height:0; order:0; z-index:0; opacity:.95; pointer-events:none;
   }
   .blob-stage{ position:absolute; inset:0; }
@@ -771,11 +771,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 
   .work .section-head{ margin-bottom:22px; }
 
-  /* filter / sort component on a single line */
-  .filters{ flex-wrap:nowrap; overflow-x:auto; width:100%; gap:2px; padding:5px; scrollbar-width:none; -ms-overflow-style:none; }
-  .filters::-webkit-scrollbar{ display:none; }
-  .filter{ padding:7px 8px; font-size:10px; }
-  .filter .cnt{ margin-left:3px; }
+  /* filter / sort component: one line, tabs spread out equally */
+  .filters{ flex-wrap:nowrap; justify-content:space-between; width:100%; gap:2px; padding:6px 8px; overflow:hidden; }
+  .filter{ padding:7px 4px; font-size:10px; white-space:nowrap; }
+  .filter .cnt{ margin-left:2px; }
 }
 
 /* =======================================================================
@@ -1776,7 +1775,7 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       group.scale.set(0.92, STRETCH, 0.92);
       var R    = Math.max(0.92, STRETCH) * 1.5;                 // approx bounding radius (incl. displacement)
       var fill = Math.max(0.35, Math.min(0.95, size * 0.5));   // capped so the blob always stays fully in frame
-      if (MQ_MOBILE.matches) fill = Math.max(fill, 0.92);      // on phones the blob is a big, visible backdrop
+      if (MQ_MOBILE.matches) fill = 0.82;                      // big but with margin so the blob never clips on phones
       uniforms.uExposure.value = MQ_MOBILE.matches               // brighten on phones (desktop brightness may be low)
         ? Math.max(bnum(BCFG.brightness, 0.62), 0.85)
         : bnum(BCFG.brightness, 0.62);
