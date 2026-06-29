@@ -55,7 +55,7 @@ window.PORTFOLIO_CONFIG = {
     { category:"ai", orientation:"landscape", poster:"ai-cinematic-02", title:"Cinematic AI Short II — Refined", foot:"reel_002 · generative", video:"https://youtu.be/u74Ia_kdyHw", alt:"Refined cinematic AI short, second iteration" },
     { category:"ai", orientation:"portrait",  poster:"ai-cinematic-03", title:"AI Concept Short", foot:"concept · vertical", video:"https://youtube.com/shorts/6mYB7DWObDM?feature=share", alt:"Vertical AI concept short" },
 
-    { category:"shorts", orientation:"portrait", poster:"client-short-01", title:"News Short — Cybersecurity Selloff", foot:"client · caption anim", video:"https://www.instagram.com/reel/DVQpMnpEZME/", alt:"Finance/tech news short about a cybersecurity selloff" },
+    { category:"shorts", orientation:"portrait", poster:"client-short-01", title:"News Short — Cybersecurity Selloff", foot:"client · caption anim", video:"https://youtube.com/shorts/F94LDrT17s0", alt:"Finance/tech news short about a cybersecurity selloff" },
     { category:"shorts", orientation:"portrait", poster:"client-short-02", title:"News Short — Markets", foot:"client · fast-cut", video:"https://youtube.com/shorts/QngjoQqr5tA?feature=share", alt:"Fast-paced markets news short" },
     { category:"shorts", orientation:"portrait", poster:"client-short-03", title:"News Short — Tech", foot:"client · internet-native", video:"https://youtube.com/shorts/GC6ULTAc5aE", alt:"Tech news short with bold caption animation" },
 
