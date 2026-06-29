@@ -51,19 +51,19 @@ window.PORTFOLIO_CONFIG = {
         alt         : description for accessibility
      Filter counts + the "showing X of N" line update automatically.           */
   works: [
-    { category:"ai", orientation:"landscape", poster:"ai-cinematic-01", title:"Cinematic AI Short — From Scratch", foot:"reel_001 · text-to-video", video:"", alt:"Cinematic AI short — moody office scene rendered entirely with AI tools" },
-    { category:"ai", orientation:"landscape", poster:"ai-cinematic-02", title:"Cinematic AI Short II — Refined", foot:"reel_002 · generative", video:"", alt:"Refined cinematic AI short, second iteration" },
+    { category:"ai", orientation:"landscape", poster:"ai-cinematic-01", title:"Cinematic AI Short — From Scratch", foot:"reel_001 · text-to-video", video:"https://youtu.be/fUZPP5u9S-I", alt:"Cinematic AI short — moody office scene rendered entirely with AI tools" },
+    { category:"ai", orientation:"landscape", poster:"ai-cinematic-02", title:"Cinematic AI Short II — Refined", foot:"reel_002 · generative", video:"https://youtu.be/u74Ia_kdyHw", alt:"Refined cinematic AI short, second iteration" },
     { category:"ai", orientation:"portrait",  poster:"ai-cinematic-03", title:"AI Concept Short", foot:"concept · vertical", video:"https://youtube.com/shorts/6mYB7DWObDM?feature=share", alt:"Vertical AI concept short" },
 
     { category:"shorts", orientation:"portrait", poster:"client-short-01", title:"News Short — Cybersecurity Selloff", foot:"client · caption anim", video:"https://www.instagram.com/reel/DVQpMnpEZME/", alt:"Finance/tech news short about a cybersecurity selloff" },
-    { category:"shorts", orientation:"portrait", poster:"client-short-02", title:"News Short — Markets", foot:"client · fast-cut", video:"", alt:"Fast-paced markets news short" },
-    { category:"shorts", orientation:"portrait", poster:"client-short-03", title:"News Short — Tech", foot:"client · internet-native", video:"", alt:"Tech news short with bold caption animation" },
+    { category:"shorts", orientation:"portrait", poster:"client-short-02", title:"News Short — Markets", foot:"client · fast-cut", video:"https://youtube.com/shorts/QngjoQqr5tA?feature=share", alt:"Fast-paced markets news short" },
+    { category:"shorts", orientation:"portrait", poster:"client-short-03", title:"News Short — Tech", foot:"client · internet-native", video:"https://youtube.com/shorts/GC6ULTAc5aE", alt:"Tech news short with bold caption animation" },
 
     { category:"motion", orientation:"portrait", poster:"motion-01", title:"Motion Graphics — 01", foot:"mograph · kinetic", video:"https://youtube.com/shorts/5EVEY_-eApM?feature=share", alt:"Motion-graphics short, design 01" },
-    { category:"motion", orientation:"portrait", poster:"motion-02", title:"Motion Graphics — 02", foot:"mograph · type", video:"", alt:"Motion-graphics short, design 02" },
-    { category:"motion", orientation:"portrait", poster:"motion-03", title:"Motion Graphics — 03", foot:"mograph · loop", video:"", alt:"Motion-graphics short, design 03" },
+    { category:"motion", orientation:"portrait", poster:"motion-02", title:"Motion Graphics — 02", foot:"mograph · type", video:"https://youtube.com/shorts/bp7SR831TSo", alt:"Motion-graphics short, design 02" },
+    { category:"motion", orientation:"portrait", poster:"motion-03", title:"Motion Graphics — 03", foot:"mograph · loop", video:"https://youtube.com/shorts/VL11ahtvk3c", alt:"Motion-graphics short, design 03" },
 
-    { category:"narrative", orientation:"landscape", poster:"narrative-longform",  title:"Long-form — Motion + AI B-roll", foot:"long-form · mograph", video:"", alt:"Long-form edit combining motion graphics and AI-generated b-roll" },
+    { category:"narrative", orientation:"landscape", poster:"narrative-longform",  title:"Long-form — Motion + AI B-roll", foot:"long-form · mograph", video:"https://youtu.be/39PXSraWRzg", alt:"Long-form edit combining motion graphics and AI-generated b-roll" },
     { category:"narrative", orientation:"landscape", poster:"narrative-shortform", title:"Short-form — Real B-roll, Text Anim & Color Grade", foot:"edit · grade", video:"", alt:"Short-form edit with real b-roll, text animation and color grading" },
     { category:"narrative", orientation:"portrait",  poster:"narrative-gaming",    title:"Gaming News Short", foot:"gaming · vertical", video:"", alt:"Gaming news short, vertical format" }
   ],
