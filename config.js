@@ -64,8 +64,8 @@ window.PORTFOLIO_CONFIG = {
     { category:"motion", orientation:"portrait", poster:"motion-03", title:"Motion Graphics — 03", foot:"mograph · loop", video:"https://youtube.com/shorts/VL11ahtvk3c", alt:"Motion-graphics short, design 03" },
 
     { category:"narrative", orientation:"landscape", poster:"narrative-longform",  title:"Long-form — Motion + AI B-roll", foot:"long-form · mograph", video:"https://youtu.be/39PXSraWRzg", alt:"Long-form edit combining motion graphics and AI-generated b-roll" },
-    { category:"narrative", orientation:"landscape", poster:"narrative-shortform", title:"Short-form — Real B-roll, Text Anim & Color Grade", foot:"edit · grade", video:"", alt:"Short-form edit with real b-roll, text animation and color grading" },
-    { category:"narrative", orientation:"portrait",  poster:"narrative-gaming",    title:"Gaming News Short", foot:"gaming · vertical", video:"", alt:"Gaming news short, vertical format" }
+    { category:"narrative", orientation:"landscape", poster:"narrative-shortform", title:"Short-form — Real B-roll, Text Anim & Color Grade", foot:"edit · grade", video:"https://youtu.be/CE181I6TKbk", alt:"Short-form edit with real b-roll, text animation and color grading" },
+    { category:"narrative", orientation:"portrait",  poster:"narrative-gaming",    title:"Gaming News Short", foot:"gaming · vertical", video:"https://youtube.com/shorts/E-VL-QoNDY4?feature=share", alt:"Gaming news short, vertical format" }
   ],
 
   /* ── 3D BLOB (the glowing object in the hero) ──────────────────────────────
