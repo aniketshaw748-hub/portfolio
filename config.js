@@ -89,7 +89,7 @@ window.PORTFOLIO_CONFIG = {
        Set your own size/position just for mobile here. Delete this whole
        "mobile" block to reuse the desktop size/position on phones too.        */
     mobile: {
-      size:     1.0,
+      size:     2.0,
       position: { x: 0, y: 0 }
     }
   }
