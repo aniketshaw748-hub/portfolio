@@ -230,25 +230,26 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 
     <article class="proj reveal">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_01</span><span class="status active">ACTIVE · FLAGSHIP</span></div>
-      <h3>Director's Flick</h3>
-      <p>Local AI video production pipeline: script + voiceover in, finished video out. Splits scripts
-         into cut-points, word-level-aligns narration, keeps characters and props consistent across
-         AI-generated keyframes and motion, then compiles through a frame-accurate preview player and
-         an FFmpeg timeline exporter. 380+ commits and counting.</p>
-      <div class="stack"><span class="t">Node 22</span><span class="t">React + Vite + TS</span><span class="t">Python</span><span class="t">FFmpeg</span><span class="t">SQLite</span></div>
-      <div class="proj-links"><span class="ghost">local · in active development</span></div>
+      <div class="proj-top"><span class="id">proj_01</span><span class="status deployed">DEPLOYED · 36HR BUILD</span></div>
+      <h3>AutoMCP</h3>
+      <p>Turns any GitHub repo or website into an AI-agent-ready MCP server in about a minute — LLMs
+         scan the code, propose the tool set, you confirm, and it deploys a working MCP server to
+         Cloudflare Workers. Built end-to-end in a sub-36-hour hackathon sprint, then kept alive as a
+         real product. The project I'm proudest of.</p>
+      <div class="stack"><span class="t">Next.js 15</span><span class="t">React 19</span><span class="t">FastAPI</span><span class="t">Supabase</span><span class="t">MCP SDK</span></div>
+      <div class="proj-links"><a href="https://automcp.vercel.app" target="_blank" rel="noopener">live ↗</a></div>
     </article>
 
     <article class="proj reveal">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_02</span><span class="status deployed">DEPLOYED</span></div>
-      <h3>AutoMCP</h3>
-      <p>Turns any GitHub repo or website into an AI-agent-ready MCP server in about a minute — LLMs
-         scan the code, propose the tool set, you confirm, and it deploys a working MCP server to
-         Cloudflare Workers.</p>
-      <div class="stack"><span class="t">Next.js 15</span><span class="t">React 19</span><span class="t">FastAPI</span><span class="t">Supabase</span><span class="t">MCP SDK</span></div>
-      <div class="proj-links"><a href="https://automcp.vercel.app" target="_blank" rel="noopener">live ↗</a></div>
+      <div class="proj-top"><span class="id">proj_02</span><span class="status active">ACTIVE · PERSONAL INFRA</span></div>
+      <h3>SecondBrain — Agentic OS</h3>
+      <p>A personal agentic OS: an LLM-maintained knowledge wiki that ingests sources, extracts and
+         cross-links entities, flags contradictions, and files knowledge from every coding session
+         automatically — plus custom skills and a plan-approved self-improvement loop. The agent
+         writes and maintains; the human curates and approves.</p>
+      <div class="stack"><span class="t">Claude Code</span><span class="t">Obsidian / Markdown</span><span class="t">hooks + skills</span><span class="t">agent workflows</span></div>
+      <div class="proj-links"><span class="ghost">private by design — it knows too much</span></div>
     </article>
 
     <article class="proj reveal">
@@ -264,7 +265,18 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 
     <article class="proj reveal">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_04</span><span class="status tool">CLIENT TOOLING</span></div>
+      <div class="proj-top"><span class="id">proj_04</span><span class="status research">HACKATHON · 3RD PLACE</span></div>
+      <h3>CampusCore</h3>
+      <p>Role-based academic platform (students / faculty / admin) built around CampusGPT — a
+         syllabus-aware, exam-focused AI tutor with dashboards, notices, and study materials.
+         Took 3rd place at its hackathon.</p>
+      <div class="stack"><span class="t">React + TS</span><span class="t">Supabase</span><span class="t">shadcn/Radix</span><span class="t">TanStack Query</span></div>
+      <div class="proj-links"><a href="https://github.com/aniketshaw748-hub/CampusCore" target="_blank" rel="noopener">github ↗</a></div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="corner tl"></span><span class="corner br"></span>
+      <div class="proj-top"><span class="id">proj_05</span><span class="status tool">CLIENT TOOLING</span></div>
       <h3>SubtitlePlugin</h3>
       <p>Adobe Premiere Pro panel that transcribes selected clips with local whisper.cpp,
          cross-verifies the transcript against the script, and outputs native caption tracks or
@@ -275,7 +287,7 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 
     <article class="proj reveal">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_05</span><span class="status tool">LOCAL TOOL</span></div>
+      <div class="proj-top"><span class="id">proj_06</span><span class="status tool">LOCAL TOOL</span></div>
       <h3>MediaGrabber</h3>
       <p>Local media downloader web app that feeds the editing pipeline: paste a URL, probe the real
          available formats, download via yt-dlp with FFmpeg merge — defaulting to edit-friendly
@@ -286,7 +298,19 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 
     <article class="proj reveal">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_06</span><span class="status research">RESEARCH · IN DESIGN</span></div>
+      <div class="proj-top"><span class="id">proj_07</span><span class="status active">EXPERIMENT · WIP</span></div>
+      <h3>Director's Flick</h3>
+      <p>Ongoing experiment in rebuilding video production as software: script + voiceover in,
+         finished video out — cut-point splitting, word-level narration alignment, consistent
+         characters across AI-generated keyframes, frame-accurate preview, FFmpeg timeline export.
+         Still fighting me; still teaching me the most.</p>
+      <div class="stack"><span class="t">Node 22</span><span class="t">React + Vite + TS</span><span class="t">Python</span><span class="t">FFmpeg</span><span class="t">SQLite</span></div>
+      <div class="proj-links"><span class="ghost">local · work in progress</span></div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="corner tl"></span><span class="corner br"></span>
+      <div class="proj-top"><span class="id">proj_08</span><span class="status research">RESEARCH · IN DESIGN</span></div>
       <h3>Prisoner's Dilemma × LLMs</h3>
       <p>Iterated prisoner's dilemma between two LLM agents that write and revise their own strategies
          over ~25-round games. The variable under study: convergence time — how many games until the
