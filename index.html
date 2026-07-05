@@ -3,14 +3,46 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aniket // AI-Native Video Editor &amp; GenAI Storyteller</title>
-<meta name="description" content="Aniket — AI-native video editor and GenAI storyteller. Cinematic AI shorts, fast internet-native edits, and motion graphics built with generative tools. Selected work + experimental lab." />
+<title>Aniket Shaw // AI-Native Video Editor &amp; GenAI Storyteller</title>
+<meta name="description" content="Aniket Shaw — AI-native video editor and GenAI storyteller. Cinematic AI shorts, fast internet-native edits, and motion graphics built with generative tools. Selected work + experimental lab." />
 <meta name="color-scheme" content="dark" />
+<link rel="canonical" href="https://aniket-portfolio.vercel.app/" />
 
-<!-- Open Graph (optional, harmless if unused) -->
-<meta property="og:title" content="Aniket // AI-Native Video Editor & GenAI Storyteller" />
+<!-- Icons -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+<!-- Open Graph / Twitter (link previews) -->
+<meta property="og:title" content="Aniket Shaw // AI-Native Video Editor & GenAI Storyteller" />
 <meta property="og:description" content="Cinematic AI shorts, internet-native edits, and motion graphics built with generative tools." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://aniket-portfolio.vercel.app/" />
+<meta property="og:image" content="https://aniket-portfolio.vercel.app/assets/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Aniket Shaw // AI-Native Video Editor & GenAI Storyteller" />
+<meta name="twitter:description" content="Cinematic AI shorts, internet-native edits, and motion graphics built with generative tools." />
+<meta name="twitter:image" content="https://aniket-portfolio.vercel.app/assets/og-image.jpg" />
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Aniket Shaw",
+  "url": "https://aniket-portfolio.vercel.app/",
+  "jobTitle": "AI-Native Video Editor & GenAI Storyteller",
+  "address": { "@type": "PostalAddress", "addressLocality": "Kolkata", "addressCountry": "IN" },
+  "knowsLanguage": ["en", "hi"],
+  "sameAs": [
+    "https://www.instagram.com/aniikettt_3/",
+    "https://www.linkedin.com/in/aniket-shaw-a10478368/",
+    "https://www.youtube.com/@KavyaanYT",
+    "https://github.com/aniketshaw748-hub"
+  ]
+}
+</script>
 
 <!-- Fonts: JetBrains Mono (HUD/terminal) + Inter (body). Site works fine if blocked. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -649,6 +681,11 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 
 .lb-stage{ position:relative; background:#000; display:grid; place-items:center; }
 .lb-stage.is-portrait{ max-height:80vh; }
+.lb-process{
+  width:100%; padding:11px 16px; border-top:1px solid var(--line);
+  background:var(--bg-2);
+  font-family:var(--mono); font-size:12.5px; line-height:1.55; color:var(--muted);
+}
 .lb-media{ width:100%; }
 .lb-media.portrait{ width:auto; max-width:min(420px,90vw); margin-inline:auto; }
 .lb-media iframe, .lb-media video{ width:100%; height:100%; display:block; border:0; }
@@ -805,6 +842,7 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
   <nav class="nav-links" id="navLinks" aria-label="Primary">
     <a href="#work"><span class="idx">[01]</span>work</a>
     <a href="#about"><span class="idx">[02]</span>about</a>
+    <a href="lab.html"><span class="idx">[03]</span>lab</a>
     <a href="#contact" class="nav-cta">[CONTACT]</a>
   </nav>
 
@@ -960,10 +998,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 
       <!-- ============ AI (cinematic, from scratch) ============ -->
       <article class="card landscape reveal" data-category="ai" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/ai-cinematic-01.jpg"
+        data-video="" data-poster="assets/posters/ai-cinematic-01.webp"
         data-title="Cinematic AI Short — From Scratch" data-tag="AI" data-orientation="landscape"
         aria-label="Play preview: Cinematic AI Short — From Scratch">
-        <img src="assets/posters/ai-cinematic-01.jpg" alt="Cinematic AI short — moody office scene rendered entirely with AI tools" loading="lazy" />
+        <img src="assets/posters/ai-cinematic-01.webp" width="1280" height="720" alt="Cinematic AI short — moody office scene rendered entirely with AI tools" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">AI</span><span class="ratio">16:9</span>
         <div class="cbody"><div class="ctitle">Cinematic AI Short — From Scratch</div>
@@ -971,10 +1009,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       </article>
 
       <article class="card landscape reveal d1" data-category="ai" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/ai-cinematic-02.jpg"
+        data-video="" data-poster="assets/posters/ai-cinematic-02.webp"
         data-title="Cinematic AI Short II — Refined" data-tag="AI" data-orientation="landscape"
         aria-label="Play preview: Cinematic AI Short II — Refined">
-        <img src="assets/posters/ai-cinematic-02.jpg" alt="Refined cinematic AI short, second iteration" loading="lazy" />
+        <img src="assets/posters/ai-cinematic-02.webp" width="1280" height="720" alt="Refined cinematic AI short, second iteration" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">AI</span><span class="ratio">16:9</span>
         <div class="cbody"><div class="ctitle">Cinematic AI Short II — Refined</div>
@@ -982,10 +1020,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       </article>
 
       <article class="card portrait reveal d2" data-category="ai" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/ai-cinematic-03.jpg"
+        data-video="" data-poster="assets/posters/ai-cinematic-03.webp"
         data-title="AI Concept Short" data-tag="AI" data-orientation="portrait"
         aria-label="Play preview: AI Concept Short">
-        <img src="assets/posters/ai-cinematic-03.jpg" alt="Vertical AI concept short" loading="lazy" />
+        <img src="assets/posters/ai-cinematic-03.webp" width="1080" height="1920" alt="Vertical AI concept short" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">AI</span><span class="ratio">9:16</span>
         <div class="cbody"><div class="ctitle">AI Concept Short</div>
@@ -994,10 +1032,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 
       <!-- ============ SHORTS (client / Avinash Mada) ============ -->
       <article class="card portrait reveal" data-category="shorts" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/client-short-01.jpg"
+        data-video="" data-poster="assets/posters/client-short-01.webp"
         data-title="News Short — Cybersecurity Selloff" data-tag="SHORTS" data-orientation="portrait"
         aria-label="Play preview: News Short — Cybersecurity Selloff">
-        <img src="assets/posters/client-short-01.jpg" alt="Finance/tech news short about a cybersecurity selloff" loading="lazy" />
+        <img src="assets/posters/client-short-01.webp" width="1080" height="1920" alt="Finance/tech news short about a cybersecurity selloff" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
         <div class="cbody"><div class="ctitle">News Short — Cybersecurity Selloff</div>
@@ -1005,10 +1043,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       </article>
 
       <article class="card portrait reveal d1" data-category="shorts" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/client-short-02.jpg"
+        data-video="" data-poster="assets/posters/client-short-02.webp"
         data-title="News Short — Markets" data-tag="SHORTS" data-orientation="portrait"
         aria-label="Play preview: News Short — Markets">
-        <img src="assets/posters/client-short-02.jpg" alt="Fast-paced markets news short" loading="lazy" />
+        <img src="assets/posters/client-short-02.webp" width="1080" height="1920" alt="Fast-paced markets news short" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
         <div class="cbody"><div class="ctitle">News Short — Markets</div>
@@ -1016,10 +1054,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       </article>
 
       <article class="card portrait reveal d2" data-category="shorts" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/client-short-03.jpg"
+        data-video="" data-poster="assets/posters/client-short-03.webp"
         data-title="News Short — Tech" data-tag="SHORTS" data-orientation="portrait"
         aria-label="Play preview: News Short — Tech">
-        <img src="assets/posters/client-short-03.jpg" alt="Tech news short with bold caption animation" loading="lazy" />
+        <img src="assets/posters/client-short-03.webp" width="1080" height="1920" alt="Tech news short with bold caption animation" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
         <div class="cbody"><div class="ctitle">News Short — Tech</div>
@@ -1028,10 +1066,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 
       <!-- ============ MOTION (motion graphics) ============ -->
       <article class="card portrait reveal" data-category="motion" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/motion-01.jpg"
+        data-video="" data-poster="assets/posters/motion-01.webp"
         data-title="Motion Graphics — 01" data-tag="MOTION" data-orientation="portrait"
         aria-label="Play preview: Motion Graphics 01">
-        <img src="assets/posters/motion-01.jpg" alt="Motion-graphics short, design 01" loading="lazy" />
+        <img src="assets/posters/motion-01.webp" width="1080" height="1920" alt="Motion-graphics short, design 01" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">MOTION</span><span class="ratio">9:16</span>
         <div class="cbody"><div class="ctitle">Motion Graphics — 01</div>
@@ -1039,10 +1077,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       </article>
 
       <article class="card portrait reveal d1" data-category="motion" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/motion-02.jpg"
+        data-video="" data-poster="assets/posters/motion-02.webp"
         data-title="Motion Graphics — 02" data-tag="MOTION" data-orientation="portrait"
         aria-label="Play preview: Motion Graphics 02">
-        <img src="assets/posters/motion-02.jpg" alt="Motion-graphics short, design 02" loading="lazy" />
+        <img src="assets/posters/motion-02.webp" width="1080" height="1920" alt="Motion-graphics short, design 02" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">MOTION</span><span class="ratio">9:16</span>
         <div class="cbody"><div class="ctitle">Motion Graphics — 02</div>
@@ -1050,10 +1088,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       </article>
 
       <article class="card portrait reveal d2" data-category="motion" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/motion-03.jpg"
+        data-video="" data-poster="assets/posters/motion-03.webp"
         data-title="Motion Graphics — 03" data-tag="MOTION" data-orientation="portrait"
         aria-label="Play preview: Motion Graphics 03">
-        <img src="assets/posters/motion-03.jpg" alt="Motion-graphics short, design 03" loading="lazy" />
+        <img src="assets/posters/motion-03.webp" width="1080" height="1920" alt="Motion-graphics short, design 03" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">MOTION</span><span class="ratio">9:16</span>
         <div class="cbody"><div class="ctitle">Motion Graphics — 03</div>
@@ -1062,10 +1100,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 
       <!-- ============ NARRATIVE (editing / storytelling) ============ -->
       <article class="card landscape reveal" data-category="narrative" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/narrative-longform.jpg"
+        data-video="" data-poster="assets/posters/narrative-longform.webp"
         data-title="Long-form — Motion + AI B-roll" data-tag="NARRATIVE" data-orientation="landscape"
         aria-label="Play preview: Long-form — Motion plus AI B-roll">
-        <img src="assets/posters/narrative-longform.jpg" alt="Long-form edit combining motion graphics and AI-generated b-roll" loading="lazy" />
+        <img src="assets/posters/narrative-longform.webp" width="1280" height="720" alt="Long-form edit combining motion graphics and AI-generated b-roll" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">NARRATIVE</span><span class="ratio">16:9</span>
         <div class="cbody"><div class="ctitle">Long-form — Motion + AI B-roll</div>
@@ -1073,10 +1111,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       </article>
 
       <article class="card landscape reveal d1" data-category="narrative" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/narrative-shortform.jpg"
+        data-video="" data-poster="assets/posters/narrative-shortform.webp"
         data-title="Short-form — Real B-roll, Text Anim & Color Grade" data-tag="NARRATIVE" data-orientation="landscape"
         aria-label="Play preview: Short-form — Real B-roll, Text Animation and Color Grade">
-        <img src="assets/posters/narrative-shortform.jpg" alt="Short-form edit with real b-roll, text animation and color grading" loading="lazy" />
+        <img src="assets/posters/narrative-shortform.webp" width="1280" height="720" alt="Short-form edit with real b-roll, text animation and color grading" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">NARRATIVE</span><span class="ratio">16:9</span>
         <div class="cbody"><div class="ctitle">Short-form — Real B-roll, Text Anim &amp; Color Grade</div>
@@ -1084,10 +1122,10 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       </article>
 
       <article class="card portrait reveal d2" data-category="narrative" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/narrative-gaming.jpg"
+        data-video="" data-poster="assets/posters/narrative-gaming.webp"
         data-title="Gaming News Short" data-tag="NARRATIVE" data-orientation="portrait"
         aria-label="Play preview: Gaming News Short">
-        <img src="assets/posters/narrative-gaming.jpg" alt="Gaming news short, vertical format" loading="lazy" />
+        <img src="assets/posters/narrative-gaming.webp" width="1080" height="1920" alt="Gaming news short, vertical format" loading="lazy" />
         <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
         <span class="ctag">NARRATIVE</span><span class="ratio">9:16</span>
         <div class="cbody"><div class="ctitle">Gaming News Short</div>
@@ -1200,6 +1238,14 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 00.5 6.2 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.8 3.02 3.02 0 002.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 002.12-2.14A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
           <span>YouTube</span>
         </a>
+        <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016.01 0c2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.83.58A12 12 0 0012 .3z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <a href="resume.html" aria-label="Resume">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 12h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>
+          <span>Résumé</span>
+        </a>
       </div>
     </div>
   </div>
@@ -1208,11 +1254,12 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 
 <!-- ============================== FOOTER ============================== -->
 <footer class="footer">
-  <span>© <span id="year">2026</span> ANIKET // ai_native</span>
+  <span>© <span id="year">2026</span> ANIKET SHAW // ai_native</span>
   <div class="socials" aria-label="Social links">
     <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">[IG]</a>
     <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">[LI]</a>
     <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">[YT]</a>
+    <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener" aria-label="GitHub">[GH]</a>
   </div>
 </footer>
 
@@ -1261,13 +1308,15 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       var ratio = portrait ? '9:16' : '16:9';
       var cat = w.category || 'ai';
       var tag = CAT_LABEL[cat] || String(cat).toUpperCase();
-      var poster = /[\/.]/.test(w.poster||'') ? w.poster : 'assets/posters/'+(w.poster||'')+'.jpg';
+      var poster = /[\/.]/.test(w.poster||'') ? w.poster : 'assets/posters/'+(w.poster||'')+'.webp';
+      var dims = portrait ? ' width="1080" height="1920"' : ' width="1280" height="720"';
       var delay = (i%3===1)?' d1':((i%3===2)?' d2':'');
       var title = esc(w.title);
       return '<article class="card '+(portrait?'portrait':'landscape')+' reveal'+delay+'" data-category="'+esc(cat)+'" role="button" tabindex="0" '+
         'data-video="'+esc(w.video||'')+'" data-poster="'+esc(poster)+'" data-title="'+title+'" data-tag="'+tag+'" data-orientation="'+(portrait?'portrait':'landscape')+'" '+
+        (w.process ? 'data-process="'+esc(w.process)+'" ' : '')+
         'aria-label="Play preview: '+title+'">'+
-        '<img src="'+esc(poster)+'" alt="'+esc(w.alt||w.title)+'" loading="lazy" />'+
+        '<img src="'+esc(poster)+'" alt="'+esc(w.alt||w.title)+'"'+dims+' loading="lazy" />'+
         '<div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>'+
         '<span class="ctag">'+tag+'</span><span class="ratio">'+ratio+'</span>'+
         '<div class="cbody"><div class="ctitle">'+title+'</div>'+
@@ -1306,7 +1355,7 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
     var tg = document.getElementById('contactTagline');    // tagline
     if(tg && typeof CFG.tagline === 'string'){ if(CFG.tagline){ tg.textContent = CFG.tagline; tg.style.display=''; } else { tg.style.display='none'; } }
     var s = CFG.socials || {};
-    var map = { 'Instagram':s.instagram, 'LinkedIn':s.linkedin, 'YouTube':s.youtube };
+    var map = { 'Instagram':s.instagram, 'LinkedIn':s.linkedin, 'YouTube':s.youtube, 'GitHub':s.github };
     document.querySelectorAll('.contact-socials a, .footer .socials a').forEach(function(a){
       var url = map[a.getAttribute('aria-label')];
       if(url) a.setAttribute('href', url);
@@ -1446,7 +1495,7 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
     // handles watch?v=, youtu.be/, /embed/, /shorts/, /live/, or a bare 11-char id
     var m = u.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/);
     var id = m ? m[1] : (/^[A-Za-z0-9_-]{11}$/.test(u.trim()) ? u.trim() : '');
-    return 'https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1';
+    return 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1';
   }
   function vimeoEmbed(u){
     var m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
@@ -1504,6 +1553,13 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
         '</div>';
     }
     lbStage.innerHTML = html;
+    var proc = card.getAttribute('data-process');
+    if(proc){
+      var pEl = document.createElement('div');
+      pEl.className = 'lb-process';
+      pEl.innerHTML = '<span class="cy">// how it was made</span> &nbsp;' + esc(proc);
+      lbStage.appendChild(pEl);
+    }
     lbStage.classList.toggle('is-portrait', portrait);
 
     lastFocus = document.activeElement;

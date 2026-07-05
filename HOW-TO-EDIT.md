@@ -34,11 +34,12 @@ Wait ~30–60 seconds, then refresh your Vercel URL.
 - **Add a new piece:** copy a `{ … }` line and edit:
   - `category`: `ai` | `shorts` | `motion` | `narrative`
   - `orientation`: `landscape` (16:9) or `portrait` (9:16)
-  - `poster`: image filename in `assets/posters/` **without** `.jpg`
+  - `poster`: image filename in `assets/posters/` **without** `.webp` (posters are WebP now — smaller, faster)
   - `title`, `foot`, `alt`
-- **Make a thumbnail** from a video:
+  - `process` (optional): a one-line "how it was made" shown under the video in the preview popup
+- **Make a thumbnail** from a video (straight to WebP):
   ```bash
-  ffmpeg -ss 5 -i "clip.mp4" -frames:v 1 -vf "scale='min(1280,iw)':-2" -q:v 3 assets/posters/my-clip.jpg
+  ffmpeg -ss 5 -i "clip.mp4" -frames:v 1 -vf "scale='min(1280,iw)':-2" -q:v 80 assets/posters/my-clip.webp
   ```
 - Filter counts and the "showing X of N" line update automatically.
 
@@ -57,4 +58,7 @@ Wait ~30–60 seconds, then refresh your Vercel URL.
 - **Big videos:** your `.mp4` files and private notes stay out of GitHub (via `.gitignore`). Host finished videos on **YouTube/Vimeo (unlisted)** and paste the links into `works`. Your 2.1 GB long-form *must* live there.
 - **Cursors:** the terminal carets stay solid and only start blinking after the first click on the page.
 - **Safety net:** if `config.js` has a typo, the site falls back to its built-in content instead of breaking — just fix the typo (check quotes/commas) and refresh.
-- **Two design drafts** still live in the repo: `index.html` (your live Style 4 site) and `draft-style5-editorial.html` (the editorial alternative).
+- **The lab page** (`lab.html`) is the coding portfolio — a separate page with its own content (projects, stacks, links). It is plain HTML: edit the `<article class="proj">` blocks directly.
+- **The résumé page** (`resume.html`) is also plain HTML — update it whenever the resume changes (it deliberately shows email only, no phone number).
+- **Link previews:** `assets/og-image.jpg` is the image shown when the site is shared on LinkedIn/WhatsApp/X. Regenerate it from any 16:9 still if you want a new one (1200×630).
+- **Design drafts** (`draft-style5-editorial.html`, `mockups/`) now stay local only — they're gitignored and no longer published.

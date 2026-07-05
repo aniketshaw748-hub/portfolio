@@ -16,7 +16,8 @@ window.PORTFOLIO_CONFIG = {
   socials: {
     instagram: "https://www.instagram.com/aniikettt_3/",
     linkedin:  "https://www.linkedin.com/in/aniket-shaw-a10478368/",
-    youtube:   "https://www.youtube.com/@KavyaanYT"
+    youtube:   "https://www.youtube.com/@KavyaanYT",
+    github:    "https://github.com/aniketshaw748-hub"
   },
 
   /* ── ABOUT / BIO ──────────────────────────────────────────────────────────
@@ -25,7 +26,7 @@ window.PORTFOLIO_CONFIG = {
   bio: [
     "I'm <b>Aniket</b> — an <span class='hl'>AI-native video editor</span> &amp; AI filmmaker who builds fast, internet-native edits and cinematic shorts end-to-end.",
     "I live inside generative image and video tools and obsess over <b>pacing, rhythm, and storytelling</b> — the stuff that makes a cut actually hit. When the shot doesn't exist, I generate it; when it needs energy, I add motion graphics.",
-    "I also <b>love to code</b>. I build my own tools, automations, and sites — this one included — with <span class='hl'>Claude Code</span>. Prompt-first, terminal-native, always experimenting."
+    "I also <b>love to code</b>. I build my own tools, automations, and sites — this one included — with <span class='hl'>Claude Code</span>. Prompt-first, terminal-native, always experimenting. <a href='lab.html' class='hl' style='text-decoration:underline'>See what I build in the lab →</a>"
   ],
   bioMeta: "Based in Kolkata, IST · works in English &amp; Hindi",
   experience: "3+ yrs editing · 1.5 yrs in GenAI",  // small credibility line under the bio
@@ -44,14 +45,15 @@ window.PORTFOLIO_CONFIG = {
      One { ... } per card. To ADD a card: copy a line, change the values.
         category    : "ai" | "shorts" | "motion" | "narrative"  (sets the filter)
         orientation : "landscape" (16:9)  or  "portrait" (9:16)
-        poster      : image filename inside assets/posters/  (without ".jpg")
+        poster      : image filename inside assets/posters/  (without ".webp")
         title       : shown on the card
         foot        : small text under the title
         video       : paste a YouTube / Vimeo / .mp4 URL to publish ("" = "coming soon")
         alt         : description for accessibility
+        process     : (optional) one-line "how it was made" shown under the video
      Filter counts + the "showing X of N" line update automatically.           */
   works: [
-    { category:"ai", orientation:"landscape", poster:"ai-cinematic-01", title:"Cinematic AI Short — From Scratch", foot:"reel_001 · text-to-video", video:"https://youtu.be/fUZPP5u9S-I", alt:"Cinematic AI short — moody office scene rendered entirely with AI tools" },
+    { category:"ai", orientation:"landscape", poster:"ai-cinematic-01", title:"Cinematic AI Short — From Scratch", foot:"reel_001 · text-to-video", video:"https://youtu.be/fUZPP5u9S-I", alt:"Cinematic AI short — moody office scene rendered entirely with AI tools", process:"script + shot list → text-to-video generations, style-matched shot by shot → assembled, graded and sound-designed in Premiere Pro. Every frame generated; every cut human." },
     { category:"ai", orientation:"landscape", poster:"ai-cinematic-02", title:"Cinematic AI Short II — Refined", foot:"reel_002 · generative", video:"https://youtu.be/u74Ia_kdyHw", alt:"Refined cinematic AI short, second iteration" },
     { category:"ai", orientation:"portrait",  poster:"ai-cinematic-03", title:"AI Concept Short", foot:"concept · vertical", video:"https://youtube.com/shorts/6mYB7DWObDM?feature=share", alt:"Vertical AI concept short" },
 
