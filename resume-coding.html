@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aniket Shaw — Résumé // Builder &amp; CS Undergrad</title>
+<meta name="description" content="Coding résumé of Aniket Shaw — CS undergraduate building AI-native tools and products end-to-end: MCP tooling, agentic systems, learning platforms." />
+<meta name="color-scheme" content="dark light" />
+<link rel="canonical" href="https://aniket-portfolio.vercel.app/resume-coding.html" />
+<meta name="robots" content="noindex" />
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --bg:#05060a; --panel:rgba(255,255,255,.03);
+  --cyan:#22d3ee; --text:#e8eef5; --muted:#9aa6b8; --dim:#5d6b7e;
+  --line:rgba(148,163,184,.16);
+  --mono:'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  --sans:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+body{ background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6; padding:40px 20px 80px; }
+a{ color:var(--cyan); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+.sheet{ max-width:820px; margin-inline:auto; }
+
+.topbar{ display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:36px; font-family:var(--mono); font-size:13px; }
+.topbar .back{ color:var(--muted); border:1px solid var(--line); padding:8px 13px; border-radius:5px; }
+.topbar .back:hover{ color:var(--cyan); border-color:rgba(34,211,238,.4); text-decoration:none; }
+.topbar button{
+  font-family:var(--mono); font-size:13px; cursor:pointer;
+  background:var(--cyan); color:#04141a; border:0; border-radius:5px; padding:9px 15px; font-weight:600;
+}
+
+header.id h1{ font-family:var(--mono); font-size:clamp(28px,5vw,40px); letter-spacing:-.01em; }
+header.id .role{ color:var(--cyan); font-family:var(--mono); font-size:15px; margin-top:4px; }
+header.id .meta{ color:var(--muted); font-size:14px; margin-top:10px; }
+header.id .meta span{ white-space:nowrap; }
+header.id .meta span + span::before{ content:" · "; color:var(--dim); }
+
+section{ margin-top:34px; }
+h2{
+  font-family:var(--mono); font-size:13px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--cyan); border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:16px;
+}
+p, li{ color:var(--muted); font-size:15px; }
+b{ color:var(--text); font-weight:600; }
+ul{ padding-left:20px; display:grid; gap:6px; }
+
+.skills{ display:flex; flex-wrap:wrap; gap:8px; }
+.skills span{ font-family:var(--mono); font-size:12.5px; color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:5px 10px; }
+
+.job{ margin-bottom:22px; }
+.job .head{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.job h3{ font-size:16.5px; color:var(--text); }
+.job .when{ font-family:var(--mono); font-size:12.5px; color:var(--dim); }
+.job ul{ margin-top:8px; }
+
+@media print{
+  :root{ --bg:#fff; --panel:#f5f7fa; --cyan:#0e7490; --text:#111827; --muted:#374151; --dim:#6b7280; --line:#d1d5db; }
+  body{ padding:0; }
+  .topbar{ display:none; }
+  a{ color:var(--cyan); }
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="topbar">
+    <a class="back" href="lab.html">← back to the lab</a>
+    <button onclick="window.print()">print / save as PDF</button>
+  </div>
+
+  <header class="id">
+    <h1>Aniket Shaw</h1>
+    <p class="role">Builder · CS Undergraduate · AI-Native Development</p>
+    <p class="meta">
+      <span><a href="mailto:aniketshaw748@gmail.com">aniketshaw748@gmail.com</a></span>
+      <span><a href="https://aniket-portfolio.vercel.app/lab.html">aniket-portfolio.vercel.app/lab</a></span>
+      <span><a href="https://github.com/aniketshaw748-hub">GitHub</a></span>
+      <span><a href="https://www.linkedin.com/in/aniket-shaw-a10478368/">LinkedIn</a></span>
+      <span>Kolkata, India (IST)</span>
+    </p>
+  </header>
+
+  <section>
+    <h2>Summary</h2>
+    <p>Computer science undergraduate who ships end-to-end products — frontend, backend, deploy —
+       built <b>prompt-first with agentic tooling</b> (Claude Code). I build tools for problems I
+       actually have: MCP infrastructure, learning platforms, and local pipelines for a working
+       video-editing practice. Currently steering toward <b>AI and multi-agent research</b>.</p>
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+    <div class="job">
+      <div class="head"><h3>AutoMCP — repo → MCP server in ~60s</h3><span class="when">live · <a href="https://automcp.vercel.app">automcp.vercel.app</a></span></div>
+      <ul>
+        <li>Turns any GitHub repo or website into a working MCP server: LLMs scan the code, propose the tool set, user confirms, deploys to Cloudflare Workers.</li>
+        <li>Built end-to-end in a <b>sub-36-hour hackathon sprint</b>, then maintained as a real deployed product.</li>
+        <li>Next.js 15 · React 19 · FastAPI · Supabase · MCP SDK · Gemini + Groq</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="head"><h3>SecondBrain — personal agentic OS</h3><span class="when">active · private</span></div>
+      <ul>
+        <li>LLM-maintained knowledge wiki with automated ingestion, entity cross-linking, and contradiction flagging — plus custom skills and a plan-approved self-improvement loop.</li>
+        <li>Claude Code · agent workflows · hooks &amp; skills · Obsidian/Markdown</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="head"><h3>Exam Quest — exam-prep learning game</h3><span class="when">live · <a href="https://examsmasher.vercel.app">examsmasher.vercel.app</a></span></div>
+      <ul>
+        <li>Teaches university engineering subjects visually from first principles — 50+ chapters, 100+ interactive explainers, previous-year question drills, AI doubt-solver on every page.</li>
+        <li>React 19 · Tailwind 4 · GSAP · KaTeX · Gemini · <a href="https://github.com/aniketshaw748-hub/ExamQuest">github</a></li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="head"><h3>CampusCore — academic platform with AI tutor</h3><span class="when">hackathon · 3rd place</span></div>
+      <ul>
+        <li>Role-based platform (students/faculty/admin) around CampusGPT, a syllabus-aware exam-focused tutor. <b>Placed 3rd</b> at its hackathon.</li>
+        <li>React + TS · Supabase · shadcn/Radix · <a href="https://github.com/aniketshaw748-hub/CampusCore">github</a></li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="head"><h3>Editing-workflow tooling</h3><span class="when">local · in production use</span></div>
+      <ul>
+        <li><b>SubtitlePlugin:</b> Premiere Pro panel — local whisper.cpp transcription, script cross-verification, native captions/MOGRT output. Used in real client work.</li>
+        <li><b>MediaGrabber:</b> local FastAPI + React downloader tuned for edit-friendly codecs; offline by design.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="head"><h3>Prisoner's Dilemma × LLMs</h3><span class="when">research · in design</span></div>
+      <ul>
+        <li>Iterated prisoner's dilemma between two LLM agents that write and revise their own strategies; measuring convergence time. First step on the multi-agent research track.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <div class="skills">
+      <span>TypeScript / JavaScript</span><span>React</span><span>Node.js</span><span>Python</span>
+      <span>FastAPI</span><span>Supabase / SQL</span><span>Next.js</span><span>Tailwind</span>
+      <span>LLM APIs (Gemini, Groq)</span><span>MCP</span><span>agentic dev (Claude Code)</span>
+      <span>FFmpeg</span><span>Git</span><span>Vercel / Cloudflare</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Professional background</h2>
+    <div class="job">
+      <div class="head"><h3>Freelance video editor</h3><span class="when">3+ years · ongoing</span></div>
+      <ul>
+        <li>Client delivery discipline from a working freelance practice — retainers, deadlines, 1M+ combined audience across creators. Full editing résumé: <a href="resume.html">video editing résumé</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="job">
+      <div class="head"><h3>B.Tech, Computer Science &amp; Engineering</h3><span class="when">3rd year</span></div>
+      <ul><li>St. Thomas' College of Engineering and Technology · MAKAUT, Kolkata</li></ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Links</h2>
+    <p>Code &amp; projects: <a href="https://aniket-portfolio.vercel.app/lab.html">the lab</a> ·
+       <a href="https://github.com/aniketshaw748-hub">GitHub</a> ·
+       Video work: <a href="https://aniket-portfolio.vercel.app/">main portfolio</a></p>
+  </section>
+</div>
+</body>
+</html>

@@ -59,6 +59,8 @@ Wait ~30–60 seconds, then refresh your Vercel URL.
 - **Cursors:** the terminal carets stay solid and only start blinking after the first click on the page.
 - **Safety net:** if `config.js` has a typo, the site falls back to its built-in content instead of breaking — just fix the typo (check quotes/commas) and refresh.
 - **The lab page** (`lab.html`) is the coding portfolio — a separate page with its own content (projects, stacks, links). It is plain HTML: edit the `<article class="proj">` blocks directly.
-- **The résumé page** (`resume.html`) is also plain HTML — update it whenever the resume changes (it deliberately shows email only, no phone number).
+- **Two résumé pages**, both plain HTML and print-ready (they deliberately show email only, no phone number):
+  - `resume.html` — **video editing** résumé, linked from the main site's contact section.
+  - `resume-coding.html` — **coding** résumé, linked from the lab page. Replace its content freely — it started as a generated draft.
 - **Link previews:** `assets/og-image.jpg` is the image shown when the site is shared on LinkedIn/WhatsApp/X. Regenerate it from any 16:9 still if you want a new one (1200×630).
 - **Design drafts** (`draft-style5-editorial.html`, `mockups/`) now stay local only — they're gitignored and no longer published.
