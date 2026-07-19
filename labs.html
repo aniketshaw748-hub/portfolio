@@ -6,7 +6,7 @@
 <title>Aniket Shaw // The Lab — Tools, Products &amp; Experiments</title>
 <meta name="description" content="The coding side of Aniket Shaw — AI video pipelines, MCP tooling, learning games and multi-agent experiments, built prompt-first with Claude Code." />
 <meta name="color-scheme" content="dark" />
-<link rel="canonical" href="https://aniket-portfolio.vercel.app/lab.html" />
+<link rel="canonical" href="https://aniket-portfolio.vercel.app/labs" />
 
 <!-- Icons -->
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -16,14 +16,14 @@
 <meta property="og:title" content="Aniket Shaw // The Lab — Tools, Products & Experiments" />
 <meta property="og:description" content="AI video pipelines, MCP tooling, learning games and multi-agent experiments — built prompt-first with Claude Code." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://aniket-portfolio.vercel.app/lab.html" />
+<meta property="og:url" content="https://aniket-portfolio.vercel.app/labs" />
 <meta property="og:image" content="https://aniket-portfolio.vercel.app/assets/og-image.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 
 <!-- Fonts (same pair as the main site) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <style>
 /* =========================================================================
@@ -31,6 +31,7 @@
    ========================================================================= */
 :root{
   --bg:#05060a; --bg-2:#0a0b14;
+  --hcy:#2ee6ff; --hmg:#ff2ea6;
   --panel:rgba(255,255,255,.025); --panel-2:rgba(255,255,255,.04);
   --cyan:#22d3ee; --magenta:#ec4899; --purple:#a855f7; --violet:#d946ef;
   --text:#e8eef5; --muted:#9aa6b8; --dim:#5d6b7e;
@@ -88,6 +89,12 @@ a{ color:inherit; text-decoration:none; }
 .nav-links .idx{ color:var(--dim); margin-right:5px; }
 .nav-links .nav-cta{ color:var(--cyan); border:1px solid rgba(34,211,238,.4); padding:8px 14px; border-radius:5px; }
 .nav-links .nav-cta:hover{ background:rgba(34,211,238,.1); box-shadow:0 0 20px rgba(34,211,238,.25); }
+/* the one bridge to the film portfolio, on the footer's right edge */
+.footer .foot-xsite{
+  padding:7px 12px; border:1px solid rgba(255,46,166,.4); border-radius:4px;
+  color:var(--hmg); transition:.22s var(--ease);
+}
+.footer .foot-xsite:hover{ background:rgba(255,46,166,.1); box-shadow:0 0 14px rgba(255,46,166,.25); }
 @media (max-width:640px){ .nav-links .idx{ display:none; } .nav-links{ gap:12px; font-size:12px; } }
 
 /* ---- header ---- */
@@ -181,11 +188,107 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 .socials a{ padding:7px 11px; border:1px solid var(--line); border-radius:4px; color:var(--muted); transition:.22s var(--ease); }
 .socials a:hover{ color:var(--cyan); border-color:rgba(34,211,238,.45); box-shadow:0 0 14px rgba(34,211,238,.18); }
 
+/* =======================================================================
+   SPACE TRAVERSAL HERO  ·  same engine as the film portfolio
+   ======================================================================= */
+.space{ position:fixed; inset:0; z-index:2; }
+#cosmos{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.swarm-grain{
+  position:absolute; inset:0; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+.journey{ position:relative; z-index:5; height:230vh; pointer-events:none; }
+.journey .swarm-copy{ pointer-events:auto; }
+.journey-hero{ position:relative; height:100dvh; }
+.no-traversal .journey{ height:100dvh; }
+.no-traversal .space{ display:none; }
+
+.swarm-h1{
+  position:absolute; width:1px; height:1px; overflow:hidden;
+  clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
+}
+.journey.fallback .swarm-h1{
+  position:absolute; width:auto; height:auto; overflow:visible; clip:auto; clip-path:none;
+  left:50%; top:36%; transform:translate(-50%,-50%);
+  font-family:var(--mono); font-weight:300; white-space:nowrap;
+  font-size:clamp(30px,5.4vw,92px); line-height:1.12; text-align:center; color:#fff;
+}
+.journey.fallback .swarm-h1 .s1{ color:var(--hcy); }
+
+.swarm-copy{
+  position:absolute; left:50%; bottom:calc(60px + clamp(24px,6.5vh,72px)); transform:translateX(-50%);
+  width:min(92vw,760px); text-align:center; z-index:3;
+}
+.swarm-whoami{ font-family:var(--mono); font-size:clamp(11px,.8vw,13.5px); letter-spacing:.22em; color:var(--muted); }
+.swarm-whoami .pr{ color:var(--hcy); }
+.swarm-sub{ margin-top:14px; font-family:var(--sans); font-size:clamp(14.5px,1.05vw,17.5px); line-height:1.65; color:var(--muted); }
+.swarm-sub b{ color:var(--text); font-weight:500; }
+.swarm-ctas{ margin-top:24px; display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap; }
+.sbtn{
+  font-family:var(--mono); font-size:14.5px; font-weight:500; letter-spacing:.04em;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:14px 24px; border-radius:6px;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s, border-color .25s, filter .25s;
+}
+.sbtn:active{ transform:translateY(1px) scale(.985); }
+.sbtn.solid{ background:var(--hcy); color:#03151b; border:1px solid var(--hcy); }
+.sbtn.solid:hover{ box-shadow:0 6px 34px rgba(46,230,255,.42); filter:brightness(1.06); transform:translateY(-2px); }
+
+.swarm-bar{
+  position:absolute; left:0; right:0; bottom:0; z-index:3;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  height:60px; padding:0 clamp(20px,4.2vw,56px);
+  border-top:1px solid rgba(151,163,182,.1);
+  font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; color:var(--dim);
+}
+.swarm-socials{ display:flex; gap:clamp(14px,1.6vw,26px); }
+.swarm-socials a{ color:var(--muted); transition:.2s; padding:6px 2px; }
+.swarm-socials a:hover{ color:var(--hcy); text-shadow:0 0 14px rgba(46,230,255,.5); }
+.swarm-render{ display:flex; align-items:center; gap:14px; white-space:nowrap; }
+.swarm-render .dot{
+  width:8px; height:8px; border-radius:50%; background:var(--hmg);
+  box-shadow:0 0 10px rgba(255,46,166,.8);
+  animation:recpulse 1.6s ease-in-out infinite;
+}
+@keyframes recpulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+.swarm-render .rec{ color:var(--hmg); }
+.swarm-render .tc{ color:var(--text); font-weight:500; letter-spacing:.12em; font-variant-numeric:tabular-nums; }
+.swarm-render .rl{ color:var(--dim); }
+
+.rv{ opacity:0; transform:translateY(16px); animation:rise .9s var(--ease) forwards; }
+.rv.d1{ animation-delay:.9s; }
+.rv.d2{ animation-delay:1.05s; }
+.rv.d3{ animation-delay:1.2s; }
+@keyframes rise{ to{ opacity:1; transform:none; } }
+
+/* content deck: the lab rises as a card over the cosmos */
+.deck{
+  position:relative; z-index:6;
+  margin:-18vh clamp(8px,1.1vw,18px) 0;
+  background:#0a0c16;
+  border:1px solid rgba(148,163,184,.14);
+  border-bottom:0;
+  border-radius:clamp(18px,2vw,30px) clamp(18px,2vw,30px) 0 0;
+  box-shadow:0 -24px 80px -24px rgba(0,0,0,.85), 0 0 0 1px rgba(46,230,255,.05);
+  overflow:hidden;
+}
+.deck .lab-head{ padding-top:clamp(44px,6vw,72px); }
+.no-traversal .deck{ margin-top:0; }
+
+@media (max-width:640px){
+  .swarm-render .rl{ display:none; }
+  .swarm-bar{ font-size:11px; }
+  .swarm-socials{ gap:12px; }
+  .sbtn{ padding:13px 18px; font-size:13.5px; }
+}
+
 /* reveal-on-scroll */
 .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
 .reveal.in{ opacity:1; transform:none; }
 @media (prefers-reduced-motion: reduce){
   .reveal{ opacity:1; transform:none; transition:none; }
+  .rv{ animation:none; opacity:1; transform:none; }
+  .swarm-render .dot{ animation:none; }
   .brand .blink{ animation:none; }
   html{ scroll-behavior:auto; }
 }
@@ -199,18 +302,52 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 
 <!-- ============================== NAV ============================== -->
 <header class="nav" id="nav">
-  <a href="index.html" class="brand" aria-label="Aniket Shaw — home">
+  <a href="labs.html" class="brand" aria-label="Aniket Shaw — the lab, home">
     ANIKET <span class="slash">//</span> <span class="tag">ai_native</span><span class="blink"> _</span>
   </a>
   <nav class="nav-links" aria-label="Primary">
-    <a href="index.html#work"><span class="idx">[01]</span>work</a>
-    <a href="index.html#about"><span class="idx">[02]</span>about</a>
-    <a href="lab.html" class="active" aria-current="page"><span class="idx">[03]</span>lab</a>
-    <a href="index.html#contact" class="nav-cta">[CONTACT]</a>
+    <a href="#projects"><span class="idx">[01]</span>projects</a>
+    <a href="#how"><span class="idx">[02]</span>how</a>
+    <a href="mailto:aniketshaw748@gmail.com" class="nav-cta">[CONTACT]</a>
   </nav>
 </header>
 
+<!-- ============================== 3D SPACE LAYER ============================== -->
+<div class="space" id="space" aria-hidden="true">
+  <canvas id="cosmos"></canvas>
+  <div class="swarm-grain"></div>
+  <div class="swarm-bar" id="spaceBar">
+    <nav class="swarm-socials" aria-label="Social links">
+      <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">[IG]</a>
+      <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">[LI]</a>
+      <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">[YT]</a>
+      <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener" aria-label="GitHub">[GH]</a>
+    </nav>
+    <div class="swarm-render" aria-hidden="true">
+      <span class="dot"></span>
+      <span class="rec">REC</span>
+      <span class="tc" id="swarmTc">00:00:07:12</span>
+      <span class="rl">rendering the_lab</span>
+    </div>
+  </div>
+</div>
+
 <main>
+<!-- ============================== JOURNEY HERO ============================== -->
+<section class="journey" id="journey" aria-label="Welcome">
+  <div class="journey-hero">
+    <p class="swarm-h1">welcome <span class="s1">/</span> the lab</p>
+    <div class="swarm-copy">
+      <p class="swarm-whoami rv d1"><span class="pr">~/ai_native&gt;</span> BUILDER · AI-NATIVE DEVELOPER</p>
+      <p class="swarm-sub rv d2">I build <b>tools, products, and AI experiments</b> end to end. Scroll: fly through the stars to the lab.</p>
+      <div class="swarm-ctas rv d3">
+        <a class="sbtn solid" href="#projects" id="beginBtn">begin the journey</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="deck">
 <!-- ============================== HEADER ============================== -->
 <section class="lab-head wrap" aria-labelledby="lab-h">
   <p class="eyebrow">[ THE LAB ]</p>
@@ -225,7 +362,7 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 </section>
 
 <!-- ============================== PROJECTS ============================== -->
-<section class="wrap" aria-label="Projects">
+<section class="wrap" id="projects" aria-label="Projects">
   <div class="lab-grid">
 
     <article class="proj reveal">
@@ -323,7 +460,7 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 </section>
 
 <!-- ============================== HOW ============================== -->
-<section class="how" aria-label="How this is built">
+<section class="how" id="how" aria-label="How this is built">
   <div class="wrap">
     <span class="k">// HOW_ITS_BUILT</span>
     <p><b>Prompt-first, terminal-native.</b> These projects are developed in an agentic loop with
@@ -334,31 +471,40 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 
 <!-- ============================== CTA ============================== -->
 <section class="lab-cta wrap">
-  <p class="big">wanna <span class="g">connect?</span>?_</p>
+  <p class="big">wanna <span class="g">connect</span>?_</p>
   <div class="btns">
-    <a class="solid" href="index.html#contact">get in touch ↗</a>
+    <a class="solid" href="mailto:aniketshaw748@gmail.com">get in touch ↗</a>
     <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener">github ↗</a>
     <a href="resume-coding.html">résumé ↗</a>
-    <a href="index.html#work">watch the video work ↗</a>
   </div>
 </section>
-</main>
 
 <!-- ============================== FOOTER ============================== -->
 <footer class="footer">
   <span>© <span id="year">2026</span> ANIKET SHAW // ai_native</span>
-  <div class="socials" aria-label="Social links">
-    <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">[IG]</a>
-    <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">[LI]</a>
-    <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">[YT]</a>
-    <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener" aria-label="GitHub">[GH]</a>
-  </div>
+  <a class="foot-xsite" href="films.html">film portfolio ↗</a>
 </footer>
+</div><!-- /deck -->
+</main>
 
 <script>
 (function(){
   "use strict";
   var y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear();
+
+  /* render clock in the space status bar */
+  var reduceMotion0 = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion0){
+    var tcEl = document.getElementById('swarmTc');
+    var totalFrames = 1092;
+    var pad2 = function(n){ n=String(n); return n.length<2?'0'+n:n; };
+    if(tcEl) setInterval(function(){
+      if(document.hidden) return;
+      totalFrames++;
+      var f = totalFrames % 24, ts = Math.floor(totalFrames/24);
+      tcEl.textContent = pad2(Math.floor(ts/3600))+':'+pad2(Math.floor(ts/60)%60)+':'+pad2(ts%60)+':'+pad2(f);
+    }, 1000/12);
+  }
 
   var nav = document.getElementById('nav');
   var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 24); };
@@ -375,6 +521,291 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
     els.forEach(function(el){ io.observe(el); });
   }
 })();
+</script>
+
+<!-- ==================== SPACE TRAVERSAL ENGINE ====================
+     Same flight as the film portfolio: the intro word dissolves into
+     stardust on scroll; a starfield cruise lands on the lab deck.
+     Fallback (no WebGL / CDN / reduced motion): static page, no canvas. -->
+<script type="module">
+const failSpace = () => {
+  document.documentElement.classList.add('no-traversal');
+  const j = document.getElementById('journey'); if(j) j.classList.add('fallback');
+  const s = document.getElementById('space');   if(s) s.style.display = 'none';
+};
+try{
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) throw 0;
+  const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js');
+
+  const space   = document.getElementById('space');
+  const canvas  = document.getElementById('cosmos');
+  const journey = document.getElementById('journey');
+
+  /* ---- journey geometry: world depth ↔ scroll length ---- */
+  const DEPTH = 100;
+  journey.style.height = '230vh';
+
+  const COARSE = matchMedia('(pointer: coarse)').matches;
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  if(!renderer.getContext()) throw 0;
+  renderer.setClearColor(0x000000, 0);
+
+  const scene  = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x05060a, 50, 300);
+  const camera = new THREE.PerspectiveCamera(58, 1, .1, 1600);
+  scene.add(camera);
+
+  const uniforms = { uT:{ value:0 }, uProj:{ value:1000 } };
+
+  /* ---- starfield ---- */
+  {
+    const SN = COARSE ? 4200 : 8600;
+    const p=new Float32Array(SN*3), c=new Float32Array(SN*3), s=new Float32Array(SN), ph=new Float32Array(SN);
+    const A=new THREE.Color('#cfe3f5'), B=new THREE.Color('#79edff'), C=new THREE.Color('#ff5cb8');
+    for(let i=0;i<SN;i++){
+      p[i*3]=(Math.random()-.5)*560; p[i*3+1]=(Math.random()-.5)*320;
+      p[i*3+2]=40-Math.random()*(DEPTH+320);
+      const r=Math.random(), col=r<.82?A:(r<.94?B:C);
+      c[i*3]=col.r; c[i*3+1]=col.g; c[i*3+2]=col.b;
+      s[i]=.5+Math.random()*1.5; ph[i]=Math.random()*6.28;
+    }
+    const g=new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(p,3));
+    g.setAttribute('aColor',   new THREE.BufferAttribute(c,3));
+    g.setAttribute('aSize',    new THREE.BufferAttribute(s,1));
+    g.setAttribute('aPhase',   new THREE.BufferAttribute(ph,1));
+    const m=new THREE.ShaderMaterial({
+      uniforms, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+      vertexShader:`
+        attribute vec3 aColor; attribute float aSize; attribute float aPhase;
+        uniform float uT; uniform float uProj;
+        varying vec3 vC; varying float vA;
+        void main(){
+          vec4 mv=modelViewMatrix*vec4(position,1.);
+          vC=aColor;
+          vA=.3+.45*(0.5+0.5*sin(uT*1.4+aPhase));
+          gl_PointSize=max(1., aSize*uProj*.05/-mv.z);
+          gl_Position=projectionMatrix*mv;
+        }`,
+      fragmentShader:`
+        precision highp float; varying vec3 vC; varying float vA;
+        void main(){
+          vec2 uv=gl_PointCoord-.5; float d=dot(uv,uv);
+          if(d>.25) discard;
+          float a=smoothstep(.25,.02,d)*vA;
+          gl_FragColor=vec4(vC*a,a);
+        }`
+    });
+    const stars=new THREE.Points(g,m); stars.frustumCulled=false; scene.add(stars);
+  }
+
+  /* ---- intro word swarm at z = -46 ---- */
+  const WORDS=['welcome','the lab'];
+  const WZ=-46;
+  const N = COARSE ? 8000 : 15000;
+  const pos=new Float32Array(N*3), vel=new Float32Array(N*3), tgt=new Float32Array(N*3);
+  const stf=new Float32Array(N), spd=new Float32Array(N), col=new Float32Array(N*3),
+        siz=new Float32Array(N), phs=new Float32Array(N);
+  {
+    const CY=new THREE.Color('#79edff'), WH=new THREE.Color('#f0fdff'),
+          MG=new THREE.Color('#ff4db4'), VI=new THREE.Color('#b39bff');
+    for(let i=0;i<N;i++){
+      const r=Math.random(), cc=r<.38?WH:(r<.78?CY:(r<.9?MG:VI));
+      col[i*3]=cc.r; col[i*3+1]=cc.g; col[i*3+2]=cc.b;
+      siz[i]=1.5+Math.random()*1.8;
+      phs[i]=Math.random()*6.28;
+      stf[i]=.03+Math.random()*.024;
+      pos[i*3]=(Math.random()-.5)*140; pos[i*3+1]=(Math.random()-.5)*80; pos[i*3+2]=WZ+(Math.random()-.5)*30;
+    }
+  }
+  const wGeo=new THREE.BufferGeometry();
+  const aPos=new THREE.BufferAttribute(pos,3), aSpd=new THREE.BufferAttribute(spd,1);
+  wGeo.setAttribute('position',aPos);
+  wGeo.setAttribute('aSpeed',aSpd);
+  wGeo.setAttribute('aColor',new THREE.BufferAttribute(col,3));
+  wGeo.setAttribute('aSize',new THREE.BufferAttribute(siz,1));
+  wGeo.setAttribute('aPhase',new THREE.BufferAttribute(phs,1));
+  function wMat(scale,alphaMul,hotGate){
+    return new THREE.ShaderMaterial({
+      uniforms, transparent:true, depthTest:false, depthWrite:false, blending:THREE.AdditiveBlending,
+      vertexShader:`
+        attribute float aSpeed; attribute vec3 aColor; attribute float aSize; attribute float aPhase;
+        uniform float uT; uniform float uProj;
+        varying vec3 vC; varying float vA;
+        void main(){
+          vec4 mv=modelViewMatrix*vec4(position,1.);
+          float tw=.8+.2*sin(uT*2.2+aPhase);
+          float hot=clamp(aSpeed*1.4,0.,1.);
+          vC=mix(aColor,vec3(1.,.88,.96),hot*.85);
+          vC+=vec3(.15,.5,.6)*hot*.6;
+          float gate=mix(1.,.12+.88*hot,float(${hotGate}));
+          vA=(.68+.32*tw)*(.66+.34*hot)*gate*float(${alphaMul});
+          gl_PointSize=max(1., aSize*(1.+hot*1.8)*uProj*.05/-mv.z*float(${scale}));
+          gl_Position=projectionMatrix*mv;
+        }`,
+      fragmentShader:`
+        precision highp float; varying vec3 vC; varying float vA;
+        void main(){
+          vec2 uv=gl_PointCoord-.5; float d=dot(uv,uv);
+          if(d>.25) discard;
+          float a=smoothstep(.25,.03,d)*vA;
+          gl_FragColor=vec4(vC*a,a);
+        }`
+    });
+  }
+  const wCore=new THREE.Points(wGeo,wMat(1,1.3,0));
+  const wHalo=new THREE.Points(wGeo,wMat(3.2,.085,1));
+  wCore.frustumCulled=false; wHalo.frustumCulled=false;
+  wCore.renderOrder=3; wHalo.renderOrder=2;
+  scene.add(wHalo); scene.add(wCore);
+
+  const samp=document.createElement('canvas');
+  const sctx=samp.getContext('2d',{ willReadFrequently:true });
+  function poolFor(word){
+    const SW=1600, SH=460;
+    samp.width=SW; samp.height=SH;
+    sctx.clearRect(0,0,SW,SH);
+    let fs=380;
+    sctx.font=`800 ${fs}px "JetBrains Mono", monospace`;
+    fs=Math.min(380*(SW*.94)/sctx.measureText(word).width, 390);
+    sctx.font=`800 ${fs}px "JetBrains Mono", monospace`;
+    sctx.textAlign='center'; sctx.textBaseline='middle'; sctx.fillStyle='#fff';
+    sctx.fillText(word,SW/2,SH/2);
+    const drawnW=sctx.measureText(word).width;
+    const img=sctx.getImageData(0,0,SW,SH).data, out=[];
+    for(let y=0;y<SH;y+=2) for(let x=0;x<SW;x+=2)
+      if(img[(y*SW+x)*4+3]>140) out.push(x-SW/2, SH/2-y);
+    return { pts:out, drawnW, fs };
+  }
+  let pools=null, word=0, hold=0, released=false;
+  const HOLD=[5,4.2];
+
+  function planeDims(){
+    const dist=8-WZ;
+    const hh=Math.tan(camera.fov*Math.PI/360)*dist;
+    return { hh, hw:hh*camera.aspect, dist };
+  }
+  function setWordTargets(wi){
+    if(!pools) return;
+    const { pts, drawnW, fs }=pools[wi];
+    const { hh, hw }=planeDims();
+    const viewW=hw*2, viewH=hh*2;
+    const portrait=camera.aspect<.9;
+    const wantW=Math.min(viewW*(portrait?.94:.78),
+      WORDS[wi].length*Math.min(viewW*(portrait?.2:.13), viewH*(portrait?.5:.4)));
+    let s=wantW/drawnW;
+    const hCap=portrait?.5:.36;
+    if(fs*s>viewH*hCap) s=viewH*hCap/fs;
+    const cy=viewH*.07;
+    const n=pts.length/2;
+    const pxPerU=innerHeight/(viewH||1);
+    const areaPx=n*4*(s*pxPerU)*(s*pxPerU);
+    const activeN=Math.max(5000, Math.min(N, Math.round(areaPx/4.5)));
+    for(let i=0;i<activeN;i++){
+      const j=((i*7919)%n)|0;
+      tgt[i*3]  =pts[j*2]*s  +(Math.random()-.5)*.08;
+      tgt[i*3+1]=pts[j*2+1]*s+cy+(Math.random()-.5)*.08;
+      tgt[i*3+2]=WZ+(Math.random()-.5)*1.6;
+    }
+    for(let i=activeN;i<N;i++){
+      const a=phs[i]*7.3, R=Math.max(innerWidth,innerHeight)/pxPerU*(1.1+.5*Math.random());
+      tgt[i*3]=Math.cos(a)*R; tgt[i*3+1]=Math.sin(a)*R; tgt[i*3+2]=WZ+(Math.random()-.5)*24;
+    }
+  }
+  function burst(){
+    for(let i=0;i<N;i++){
+      const a=phs[i], m=.5+Math.random()*1.4;
+      vel[i*3]+=Math.cos(a)*m; vel[i*3+1]+=Math.sin(a)*m; vel[i*3+2]+=(Math.random()-.3)*1.1;
+    }
+  }
+
+  /* ---- scroll → camera ---- */
+  let camZ=8, swayX=0, swayY=0, px=0, py=0;
+  addEventListener('pointermove', e=>{
+    px=e.clientX/innerWidth-.5; py=e.clientY/innerHeight-.5;
+  }, { passive:true });
+
+  function resize(){
+    const w=innerWidth, h=innerHeight;
+    renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h; camera.updateProjectionMatrix();
+    uniforms.uProj.value=h*renderer.getPixelRatio();
+    if(!released) setWordTargets(word);
+  }
+
+  let raf=0, last=0, running=false, t=0;
+  function frame(now){
+    raf=requestAnimationFrame(frame);
+    const dt=Math.min((now-last)/1000,.05); last=now;
+    if(dt<=0) return;
+    t+=dt; uniforms.uT.value=t;
+
+    const sy=scrollY;
+    const jp=Math.max(1, journey.offsetHeight-innerHeight);
+
+    const fadeStart=jp-innerHeight*.25;
+    const op=sy<fadeStart?1:Math.max(0,1-(sy-fadeStart)/(innerHeight*1.0));
+    space.style.opacity=op;
+    space.style.visibility=op<=.02?'hidden':'visible';
+    space.style.pointerEvents=op>.9?'auto':'none';
+
+    const targetZ=8-Math.min(1,sy/jp)*DEPTH;
+    camZ+=(targetZ-camZ)*.07;
+    swayX+=(px*2.4-swayX)*.05;
+    swayY+=(-py*1.8-swayY)*.05;
+    camera.position.set(swayX,swayY,camZ);
+
+    if(pools){
+      if(!released && sy>70){ released=true; burst(); }
+      else if(released && sy<25){ released=false; setWordTargets(word); }
+      if(!released){
+        hold+=dt;
+        if(hold>HOLD[word]){ hold=0; word=(word+1)%WORDS.length; setWordTargets(word); burst(); }
+      }
+      const wordVisible=camZ>WZ-40;
+      wCore.visible=wHalo.visible=wordVisible;
+      if(wordVisible){
+        const k=dt*60, dmp=Math.pow(released?.996:.88,k);
+        for(let i=0;i<N;i++){
+          const i3=i*3;
+          let vx=vel[i3], vy=vel[i3+1], vz=vel[i3+2];
+          if(!released){
+            vx+=(tgt[i3]-pos[i3])*stf[i]*k;
+            vy+=(tgt[i3+1]-pos[i3+1])*stf[i]*k;
+            vz+=(tgt[i3+2]-pos[i3+2])*stf[i]*k;
+            const { hh,hw }=planeDims();
+            const mx=px*2*hw, my=-py*2*hh;
+            const dx=pos[i3]-mx, dy=pos[i3+1]-my, d2=dx*dx+dy*dy;
+            if(d2<16&&d2>.001){
+              const d=Math.sqrt(d2), f=(1-d/4)*(1-d/4)*.5*k;
+              vx+=dx/d*f; vy+=dy/d*f;
+            }
+          }
+          vx*=dmp; vy*=dmp; vz*=dmp;
+          pos[i3]+=vx*k; pos[i3+1]+=vy*k; pos[i3+2]+=vz*k;
+          vel[i3]=vx; vel[i3+1]=vy; vel[i3+2]=vz;
+          spd[i]=Math.abs(vx)+Math.abs(vy)+Math.abs(vz);
+        }
+        aPos.needsUpdate=true; aSpd.needsUpdate=true;
+      }
+    }
+
+    if(op>.02) renderer.render(scene,camera);
+  }
+  function run(on){
+    if(on&&!running){ running=true; last=performance.now(); raf=requestAnimationFrame(frame); }
+    else if(!on&&running){ running=false; cancelAnimationFrame(raf); }
+  }
+
+  await document.fonts.load('800 100px "JetBrains Mono"').catch(()=>{});
+  resize();
+  pools=WORDS.map(poolFor);
+  setWordTargets(0);
+  run(true);
+  document.addEventListener('visibilitychange',()=>run(!document.hidden));
+  addEventListener('resize',resize);
+}catch(e){ failSpace(); }
 </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 <title>Aniket Shaw // AI-Native Video Editor &amp; GenAI Storyteller</title>
 <meta name="description" content="Aniket Shaw — AI-native video editor and GenAI storyteller. Cinematic AI shorts, fast internet-native edits, and motion graphics built with generative tools. Selected work + experimental lab." />
 <meta name="color-scheme" content="dark" />
-<link rel="canonical" href="https://aniket-portfolio.vercel.app/" />
+<link rel="canonical" href="https://aniket-portfolio.vercel.app/films" />
 
 <!-- Icons -->
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -16,7 +16,7 @@
 <meta property="og:title" content="Aniket Shaw // AI-Native Video Editor & GenAI Storyteller" />
 <meta property="og:description" content="Cinematic AI shorts, internet-native edits, and motion graphics built with generative tools." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://aniket-portfolio.vercel.app/" />
+<meta property="og:url" content="https://aniket-portfolio.vercel.app/films" />
 <meta property="og:image" content="https://aniket-portfolio.vercel.app/assets/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -31,7 +31,7 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Aniket Shaw",
-  "url": "https://aniket-portfolio.vercel.app/",
+  "url": "https://aniket-portfolio.vercel.app/films",
   "jobTitle": "AI-Native Video Editor & GenAI Storyteller",
   "address": { "@type": "PostalAddress", "addressLocality": "Kolkata", "addressCountry": "IN" },
   "knowsLanguage": ["en", "hi"],
@@ -219,6 +219,12 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
   transition:.22s var(--ease);
 }
 .nav-cta:hover{ background:rgba(34,211,238,.12); box-shadow:0 0 22px rgba(34,211,238,.25); border-color:var(--cyan); }
+/* the one bridge to the coding portfolio, on the footer's right edge */
+.footer .foot-xsite{
+  padding:7px 12px; border:1px solid rgba(255,46,166,.4); border-radius:4px;
+  color:var(--hmg); transition:.22s var(--ease);
+}
+.footer .foot-xsite:hover{ background:rgba(255,46,166,.1); box-shadow:0 0 14px rgba(255,46,166,.25); }
 
 /* Grid-dots button — decorative on desktop, the menu toggle on mobile */
 .nav-dots{ display:grid; grid-template-columns:repeat(3,3px); gap:3px; place-content:center; padding:11px; margin:-11px; cursor:pointer; }
@@ -242,7 +248,8 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 }
 
 /* journey scroll track: height set by JS (fallback height in .no-traversal) */
-.journey{ position:relative; z-index:5; height:2100vh; }
+.journey{ position:relative; z-index:5; height:2100vh; pointer-events:none; }
+.journey .swarm-copy{ pointer-events:auto; }   /* the fixed status bar beneath stays clickable */
 .journey-hero{ position:relative; height:100dvh; }
 .no-traversal .journey{ height:100dvh; }
 .no-traversal .space{ display:none; }
@@ -689,7 +696,6 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
   <nav class="nav-links" id="navLinks" aria-label="Primary">
     <a href="#work"><span class="idx">[01]</span>work</a>
     <a href="#about"><span class="idx">[02]</span>about</a>
-    <a href="lab.html"><span class="idx">[03]</span>lab</a>
     <a href="#contact" class="nav-cta">[CONTACT]</a>
   </nav>
 
@@ -725,7 +731,6 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
       <p class="swarm-sub rv d2">I edit <b>AI-powered videos</b> and cinematic shorts. Scroll: fly through the stars to the work.</p>
       <div class="swarm-ctas rv d3">
         <a class="sbtn solid" href="#work" id="beginBtn">begin the journey</a>
-        <a class="sbtn ghost" href="lab.html">enter the lab <span class="ar">↗</span></a>
       </div>
     </div>
   </div>
@@ -1017,12 +1022,7 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 <!-- ============================== FOOTER ============================== -->
 <footer class="footer">
   <span>© <span id="year">2026</span> ANIKET SHAW // ai_native</span>
-  <div class="socials" aria-label="Social links">
-    <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">[IG]</a>
-    <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">[LI]</a>
-    <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">[YT]</a>
-    <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener" aria-label="GitHub">[GH]</a>
-  </div>
+  <a class="foot-xsite" href="labs.html">code portfolio ↗</a>
 </footer>
 </div><!-- /deck -->
 </main>

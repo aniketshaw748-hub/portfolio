@@ -1,0 +1,9 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/", "destination": "/films", "permanent": false },
+    { "source": "/lab", "destination": "/labs", "permanent": true },
+    { "source": "/lab.html", "destination": "/labs", "permanent": true }
+  ]
+}

@@ -26,7 +26,7 @@ window.PORTFOLIO_CONFIG = {
   bio: [
     "I'm <b>Aniket</b> — an <span class='hl'>AI-native video editor</span> &amp; AI filmmaker who builds fast, internet-native edits and cinematic shorts end-to-end.",
     "I live inside generative image and video tools and obsess over <b>pacing, rhythm, and storytelling</b> — the stuff that makes a cut actually hit. When the shot doesn't exist, I generate it; when it needs energy, I add motion graphics.",
-    "I also <b>love to code</b>. I build my own tools, automations, and sites — this one included — with <span class='hl'>Claude Code</span>. Prompt-first, terminal-native, always experimenting. <a href='lab.html' class='hl' style='text-decoration:underline'>See what I build in the lab →</a>"
+    "I also <b>love to code</b>. I build my own tools, automations, and sites — this one included — with <span class='hl'>Claude Code</span>. Prompt-first, terminal-native, always experimenting."
   ],
   bioMeta: "Based in Kolkata, IST · works in English &amp; Hindi",
   experience: "3+ yrs editing · 1.5 yrs in GenAI",  // small credibility line under the bio
