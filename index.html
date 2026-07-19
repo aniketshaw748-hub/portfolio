@@ -247,6 +247,21 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
 .no-traversal .journey{ height:100dvh; }
 .no-traversal .space{ display:none; }
 
+/* content deck: everything after the flight rises as a card over the cosmos */
+.deck{
+  position:relative; z-index:6;
+  margin:-18vh clamp(8px,1.1vw,18px) 0;
+  background:#0a0c16;
+  border:1px solid rgba(148,163,184,.14);
+  border-bottom:0;
+  border-radius:clamp(18px,2vw,30px) clamp(18px,2vw,30px) 0 0;
+  box-shadow:0 -24px 80px -24px rgba(0,0,0,.85), 0 0 0 1px rgba(46,230,255,.05);
+  overflow:hidden;
+}
+.deck .section:first-child{ padding-top:clamp(38px,4.2vw,60px); }
+.deck .footer{ margin-top:0; }
+.no-traversal .deck{ margin-top:0; }
+
 /* accessible headline: visually replaced by the swarm unless fallback mode */
 .swarm-h1{
   position:absolute; width:1px; height:1px; overflow:hidden;
@@ -716,6 +731,7 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
   </div>
 </section>
 
+<div class="deck">
 <!-- ============================== WORK ============================== -->
 <section class="section work" id="work" aria-labelledby="work-h">
   <span class="plus" style="left:18px;top:24px"></span>
@@ -997,7 +1013,6 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
     </div>
   </div>
 </section>
-</main>
 
 <!-- ============================== FOOTER ============================== -->
 <footer class="footer">
@@ -1009,6 +1024,8 @@ button{ font-family:inherit; color:inherit; background:none; border:none; cursor
     <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener" aria-label="GitHub">[GH]</a>
   </div>
 </footer>
+</div><!-- /deck -->
+</main>
 
 <!-- ============================== LIGHTBOX ============================== -->
 <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Video preview" aria-hidden="true">
@@ -1342,8 +1359,8 @@ try{
   const journey = document.getElementById('journey');
 
   /* ---- journey geometry: world depth ↔ scroll length ---- */
-  const DEPTH = 300;
-  journey.style.height = '520vh';
+  const DEPTH = 100;
+  journey.style.height = '230vh';
 
   const COARSE = matchMedia('(pointer: coarse)').matches;
   const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
@@ -1556,9 +1573,10 @@ try{
     const sy=scrollY;
     const jp=Math.max(1, journey.offsetHeight-innerHeight);
 
-    /* fade out at the landing, hand the page back to the DOM */
-    const fadeStart=jp-innerHeight*.85;
-    const op=sy<fadeStart?1:Math.max(0,1-(sy-fadeStart)/(innerHeight*.6));
+    /* fade out at the landing: the content deck slides up over the live stars,
+       which dim away only as the card takes the viewport */
+    const fadeStart=jp-innerHeight*.25;
+    const op=sy<fadeStart?1:Math.max(0,1-(sy-fadeStart)/(innerHeight*1.0));
     space.style.opacity=op;
     space.style.visibility=op<=.02?'hidden':'visible';
     space.style.pointerEvents=op>.9?'auto':'none';
