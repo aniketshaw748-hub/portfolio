@@ -154,6 +154,76 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 .proj-links a:hover{ background:rgba(34,211,238,.1); box-shadow:0 0 16px rgba(34,211,238,.2); }
 .proj-links .ghost{ color:var(--dim); border-color:var(--line); pointer-events:none; }
 
+.lab-more{
+  font-family:var(--mono); font-size:12.5px; color:var(--dim); letter-spacing:.04em;
+  margin:calc(-1*clamp(30px,4vw,60px)) 0 clamp(60px,8vw,100px);
+}
+.lab-more b{ color:var(--muted); font-weight:500; }
+
+/* ---- about ---- */
+.lab-about{ position:relative; z-index:2; padding-bottom:clamp(60px,8vw,100px); }
+.lab-about h2{
+  font-family:var(--mono); font-weight:800; letter-spacing:-.01em;
+  font-size:clamp(26px,4vw,44px); line-height:1.1; margin-top:16px;
+}
+.lab-about h2 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
+.about-cols{ display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:clamp(28px,5vw,70px); align-items:start; margin-top:clamp(22px,3vw,36px); }
+.about-bio p{ color:var(--muted); font-size:clamp(15px,1.8vw,17.5px); line-height:1.7; margin-bottom:16px; }
+.about-bio p.lead{ color:var(--text); font-size:clamp(17px,2.2vw,21px); }
+.about-bio .hl{ color:var(--cyan); }
+.about-bio b{ color:var(--text); font-weight:600; }
+.about-facts{
+  border:1px solid var(--line); border-radius:10px; background:var(--panel);
+  padding:clamp(18px,2.4vw,26px);
+  font-family:var(--mono); font-size:13px; display:grid; gap:12px;
+}
+.about-facts div{ display:flex; gap:14px; }
+.about-facts span:first-child{ color:var(--dim); width:7.5em; flex:none; letter-spacing:.08em; }
+.about-facts span:last-child{ color:var(--muted); }
+@media (max-width:900px){ .about-cols{ grid-template-columns:1fr; } }
+
+/* ---- contact (mirrors the film portfolio) ---- */
+.contact{ position:relative; z-index:2; text-align:center; padding:clamp(30px,5vw,60px) 0 clamp(70px,9vw,120px); }
+.contact .eyebrow{ justify-content:center; }
+.contact .eyebrow::after{ display:none; }
+.contact h2{
+  font-family:var(--mono); font-weight:800;
+  font-size:clamp(34px,7vw,82px); line-height:1; letter-spacing:-.02em; margin:18px 0 26px;
+}
+.contact h2 .g{ background:linear-gradient(90deg,var(--cyan),var(--magenta)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.contact .lead{ color:var(--muted); max-width:54ch; margin:0 auto 34px; font-size:clamp(15px,2vw,18px); }
+.contact-tagline{ font-family:var(--mono); color:var(--cyan); letter-spacing:.04em; font-size:clamp(14px,2vw,17px); margin:-8px 0 26px; }
+.contact-cta{ display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:14px; }
+.callbtn{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--mono); font-size:clamp(15px,2.4vw,20px); font-weight:600;
+  background:var(--cyan); color:#04141a; border:1px solid var(--cyan);
+  padding:15px 26px; border-radius:6px; transition:.25s var(--ease);
+}
+.callbtn .cal-ic{ width:18px; height:18px; fill:currentColor; flex:none; }
+.callbtn .ar{ transition:transform .25s var(--ease); }
+.callbtn:hover{ box-shadow:0 0 34px rgba(34,211,238,.5); transform:translateY(-2px); filter:brightness(1.06); }
+.callbtn:hover .ar{ transform:translate(3px,-3px); }
+.mailbtn{
+  display:inline-flex; align-items:center; gap:12px;
+  font-family:var(--mono); font-size:clamp(15px,2.4vw,20px);
+  border:1px solid rgba(34,211,238,.45); color:var(--cyan);
+  padding:15px 26px; border-radius:6px;
+  transition:.25s var(--ease);
+}
+.mailbtn:hover{ background:rgba(34,211,238,.1); box-shadow:0 0 30px rgba(34,211,238,.3); border-color:var(--cyan); transform:translateY(-2px); }
+.mailbtn .ar{ transition:transform .25s var(--ease); }
+.mailbtn:hover .ar{ transform:translate(3px,-3px); }
+.contact-socials{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:24px; }
+.contact-socials a{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:var(--mono); font-size:13px; color:var(--muted);
+  border:1px solid var(--line); border-radius:6px; padding:10px 15px;
+  transition:.22s var(--ease);
+}
+.contact-socials a svg{ width:17px; height:17px; fill:currentColor; flex:none; }
+.contact-socials a:hover{ color:var(--cyan); border-color:rgba(34,211,238,.45); box-shadow:0 0 18px rgba(34,211,238,.16); transform:translateY(-2px); }
+
 /* ---- how it's built strip ---- */
 .how{
   position:relative; z-index:2; border-block:1px solid var(--line);
@@ -307,8 +377,8 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
   </a>
   <nav class="nav-links" aria-label="Primary">
     <a href="#projects"><span class="idx">[01]</span>projects</a>
-    <a href="#how"><span class="idx">[02]</span>how</a>
-    <a href="mailto:aniketshaw748@gmail.com" class="nav-cta">[CONTACT]</a>
+    <a href="#about"><span class="idx">[02]</span>about</a>
+    <a href="#contact" class="nav-cta">[CONTACT]</a>
   </nav>
 </header>
 
@@ -320,7 +390,6 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
     <nav class="swarm-socials" aria-label="Social links">
       <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">[IG]</a>
       <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">[LI]</a>
-      <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">[YT]</a>
       <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener" aria-label="GitHub">[GH]</a>
     </nav>
     <div class="swarm-render" aria-hidden="true">
@@ -381,10 +450,10 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
       <span class="corner tl"></span><span class="corner br"></span>
       <div class="proj-top"><span class="id">proj_02</span><span class="status active">ACTIVE · PERSONAL INFRA</span></div>
       <h3>SecondBrain — Agentic OS</h3>
-      <p>A personal agentic OS: an LLM-maintained knowledge wiki that ingests sources, extracts and
-         cross-links entities, flags contradictions, and files knowledge from every coding session
-         automatically — plus custom skills and a plan-approved self-improvement loop. The agent
-         writes and maintains; the human curates and approves.</p>
+      <p>A personal agentic OS: an LLM-maintained wiki that ingests my day — screen activity,
+         browser history, every Claude Code session — files it nightly, cross-links entities,
+         flags contradictions, and rebuilds its understanding of me weekly. The agent maintains;
+         I curate and approve.</p>
       <div class="stack"><span class="t">Claude Code</span><span class="t">Obsidian / Markdown</span><span class="t">hooks + skills</span><span class="t">agent workflows</span></div>
       <div class="proj-links"><span class="ghost">private by design — it knows too much</span></div>
     </article>
@@ -393,27 +462,61 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
       <span class="corner tl"></span><span class="corner br"></span>
       <div class="proj-top"><span class="id">proj_03</span><span class="status deployed">DEPLOYED</span></div>
       <h3>Exam Quest</h3>
-      <p>Exam-prep learning game for MAKAUT engineering subjects — teaches visually from first
-         principles across 50+ chapters and 100+ interactive explainers, drills the most-repeated
-         previous-year questions, and puts an AI doubt-solver on every page. Built because I needed it.</p>
+      <p>Exam-prep learning game for MAKAUT engineering subjects — 50+ chapters of first-principles
+         visual explainers, previous-year drills, and an AI doubt-solver on every page. Its tutor
+         files real GitHub issues from production, and it now ships a premium light theme. Built
+         because I needed it.</p>
       <div class="stack"><span class="t">React 19</span><span class="t">Tailwind 4</span><span class="t">GSAP</span><span class="t">KaTeX</span><span class="t">Gemini</span></div>
       <div class="proj-links"><a href="https://examsmasher.vercel.app" target="_blank" rel="noopener">live ↗</a><a href="https://github.com/aniketshaw748-hub/ExamQuest" target="_blank" rel="noopener">github ↗</a></div>
     </article>
 
     <article class="proj reveal">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_04</span><span class="status research">HACKATHON · 3RD PLACE</span></div>
-      <h3>CampusCore</h3>
-      <p>Role-based academic platform (students / faculty / admin) built around CampusGPT — a
-         syllabus-aware, exam-focused AI tutor with dashboards, notices, and study materials.
-         Took 3rd place at its hackathon.</p>
-      <div class="stack"><span class="t">React + TS</span><span class="t">Supabase</span><span class="t">shadcn/Radix</span><span class="t">TanStack Query</span></div>
-      <div class="proj-links"><a href="https://github.com/aniketshaw748-hub/CampusCore" target="_blank" rel="noopener">github ↗</a></div>
+      <div class="proj-top"><span class="id">proj_04</span><span class="status deployed">LIVE · CONTEST BUILD</span></div>
+      <h3>Higgs Notify + GenPets</h3>
+      <p>Generation tracker for Higgsfield: restart-safe job tracking, Windows toast alerts, and
+         picture-in-picture previews the moment a render lands. Spun off GenPets — a desktop-pet
+         gallery built from 45 original sprites — shipped as a contest entry.</p>
+      <div class="stack"><span class="t">Node</span><span class="t">Windows toasts</span><span class="t">PiP previews</span><span class="t">OpenPets</span></div>
+      <div class="proj-links"><a href="https://genpets.higgsfield.app" target="_blank" rel="noopener">genpets live ↗</a></div>
     </article>
 
     <article class="proj reveal">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_05</span><span class="status tool">CLIENT TOOLING</span></div>
+      <div class="proj-top"><span class="id">proj_05</span><span class="status active">AI COMPANION · V1</span></div>
+      <h3>Chloe — 3D AI Dashboard</h3>
+      <p>A Detroit: Become Human-style 3D character who fronts my machine: daily briefings,
+         dashboard data, and a live bridge into the Claude Code CLI. A face on the terminal —
+         she reads the morning digest, I get to work.</p>
+      <div class="stack"><span class="t">Three.js</span><span class="t">React</span><span class="t">Claude Code bridge</span></div>
+      <div class="proj-links"><span class="ghost">local · v1 running</span></div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="corner tl"></span><span class="corner br"></span>
+      <div class="proj-top"><span class="id">proj_06</span><span class="status active">AGENT SIM</span></div>
+      <h3>SIXTEEN — AI Life Sim</h3>
+      <p>A teen-life simulation where every NPC is a local-LLM agent with persistent memory — they
+         gossip, hold grudges, and remember you across days. A director agent shapes the drama,
+         and the epilogue writes itself from what actually happened.</p>
+      <div class="stack"><span class="t">local LLMs</span><span class="t">agent memory</span><span class="t">web UI</span></div>
+      <div class="proj-links"><span class="ghost">local · 5 agents live</span></div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="corner tl"></span><span class="corner br"></span>
+      <div class="proj-top"><span class="id">proj_07</span><span class="status tool">EXPERIMENT · BUILT</span></div>
+      <h3>ASCII AI Face</h3>
+      <p>A 3D talking head rendered entirely in ASCII — 160×160 characters at 3.9ms a frame,
+         12 blendshapes — driven by voice through my own push-to-talk tool. A terminal that
+         looks back at you.</p>
+      <div class="stack"><span class="t">WebGL</span><span class="t">blendshapes</span><span class="t">OpenLess (voice)</span></div>
+      <div class="proj-links"><span class="ghost">local · terminal-native</span></div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="corner tl"></span><span class="corner br"></span>
+      <div class="proj-top"><span class="id">proj_08</span><span class="status tool">CLIENT TOOLING</span></div>
       <h3>SubtitlePlugin</h3>
       <p>Adobe Premiere Pro panel that transcribes selected clips with local whisper.cpp,
          cross-verifies the transcript against the script, and outputs native caption tracks or
@@ -424,30 +527,7 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
 
     <article class="proj reveal">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_06</span><span class="status tool">LOCAL TOOL</span></div>
-      <h3>MediaGrabber</h3>
-      <p>Local media downloader web app that feeds the editing pipeline: paste a URL, probe the real
-         available formats, download via yt-dlp with FFmpeg merge — defaulting to edit-friendly
-         H.264/AAC for Premiere and Resolve. Offline by design, zero network exposure.</p>
-      <div class="stack"><span class="t">Python FastAPI</span><span class="t">React + TS</span><span class="t">yt-dlp</span><span class="t">FFmpeg</span></div>
-      <div class="proj-links"><span class="ghost">local · single-user by design</span></div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_07</span><span class="status active">EXPERIMENT · WIP</span></div>
-      <h3>Director's Flick</h3>
-      <p>Ongoing experiment in rebuilding video production as software: script + voiceover in,
-         finished video out — cut-point splitting, word-level narration alignment, consistent
-         characters across AI-generated keyframes, frame-accurate preview, FFmpeg timeline export.
-         Still fighting me; still teaching me the most.</p>
-      <div class="stack"><span class="t">Node 22</span><span class="t">React + Vite + TS</span><span class="t">Python</span><span class="t">FFmpeg</span><span class="t">SQLite</span></div>
-      <div class="proj-links"><span class="ghost">local · work in progress</span></div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="corner tl"></span><span class="corner br"></span>
-      <div class="proj-top"><span class="id">proj_08</span><span class="status research">RESEARCH · IN DESIGN</span></div>
+      <div class="proj-top"><span class="id">proj_09</span><span class="status research">RESEARCH · IN DESIGN</span></div>
       <h3>Prisoner's Dilemma × LLMs</h3>
       <p>Iterated prisoner's dilemma between two LLM agents that write and revise their own strategies
          over ~25-round games. The variable under study: convergence time — how many games until the
@@ -456,6 +536,35 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
       <div class="proj-links"><span class="ghost">spec complete · build next</span></div>
     </article>
 
+  </div>
+  <p class="lab-more">&gt; also in the lab: <b>OpenLess</b> (push-to-talk voice for the terminal) ·
+     <b>RationTracker</b> (Android pantry app, APK shipped) · <b>ReelVault</b> (saved reels → searchable vault) ·
+     <b>MediaGrabber</b> · <b>CampusCore</b> (hackathon, 3rd place) · <b>Omni-Solver</b> · <b>Cosmos</b></p>
+</section>
+
+<!-- ============================== ABOUT ============================== -->
+<section class="lab-about wrap" id="about" aria-labelledby="about-h">
+  <p class="eyebrow">[ ABOUT ]</p>
+  <h2 id="about-h">whoami <span class="sub">// the builder</span></h2>
+  <div class="about-cols">
+    <div class="about-bio">
+      <p class="lead">I'm <b>Aniket</b> — a CS undergrad in Kolkata who ships end-to-end products
+         <span class="hl">prompt-first</span>, from a Windows terminal.</p>
+      <p>I build for problems I actually have: tools that speed up my editing practice, a learning
+         game for my own exams, an agentic second brain that runs my machine. If it survives daily
+         use, it stays in the lab.</p>
+      <p>The current direction is <b>AI and multi-agent research</b> — agents with persistent memory,
+         self-improving systems behind approval gates, experiments in how LLM agents learn each
+         other. Years of freelance client work supply the other half:
+         <span class="hl">deadlines, retainers, shipping</span>.</p>
+    </div>
+    <div class="about-facts" aria-label="Quick facts">
+      <div><span>BASE</span><span>Kolkata, IST · works in English &amp; Hindi</span></div>
+      <div><span>DEGREE</span><span>B.Tech CSE · MAKAUT</span></div>
+      <div><span>METHOD</span><span>agentic loop with Claude Code</span></div>
+      <div><span>FOCUS</span><span>agents · tooling · learning systems</span></div>
+      <div><span>SHIPPED</span><span>hackathon builds kept alive as products</span></div>
+    </div>
   </div>
 </section>
 
@@ -469,13 +578,41 @@ h1 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:0; }
   </div>
 </section>
 
-<!-- ============================== CTA ============================== -->
-<section class="lab-cta wrap">
-  <p class="big">wanna <span class="g">connect</span>?_</p>
-  <div class="btns">
-    <a class="solid" href="mailto:aniketshaw748@gmail.com">get in touch ↗</a>
-    <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener">github ↗</a>
-    <a href="resume-coding.html">résumé ↗</a>
+<!-- ============================== CONTACT ============================== -->
+<section class="contact wrap" id="contact" aria-labelledby="contact-h">
+  <p class="eyebrow">[ CONTACT ]</p>
+  <h2 id="contact-h">let's ship <span class="g">something</span>_</h2>
+  <p class="lead">Got a tool worth building, a product idea, or an agent experiment?
+     I build fast, end to end. Let's make it.</p>
+  <p class="contact-tagline">Prompt-first. Terminal-native.</p>
+
+  <div class="contact-cta">
+    <a class="callbtn" href="https://calendly.com/aniketshaw748/let-s-meet" target="_blank" rel="noopener">
+      <svg class="cal-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 00-2 2v13a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2V2h-2v2H9V2H7zm12 7v10H5V9h14zM7 11v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2z"/></svg>
+      Book a call <span class="ar">↗</span>
+    </a>
+    <a class="mailbtn" href="mailto:aniketshaw748@gmail.com">
+      aniketshaw748@gmail.com <span class="ar">↗</span>
+    </a>
+  </div>
+
+  <div class="contact-socials" aria-label="Find me on social">
+    <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07zm0 1.62c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.4-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.16.42-.35 1.04-.4 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.4 2.19.21.55.47.94.88 1.35.41.41.8.67 1.35.88.42.16 1.04.35 2.19.4 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.4.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.16-.42.35-1.04.4-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.4-2.19-.21-.55-.47-.94-.88-1.35-.41-.41-.8-.67-1.35-.88-.42-.16-1.04-.35-2.19-.4-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.3 5.3 0 110 10.6 5.3 5.3 0 010-10.6zm0 1.62a3.68 3.68 0 100 7.36 3.68 3.68 0 000-7.36zm5.5-2.69a1.24 1.24 0 110 2.48 1.24 1.24 0 010-2.48z"/></svg>
+      <span>Instagram</span>
+    </a>
+    <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 002.5 6 2.5 2.5 0 005 8.48 2.5 2.5 0 007.5 6 2.5 2.5 0 004.98 3.5zM3 9.75h4v11H3v-11zm6.5 0H13v1.5h.05c.49-.93 1.7-1.9 3.5-1.9 3.74 0 4.45 2.46 4.45 5.66v5.74h-4v-5.09c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68v5.18h-4v-11z"/></svg>
+      <span>LinkedIn</span>
+    </a>
+    <a href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016.01 0c2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.83.58A12 12 0 0012 .3z"/></svg>
+      <span>GitHub</span>
+    </a>
+    <a href="resume-coding.html" aria-label="Resume">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 12h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>
+      <span>Résumé</span>
+    </a>
   </div>
 </section>
 
