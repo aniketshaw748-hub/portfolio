@@ -24,41 +24,32 @@ Wait ~30–60 seconds, then refresh your Vercel URL.
 | Section | What it controls |
 |---|---|
 | `email`, `calendly`, `socials` | Contact email, Book-a-call (Calendly) link, and Instagram / LinkedIn / YouTube |
-| `bio`, `bioMeta`, `experience`, `tagline` | About paragraphs, a small experience line, and the tagline near the contact CTAs |
-| `tools` | The skill chips, grouped (first chip in **CODE** is highlighted) |
-| `works` | Every video card (see below) |
-| `blob` | The 3D object (see below) |
+| `bio`, `bioMeta` | About copy and the small location/language line |
+| `tools` | The three craft/tool groups in the About section |
+| `works` | The cinematic chapters, vertical wall, wide edits, and film index. The first entry is the opening film |
 
 ### Add or publish a video (`works`)
 - **Publish a video:** set that item's `video:` to a YouTube / Vimeo / `.mp4` URL. Empty `""` = "preview coming soon".
-- **Add a new piece:** copy a `{ … }` line and edit:
+- **Add a new piece:** copy a `{ … }` line and edit. Its position in the array is its position in the film index:
   - `category`: `ai` | `shorts` | `motion` | `narrative`
   - `orientation`: `landscape` (16:9) or `portrait` (9:16)
-  - `poster`: image filename in `assets/posters/` **without** `.webp` (posters are WebP now — smaller, faster)
+  - `poster`: image filename in `assets/posters/` **without** `.webp`
   - `title`, `foot`, `alt`
-  - `process` (optional): a one-line "how it was made" shown under the video in the preview popup
+  - `process` (optional): a note retained with the film entry
 - **Make a thumbnail** from a video (straight to WebP):
   ```bash
   ffmpeg -ss 5 -i "clip.mp4" -frames:v 1 -vf "scale='min(1280,iw)':-2" -q:v 80 assets/posters/my-clip.webp
   ```
-- Filter counts and the "showing X of N" line update automatically.
-
-### The 3D blob (`blob`)
-- `colors.cyan / magenta / purple` — hex colors (e.g. `"#22d3ee"`)
-- `size` — how much of the frame the blob fills. It **auto-frames so it can never get cut off** (~`2` fills it nicely; going higher just caps, it won't clip). `1` ≈ half-size.
-- `stretch` — vertical stretch (`1` round, `>1` taller)
-- `position: { x, y }` — nudge right(+)/left(−), up(+)/down(−). Auto-clamped so the blob can't leave the frame, so big numbers just push it to the edge.
-- `density` — grain (20–56; higher = denser, heavier) · `lumpiness` (0.2–0.7) · `brightness` (0.4–1.0) · `rimGlow` (0.2–0.8)
-- `autoRotate` — `true`/`false`
-- **`mobile: { size, position }`** — separate size & position **for phones (≤640px)**. Delete the whole `mobile` block to reuse the desktop values on phones too.
+- The first `ai` entry becomes the opening hero and muted desktop preview. The remaining `ai` entries become full-screen chapters in order.
+- Non-AI portrait work appears in the expanding vertical wall. Non-AI landscape work appears under **The wider cuts**.
+- Film-index entries and filter counts update automatically. Keep **Nuvve Kada** first and the previous music video second unless you intentionally want to change the feature order.
 
 ---
 
 ## Good to know
 - **Big videos:** your `.mp4` files and private notes stay out of GitHub (via `.gitignore`). Host finished videos on **YouTube/Vimeo (unlisted)** and paste the links into `works`. Your 2.1 GB long-form *must* live there.
-- **Cursors:** the terminal carets stay solid and only start blinking after the first click on the page.
 - **Safety net:** if `config.js` has a typo, the site falls back to its built-in content instead of breaking — just fix the typo (check quotes/commas) and refresh.
-- **The lab page** (`lab.html`) is the coding portfolio — a separate page with its own content (projects, stacks, links). It is plain HTML: edit the `<article class="proj">` blocks directly.
+- **The lab page** (`labs.html`) is the coding portfolio, with its own projects, stacks, and links. Edit the `<article class="proj">` blocks directly.
 - **Two résumé pages**, both plain HTML and print-ready (they deliberately show email only, no phone number):
   - `resume.html` — **video editing** résumé, linked from the main site's contact section.
   - `resume-coding.html` — **coding** résumé, linked from the lab page. Replace its content freely — it started as a generated draft.

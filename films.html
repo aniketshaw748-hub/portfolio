@@ -3,38 +3,34 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aniket Shaw // AI-Native Video Editor &amp; GenAI Storyteller</title>
-<meta name="description" content="Aniket Shaw — AI-native video editor and GenAI storyteller. Cinematic AI shorts, fast internet-native edits, and motion graphics built with generative tools. Selected work + experimental lab." />
+<title>Aniket Shaw | AI Filmmaker and Video Editor</title>
+<meta name="description" content="Films and edits by Aniket Shaw. AI cinema, music films, short-form editing, motion graphics and narrative work." />
 <meta name="color-scheme" content="dark" />
 <link rel="canonical" href="https://aniket-portfolio.vercel.app/films" />
-
-<!-- Icons -->
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<link rel="preload" href="assets/fonts/Archivo-Variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/posters/hero-nuvve-kada.webp" as="image" type="image/webp" fetchpriority="high" />
 
-<!-- Open Graph / Twitter (link previews) -->
-<meta property="og:title" content="Aniket Shaw // AI-Native Video Editor & GenAI Storyteller" />
-<meta property="og:description" content="Cinematic AI shorts, internet-native edits, and motion graphics built with generative tools." />
+<meta property="og:title" content="Aniket Shaw | AI Filmmaker and Video Editor" />
+<meta property="og:description" content="AI cinema, music films, short-form editing, motion graphics and narrative work." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://aniket-portfolio.vercel.app/films" />
 <meta property="og:image" content="https://aniket-portfolio.vercel.app/assets/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Aniket Shaw // AI-Native Video Editor & GenAI Storyteller" />
-<meta name="twitter:description" content="Cinematic AI shorts, internet-native edits, and motion graphics built with generative tools." />
+<meta name="twitter:title" content="Aniket Shaw | AI Filmmaker and Video Editor" />
+<meta name="twitter:description" content="AI cinema, music films, short-form editing, motion graphics and narrative work." />
 <meta name="twitter:image" content="https://aniket-portfolio.vercel.app/assets/og-image.jpg" />
 
-<!-- Structured data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Aniket Shaw",
   "url": "https://aniket-portfolio.vercel.app/films",
-  "jobTitle": "AI-Native Video Editor & GenAI Storyteller",
-  "address": { "@type": "PostalAddress", "addressLocality": "Kolkata", "addressCountry": "IN" },
-  "knowsLanguage": ["en", "hi"],
+  "jobTitle": "AI Filmmaker and Video Editor",
   "sameAs": [
     "https://www.instagram.com/aniikettt_3/",
     "https://www.linkedin.com/in/aniket-shaw-a10478368/",
@@ -44,1598 +40,1195 @@
 }
 </script>
 
-<!-- Fonts: JetBrains Mono (HUD/terminal) + Inter (body). Site works fine if blocked. -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
 <style>
-/* =========================================================================
-   STYLE 4 — "EXPERIMENTAL AI-NATIVE"  (single-file portfolio)
-   Sections: tokens · base · overlays · nav · hero · work · lab · about ·
-             contact/footer · lightbox · responsive · reduced-motion
-   ========================================================================= */
-
-/* ---- Design tokens ---------------------------------------------------- */
-:root{
-  --bg:        #05060a;
-  --bg-2:      #0a0b14;
-  --panel:     rgba(255,255,255,.025);
-  --panel-2:   rgba(255,255,255,.04);
-
-  --cyan:      #22d3ee;
-  --magenta:   #ec4899;
-  --purple:    #a855f7;
-  --violet:    #d946ef;
-  --hcy:       #2ee6ff;   /* traversal-hero hot accents */
-  --hmg:       #ff2ea6;
-
-  --text:      #e8eef5;
-  --muted:     #9aa6b8;
-  --dim:       #5d6b7e;
-  --dim-2:     #38414f;
-
-  --line:      rgba(148,163,184,.14);
-  --line-soft: rgba(148,163,184,.08);
-
-  --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-
-  --maxw: 1320px;
-  --ease: cubic-bezier(.22,.61,.36,1);
+@font-face{
+  font-family:"Archivo";
+  src:url("assets/fonts/Archivo-Variable.woff2") format("woff2");
+  font-style:normal;
+  font-weight:100 900;
+  font-stretch:62% 125%;
+  font-display:swap;
 }
 
-/* ---- Reset / base ----------------------------------------------------- */
+:root{
+  --bg:#0d0a09;
+  --bg-deep:#080706;
+  --surface:#1a100d;
+  --surface-2:#24120f;
+  --wine:#2a1012;
+  --accent:#e44b2b;
+  --accent-deep:#b5321f;
+  --text:#f3eee7;
+  --text-soft:#c7bbb0;
+  --muted:#91857d;
+  --nav-h:68px;
+  --pad:clamp(18px,3.2vw,58px);
+  --font:"Archivo","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --z-nav:20;
+  --z-index:50;
+  --z-viewer:70;
+}
+
 *{ box-sizing:border-box; margin:0; padding:0; }
-html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; background:var(--bg); }
 body{
+  min-height:100dvh;
+  overflow-x:hidden;
   background:var(--bg);
   color:var(--text);
-  font-family:var(--sans);
-  line-height:1.6;
-  overflow-x:hidden;
-  min-height:100vh;
+  font-family:var(--font);
+  font-size:16px;
+  line-height:1.45;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
-body.no-scroll{ overflow:hidden; }
+body.viewer-open,body.index-open{ overflow:hidden; }
+button,a{ color:inherit; font:inherit; }
+button{ border:0; background:none; cursor:pointer; }
+a{ text-decoration:none; }
 img{ display:block; max-width:100%; }
-a{ color:inherit; text-decoration:none; }
-button{ font-family:inherit; color:inherit; background:none; border:none; cursor:pointer; }
-::selection{ background:rgba(34,211,238,.28); color:#fff; }
+::selection{ background:var(--accent); color:var(--bg-deep); }
+:focus-visible{ outline:3px solid var(--accent); outline-offset:4px; }
 
-:focus-visible{
-  outline:2px solid var(--cyan);
-  outline-offset:3px;
-  border-radius:2px;
+.skip-link{
+  position:fixed;
+  left:18px;
+  top:12px;
+  z-index:100;
+  padding:11px 15px;
+  background:var(--accent);
+  color:var(--bg-deep);
+  font-weight:700;
+  transform:translateY(-160%);
 }
+.skip-link:focus{ transform:translateY(0); }
 
-.mono{ font-family:var(--mono); }
-.cy{ color:var(--cyan); }
-.mg{ color:var(--magenta); }
-.pu{ color:var(--purple); }
-.dim{ color:var(--dim); }
-.muted{ color:var(--muted); }
+.site-nav{
+  position:fixed;
+  inset:0 0 auto;
+  z-index:var(--z-nav);
+  height:var(--nav-h);
+  padding-inline:var(--pad);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  background:linear-gradient(180deg,rgba(8,7,6,.91),rgba(8,7,6,.48) 72%,transparent);
+}
+.wordmark{
+  flex:none;
+  font-size:13px;
+  font-weight:780;
+  font-stretch:112%;
+  letter-spacing:-.025em;
+}
+.wordmark span{ color:var(--text-soft); font-weight:370; font-stretch:90%; }
+.site-nav nav{ display:flex; align-items:center; gap:clamp(18px,2.4vw,38px); font-size:12px; font-weight:520; }
+.site-nav nav a{ color:var(--text-soft); transition:color .2s ease; }
+.site-nav nav a:hover,.site-nav nav a[aria-current="page"]{ color:var(--text); }
+.index-trigger{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 0 6px;
+  border-bottom:2px solid var(--accent);
+  color:var(--text);
+  white-space:nowrap;
+  transition:color .2s ease,transform .2s var(--ease);
+}
+.index-trigger span{ color:var(--muted); font-variant-numeric:tabular-nums; }
+.index-trigger:hover{ color:var(--accent); transform:translateY(-1px); }
+.index-trigger:active{ transform:translateY(1px); }
 
-/* ---- Global ambient overlays (scanlines · grid · vignette) ------------ */
-.fx{
-  position:fixed; inset:0; pointer-events:none; z-index:1;
-}
-.fx-grid{
-  background-image:
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size:64px 64px;
-  opacity:.5;
-  mask-image:radial-gradient(ellipse 90% 80% at 50% 35%, #000 30%, transparent 90%);
-}
-.fx-scan{
-  background:repeating-linear-gradient(
-    to bottom, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);
-  opacity:.5;
-}
-.fx-vignette{
-  background:radial-gradient(ellipse 120% 100% at 50% 30%, transparent 40%, rgba(0,0,0,.55) 100%);
-}
-.fx-noise{ /* faint colour wash so pure black never feels flat */
-  background:
-    radial-gradient(60% 50% at 80% 8%, rgba(168,85,247,.07), transparent 60%),
-    radial-gradient(50% 45% at 12% 70%, rgba(34,211,238,.06), transparent 60%);
-}
-
-/* ---- Shared layout helpers ------------------------------------------- */
-.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:clamp(20px,5vw,72px); }
-.section{ position:relative; z-index:2; padding-block:clamp(72px,10vw,140px); }
-
-.eyebrow{
-  font-family:var(--mono);
-  font-size:13px; letter-spacing:.18em; text-transform:uppercase;
-  color:var(--cyan);
-  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-}
-.eyebrow::before{
-  content:""; width:34px; height:1px; background:var(--cyan); opacity:.7;
-}
-.section-head{ margin-bottom:clamp(34px,5vw,64px); }
-.section-head h2{
-  font-family:var(--mono);
-  font-weight:800;
-  font-size:clamp(28px,4.4vw,52px);
-  letter-spacing:-.01em;
-  line-height:1.05;
-  margin-top:18px;
-}
-.section-head h2 .sub{ color:var(--dim); font-weight:500; font-size:.5em; letter-spacing:.04em; }
-
-/* Corner crosshair "+" decorations */
-.plus{ position:absolute; width:13px; height:13px; pointer-events:none; opacity:.5; }
-.plus::before,.plus::after{ content:""; position:absolute; background:var(--dim); }
-.plus::before{ left:50%; top:0; width:1px; height:100%; transform:translateX(-.5px); }
-.plus::after{ top:50%; left:0; height:1px; width:100%; transform:translateY(-.5px); }
-
-/* =======================================================================
-   NAV
-   ======================================================================= */
-.nav{
-  position:fixed; top:0; left:0; right:0; z-index:60;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:18px;
-  padding:18px clamp(20px,5vw,56px);
-  background:linear-gradient(180deg, rgba(5,6,10,.86), rgba(5,6,10,.2) 70%, transparent);
-  backdrop-filter:blur(8px);
-  transition:background .3s var(--ease), border-color .3s;
-  border-bottom:1px solid transparent;
-}
-.nav.scrolled{
-  background:rgba(5,6,10,.9);
-  border-bottom:1px solid var(--line);
-}
-.brand{
-  font-family:var(--mono); font-weight:800; font-size:18px; letter-spacing:.02em;
-  display:flex; align-items:center; gap:8px; white-space:nowrap;
-}
-.brand .slash{ background:linear-gradient(90deg,var(--cyan),var(--magenta)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.brand .tag{ color:var(--cyan); font-weight:500; font-size:15px; }
-.brand .blink{ color:var(--cyan); }
-
-.nav-links{
-  display:flex; align-items:center; gap:clamp(14px,2.4vw,34px);
-  font-family:var(--mono); font-size:14px;
-}
-.nav-links a{ color:var(--muted); transition:color .2s; position:relative; padding:4px 0; }
-.nav-links a .idx{ color:var(--dim); margin-right:5px; }
-.nav-links a:hover{ color:var(--text); }
-.nav-links a:hover .idx{ color:var(--cyan); }
-.nav-links a::after{
-  content:""; position:absolute; left:0; bottom:-2px; height:1px; width:0;
-  background:var(--cyan); transition:width .25s var(--ease);
-}
-.nav-links a:hover::after{ width:100%; }
-
-.nav-cta{
-  font-family:var(--mono); font-size:14px; color:var(--cyan);
-  border:1px solid rgba(34,211,238,.4);
-  padding:9px 16px; border-radius:4px;
-  transition:.22s var(--ease);
-}
-.nav-cta:hover{ background:rgba(34,211,238,.12); box-shadow:0 0 22px rgba(34,211,238,.25); border-color:var(--cyan); }
-/* the one bridge to the coding portfolio, on the footer's right edge */
-.footer .foot-xsite{
-  padding:7px 12px; border:1px solid rgba(255,46,166,.4); border-radius:4px;
-  color:var(--hmg); transition:.22s var(--ease);
-}
-.footer .foot-xsite:hover{ background:rgba(255,46,166,.1); box-shadow:0 0 14px rgba(255,46,166,.25); }
-
-/* Grid-dots button — decorative on desktop, the menu toggle on mobile */
-.nav-dots{ display:grid; grid-template-columns:repeat(3,3px); gap:3px; place-content:center; padding:11px; margin:-11px; cursor:pointer; }
-.nav-dots i{ width:3px; height:3px; background:var(--magenta); border-radius:1px; opacity:.7; transition:.2s var(--ease); }
-.nav-dots:hover i{ opacity:1; }
-.nav-dots[aria-expanded="true"] i{ background:var(--cyan); opacity:1; }
-
-/* =======================================================================
-   SPACE TRAVERSAL · scroll = flying through the galaxy on the z-axis
-   Fixed 3D layer behind everything; the journey section provides scroll
-   length; works appear as planets; the intro word is a particle swarm.
-   ======================================================================= */
-.space{
-  position:fixed; inset:0; z-index:2;
-  --hcy:#2ee6ff; --hmg:#ff2ea6;   /* hot accents (canvas palette) */
-}
-#cosmos{ position:absolute; inset:0; width:100%; height:100%; display:block; }
-.swarm-grain{
-  position:absolute; inset:0; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='0.6'/></svg>");
-}
-
-/* journey scroll track: height set by JS (fallback height in .no-traversal) */
-.journey{ position:relative; z-index:5; height:2100vh; pointer-events:none; }
-.journey .swarm-copy{ pointer-events:auto; }   /* the fixed status bar beneath stays clickable */
-.journey-hero{ position:relative; height:100dvh; }
-.no-traversal .journey{ height:100dvh; }
-.no-traversal .space{ display:none; }
-
-/* content deck: everything after the flight rises as a card over the cosmos */
-.deck{
-  position:relative; z-index:6;
-  margin:-18vh clamp(8px,1.1vw,18px) 0;
-  background:#0a0c16;
-  border:1px solid rgba(148,163,184,.14);
-  border-bottom:0;
-  border-radius:clamp(18px,2vw,30px) clamp(18px,2vw,30px) 0 0;
-  box-shadow:0 -24px 80px -24px rgba(0,0,0,.85), 0 0 0 1px rgba(46,230,255,.05);
+.cinema-stack{ position:relative; background:var(--bg); }
+.film-chapter{
+  --scene:0;
+  position:sticky;
+  top:0;
+  z-index:calc(2 + var(--scene));
+  min-height:100dvh;
   overflow:hidden;
+  isolation:isolate;
+  background:var(--surface);
+  box-shadow:0 -24px 90px rgba(45,12,7,.42);
 }
-.deck .section:first-child{ padding-top:clamp(38px,4.2vw,60px); }
-.deck .footer{ margin-top:0; }
-.no-traversal .deck{ margin-top:0; }
-
-/* accessible headline: visually replaced by the swarm unless fallback mode */
-.swarm-h1{
-  position:absolute; width:1px; height:1px; overflow:hidden;
-  clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
+.film-ambient{
+  position:absolute;
+  inset:-12%;
+  z-index:-2;
+  overflow:hidden;
+  background:var(--surface);
 }
-.journey.fallback .swarm-h1{
-  position:absolute; width:auto; height:auto; overflow:visible; clip:auto; clip-path:none;
-  left:50%; top:36%; transform:translate(-50%,-50%);
-  font-family:var(--mono); font-weight:300; white-space:nowrap;
-  font-size:clamp(30px,5.4vw,92px); line-height:1.12; text-align:center; color:#fff;
+.film-ambient img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.62;
+  filter:blur(52px) saturate(.74) brightness(.36);
+  transform:scale(1.13);
 }
-.journey.fallback .swarm-h1 .s1{ color:#2ee6ff; }
-.journey.fallback .swarm-h1 .s2{ color:#ff2ea6; }
-
-/* the quiet block in the lower third of the first viewport */
-.swarm-copy{
-  position:absolute; left:50%; bottom:calc(60px + clamp(24px,6.5vh,72px)); transform:translateX(-50%);
-  width:min(92vw,760px); text-align:center; z-index:3;
+.film-chapter::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(115deg,rgba(8,7,6,.62),rgba(8,7,6,.18) 52%,rgba(8,7,6,.52));
 }
-.swarm-whoami{ font-family:var(--mono); font-size:clamp(11px,.8vw,13.5px); letter-spacing:.22em; color:var(--muted); }
-.swarm-whoami .pr{ color:var(--hcy); }
-.swarm-sub{ margin-top:14px; font-size:clamp(14.5px,1.05vw,17.5px); line-height:1.65; color:var(--muted); }
-.swarm-sub b{ color:var(--text); font-weight:500; }
-.swarm-ctas{ margin-top:24px; display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap; }
-.sbtn{
-  font-family:var(--mono); font-size:14.5px; font-weight:500; letter-spacing:.04em;
-  display:inline-flex; align-items:center; gap:10px;
-  padding:14px 24px; border-radius:6px;
-  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s, border-color .25s, filter .25s;
+.chapter-stage{
+  position:relative;
+  z-index:1;
+  min-height:100dvh;
+  padding:calc(var(--nav-h) + 34px) var(--pad) 42px;
 }
-.sbtn .ar{ transition:transform .25s var(--ease); }
-.sbtn:hover .ar{ transform:translate(3px,-3px); }
-.sbtn:active{ transform:translateY(1px) scale(.985); }
-.sbtn.solid{ background:var(--hcy); color:#03151b; border:1px solid var(--hcy); }
-.sbtn.solid:hover{ box-shadow:0 6px 34px rgba(46,230,255,.42); filter:brightness(1.06); transform:translateY(-2px); }
-.sbtn.ghost{ color:var(--text); border:1px solid var(--line); }
-.sbtn.ghost:hover{ border-color:rgba(46,230,255,.5); color:var(--hcy); box-shadow:0 0 22px rgba(46,230,255,.14); transform:translateY(-2px); }
-
-/* status strip pinned to the viewport fold during the flight */
-.swarm-bar{
-  position:absolute; left:0; right:0; bottom:0; z-index:3;
-  display:flex; align-items:center; justify-content:space-between; gap:18px;
-  height:60px; padding:0 clamp(20px,4.2vw,56px);
-  border-top:1px solid rgba(151,163,182,.1);
-  font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; color:var(--dim);
+.film-visual{
+  position:relative;
+  overflow:hidden;
+  background:#060504;
+  box-shadow:0 38px 100px rgba(34,9,5,.42);
 }
-.swarm-socials{ display:flex; gap:clamp(14px,1.6vw,26px); }
-.swarm-socials a{ color:var(--muted); transition:.2s; padding:6px 2px; }
-.swarm-socials a:hover{ color:var(--hcy); text-shadow:0 0 14px rgba(46,230,255,.5); }
-.swarm-render{ display:flex; align-items:center; gap:14px; white-space:nowrap; }
-.swarm-render .dot{
-  width:8px; height:8px; border-radius:50%; background:var(--hmg);
-  box-shadow:0 0 10px rgba(255,46,166,.8);
-  animation:recpulse 1.6s ease-in-out infinite;
+.film-poster{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.035);
+  transition:transform 1.25s var(--ease),opacity .45s ease;
 }
-@keyframes recpulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
-.swarm-render .rec{ color:var(--hmg); }
-.swarm-render .tc{ color:var(--text); font-weight:500; letter-spacing:.12em; font-variant-numeric:tabular-nums; }
-.swarm-render .rl{ color:var(--dim); }
-
-/* load-in choreography for the copy + bar */
-.rv{ opacity:0; transform:translateY(16px); animation:rise .9s var(--ease) forwards; }
-.rv.d1{ animation-delay:.9s; }
-.rv.d2{ animation-delay:1.05s; }
-.rv.d3{ animation-delay:1.2s; }
-.rv.d4{ animation-delay:1.35s; }
-@keyframes rise{ to{ opacity:1; transform:none; } }
-
-@keyframes spin{ to{ rotate:360deg; } }   /* used by the lightbox loading ring */
-
-/* =======================================================================
-   SCROLL REVEAL
-   ======================================================================= */
-.reveal{ opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.in{ opacity:1; transform:none; }
-.reveal.d1{ transition-delay:.07s; }
-.reveal.d2{ transition-delay:.14s; }
-.reveal.d3{ transition-delay:.21s; }
-
-/* =======================================================================
-   WORK
-   ======================================================================= */
-.work{ background:linear-gradient(180deg, transparent, rgba(10,11,20,.5) 12%, rgba(10,11,20,.5) 88%, transparent); }
-
-.filters{
-  display:flex; flex-wrap:wrap; gap:6px;
-  font-family:var(--mono); font-size:13px;
-  border:1px solid var(--line); border-radius:6px; padding:6px;
-  width:fit-content; max-width:100%;
+.film-chapter.is-current .film-poster{ transform:scale(1); }
+.film-copy{ position:relative; z-index:3; }
+.film-title{
+  max-width:12ch;
+  font-size:clamp(48px,7vw,116px);
+  font-weight:780;
+  font-stretch:70%;
+  letter-spacing:-.058em;
+  line-height:.85;
+  text-wrap:balance;
+  opacity:.48;
+  transform:translateY(20px);
+  transition:opacity .75s var(--ease),transform .75s var(--ease);
 }
-.filter{
-  padding:9px 16px; border-radius:4px; color:var(--muted); letter-spacing:.04em;
-  transition:.2s var(--ease); white-space:nowrap;
+.film-chapter.is-current .film-title{ opacity:1; transform:none; }
+.film-detail{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.film-descriptor{
+  max-width:34ch;
+  color:var(--text-soft);
+  font-size:13px;
+  font-weight:450;
+  line-height:1.35;
 }
-.filter:hover{ color:var(--text); background:var(--panel); }
-.filter.active{ color:var(--bg); background:var(--cyan); font-weight:600; }
-.filter .cnt{ opacity:.6; font-size:.85em; margin-left:5px; }
-.filter.active .cnt{ opacity:.8; }
-
-.work-meta{ font-family:var(--mono); font-size:12px; color:var(--dim); margin-top:14px; }
-.work-meta b{ color:var(--cyan); font-weight:500; }
-
-.work-grid{
-  margin-top:clamp(28px,4vw,44px);
-  display:grid; grid-template-columns:repeat(4,1fr);
-  grid-auto-flow:dense; gap:clamp(12px,1.6vw,20px);
+.play-cta{
+  min-width:116px;
+  padding:14px 20px 13px;
+  background:var(--accent);
+  color:var(--bg-deep);
+  font-size:13px;
+  font-weight:750;
+  text-align:center;
+  white-space:nowrap;
+  transition:background .2s ease,transform .2s var(--ease);
 }
+.play-cta:hover{ background:var(--text); transform:translateY(-2px); }
+.play-cta:active{ transform:translateY(1px) scale(.985); }
 
-.card{
-  position:relative; overflow:hidden; border-radius:8px;
-  border:1px solid var(--line); background:var(--bg-2);
-  cursor:pointer;
-  transition:transform .4s var(--ease), border-color .3s, box-shadow .4s, opacity .35s, filter .35s;
+.media-loader{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  background:linear-gradient(100deg,var(--surface) 20%,#35201a 42%,var(--surface) 64%);
+  background-size:220% 100%;
+  opacity:1;
+  transition:opacity .3s ease;
 }
-.card.landscape{ grid-column:span 2; aspect-ratio:16/9; }
-.card.portrait{ grid-column:span 1; aspect-ratio:9/16; }
+.media-ready>.media-loader,.media-failed>.media-loader{ opacity:0; }
+.media-error{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  display:none;
+  place-items:center;
+  padding:24px;
+  background:var(--surface);
+  color:var(--text-soft);
+  font-size:13px;
+  text-align:center;
+}
+.media-failed>.media-error{ display:grid; }
 
-.card img{
-  width:100%; height:100%; object-fit:cover;
-  transition:transform .6s var(--ease), filter .4s;
-  filter:saturate(.92) brightness(.82);
+/* Opening film: the film itself owns the viewport. */
+.layout-cover .film-ambient{ display:none; }
+.layout-cover .chapter-stage{ padding:0; }
+.layout-cover .film-visual{ position:absolute; inset:0; box-shadow:none; }
+.layout-cover .film-poster{ object-position:center center; }
+.layout-cover .film-visual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(7,5,4,.28),transparent 34%),
+    linear-gradient(0deg,rgba(7,5,4,.92),rgba(7,5,4,.18) 48%,transparent 72%),
+    linear-gradient(90deg,rgba(7,5,4,.43),transparent 58%);
 }
-.card:hover{ border-color:rgba(34,211,238,.5); box-shadow:0 14px 40px -16px rgba(34,211,238,.4); transform:translateY(-4px); }
-.card:hover img{ transform:scale(1.06); filter:saturate(1.05) brightness(.95); }
+.layout-cover .film-copy{
+  position:absolute;
+  left:var(--pad);
+  right:var(--pad);
+  bottom:clamp(38px,6vh,72px);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end;
+  gap:30px;
+}
+.layout-cover .film-title{ max-width:8ch; color:var(--text); font-size:clamp(64px,9.5vw,164px); text-shadow:0 12px 50px rgba(0,0,0,.46); }
+.layout-cover .film-detail{ justify-content:flex-end; align-items:flex-end; flex-direction:column; }
+.layout-cover .film-descriptor{ color:var(--text); text-align:right; }
+.hero-motion{ position:absolute; inset:0; z-index:1; overflow:hidden; opacity:0; transition:opacity .9s ease; }
+.hero-motion.is-playing{ opacity:1; }
+.hero-motion iframe{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:max(100vw,177.78vh);
+  height:max(56.25vw,100vh);
+  border:0;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+}
+.opening-bar{ position:absolute; left:0; right:0; z-index:6; height:50.2%; background:var(--bg-deep); pointer-events:none; }
+.opening-bar.top{ top:0; transform-origin:top; }
+.opening-bar.bottom{ bottom:0; transform-origin:bottom; }
 
-/* HUD overlay on card */
-.card .scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(5,6,10,.05) 30%, rgba(5,6,10,.55) 70%, rgba(5,6,10,.92)); }
-.card .corner{ position:absolute; width:11px; height:11px; border:1px solid rgba(34,211,238,.0); transition:border-color .3s; pointer-events:none; }
-.card .corner.tl{ left:9px; top:9px; border-right:0; border-bottom:0; }
-.card .corner.br{ right:9px; bottom:9px; border-left:0; border-top:0; }
-.card:hover .corner{ border-color:rgba(34,211,238,.7); }
+/* Second film: a composed split title card. */
+.layout-split{ background:var(--wine); }
+.layout-split .chapter-stage{
+  display:grid;
+  grid-template-columns:minmax(270px,.72fr) minmax(0,1.28fr);
+  align-items:center;
+  gap:clamp(30px,5vw,94px);
+}
+.layout-split .chapter-stage::before{
+  content:"";
+  position:absolute;
+  right:2.5vw;
+  top:17vh;
+  width:57vw;
+  height:57vh;
+  z-index:-1;
+  background:var(--accent);
+  opacity:.88;
+}
+.layout-split .film-copy{ grid-column:1; grid-row:1; align-self:end; padding-bottom:clamp(30px,7vh,80px); }
+.layout-split .film-title{ margin-bottom:30px; }
+.layout-split .film-visual{ grid-column:2; grid-row:1; width:100%; aspect-ratio:16/9; }
 
-.card .ctag{
-  position:absolute; top:11px; left:11px;
-  font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
-  padding:4px 9px; border-radius:3px;
-  background:rgba(5,6,10,.6); border:1px solid var(--line); color:var(--cyan);
-  backdrop-filter:blur(4px);
+/* Third film: a wide frame held by a single color field. */
+.layout-letterbox{ background:var(--surface); }
+.layout-letterbox .chapter-stage{ display:flex; flex-direction:column; justify-content:center; }
+.layout-letterbox .chapter-stage::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:38%;
+  height:31%;
+  z-index:-1;
+  background:var(--accent-deep);
 }
-.card .ratio{
-  position:absolute; top:11px; right:11px;
-  font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.08em;
-  background:rgba(5,6,10,.55); padding:3px 7px; border-radius:3px; backdrop-filter:blur(4px);
+.layout-letterbox .film-visual{ width:min(84vw,110dvh,1500px); margin-inline:auto; aspect-ratio:16/9; }
+.layout-letterbox .film-copy{
+  width:min(84vw,110dvh,1500px);
+  max-width:1500px;
+  margin:24px auto 0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end;
+  gap:28px;
 }
-.card .cbody{ position:absolute; left:13px; right:13px; bottom:13px; }
-.card .ctitle{ font-family:var(--mono); font-weight:600; font-size:14px; line-height:1.25; color:#fff; }
-.card .cfoot{ display:flex; align-items:center; gap:8px; margin-top:9px; font-family:var(--mono); font-size:11px; color:var(--muted); }
-.card .play{
-  width:30px; height:30px; border-radius:50%; flex:none;
-  border:1px solid rgba(255,255,255,.35); display:grid; place-items:center;
-  transition:.25s var(--ease);
-}
-.card:hover .play{ border-color:var(--cyan); background:rgba(34,211,238,.18); box-shadow:0 0 18px rgba(34,211,238,.4); }
-.card .play svg{ width:11px; height:11px; margin-left:1px; fill:#fff; }
+.layout-letterbox .film-title{ max-width:15ch; font-size:clamp(44px,5.1vw,86px); }
+.layout-letterbox .film-detail{ justify-content:flex-end; }
+.layout-letterbox .film-descriptor{ text-align:right; }
 
-/* filtered-out state */
-.card.hide{ display:none; }
-
-/* =======================================================================
-   LAB BAND
-   ======================================================================= */
-.lab{ position:relative; }
-.lab .lab-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,2vw,22px); margin-top:clamp(28px,4vw,44px); }
-.lab-card{
-  border:1px solid var(--line); border-radius:8px; padding:26px 24px;
-  background:var(--panel); position:relative; overflow:hidden;
-  transition:border-color .3s, transform .35s var(--ease);
+/* Fourth film: the title block cuts into the image. */
+.layout-block{ background:var(--surface-2); }
+.layout-block .chapter-stage{ display:flex; align-items:center; }
+.layout-block .film-visual{ width:min(72vw,1240px); aspect-ratio:16/9; margin-left:1vw; }
+.layout-block .film-copy{
+  position:absolute;
+  right:var(--pad);
+  bottom:clamp(40px,8vh,90px);
+  width:min(43vw,650px);
+  padding:clamp(26px,3.4vw,56px);
+  background:var(--accent);
+  color:var(--bg-deep);
 }
-.lab-card:hover{ border-color:rgba(168,85,247,.45); transform:translateY(-4px); }
-.lab-card .num{ font-family:var(--mono); font-size:12px; color:var(--purple); letter-spacing:.12em; }
-.lab-card h3{ font-family:var(--mono); font-size:18px; margin:14px 0 10px; font-weight:700; }
-.lab-card p{ color:var(--muted); font-size:14.5px; }
-.lab-card .glow{ position:absolute; right:-30px; top:-30px; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle, rgba(168,85,247,.22), transparent 70%); filter:blur(8px); }
+.layout-block .film-title{ max-width:10ch; margin-bottom:28px; color:var(--bg-deep); opacity:.6; }
+.layout-block.is-current .film-title{ opacity:1; }
+.layout-block .film-descriptor{ color:rgba(8,7,6,.72); }
+.layout-block .play-cta{ background:var(--bg-deep); color:var(--text); }
+.layout-block .play-cta:hover{ background:var(--text); color:var(--bg-deep); }
 
-/* =======================================================================
-   ABOUT
-   ======================================================================= */
-.about-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(34px,5vw,72px); align-items:start; }
-.bio p{ font-size:clamp(16px,2vw,20px); line-height:1.7; color:var(--text); margin-bottom:18px; }
-.bio p.lead{ font-size:clamp(18px,2.4vw,24px); }
-.bio p .hl{ color:var(--cyan); }
-.bio p b{ color:var(--text); }
+/* Fifth film: image and type deliberately break alignment. */
+.layout-offset{ background:#0a0b0a; }
+.layout-offset .chapter-stage{ display:flex; align-items:center; justify-content:flex-end; }
+.layout-offset .chapter-stage::before{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:33vw;
+  height:44vh;
+  z-index:-1;
+  background:var(--accent-deep);
+}
+.layout-offset .film-visual{ width:min(70vw,1260px); aspect-ratio:16/9; margin-right:1vw; }
+.layout-offset .film-copy{ position:absolute; left:var(--pad); top:18vh; width:min(44vw,680px); }
+.layout-offset .film-title{ margin-bottom:32px; text-shadow:0 14px 42px rgba(0,0,0,.58); }
 
-.stack-head{ font-family:var(--mono); font-size:12px; letter-spacing:.16em; color:var(--magenta); margin:30px 0 14px; }
-.stack{ display:flex; flex-wrap:wrap; gap:9px; }
-.stack .t{
-  font-family:var(--mono); font-size:12.5px; padding:8px 13px; border-radius:5px;
-  border:1px solid var(--line); color:var(--muted); background:var(--panel);
-  transition:.22s var(--ease);
+/* Sixth film: portrait work keeps its own frame. */
+.layout-portrait{ background:#15100d; }
+.layout-portrait .chapter-stage{ display:grid; place-items:center; }
+.layout-portrait .chapter-stage::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:min(32vw,470px);
+  height:72dvh;
+  background:var(--accent);
+  transform:translate(-42%,-46%);
 }
-.stack .t:hover{ color:var(--text); border-color:rgba(34,211,238,.4); box-shadow:0 0 16px rgba(34,211,238,.12); }
-.stack .t.key{ color:var(--cyan); border-color:rgba(34,211,238,.5); box-shadow:0 0 16px rgba(34,211,238,.14); }
-.bio-meta{ font-family:var(--mono); font-size:12px; color:var(--dim); letter-spacing:.04em; margin-top:8px; }
+.layout-portrait .film-visual{ height:76dvh; aspect-ratio:9/16; z-index:1; }
+.layout-portrait .film-poster{ object-fit:cover; }
+.layout-portrait .film-copy{ position:absolute; inset:0; z-index:3; }
+.layout-portrait .film-title{ position:absolute; left:var(--pad); bottom:10vh; width:min(36vw,560px); }
+.layout-portrait .film-detail{ position:absolute; right:var(--pad); bottom:12vh; width:min(27vw,380px); justify-content:flex-end; }
+.layout-portrait .film-descriptor{ text-align:right; }
 
-.caps{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-.cap{
-  border:1px solid var(--line); border-radius:8px; padding:22px 20px; background:var(--panel);
-  transition:border-color .3s, transform .35s var(--ease);
+.reel-break{ position:relative; z-index:16; box-shadow:0 -30px 100px rgba(20,5,3,.62); }
+.vertical-cuts{ padding:clamp(100px,12vw,190px) var(--pad) clamp(110px,14vw,220px); background:#120d0b; }
+.section-heading{ max-width:980px; margin-bottom:clamp(52px,7vw,100px); }
+.section-heading h2{
+  max-width:13ch;
+  font-size:clamp(48px,7.3vw,122px);
+  font-weight:780;
+  font-stretch:68%;
+  letter-spacing:-.058em;
+  line-height:.88;
+  text-wrap:balance;
 }
-.cap:hover{ border-color:rgba(34,211,238,.4); transform:translateY(-3px); }
-.cap .ic{ font-family:var(--mono); font-size:12px; color:var(--cyan); letter-spacing:.1em; }
-.cap h4{ font-family:var(--mono); font-size:15.5px; margin:12px 0 8px; font-weight:700; }
-.cap p{ font-size:13.5px; color:var(--muted); line-height:1.55; }
+.section-heading p{ max-width:42ch; margin-top:22px; color:var(--text-soft); font-size:clamp(15px,1.35vw,19px); }
+.portrait-wall{ display:flex; width:100%; height:min(78dvh,860px); gap:6px; overflow:hidden; }
+.cut-item{
+  position:relative;
+  flex:1 1 0;
+  min-width:66px;
+  overflow:hidden;
+  background:var(--surface);
+  text-align:left;
+  transition:flex .62s var(--ease),transform .2s var(--ease);
+}
+.cut-item:first-child{ flex-grow:2.15; }
+.portrait-wall:has(.cut-item:hover) .cut-item:first-child,
+.portrait-wall:has(.cut-item:focus-visible) .cut-item:first-child{ flex-grow:1; }
+.cut-item:hover,.cut-item:focus-visible{ flex-grow:4.2; }
+.cut-item:active{ transform:scale(.992); }
+.cut-item img{ width:100%; height:100%; object-fit:cover; transform:scale(1.03); transition:transform .7s var(--ease),filter .45s ease; }
+.cut-item:hover img,.cut-item:focus-visible img{ transform:scale(1); filter:saturate(1.08); }
+.cut-item::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(0deg,rgba(7,5,4,.95),transparent 44%);
+}
+.cut-info{ position:absolute; left:18px; right:18px; bottom:19px; z-index:3; transform:translateY(8px); transition:transform .45s var(--ease); }
+.cut-item:hover .cut-info,.cut-item:focus-visible .cut-info{ transform:none; }
+.cut-title{ display:block; max-width:13ch; color:var(--text); font-size:clamp(18px,2vw,34px); font-weight:720; font-stretch:78%; letter-spacing:-.038em; line-height:.98; }
+.cut-kind{ display:block; margin-top:9px; color:var(--text-soft); font-size:11px; }
+.cut-item:not(:hover):not(:focus-visible) .cut-title{ font-size:clamp(14px,1.25vw,20px); }
+.cut-item:not(:hover):not(:focus-visible) .cut-kind{ opacity:.58; }
 
-/* =======================================================================
-   CONTACT / FOOTER
-   ======================================================================= */
-.contact{ text-align:center; }
-.contact .eyebrow{ justify-content:center; }
-.contact .eyebrow::before{ display:none; }
-.contact h2{
-  font-family:var(--mono); font-weight:800;
-  font-size:clamp(34px,7vw,82px); line-height:1; letter-spacing:-.02em; margin:18px 0 26px;
-}
-.contact h2 .g{ background:linear-gradient(90deg,var(--cyan),var(--magenta)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.contact .lead{ color:var(--muted); max-width:54ch; margin:0 auto 34px; font-size:clamp(15px,2vw,18px); }
-.mailbtn{
-  display:inline-flex; align-items:center; gap:12px;
-  font-family:var(--mono); font-size:clamp(15px,2.4vw,20px);
-  border:1px solid rgba(34,211,238,.45); color:var(--cyan);
-  padding:15px 26px; border-radius:6px;
-  transition:.25s var(--ease);
-}
-.mailbtn:hover{ background:rgba(34,211,238,.1); box-shadow:0 0 30px rgba(34,211,238,.3); border-color:var(--cyan); transform:translateY(-2px); }
-.mailbtn .ar{ transition:transform .25s var(--ease); }
-.mailbtn:hover .ar{ transform:translate(3px,-3px); }
+.wide-edits{ padding:clamp(100px,12vw,180px) var(--pad) clamp(120px,15vw,230px); background:var(--wine); overflow:hidden; }
+.wide-stage{ max-width:1580px; min-height:112dvh; margin-inline:auto; }
+.wide-film{ display:block; width:71%; color:var(--text); text-align:left; }
+.wide-film+.wide-film{ width:62%; margin-top:-3vw; margin-left:auto; }
+.wide-image{ position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:var(--surface); box-shadow:0 36px 90px rgba(25,5,3,.48); }
+.wide-image img{ width:100%; height:100%; object-fit:cover; transform:scale(1.025); transition:transform .75s var(--ease),filter .4s ease; }
+.wide-film:hover .wide-image img,.wide-film:focus-visible .wide-image img{ transform:scale(1); filter:saturate(1.08); }
+.wide-caption{ display:flex; align-items:flex-end; justify-content:space-between; gap:26px; padding-top:18px; }
+.wide-title{ max-width:17ch; font-size:clamp(24px,3.1vw,52px); font-weight:720; font-stretch:75%; letter-spacing:-.047em; line-height:.95; }
+.wide-kind{ flex:none; color:var(--text-soft); font-size:12px; }
 
-/* contact social icon buttons (email shown first, these sit below) */
-.contact-socials{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:24px; }
-.contact-socials a{
-  display:inline-flex; align-items:center; gap:9px;
-  font-family:var(--mono); font-size:13px; color:var(--muted);
-  border:1px solid var(--line); border-radius:6px; padding:10px 15px;
-  transition:.22s var(--ease);
+.about{
+  position:relative;
+  z-index:17;
+  padding:clamp(110px,14vw,220px) var(--pad);
+  background:var(--bg);
+  display:grid;
+  grid-template-columns:minmax(120px,.23fr) minmax(0,1fr);
+  gap:clamp(36px,8vw,150px);
 }
-.contact-socials a svg{ width:17px; height:17px; fill:currentColor; flex:none; }
-.contact-socials a:hover{ color:var(--cyan); border-color:rgba(34,211,238,.45); box-shadow:0 0 18px rgba(34,211,238,.16); transform:translateY(-2px); }
+.section-name{ color:var(--accent); font-size:14px; font-weight:680; }
+.about-body{ max-width:1160px; }
+.bio p{ max-width:64ch; color:var(--text-soft); font-size:clamp(17px,1.65vw,25px); line-height:1.5; letter-spacing:-.018em; }
+.bio p:first-child{ max-width:21ch; color:var(--text); font-size:clamp(40px,5.6vw,92px); font-weight:650; font-stretch:82%; line-height:.98; letter-spacing:-.052em; }
+.bio p+p{ margin-top:28px; }
+.bio-meta{ color:var(--muted) !important; font-size:13px !important; letter-spacing:0 !important; }
+.craft{
+  margin-top:clamp(72px,9vw,130px);
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(28px,5vw,78px);
+}
+.craft div{ padding-top:17px; border-top:3px solid var(--accent); }
+.craft dt{ margin-bottom:13px; color:var(--text); font-size:13px; font-weight:680; }
+.craft dd{ color:var(--text-soft); font-size:13px; line-height:1.75; }
 
-/* contact tagline + CTA row (Book a call + email) */
-.contact-tagline{ font-family:var(--mono); color:var(--cyan); letter-spacing:.04em; font-size:clamp(14px,2vw,17px); margin:-8px 0 26px; }
-.contact-cta{ display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:14px; }
-.callbtn{
-  display:inline-flex; align-items:center; gap:10px;
-  font-family:var(--mono); font-size:clamp(15px,2.4vw,20px); font-weight:600;
-  background:var(--cyan); color:#04141a; border:1px solid var(--cyan);
-  padding:15px 26px; border-radius:6px; transition:.25s var(--ease);
+.contact{
+  position:relative;
+  z-index:17;
+  min-height:84dvh;
+  padding:clamp(92px,11vw,170px) var(--pad) clamp(72px,9vw,130px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:var(--accent);
+  color:var(--bg-deep);
 }
-.callbtn .cal-ic{ width:18px; height:18px; fill:currentColor; flex:none; }
-.callbtn .ar{ transition:transform .25s var(--ease); }
-.callbtn:hover{ box-shadow:0 0 34px rgba(34,211,238,.5); transform:translateY(-2px); filter:brightness(1.06); }
-.callbtn:hover .ar{ transform:translate(3px,-3px); }
+.contact-top{ display:grid; grid-template-columns:minmax(120px,.23fr) minmax(0,1fr); gap:clamp(36px,8vw,150px); }
+.contact .section-name{ color:var(--bg-deep); }
+.contact-body h2{ max-width:13ch; font-size:clamp(52px,8.2vw,142px); font-weight:820; font-stretch:67%; letter-spacing:-.064em; line-height:.84; text-wrap:balance; }
+.contact-actions{ margin-top:clamp(48px,7vw,88px); display:flex; flex-wrap:wrap; align-items:baseline; gap:20px 38px; }
+.contact-actions a{ padding-bottom:5px; border-bottom:2px solid currentColor; font-weight:650; transition:opacity .2s ease,transform .2s var(--ease); }
+.contact-actions a:first-child{ font-size:clamp(18px,2vw,30px); }
+.contact-actions a:hover{ opacity:.62; transform:translateY(-2px); }
+.contact-bottom{ margin-top:80px; display:flex; align-items:flex-end; justify-content:space-between; gap:32px; }
+.social-links{ display:flex; flex-wrap:wrap; gap:18px 30px; font-size:13px; font-weight:620; }
+.social-links a:hover{ opacity:.6; }
+.contact-mark{ max-width:20ch; font-size:12px; text-align:right; }
 
 .footer{
-  position:relative; z-index:2;
-  border-top:1px solid var(--line);
-  margin-top:clamp(60px,8vw,100px);
-  padding:30px clamp(20px,5vw,56px);
-  display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
-  font-family:var(--mono); font-size:12.5px; color:var(--dim);
+  position:relative;
+  z-index:17;
+  padding:24px var(--pad);
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  background:var(--bg-deep);
+  color:var(--muted);
+  font-size:11px;
 }
-.socials{ display:flex; gap:8px; }
-.socials a{
-  padding:7px 11px; border:1px solid var(--line); border-radius:4px; color:var(--muted);
-  transition:.22s var(--ease);
-}
-.socials a:hover{ color:var(--cyan); border-color:rgba(34,211,238,.45); box-shadow:0 0 14px rgba(34,211,238,.18); }
+.footer a:hover{ color:var(--text); }
 
-/* =======================================================================
-   LIGHTBOX / MODAL
-   ======================================================================= */
-.lb{
-  position:fixed; inset:0; z-index:100;
-  display:none; align-items:center; justify-content:center;
-  padding:clamp(16px,4vw,48px);
-  background:rgba(3,4,8,.86); backdrop-filter:blur(10px);
-  opacity:0; transition:opacity .3s var(--ease);
-}
-.lb.open{ display:flex; opacity:1; }
-.lb-inner{
-  position:relative; width:100%; max-width:1040px;
-  border:1px solid var(--line); border-radius:10px; overflow:hidden;
-  background:var(--bg-2);
-  transform:scale(.96) translateY(10px); transition:transform .35s var(--ease);
-  box-shadow:0 40px 120px -30px rgba(0,0,0,.8);
-}
-.lb.open .lb-inner{ transform:none; }
-.lb-bar{
-  display:flex; align-items:center; justify-content:space-between; gap:14px;
-  padding:13px 16px; border-bottom:1px solid var(--line);
-  font-family:var(--mono); font-size:12.5px; color:var(--muted);
-}
-.lb-bar .lb-tag{ color:var(--cyan); letter-spacing:.08em; }
-.lb-bar .lb-title{ color:var(--text); }
-.lb-dots{ display:flex; gap:6px; }
-.lb-dots i{ width:9px; height:9px; border-radius:50%; border:1px solid var(--line); }
-.lb-dots i:nth-child(1){ background:rgba(236,72,153,.6); border:0; }
-.lb-dots i:nth-child(2){ background:rgba(34,211,238,.6); border:0; }
-.lb-close{
-  position:absolute; top:10px; right:12px; z-index:5;
-  width:34px; height:34px; border:1px solid var(--line); border-radius:5px;
-  display:grid; place-items:center; color:var(--text); background:rgba(5,6,10,.6);
-  transition:.2s var(--ease); font-family:var(--mono);
-}
-.lb-close:hover{ border-color:var(--magenta); color:var(--magenta); }
+.empty-state{ min-height:70dvh; display:grid; place-items:center; padding:40px; color:var(--text-soft); text-align:center; }
+.reveal{ opacity:0; transform:translateY(28px); transition:opacity .75s var(--ease),transform .75s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
 
-.lb-stage{ position:relative; background:#000; display:grid; place-items:center; }
-.lb-stage.is-portrait{ max-height:80vh; }
-.lb-process{
-  width:100%; padding:11px 16px; border-top:1px solid var(--line);
-  background:var(--bg-2);
-  font-family:var(--mono); font-size:12.5px; line-height:1.55; color:var(--muted);
+.film-index{
+  position:fixed;
+  inset:0;
+  z-index:var(--z-index);
+  visibility:hidden;
+  display:grid;
+  grid-template-columns:minmax(320px,42vw) minmax(0,1fr);
+  background:var(--accent);
+  color:var(--bg-deep);
+  transform:translateY(100%);
+  transition:transform .58s var(--ease),visibility .58s;
 }
-.lb-media{ width:100%; }
-.lb-media.portrait{ width:auto; max-width:min(420px,90vw); margin-inline:auto; }
-.lb-media iframe, .lb-media video{ width:100%; height:100%; display:block; border:0; }
-.lb-media.land .frame{ aspect-ratio:16/9; width:100%; }
-.lb-media.portrait .frame{ aspect-ratio:9/16; max-height:78vh; }
-/* Instagram embeds — fixed card (IG brings its own chrome, so no forced aspect) */
-.lb-media.ig-wrap{ display:flex; justify-content:center; width:auto; }
-.lb-media.ig-wrap .frame.ig{ width:min(400px,94vw); height:min(80vh,760px); background:#000; }
-.lb-media.ig-wrap .frame.ig iframe{ width:100%; height:100%; border:0; }
-/* "Watch ↗" button fallback for other hosts (TikTok, Drive, etc.) */
-.lb-openbtn{ display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:14px; color:var(--cyan); border:1px solid rgba(34,211,238,.5); padding:12px 20px; border-radius:6px; transition:.22s var(--ease); }
-.lb-openbtn:hover{ background:rgba(34,211,238,.12); box-shadow:0 0 22px rgba(34,211,238,.25); transform:translateY(-2px); }
+.film-index.open{ visibility:visible; transform:none; }
+.index-preview{ position:relative; min-height:100dvh; overflow:hidden; background:var(--wine); }
+.index-preview img{ width:100%; height:100%; object-fit:cover; filter:saturate(.82) contrast(1.04); transform:scale(1.025); transition:opacity .18s ease,transform .65s var(--ease); }
+.film-index.open .index-preview img{ transform:scale(1); }
+.index-preview::after{ content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(8,7,6,.84),transparent 58%); pointer-events:none; }
+.index-preview-title{ position:absolute; left:clamp(22px,3vw,50px); right:clamp(22px,3vw,50px); bottom:34px; z-index:2; color:var(--text); font-size:clamp(32px,4vw,70px); font-weight:770; font-stretch:70%; letter-spacing:-.055em; line-height:.9; }
+.index-panel{ min-width:0; min-height:100dvh; padding:26px clamp(24px,4vw,72px) 42px; display:grid; grid-template-rows:auto auto minmax(0,1fr); }
+.index-top{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.index-top h2{ font-size:clamp(34px,4.7vw,78px); font-weight:810; font-stretch:66%; letter-spacing:-.055em; line-height:.9; }
+.index-close{ padding:9px 0 6px; border-bottom:2px solid currentColor; font-size:13px; font-weight:680; transition:opacity .2s ease; }
+.index-close:hover{ opacity:.58; }
+.index-filters{ padding:30px 0 26px; display:flex; flex-wrap:wrap; gap:10px 24px; }
+.index-filter{ padding:5px 0 3px; border-bottom:2px solid transparent; color:var(--bg-deep); font-size:12px; font-weight:650; }
+.index-filter:hover,.index-filter[aria-pressed="true"]{ border-color:var(--bg-deep); color:var(--bg-deep); }
+.index-grid{ min-height:0; overflow-y:auto; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-content:start; gap:11px 34px; padding-right:10px; scrollbar-color:var(--bg-deep) transparent; }
+.index-item{ min-width:0; padding:5px 0; color:var(--bg-deep); text-align:left; transition:color .18s ease,transform .25s var(--ease); }
+.index-item strong{ display:block; font-size:clamp(18px,1.65vw,28px); font-weight:710; font-stretch:78%; letter-spacing:-.035em; line-height:1.02; text-wrap:balance; }
+.index-item span{ display:block; margin-top:4px; color:var(--bg-deep); font-size:10px; opacity:1; }
+.index-item:hover,.index-item:focus-visible{ color:var(--text); transform:translateX(7px); }
+.index-empty{ padding-top:30px; font-weight:650; }
 
-/* poster fallback (no video yet) */
-.lb-fallback{ position:relative; }
-.lb-fallback img{ width:100%; height:100%; object-fit:contain; max-height:78vh; }
-.lb-fallback.portrait img{ max-width:min(420px,90vw); margin-inline:auto; }
-.lb-soon{
-  position:absolute; inset:0; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:12px; text-align:center;
-  background:linear-gradient(180deg, rgba(5,6,10,.35), rgba(5,6,10,.78));
-  font-family:var(--mono);
+.viewer{
+  position:fixed;
+  inset:0;
+  z-index:var(--z-viewer);
+  visibility:hidden;
+  opacity:0;
+  display:grid;
+  grid-template-rows:62px minmax(0,1fr);
+  background:rgba(6,5,4,.985);
+  transition:opacity .22s ease,visibility .22s;
 }
-.lb-soon .ring{
-  width:60px; height:60px; border-radius:50%;
-  border:1px solid rgba(34,211,238,.4); border-top-color:var(--cyan);
-  animation:spin 2.4s linear infinite;
-  display:grid; place-items:center; color:var(--cyan);
-}
-.lb-soon .ring svg{ width:18px; height:18px; fill:var(--cyan); margin-left:2px; }
-.lb-soon .msg{ color:var(--text); font-size:14px; letter-spacing:.04em; }
-.lb-soon .sub{ color:var(--dim); font-size:11.5px; letter-spacing:.06em; max-width:34ch; }
+.viewer.open{ visibility:visible; opacity:1; }
+.viewer-bar{ padding-inline:var(--pad); display:flex; align-items:center; justify-content:space-between; gap:24px; background:var(--accent); color:var(--bg-deep); font-size:13px; font-weight:670; }
+.viewer-close{ padding:8px 0 5px; border-bottom:2px solid currentColor; }
+.viewer-close:hover{ opacity:.6; }
+.viewer-stage{ min-height:0; padding:18px; display:grid; place-items:center; }
+.viewer-media{ width:min(96vw,calc((100dvh - 100px) * 1.7778)); aspect-ratio:16/9; background:#000; }
+.viewer-media.portrait{ width:min(88vw,calc((100dvh - 100px) * .5625)); aspect-ratio:9/16; }
+.viewer-media iframe,.viewer-media video{ width:100%; height:100%; display:block; border:0; }
+.viewer-fallback{ max-width:680px; color:var(--text-soft); text-align:center; }
+.viewer-fallback img{ max-height:70dvh; margin:0 auto 24px; object-fit:contain; }
+.viewer-fallback a{ display:inline-block; padding-bottom:5px; border-bottom:2px solid var(--accent); color:var(--text); }
 
-/* =======================================================================
-   RESPONSIVE
-   ======================================================================= */
-@media (max-width:1100px){
-  .work-grid{ grid-template-columns:repeat(3,1fr); }
-  /* portraits 1 col, landscapes span 2 of 3 */
+@media(prefers-reduced-motion:no-preference){
+  .media-loader{ animation:loadingSweep 1.4s ease-in-out infinite; }
+  .page-ready .opening-bar.top{ animation:openTop .95s var(--ease) .12s forwards; }
+  .page-ready .opening-bar.bottom{ animation:openBottom .95s var(--ease) .12s forwards; }
 }
-@media (max-width:980px){
-  .nav-links, .nav-cta{ display:none; }
-  .nav.menu-open .nav-links{
-    display:flex; flex-direction:column; align-items:flex-start; gap:4px;
-    position:absolute; top:100%; left:0; right:0;
-    background:rgba(5,6,10,.97); border-bottom:1px solid var(--line);
-    padding:16px clamp(20px,5vw,56px) 22px;
+@keyframes loadingSweep{ to{ background-position:-120% 0; } }
+@keyframes openTop{ to{ transform:translateY(-102%); } }
+@keyframes openBottom{ to{ transform:translateY(102%); } }
+
+@media(max-width:980px){
+  :root{ --nav-h:62px; }
+  .site-nav nav a[href="#about"]{ display:none; }
+  .layout-split .chapter-stage{ grid-template-columns:.82fr 1.18fr; gap:28px; }
+  .layout-split .chapter-stage::before{ width:60vw; }
+  .layout-block .film-copy{ width:48vw; }
+  .layout-offset .film-copy{ width:46vw; }
+  .portrait-wall{ height:70dvh; }
+  .wide-stage{ min-height:96dvh; }
+  .film-index{ grid-template-columns:36vw minmax(0,1fr); }
+}
+
+@media(max-width:760px){
+  :root{ --pad:18px; --nav-h:58px; }
+  .site-nav{ gap:16px; }
+  .site-nav nav{ gap:16px; }
+  .site-nav nav a[href="#work"],.site-nav nav a[href="#contact"]{ display:none; }
+  .wordmark{ font-size:12px; }
+  .index-trigger{ font-size:11px; }
+  .film-chapter{ position:relative; min-height:100dvh; box-shadow:none; }
+  .chapter-stage{ min-height:100dvh; padding:calc(var(--nav-h) + 24px) var(--pad) 34px; }
+  .film-title{ max-width:14ch; font-size:clamp(44px,15vw,78px); }
+  .film-detail{ align-items:flex-start; justify-content:space-between; }
+
+  .layout-cover .chapter-stage{
+    padding:calc(var(--nav-h) + 24px) 0 34px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:32px;
   }
-  .nav.menu-open .nav-links a{ padding:10px 0; font-size:16px; width:100%; }
-  .nav.menu-open .nav-cta{ display:inline-block; margin-top:8px; }
+  .layout-cover .film-ambient{ display:block; }
+  .layout-cover .film-ambient img{ opacity:.9; filter:blur(42px) saturate(.9) brightness(.54); }
+  .layout-cover::after{ background:linear-gradient(180deg,rgba(8,7,6,.42),rgba(8,7,6,.72)); }
+  .layout-cover .film-visual{ position:relative; inset:auto; width:100%; height:auto; aspect-ratio:16/9; background:transparent; }
+  .layout-cover .film-poster{ object-fit:cover; }
+  .layout-cover .film-copy{ position:relative; inset:auto; width:100%; padding-inline:var(--pad); display:block; }
+  .layout-cover .film-title{ max-width:9ch; font-size:clamp(58px,20vw,94px); }
+  .layout-cover .film-detail{ margin-top:24px; align-items:center; flex-direction:row; justify-content:space-between; }
+  .layout-cover .film-descriptor{ text-align:left; }
+  .hero-motion{ display:none; }
 
-  .about-grid{ grid-template-columns:1fr; }
-  .lab .lab-grid{ grid-template-columns:1fr; }
+  .layout-split .chapter-stage,
+  .layout-letterbox .chapter-stage,
+  .layout-block .chapter-stage,
+  .layout-offset .chapter-stage,
+  .layout-portrait .chapter-stage{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:stretch;
+    gap:28px;
+  }
+  .layout-split .chapter-stage::before,
+  .layout-letterbox .chapter-stage::before,
+  .layout-block .chapter-stage::before,
+  .layout-offset .chapter-stage::before,
+  .layout-portrait .chapter-stage::before{
+    left:auto;
+    right:-8vw;
+    top:18vh;
+    bottom:auto;
+    width:65vw;
+    height:42dvh;
+    transform:none;
+    opacity:.86;
+  }
+  .layout-split .film-visual,
+  .layout-letterbox .film-visual,
+  .layout-block .film-visual,
+  .layout-offset .film-visual{
+    order:1;
+    width:100%;
+    margin:0;
+    aspect-ratio:16/9;
+  }
+  .layout-split .film-copy,
+  .layout-letterbox .film-copy,
+  .layout-block .film-copy,
+  .layout-offset .film-copy{
+    order:2;
+    position:relative;
+    inset:auto;
+    width:100%;
+    margin:0;
+    padding:0;
+    display:block;
+    background:transparent;
+    color:var(--text);
+  }
+  .layout-split .film-title,
+  .layout-letterbox .film-title,
+  .layout-block .film-title,
+  .layout-offset .film-title{ max-width:14ch; margin:0 0 24px; color:var(--text); text-shadow:none; }
+  .layout-split .film-detail,
+  .layout-letterbox .film-detail,
+  .layout-block .film-detail,
+  .layout-offset .film-detail{ justify-content:space-between; }
+  .layout-split .film-descriptor,
+  .layout-letterbox .film-descriptor,
+  .layout-block .film-descriptor,
+  .layout-offset .film-descriptor{ color:var(--text-soft); text-align:left; }
+  .layout-block .play-cta{ background:var(--accent); color:var(--bg-deep); }
+
+  .layout-portrait .film-visual{ order:1; width:min(64vw,360px); height:auto; margin-inline:auto; aspect-ratio:9/16; }
+  .layout-portrait .film-copy{ order:2; position:relative; inset:auto; }
+  .layout-portrait .film-title{ position:relative; inset:auto; width:100%; margin-bottom:24px; }
+  .layout-portrait .film-detail{ position:relative; inset:auto; width:100%; justify-content:space-between; }
+  .layout-portrait .film-descriptor{ text-align:left; }
+
+  .vertical-cuts{ padding-inline:0; }
+  .vertical-cuts .section-heading{ padding-inline:var(--pad); }
+  .section-heading h2{ font-size:clamp(54px,17vw,90px); }
+  .portrait-wall{ height:70dvh; overflow-x:auto; gap:8px; padding-inline:var(--pad); scroll-snap-type:x mandatory; scrollbar-width:none; }
+  .portrait-wall::-webkit-scrollbar{ display:none; }
+  .cut-item,.cut-item:first-child,.cut-item:hover,.cut-item:focus-visible{ flex:0 0 74vw; min-width:0; scroll-snap-align:center; }
+  .cut-info{ transform:none; }
+  .cut-item:not(:hover):not(:focus-visible) .cut-title{ font-size:clamp(22px,7vw,38px); }
+
+  .wide-stage{ min-height:auto; }
+  .wide-film,.wide-film+.wide-film{ width:100%; margin:0; }
+  .wide-film+.wide-film{ margin-top:72px; }
+  .wide-caption{ display:block; }
+  .wide-kind{ display:block; margin-top:10px; }
+
+  .about,.contact-top{ grid-template-columns:1fr; gap:34px; }
+  .bio p:first-child{ font-size:clamp(44px,14vw,72px); }
+  .craft{ grid-template-columns:1fr; }
+  .contact{ min-height:78dvh; }
+  .contact-body h2{ font-size:clamp(58px,18vw,96px); }
+  .contact-bottom{ align-items:flex-start; flex-direction:column; }
+  .contact-mark{ text-align:left; }
+  .footer{ flex-direction:column; }
+
+  .film-index{ grid-template-columns:1fr; }
+  .index-preview{ display:none; }
+  .index-panel{ min-height:100dvh; padding:22px var(--pad) 32px; }
+  .index-top h2{ font-size:50px; }
+  .index-filters{ padding-block:24px 20px; gap:8px 18px; }
+  .index-grid{ grid-template-columns:1fr; gap:10px; }
+  .index-item strong{ font-size:24px; }
+  .viewer-stage{ padding:10px; }
 }
-@media (max-width:760px){
-  .work-grid{ grid-template-columns:repeat(2,1fr); }
-  .card.landscape{ grid-column:span 2; }
-  .card.portrait{ grid-column:span 1; }
-}
-@media (max-width:560px){
-  /* Work: tidy 2-col bento — smaller, nicer tiles */
-  .work-grid{ grid-template-columns:repeat(2,1fr); gap:10px; }
-  .card.landscape{ grid-column:span 2; }
-  .card.portrait{ grid-column:span 1; }
-  .card .ctitle{ font-size:12.5px; }
-  .card .cfoot{ font-size:10px; }
-  .card .ctag{ font-size:9.5px; padding:3px 7px; }
-  .caps{ grid-template-columns:1fr; }
-}
 
-/* =======================================================================
-   PHONES
-   ======================================================================= */
-@media (max-width:640px){
-  .swarm-render .rl{ display:none; }
-  .swarm-bar{ font-size:11px; }
-  .swarm-socials{ gap:12px; }
-  .sbtn{ padding:13px 18px; font-size:13.5px; }
-
-  .work .section-head{ margin-bottom:22px; }
-
-  /* filter / sort component: one line, tabs spread out equally */
-  .filters{ flex-wrap:nowrap; justify-content:space-between; width:100%; gap:2px; padding:6px 8px; overflow:hidden; }
-  .filter{ padding:7px 4px; font-size:10px; white-space:nowrap; }
-  .filter .cnt{ margin-left:2px; }
-}
-
-/* =======================================================================
-   REDUCED MOTION
-   ======================================================================= */
-@media (prefers-reduced-motion:reduce){
-  *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
-  .reveal{ opacity:1 !important; transform:none !important; }
-  .rv{ animation:none !important; opacity:1 !important; transform:none !important; }
-  .swarm-render .dot{ animation:none !important; }
+@media(prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation:none !important; transition:none !important; }
+  .reveal{ opacity:1; transform:none; }
+  .film-title{ opacity:1; transform:none; }
+  .opening-bar{ display:none; }
 }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#work">Skip to films</a>
 
-<!-- Ambient FX layers -->
-<div class="fx fx-noise" aria-hidden="true"></div>
-<div class="fx fx-grid" aria-hidden="true"></div>
-<div class="fx fx-scan" aria-hidden="true"></div>
-<div class="fx fx-vignette" aria-hidden="true"></div>
-
-<!-- ============================== NAV ============================== -->
-<header class="nav" id="nav">
-  <a href="#top" class="brand" aria-label="Aniket — home">
-    ANIKET <span class="slash">//</span> <span class="tag">ai_native</span><span class="blink"> _</span>
-  </a>
-
-  <nav class="nav-links" id="navLinks" aria-label="Primary">
-    <a href="#work"><span class="idx">[01]</span>work</a>
-    <a href="#about"><span class="idx">[02]</span>about</a>
-    <a href="#contact" class="nav-cta">[CONTACT]</a>
+<header class="site-nav">
+  <a class="wordmark" href="#work" aria-label="Aniket, film portfolio home">ANIKET <span>// ai_native</span></a>
+  <nav aria-label="Primary">
+    <a href="#work" aria-current="page">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="labs.html">Labs</a>
+    <button class="index-trigger" id="indexOpen" type="button" aria-haspopup="dialog">Film index <span id="indexCount">15</span></button>
   </nav>
-
-  <button class="nav-dots" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></button>
 </header>
 
-<!-- ============================== HERO ============================== -->
-<!-- ============================== 3D SPACE LAYER ============================== -->
-<div class="space" id="space" aria-hidden="true">
-  <canvas id="cosmos"></canvas>
-  <div class="swarm-grain"></div>
-  <div class="swarm-bar" id="spaceBar">
-    <nav class="swarm-socials" aria-label="Social links">
-      <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">[IG]</a>
-      <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">[LI]</a>
-      <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">[YT]</a>
-    </nav>
-    <div class="swarm-render" aria-hidden="true">
-      <span class="dot"></span>
-      <span class="rec">REC</span>
-      <span class="tc" id="swarmTc">00:00:07:12</span>
-      <span class="rl" id="sectorLbl">deep_space</span>
+<main>
+  <section class="cinema-stack" id="work" aria-label="Featured films">
+    <div id="cinemaStack">
+      <article class="film-chapter layout-cover is-current" style="--scene:0">
+        <div class="film-visual media-ready">
+          <img class="film-poster" src="assets/posters/hero-nuvve-kada.webp" width="1280" height="720" alt="Nuvve Kada, a cinematic Telugu musical love story" fetchpriority="high" />
+          <span class="media-loader" aria-hidden="true"></span>
+          <span class="media-error">Preview unavailable</span>
+          <span class="opening-bar top" aria-hidden="true"></span>
+          <span class="opening-bar bottom" aria-hidden="true"></span>
+        </div>
+        <div class="film-copy">
+          <h1 class="film-title">Nuvve Kada</h1>
+          <div class="film-detail">
+            <p class="film-descriptor">Musical love story / 02:22</p>
+            <button class="play-cta" type="button" data-open-index="0">Play film</button>
+          </div>
+        </div>
+      </article>
     </div>
-  </div>
-</div>
-<main id="top">
-<section class="journey" id="journey" aria-label="Welcome">
-  <div class="journey-hero">
-    <h1 class="swarm-h1">welcome <span class="s1">/</span> explore the work</h1>
-    <div class="swarm-copy">
-      <p class="swarm-whoami rv d1"><span class="pr">~/ai_native&gt;</span> AI-NATIVE VIDEO EDITOR · GENAI STORYTELLER</p>
-      <p class="swarm-sub rv d2">I edit <b>AI-powered videos</b> and cinematic shorts. Scroll: fly through the stars to the work.</p>
-      <div class="swarm-ctas rv d3">
-        <a class="sbtn solid" href="#work" id="beginBtn">begin the journey</a>
+  </section>
+
+  <section class="vertical-cuts reel-break" id="verticalCuts" aria-labelledby="verticalTitle">
+    <div class="section-heading reveal">
+      <h2 id="verticalTitle">Made for the vertical frame.</h2>
+      <p>News edits, motion studies and narrative shorts that move at phone speed.</p>
+    </div>
+    <div class="portrait-wall" id="portraitWall" aria-label="Vertical films"></div>
+  </section>
+
+  <section class="wide-edits" id="wideEdits" aria-labelledby="wideTitle">
+    <div class="section-heading reveal">
+      <h2 id="wideTitle">The wider cuts.</h2>
+      <p>Long-form and short-form edits where motion, real footage and generated shots share the frame.</p>
+    </div>
+    <div class="wide-stage" id="wideStage"></div>
+  </section>
+
+  <section class="about" id="about" aria-labelledby="aboutTitle">
+    <h2 class="section-name" id="aboutTitle">About</h2>
+    <div class="about-body reveal">
+      <div class="bio" id="bio">
+        <p>I'm Aniket, a video editor and AI filmmaker.</p>
+        <p>I make music films, short-form edits and motion work, building shots with generative tools when the footage does not exist.</p>
+        <p class="bio-meta">Based in Kolkata, IST / working in English and Hindi</p>
       </div>
+      <dl class="craft" id="craft">
+        <div><dt>Generative</dt><dd>Seedance, Kling, Veo, Higgsfield, Google Flow, Nano Banana, GPT Image</dd></div>
+        <div><dt>Edit and motion</dt><dd>Premiere Pro, After Effects</dd></div>
+        <div><dt>Code</dt><dd>Python, JavaScript, HTML, CSS</dd></div>
+      </dl>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="deck">
-<!-- ============================== WORK ============================== -->
-<section class="section work" id="work" aria-labelledby="work-h">
-  <span class="plus" style="left:18px;top:24px"></span>
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">[ WORK ]</p>
-      <h2 id="work-h">selected_output <span class="sub">// reel · client · motion</span></h2>
-    </div>
-
-    <!-- Filter tab bar -->
-    <div class="reveal d1">
-      <div class="filters" id="filters" role="tablist" aria-label="Filter work by category">
-        <button class="filter active" data-filter="all"  role="tab" aria-selected="true">ALL <span class="cnt">[12]</span></button>
-        <button class="filter" data-filter="ai"        role="tab" aria-selected="false">AI <span class="cnt">[3]</span></button>
-        <button class="filter" data-filter="shorts"    role="tab" aria-selected="false">SHORTS <span class="cnt">[3]</span></button>
-        <button class="filter" data-filter="motion"    role="tab" aria-selected="false">MOTION <span class="cnt">[3]</span></button>
-        <button class="filter" data-filter="narrative" role="tab" aria-selected="false">NARRATIVE <span class="cnt">[3]</span></button>
-      </div>
-      <p class="work-meta">&gt; showing <b id="shownCount">12</b> of <span id="totalCount">12</span> outputs · click any tile to preview</p>
-    </div>
-
-    <!-- Work grid. These cards are rendered from config.js (the `works` array)
-         and update automatically. The static cards below are only a fallback
-         shown if config.js is unavailable. To add/edit work or paste video
-         links, edit config.js — see HOW-TO-EDIT.md. -->
-    <div class="work-grid" id="workGrid">
-
-      <!-- ============ AI (cinematic, from scratch) ============ -->
-      <article class="card landscape reveal" data-category="ai" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/ai-cinematic-01.webp"
-        data-title="Cinematic AI Short — From Scratch" data-tag="AI" data-orientation="landscape"
-        aria-label="Play preview: Cinematic AI Short — From Scratch">
-        <img src="assets/posters/ai-cinematic-01.webp" width="1280" height="720" alt="Cinematic AI short — moody office scene rendered entirely with AI tools" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">AI</span><span class="ratio">16:9</span>
-        <div class="cbody"><div class="ctitle">Cinematic AI Short — From Scratch</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> reel_001 · text-to-video</div></div>
-      </article>
-
-      <article class="card landscape reveal d1" data-category="ai" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/ai-cinematic-02.webp"
-        data-title="Cinematic AI Short II — Refined" data-tag="AI" data-orientation="landscape"
-        aria-label="Play preview: Cinematic AI Short II — Refined">
-        <img src="assets/posters/ai-cinematic-02.webp" width="1280" height="720" alt="Refined cinematic AI short, second iteration" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">AI</span><span class="ratio">16:9</span>
-        <div class="cbody"><div class="ctitle">Cinematic AI Short II — Refined</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> reel_002 · generative</div></div>
-      </article>
-
-      <article class="card portrait reveal d2" data-category="ai" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/ai-cinematic-03.webp"
-        data-title="AI Concept Short" data-tag="AI" data-orientation="portrait"
-        aria-label="Play preview: AI Concept Short">
-        <img src="assets/posters/ai-cinematic-03.webp" width="1080" height="1920" alt="Vertical AI concept short" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">AI</span><span class="ratio">9:16</span>
-        <div class="cbody"><div class="ctitle">AI Concept Short</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> concept · vertical</div></div>
-      </article>
-
-      <!-- ============ SHORTS (client / Avinash Mada) ============ -->
-      <article class="card portrait reveal" data-category="shorts" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/client-short-01.webp"
-        data-title="News Short — Cybersecurity Selloff" data-tag="SHORTS" data-orientation="portrait"
-        aria-label="Play preview: News Short — Cybersecurity Selloff">
-        <img src="assets/posters/client-short-01.webp" width="1080" height="1920" alt="Finance/tech news short about a cybersecurity selloff" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
-        <div class="cbody"><div class="ctitle">News Short — Cybersecurity Selloff</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> client · caption anim</div></div>
-      </article>
-
-      <article class="card portrait reveal d1" data-category="shorts" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/client-short-02.webp"
-        data-title="News Short — Markets" data-tag="SHORTS" data-orientation="portrait"
-        aria-label="Play preview: News Short — Markets">
-        <img src="assets/posters/client-short-02.webp" width="1080" height="1920" alt="Fast-paced markets news short" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
-        <div class="cbody"><div class="ctitle">News Short — Markets</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> client · fast-cut</div></div>
-      </article>
-
-      <article class="card portrait reveal d2" data-category="shorts" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/client-short-03.webp"
-        data-title="News Short — Tech" data-tag="SHORTS" data-orientation="portrait"
-        aria-label="Play preview: News Short — Tech">
-        <img src="assets/posters/client-short-03.webp" width="1080" height="1920" alt="Tech news short with bold caption animation" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">SHORTS</span><span class="ratio">9:16</span>
-        <div class="cbody"><div class="ctitle">News Short — Tech</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> client · internet-native</div></div>
-      </article>
-
-      <!-- ============ MOTION (motion graphics) ============ -->
-      <article class="card portrait reveal" data-category="motion" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/motion-01.webp"
-        data-title="Motion Graphics — 01" data-tag="MOTION" data-orientation="portrait"
-        aria-label="Play preview: Motion Graphics 01">
-        <img src="assets/posters/motion-01.webp" width="1080" height="1920" alt="Motion-graphics short, design 01" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">MOTION</span><span class="ratio">9:16</span>
-        <div class="cbody"><div class="ctitle">Motion Graphics — 01</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> mograph · kinetic</div></div>
-      </article>
-
-      <article class="card portrait reveal d1" data-category="motion" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/motion-02.webp"
-        data-title="Motion Graphics — 02" data-tag="MOTION" data-orientation="portrait"
-        aria-label="Play preview: Motion Graphics 02">
-        <img src="assets/posters/motion-02.webp" width="1080" height="1920" alt="Motion-graphics short, design 02" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">MOTION</span><span class="ratio">9:16</span>
-        <div class="cbody"><div class="ctitle">Motion Graphics — 02</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> mograph · type</div></div>
-      </article>
-
-      <article class="card portrait reveal d2" data-category="motion" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/motion-03.webp"
-        data-title="Motion Graphics — 03" data-tag="MOTION" data-orientation="portrait"
-        aria-label="Play preview: Motion Graphics 03">
-        <img src="assets/posters/motion-03.webp" width="1080" height="1920" alt="Motion-graphics short, design 03" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">MOTION</span><span class="ratio">9:16</span>
-        <div class="cbody"><div class="ctitle">Motion Graphics — 03</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> mograph · loop</div></div>
-      </article>
-
-      <!-- ============ NARRATIVE (editing / storytelling) ============ -->
-      <article class="card landscape reveal" data-category="narrative" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/narrative-longform.webp"
-        data-title="Long-form — Motion + AI B-roll" data-tag="NARRATIVE" data-orientation="landscape"
-        aria-label="Play preview: Long-form — Motion plus AI B-roll">
-        <img src="assets/posters/narrative-longform.webp" width="1280" height="720" alt="Long-form edit combining motion graphics and AI-generated b-roll" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">NARRATIVE</span><span class="ratio">16:9</span>
-        <div class="cbody"><div class="ctitle">Long-form — Motion + AI B-roll</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> long-form · mograph</div></div>
-      </article>
-
-      <article class="card landscape reveal d1" data-category="narrative" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/narrative-shortform.webp"
-        data-title="Short-form — Real B-roll, Text Anim & Color Grade" data-tag="NARRATIVE" data-orientation="landscape"
-        aria-label="Play preview: Short-form — Real B-roll, Text Animation and Color Grade">
-        <img src="assets/posters/narrative-shortform.webp" width="1280" height="720" alt="Short-form edit with real b-roll, text animation and color grading" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">NARRATIVE</span><span class="ratio">16:9</span>
-        <div class="cbody"><div class="ctitle">Short-form — Real B-roll, Text Anim &amp; Color Grade</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> edit · grade</div></div>
-      </article>
-
-      <article class="card portrait reveal d2" data-category="narrative" role="button" tabindex="0"
-        data-video="" data-poster="assets/posters/narrative-gaming.webp"
-        data-title="Gaming News Short" data-tag="NARRATIVE" data-orientation="portrait"
-        aria-label="Play preview: Gaming News Short">
-        <img src="assets/posters/narrative-gaming.webp" width="1080" height="1920" alt="Gaming news short, vertical format" loading="lazy" />
-        <div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>
-        <span class="ctag">NARRATIVE</span><span class="ratio">9:16</span>
-        <div class="cbody"><div class="ctitle">Gaming News Short</div>
-          <div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> gaming · vertical</div></div>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============================== ABOUT ============================== -->
-<section class="section" id="about" aria-labelledby="about-h">
-  <span class="plus" style="left:18px;bottom:24px"></span>
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">[ ABOUT ]</p>
-      <h2 id="about-h">whoami <span class="sub">// the operator</span></h2>
-    </div>
-
-    <div class="about-grid">
-      <!-- bio + stack -->
-      <div class="bio reveal">
-        <p class="lead">I'm <b>Aniket</b> — an <span class="hl">AI-native video editor</span> &amp; AI filmmaker who builds fast, internet-native edits and cinematic shorts end-to-end.</p>
-        <p>I live inside generative image and video tools and obsess over <b>pacing, rhythm, and storytelling</b> — the stuff that makes a cut actually hit. When the shot doesn't exist, I generate it; when it needs energy, I add motion graphics.</p>
-        <p>I also <b>love to code</b>. I build my own tools, automations, and sites — this one included — with <span class="hl">Claude Code</span>. Prompt-first, terminal-native, always experimenting.</p>
-        <p class="bio-meta">Based in Kolkata, IST · works in English &amp; Hindi</p>
-
-        <div class="stack-head">// AI STACK</div>
-        <div class="stack" aria-label="AI tools">
-          <span class="t">Seedance</span>
-          <span class="t">Kling</span>
-          <span class="t">Veo</span>
-          <span class="t">Higgsfield</span>
-          <span class="t">Google Flow</span>
-          <span class="t">Nano Banana</span>
-          <span class="t">GPT Image</span>
-          <span class="t">ElevenLabs</span>
-          <span class="t">Suno</span>
-          <span class="t">Topaz</span>
-        </div>
-
-        <div class="stack-head">// EDIT / MOTION</div>
-        <div class="stack" aria-label="Editing and motion tools">
-          <span class="t">Premiere Pro</span>
-          <span class="t">After Effects</span>
-        </div>
-
-        <div class="stack-head">// CODE</div>
-        <div class="stack" aria-label="Code tooling">
-          <span class="t key">Claude Code</span>
-        </div>
-      </div>
-
-      <!-- capability cards -->
-      <div class="caps reveal d1" aria-label="Capabilities">
-        <div class="cap">
-          <div class="ic">[ AI ]</div>
-          <h4>Generative Video</h4>
-          <p>Text-to-video, image-to-video, and AI b-roll directed into finished, cohesive sequences.</p>
-        </div>
-        <div class="cap">
-          <div class="ic">[ EDIT ]</div>
-          <h4>Fast-Paced Editing</h4>
-          <p>Internet-native shorts with tight pacing, punchy cuts, and hook-first storytelling.</p>
-        </div>
-        <div class="cap">
-          <div class="ic">[ MOGRAPH ]</div>
-          <h4>Motion Graphics</h4>
-          <p>Kinetic type, caption animation, and clean graphic systems that lift the edit.</p>
-        </div>
-        <div class="cap">
-          <div class="ic">[ GRADE ]</div>
-          <h4>Color &amp; Finish</h4>
-          <p>Mood-driven color grading and final polish that gives every frame a consistent look.</p>
+  <section class="contact" id="contact" aria-labelledby="contactTitle">
+    <div class="contact-top">
+      <p class="section-name">Contact</p>
+      <div class="contact-body reveal">
+        <h2 id="contactTitle">Have a film worth making?</h2>
+        <div class="contact-actions">
+          <a id="emailLink" href="mailto:aniketshaw748@gmail.com">aniketshaw748@gmail.com</a>
+          <a id="calendarLink" href="https://calendly.com/aniketshaw748/let-s-meet" target="_blank" rel="noopener">Book a call</a>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ============================== CONTACT ============================== -->
-<section class="section contact" id="contact" aria-labelledby="contact-h">
-  <div class="wrap">
-    <div class="reveal">
-      <p class="eyebrow">[ CONTACT ]</p>
-      <h2 id="contact-h">let's build <span class="g">something</span>_</h2>
-      <p class="lead">Got a reel, a campaign, or a wild generative idea? I turn prompts into polished, scroll-stopping video. Let's make it.</p>
-      <p class="contact-tagline" id="contactTagline">Let my work do the talking.</p>
-
-      <div class="contact-cta">
-        <a class="callbtn" id="callBtn" href="https://calendly.com/aniketshaw748/let-s-meet" target="_blank" rel="noopener">
-          <svg class="cal-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 00-2 2v13a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2V2h-2v2H9V2H7zm12 7v10H5V9h14zM7 11v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2z"/></svg>
-          Book a call <span class="ar">↗</span>
-        </a>
-        <a class="mailbtn" href="mailto:aniketshaw748@gmail.com">
-          aniketshaw748@gmail.com <span class="ar">↗</span>
-        </a>
-      </div>
-
-      <div class="contact-socials" aria-label="Find me on social">
-        <a href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07zm0 1.62c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.4-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.16.42-.35 1.04-.4 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.4 2.19.21.55.47.94.88 1.35.41.41.8.67 1.35.88.42.16 1.04.35 2.19.4 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.4.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.16-.42.35-1.04.4-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.4-2.19-.21-.55-.47-.94-.88-1.35-.41-.41-.8-.67-1.35-.88-.42-.16-1.04-.35-2.19-.4-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.3 5.3 0 110 10.6 5.3 5.3 0 010-10.6zm0 1.62a3.68 3.68 0 100 7.36 3.68 3.68 0 000-7.36zm5.5-2.69a1.24 1.24 0 110 2.48 1.24 1.24 0 010-2.48z"/></svg>
-          <span>Instagram</span>
-        </a>
-        <a href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 002.5 6 2.5 2.5 0 005 8.48 2.5 2.5 0 007.5 6 2.5 2.5 0 004.98 3.5zM3 9.75h4v11H3v-11zm6.5 0H13v1.5h.05c.49-.93 1.7-1.9 3.5-1.9 3.74 0 4.45 2.46 4.45 5.66v5.74h-4v-5.09c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68v5.18h-4v-11z"/></svg>
-          <span>LinkedIn</span>
-        </a>
-        <a href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 00.5 6.2 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.8 3.02 3.02 0 002.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 002.12-2.14A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
-          <span>YouTube</span>
-        </a>
-        <a href="resume.html" aria-label="Resume">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 12h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>
-          <span>Résumé</span>
-        </a>
-      </div>
+    <div class="contact-bottom">
+      <nav class="social-links" aria-label="Social links">
+        <a id="instagramLink" href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener">Instagram</a>
+        <a id="linkedinLink" href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener">LinkedIn</a>
+        <a id="youtubeLink" href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener">YouTube</a>
+        <a href="resume.html">Resume</a>
+      </nav>
+      <p class="contact-mark">Editing, motion and AI filmmaking by Aniket Shaw.</p>
     </div>
-  </div>
-</section>
-
-<!-- ============================== FOOTER ============================== -->
-<footer class="footer">
-  <span>© <span id="year">2026</span> ANIKET SHAW // ai_native</span>
-  <a class="foot-xsite" href="labs.html">code portfolio ↗</a>
-</footer>
-</div><!-- /deck -->
+  </section>
 </main>
 
-<!-- ============================== LIGHTBOX ============================== -->
-<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Video preview" aria-hidden="true">
-  <div class="lb-inner" role="document">
-    <div class="lb-bar">
-      <span><span class="lb-tag" id="lbTag">AI</span> &nbsp;/&nbsp; <span class="lb-title" id="lbTitle">Title</span></span>
-      <div class="lb-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-    </div>
-    <button class="lb-close" id="lbClose" aria-label="Close preview">✕</button>
-    <div class="lb-stage" id="lbStage"><!-- media injected by JS --></div>
+<footer class="footer">
+  <span>© <span id="year">2026</span> Aniket Shaw</span>
+  <a href="labs.html">Code portfolio</a>
+</footer>
+
+<aside class="film-index" id="filmIndex" role="dialog" aria-modal="true" aria-labelledby="filmIndexTitle" aria-hidden="true">
+  <div class="index-preview" aria-hidden="true">
+    <img id="indexPoster" src="assets/posters/hero-nuvve-kada.webp" alt="" />
+    <p class="index-preview-title" id="indexPreviewTitle">Nuvve Kada</p>
   </div>
+  <div class="index-panel">
+    <div class="index-top">
+      <h2 id="filmIndexTitle">Film index</h2>
+      <button class="index-close" id="indexClose" type="button">Close</button>
+    </div>
+    <div class="index-filters" id="indexFilters" aria-label="Filter films">
+      <button class="index-filter" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="index-filter" type="button" data-filter="ai" aria-pressed="false">AI cinema</button>
+      <button class="index-filter" type="button" data-filter="shorts" aria-pressed="false">Shorts</button>
+      <button class="index-filter" type="button" data-filter="motion" aria-pressed="false">Motion</button>
+      <button class="index-filter" type="button" data-filter="narrative" aria-pressed="false">Narrative</button>
+    </div>
+    <div class="index-grid" id="indexGrid"></div>
+  </div>
+</aside>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" aria-hidden="true">
+  <div class="viewer-bar">
+    <span id="viewerTitle">Film</span>
+    <button class="viewer-close" id="viewerClose" type="button">Close</button>
+  </div>
+  <div class="viewer-stage" id="viewerStage"></div>
 </div>
 
-<!-- ★ EDIT config.js TO UPDATE THE SITE (works, videos, bio, tools, contact, blob) ★ -->
-<script src="config.js"></script>
-
+<script src="config.js?v=20260812-title-sequence"></script>
 <script>
-/* =========================================================================
-   STYLE 4 — interactions
-   ========================================================================= */
 (function(){
   "use strict";
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---- Year ---- */
-  var y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear();
-
-  /* =======================================================================
-     APPLY config.js  →  renders works, bio, tools & contact from
-     window.PORTFOLIO_CONFIG. Edit config.js (NOT this file). Every step is
-     guarded with try/catch: if config.js is missing or has a typo, the
-     static HTML already on the page is kept, so the site never breaks.
-     ======================================================================= */
   var CFG = window.PORTFOLIO_CONFIG || {};
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  var CAT_LABEL = { ai:'AI', shorts:'SHORTS', motion:'MOTION', narrative:'NARRATIVE' };
+  var FALLBACK = [
+    { category:"ai", orientation:"landscape", poster:"hero-nuvve-kada", title:"Nuvve Kada", foot:"musical love story / 02:22", video:"https://www.youtube.com/watch?v=3yY6CAn7Qeo", alt:"Nuvve Kada, a cinematic Telugu musical love story" },
+    { category:"ai", orientation:"landscape", poster:"ai-cinematic-01", title:"Cinematic AI Music Video", foot:"text-to-video", video:"https://youtu.be/xtJId7RjkWM", alt:"Cinematic AI music video" }
+  ];
+  var works = Array.isArray(CFG.works) && CFG.works.length ? CFG.works : FALLBACK;
+  var indexFilter = "all";
+  var lastFocus = null;
 
-  function renderWorks(){
-    var grid = document.getElementById('workGrid');
-    var works = CFG.works;
-    if(!grid || !works || !works.length) return;          // no config → keep static fallback
-    grid.innerHTML = works.map(function(w, i){
-      var portrait = (w.orientation === 'portrait');
-      var ratio = portrait ? '9:16' : '16:9';
-      var cat = w.category || 'ai';
-      var tag = CAT_LABEL[cat] || String(cat).toUpperCase();
-      var poster = /[\/.]/.test(w.poster||'') ? w.poster : 'assets/posters/'+(w.poster||'')+'.webp';
-      var dims = portrait ? ' width="1080" height="1920"' : ' width="1280" height="720"';
-      var delay = (i%3===1)?' d1':((i%3===2)?' d2':'');
-      var title = esc(w.title);
-      return '<article class="card '+(portrait?'portrait':'landscape')+' reveal'+delay+'" data-category="'+esc(cat)+'" role="button" tabindex="0" '+
-        'data-video="'+esc(w.video||'')+'" data-poster="'+esc(poster)+'" data-title="'+title+'" data-tag="'+tag+'" data-orientation="'+(portrait?'portrait':'landscape')+'" '+
-        (w.process ? 'data-process="'+esc(w.process)+'" ' : '')+
-        'aria-label="Play preview: '+title+'">'+
-        '<img src="'+esc(poster)+'" alt="'+esc(w.alt||w.title)+'"'+dims+' loading="lazy" />'+
-        '<div class="scrim"></div><span class="corner tl"></span><span class="corner br"></span>'+
-        '<span class="ctag">'+tag+'</span><span class="ratio">'+ratio+'</span>'+
-        '<div class="cbody"><div class="ctitle">'+title+'</div>'+
-        '<div class="cfoot"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span> '+esc(w.foot||'')+'</div></div>'+
-        '</article>';
-    }).join('');
+  var cinemaStack = document.getElementById("cinemaStack");
+  var portraitWall = document.getElementById("portraitWall");
+  var wideStage = document.getElementById("wideStage");
+  var wideEdits = document.getElementById("wideEdits");
+  var verticalCuts = document.getElementById("verticalCuts");
+  var indexOpen = document.getElementById("indexOpen");
+  var indexClose = document.getElementById("indexClose");
+  var filmIndex = document.getElementById("filmIndex");
+  var indexGrid = document.getElementById("indexGrid");
+  var indexFilters = document.getElementById("indexFilters");
+  var indexPoster = document.getElementById("indexPoster");
+  var indexPreviewTitle = document.getElementById("indexPreviewTitle");
+  var viewer = document.getElementById("viewer");
+  var viewerStage = document.getElementById("viewerStage");
+  var viewerTitle = document.getElementById("viewerTitle");
+  var viewerClose = document.getElementById("viewerClose");
+
+  function esc(value){
+    return String(value == null ? "" : value).replace(/[&<>\"]/g,function(char){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[char];
+    });
   }
 
-  function renderBio(){
-    var bio = document.querySelector('.bio');
-    if(!bio || (!CFG.bio && !CFG.tools)) return;
-    var html = '';
-    if(CFG.bio && CFG.bio.length){ CFG.bio.forEach(function(p,i){ html += '<p'+(i===0?' class="lead"':'')+'>'+p+'</p>'; }); }
-    if(CFG.bioMeta){ html += '<p class="bio-meta">'+CFG.bioMeta+'</p>'; }
-    if(CFG.experience){ html += '<p class="bio-meta exp">'+esc(CFG.experience)+'</p>'; }
-    if(CFG.tools){
-      Object.keys(CFG.tools).forEach(function(group){
-        html += '<div class="stack-head">// '+esc(group)+'</div><div class="stack">';
-        (CFG.tools[group]||[]).forEach(function(t, idx){
-          var k = (String(group).toUpperCase()==='CODE' && idx===0) ? ' key' : '';
-          html += '<span class="t'+k+'">'+esc(t)+'</span>';
-        });
-        html += '</div>';
-      });
+  function cleanText(value){
+    return String(value || "").replace(/[\u2014\u2013\u00b7]/g," / ").replace(/\s*\/\s*\/\s*/g," / ").trim();
+  }
+
+  function posterFor(work){
+    return /[\/.]/.test(work.poster || "") ? work.poster : "assets/posters/" + (work.poster || "") + ".webp";
+  }
+
+  function kindFor(category){
+    return { ai:"AI cinema", shorts:"Short-form", motion:"Motion", narrative:"Narrative" }[category] || "Film";
+  }
+
+  function descriptorFor(work){
+    var text = cleanText(work.foot || kindFor(work.category));
+    text = text.replace(/^reel_?\d+\s*\/?\s*/i,"").replace(/^hero film\s*\/?\s*/i,"");
+    return text || kindFor(work.category);
+  }
+
+  function entriesWhere(test){
+    return works.map(function(work,index){ return { work:work, index:index }; }).filter(function(entry){ return test(entry.work,entry.index); });
+  }
+
+  function mediaMarkup(work,priority){
+    var poster = posterFor(work);
+    var portrait = work.orientation === "portrait";
+    return '<img class="film-poster media-image" src="'+esc(poster)+'" width="'+(portrait?1080:1280)+'" height="'+(portrait?1920:720)+'" alt="'+esc(cleanText(work.alt||work.title))+'" '+(priority?'fetchpriority="high"':'loading="lazy"')+' />'+
+      '<span class="media-loader" aria-hidden="true"></span><span class="media-error">Preview unavailable</span>';
+  }
+
+  function renderCinema(){
+    var entries = entriesWhere(function(work){ return work.category === "ai"; });
+    if(!entries.length) entries = entriesWhere(function(work,index){ return index < 6; });
+    var layouts = ["layout-cover","layout-split","layout-letterbox","layout-block","layout-offset","layout-portrait"];
+    if(!entries.length){
+      cinemaStack.innerHTML = '<p class="empty-state">No films have been added yet.</p>';
+      return;
     }
-    bio.innerHTML = html;
+    cinemaStack.innerHTML = entries.map(function(entry,position){
+      var work = entry.work;
+      var layout = layouts[Math.min(position,layouts.length-1)];
+      var heading = position === 0 ? "h1" : "h2";
+      var heroMotion = position === 0 ? '<div class="hero-motion" id="heroMotion" aria-hidden="true"></div><span class="opening-bar top" aria-hidden="true"></span><span class="opening-bar bottom" aria-hidden="true"></span>' : "";
+      return '<article class="film-chapter '+layout+(position===0?' is-current':'')+'" style="--scene:'+position+'" data-work-index="'+entry.index+'">'+
+        '<div class="film-ambient" aria-hidden="true"><img src="'+esc(posterFor(work))+'" alt="" loading="lazy" /></div>'+
+        '<div class="chapter-stage">'+
+          '<div class="film-visual">'+mediaMarkup(work,position===0)+heroMotion+'</div>'+
+          '<div class="film-copy">'+
+            '<'+heading+' class="film-title">'+esc(cleanText(work.title))+'</'+heading+'>'+
+            '<div class="film-detail"><p class="film-descriptor">'+esc(descriptorFor(work))+'</p><button class="play-cta" type="button" data-open-index="'+entry.index+'">Play film</button></div>'+
+          '</div>'+
+        '</div>'+
+      '</article>';
+    }).join("");
+  }
+
+  function renderPortraits(){
+    var entries = entriesWhere(function(work){ return work.orientation === "portrait" && work.category !== "ai"; });
+    if(!entries.length){ verticalCuts.hidden = true; return; }
+    portraitWall.innerHTML = entries.map(function(entry){
+      var work = entry.work;
+      return '<button class="cut-item" type="button" data-open-index="'+entry.index+'" aria-label="Play '+esc(cleanText(work.title))+'">'+
+        '<img class="media-image" src="'+esc(posterFor(work))+'" width="1080" height="1920" alt="'+esc(cleanText(work.alt||work.title))+'" loading="lazy" />'+
+        '<span class="media-loader" aria-hidden="true"></span><span class="media-error">Preview unavailable</span>'+
+        '<span class="cut-info"><strong class="cut-title">'+esc(cleanText(work.title))+'</strong><span class="cut-kind">'+esc(kindFor(work.category))+'</span></span>'+
+      '</button>';
+    }).join("");
+  }
+
+  function renderWideEdits(){
+    var entries = entriesWhere(function(work){ return work.orientation !== "portrait" && work.category !== "ai"; });
+    if(!entries.length){ wideEdits.hidden = true; return; }
+    wideStage.innerHTML = entries.map(function(entry){
+      var work = entry.work;
+      return '<button class="wide-film" type="button" data-open-index="'+entry.index+'" aria-label="Play '+esc(cleanText(work.title))+'">'+
+        '<span class="wide-image">'+
+          '<img class="media-image" src="'+esc(posterFor(work))+'" width="1280" height="720" alt="'+esc(cleanText(work.alt||work.title))+'" loading="lazy" />'+
+          '<span class="media-loader" aria-hidden="true"></span><span class="media-error">Preview unavailable</span>'+
+        '</span>'+
+        '<span class="wide-caption"><strong class="wide-title">'+esc(cleanText(work.title))+'</strong><span class="wide-kind">'+esc(kindFor(work.category))+'</span></span>'+
+      '</button>';
+    }).join("");
+  }
+
+  function visibleIndexEntries(){
+    return entriesWhere(function(work){ return indexFilter === "all" || work.category === indexFilter; });
+  }
+
+  function updateIndexPreview(index){
+    var work = works[index];
+    if(!work) return;
+    indexPoster.style.opacity = "0";
+    window.setTimeout(function(){
+      indexPoster.src = posterFor(work);
+      indexPreviewTitle.textContent = cleanText(work.title);
+      indexPoster.style.opacity = "1";
+    },120);
+  }
+
+  function renderIndex(){
+    var entries = visibleIndexEntries();
+    if(!entries.length){
+      indexGrid.innerHTML = '<p class="index-empty">No films in this category yet.</p>';
+      return;
+    }
+    indexGrid.innerHTML = entries.map(function(entry){
+      return '<button class="index-item" type="button" data-index-item="'+entry.index+'"><strong>'+esc(cleanText(entry.work.title))+'</strong><span>'+esc(kindFor(entry.work.category))+'</span></button>';
+    }).join("");
+    updateIndexPreview(entries[0].index);
+  }
+
+  function openIndex(){
+    lastFocus = document.activeElement;
+    filmIndex.classList.add("open");
+    filmIndex.setAttribute("aria-hidden","false");
+    document.body.classList.add("index-open");
+    indexClose.focus();
+  }
+
+  function closeIndex(restoreFocus){
+    filmIndex.classList.remove("open");
+    filmIndex.setAttribute("aria-hidden","true");
+    document.body.classList.remove("index-open");
+    if(restoreFocus !== false && lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function youtubeId(url){
+    var match = String(url).match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/);
+    return match ? match[1] : "";
+  }
+
+  function youtubeEmbed(url){
+    var id = youtubeId(url);
+    return id ? "https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0&playsinline=1" : "";
+  }
+
+  function vimeoEmbed(url){
+    var match = String(url).match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    return match ? "https://player.vimeo.com/video/"+match[1]+"?autoplay=1" : "";
+  }
+
+  function instagramEmbed(url){
+    var match = String(url).match(/instagram\.com\/(reels?|p|tv)\/([A-Za-z0-9_-]+)/i);
+    if(!match) return "";
+    var type = /^reels?$/i.test(match[1]) ? "reel" : match[1];
+    return "https://www.instagram.com/"+type+"/"+match[2]+"/embed/";
+  }
+
+  function isDirectVideo(url){
+    return /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(String(url));
+  }
+
+  function openViewer(work){
+    if(!work) return;
+    if(filmIndex.classList.contains("open")) closeIndex(false);
+    var video = work.video || "";
+    var portrait = work.orientation === "portrait";
+    var mediaClass = "viewer-media" + (portrait ? " portrait" : "");
+    var src = youtubeEmbed(video) || vimeoEmbed(video) || instagramEmbed(video);
+    var html = "";
+    if(src){
+      html = '<div class="'+mediaClass+'"><iframe src="'+esc(src)+'" title="'+esc(cleanText(work.title))+'" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div>';
+    } else if(isDirectVideo(video)){
+      html = '<div class="'+mediaClass+'"><video src="'+esc(video)+'" poster="'+esc(posterFor(work))+'" controls autoplay playsinline></video></div>';
+    } else {
+      html = '<div class="viewer-fallback"><img src="'+esc(posterFor(work))+'" alt="'+esc(cleanText(work.alt||work.title))+'" />'+
+        (video ? '<a href="'+esc(video)+'" target="_blank" rel="noopener">Open film</a>' : '<p>Film link coming soon.</p>')+'</div>';
+    }
+    lastFocus = document.activeElement;
+    viewerTitle.textContent = cleanText(work.title || "Film");
+    viewerStage.innerHTML = html;
+    viewer.classList.add("open");
+    viewer.setAttribute("aria-hidden","false");
+    document.body.classList.add("viewer-open");
+    viewerClose.focus();
+  }
+
+  function closeViewer(){
+    viewer.classList.remove("open");
+    viewer.setAttribute("aria-hidden","true");
+    document.body.classList.remove("viewer-open");
+    window.setTimeout(function(){ viewerStage.innerHTML = ""; },230);
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function bindMediaStates(){
+    document.querySelectorAll(".media-image").forEach(function(image){
+      var frame = image.parentElement;
+      function ready(){ frame.classList.add("media-ready"); }
+      function failed(){ frame.classList.add("media-failed"); }
+      if(image.complete){ image.naturalWidth ? ready() : failed(); }
+      else { image.addEventListener("load",ready,{once:true}); image.addEventListener("error",failed,{once:true}); }
+    });
+  }
+
+  function mountHeroMotion(){
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.innerWidth < 761) return;
+    var host = document.getElementById("heroMotion");
+    var firstFilm = entriesWhere(function(work){ return work.category === "ai"; })[0];
+    if(!host || !firstFilm) return;
+    var id = youtubeId(firstFilm.work.video || "");
+    if(!id) return;
+    var iframe = document.createElement("iframe");
+    iframe.title = cleanText(firstFilm.work.title) + " silent preview";
+    iframe.tabIndex = -1;
+    iframe.setAttribute("allow","autoplay; encrypted-media");
+    iframe.src = "https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&mute=1&controls=0&loop=1&playlist="+id+"&playsinline=1&rel=0&modestbranding=1";
+    iframe.addEventListener("load",function(){ window.setTimeout(function(){ host.classList.add("is-playing"); },500); },{once:true});
+    host.appendChild(iframe);
+  }
+
+  function renderAbout(){
+    if(Array.isArray(CFG.bio) && CFG.bio.length){
+      document.getElementById("bio").innerHTML = CFG.bio.map(function(text){ return '<p>'+cleanText(text)+'</p>'; }).join("") +
+        (CFG.bioMeta ? '<p class="bio-meta">'+esc(cleanText(CFG.bioMeta))+'</p>' : "");
+    }
+    if(CFG.tools){
+      var labels = {"AI STACK":"Generative","EDIT / MOTION":"Edit and motion","CODE":"Code"};
+      document.getElementById("craft").innerHTML = Object.keys(CFG.tools).map(function(group){
+        return '<div><dt>'+esc(labels[group]||cleanText(group))+'</dt><dd>'+esc((CFG.tools[group]||[]).join(", "))+'</dd></div>';
+      }).join("");
+    }
   }
 
   function renderContact(){
     if(CFG.email){
-      var mb = document.querySelector('.mailbtn');
-      if(mb){ mb.setAttribute('href','mailto:'+CFG.email); mb.innerHTML = esc(CFG.email)+' <span class="ar">↗</span>'; }
+      var email = document.getElementById("emailLink");
+      email.href = "mailto:"+CFG.email;
+      email.textContent = CFG.email;
     }
-    var cb = document.getElementById('callBtn');           // "Book a call" (Calendly)
-    if(cb && typeof CFG.calendly === 'string'){ if(CFG.calendly){ cb.setAttribute('href', CFG.calendly); cb.style.display=''; } else { cb.style.display='none'; } }
-    var tg = document.getElementById('contactTagline');    // tagline
-    if(tg && typeof CFG.tagline === 'string'){ if(CFG.tagline){ tg.textContent = CFG.tagline; tg.style.display=''; } else { tg.style.display='none'; } }
-    var s = CFG.socials || {};
-    var map = { 'Instagram':s.instagram, 'LinkedIn':s.linkedin, 'YouTube':s.youtube, 'GitHub':s.github };
-    document.querySelectorAll('.contact-socials a, .footer .socials a, .swarm-socials a').forEach(function(a){
-      var url = map[a.getAttribute('aria-label')];
-      if(url) a.setAttribute('href', url);
-    });
+    if(typeof CFG.calendly === "string"){
+      var calendar = document.getElementById("calendarLink");
+      if(CFG.calendly) calendar.href = CFG.calendly;
+      else calendar.hidden = true;
+    }
+    var socials = CFG.socials || {};
+    if(socials.instagram) document.getElementById("instagramLink").href = socials.instagram;
+    if(socials.linkedin) document.getElementById("linkedinLink").href = socials.linkedin;
+    if(socials.youtube) document.getElementById("youtubeLink").href = socials.youtube;
   }
 
-  function updateWorkCounts(){
-    var cards = document.querySelectorAll('#workGrid .card');
-    var counts = { all: cards.length };
-    cards.forEach(function(c){ var k=c.getAttribute('data-category'); counts[k]=(counts[k]||0)+1; });
-    document.querySelectorAll('#filters .filter').forEach(function(b){
-      var f=b.getAttribute('data-filter'); var cnt=b.querySelector('.cnt');
-      if(cnt) cnt.textContent='['+(counts[f]||0)+']';
-    });
-    var sc=document.getElementById('shownCount'); if(sc) sc.textContent=cards.length;
-    var tc=document.getElementById('totalCount'); if(tc) tc.textContent=cards.length;
+  function trapFocus(event,container){
+    if(event.key !== "Tab") return;
+    var focusable = container.querySelectorAll("button,[href],iframe,video,[tabindex]:not([tabindex='-1'])");
+    if(!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length-1];
+    if(event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
+    else if(!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
   }
 
-  try { renderWorks(); }     catch(e){}
-  try { renderBio(); }       catch(e){}
-  try { renderContact(); }   catch(e){}
-  try { updateWorkCounts(); }catch(e){}
-
-  /* (Terminal carets are solid, no blinking — handled in CSS.) */
-
-  /* ---- Nav: scrolled state + mobile menu ---- */
-  var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 24); };
-  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
-
-  var burger = document.getElementById('navToggle');
-  if(burger){
-    burger.addEventListener('click', function(){
-      var open = nav.classList.toggle('menu-open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  }
-  // close mobile menu after clicking a link
-  document.getElementById('navLinks').addEventListener('click', function(e){
-    if(e.target.closest('a')){ nav.classList.remove('menu-open'); if(burger) burger.setAttribute('aria-expanded','false'); }
+  document.addEventListener("click",function(event){
+    var opener = event.target.closest("[data-open-index]");
+    if(opener){ openViewer(works[Number(opener.dataset.openIndex)]); }
+  });
+  indexOpen.addEventListener("click",openIndex);
+  indexClose.addEventListener("click",function(){ closeIndex(true); });
+  indexFilters.addEventListener("click",function(event){
+    var button = event.target.closest("[data-filter]");
+    if(!button) return;
+    indexFilter = button.dataset.filter;
+    indexFilters.querySelectorAll("[data-filter]").forEach(function(item){ item.setAttribute("aria-pressed",item===button?"true":"false"); });
+    renderIndex();
+  });
+  indexGrid.addEventListener("pointerover",function(event){
+    if(event.pointerType === "touch") return;
+    var item = event.target.closest("[data-index-item]");
+    if(item) updateIndexPreview(Number(item.dataset.indexItem));
+  });
+  indexGrid.addEventListener("focusin",function(event){
+    var item = event.target.closest("[data-index-item]");
+    if(item) updateIndexPreview(Number(item.dataset.indexItem));
+  });
+  indexGrid.addEventListener("click",function(event){
+    var item = event.target.closest("[data-index-item]");
+    if(item) openViewer(works[Number(item.dataset.indexItem)]);
+  });
+  viewerClose.addEventListener("click",closeViewer);
+  viewer.addEventListener("click",function(event){ if(event.target===viewer || event.target===viewerStage) closeViewer(); });
+  document.addEventListener("keydown",function(event){
+    if(event.key === "Escape"){
+      if(viewer.classList.contains("open")) closeViewer();
+      else if(filmIndex.classList.contains("open")) closeIndex(true);
+    }
+    if(viewer.classList.contains("open")) trapFocus(event,viewer);
+    else if(filmIndex.classList.contains("open")) trapFocus(event,filmIndex);
   });
 
-  /* ---- Render clock in the space status bar ---- */
-  if(!reduceMotion){
-    var tcEl2 = document.getElementById('swarmTc');
-    var totalFrames = 1092;
-    var pad2 = function(n){ n=String(n); return n.length<2?'0'+n:n; };
-    if(tcEl2) setInterval(function(){
-      if(document.hidden) return;
-      totalFrames++;
-      var f = totalFrames % 24, ts = Math.floor(totalFrames/24);
-      tcEl2.textContent = pad2(Math.floor(ts/3600))+':'+pad2(Math.floor(ts/60)%60)+':'+pad2(ts%60)+':'+pad2(f);
-    }, 1000/12);
-  }
+  renderCinema();
+  renderPortraits();
+  renderWideEdits();
+  renderIndex();
+  renderAbout();
+  renderContact();
+  bindMediaStates();
+  document.getElementById("indexCount").textContent = works.length;
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* ---- Scroll reveal (IntersectionObserver, no CDN dependency) ---- */
-  var reveals = document.querySelectorAll('.reveal');
-  if(reduceMotion || !('IntersectionObserver' in window)){
-    reveals.forEach(function(el){ el.classList.add('in'); });
+  var chapters = document.querySelectorAll(".film-chapter");
+  if("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    var chapterObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ entry.target.classList.toggle("is-current",entry.isIntersecting && entry.intersectionRatio > .45); });
+    },{ threshold:[.25,.45,.65] });
+    chapters.forEach(function(chapter){ chapterObserver.observe(chapter); });
   } else {
-    var ro = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ro.unobserve(en.target); } });
-    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-    reveals.forEach(function(el){ ro.observe(el); });
+    chapters.forEach(function(chapter){ chapter.classList.add("is-current"); });
   }
 
-  /* ---- WORK filters ---- */
-  var filterBar = document.getElementById('filters');
-  var cards = Array.prototype.slice.call(document.querySelectorAll('#workGrid .card'));
-  var shownCount = document.getElementById('shownCount');
-  filterBar.addEventListener('click', function(e){
-    var btn = e.target.closest('.filter'); if(!btn) return;
-    var f = btn.getAttribute('data-filter');
-    // active state
-    filterBar.querySelectorAll('.filter').forEach(function(b){
-      var on = b===btn; b.classList.toggle('active', on); b.setAttribute('aria-selected', on?'true':'false');
-    });
-    var n = 0;
-    cards.forEach(function(c){
-      var match = (f==='all' || c.getAttribute('data-category')===f);
-      c.classList.toggle('hide', !match);
-      if(match) n++;
-    });
-    if(shownCount) shownCount.textContent = n;
-  });
-
-  /* ---- LIGHTBOX ---- */
-  var lb = document.getElementById('lightbox');
-  var lbStage = document.getElementById('lbStage');
-  var lbTag = document.getElementById('lbTag');
-  var lbTitle = document.getElementById('lbTitle');
-  var lbClose = document.getElementById('lbClose');
-  var lastFocus = null;
-
-  function isYouTube(u){ return /(?:youtube\.com|youtu\.be)/i.test(u); }
-  function isVimeo(u){ return /vimeo\.com/i.test(u); }
-  function isInstagram(u){ return /instagram\.com/i.test(u); }
-  function isDirectVideo(u){ return /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(u); }
-  function ytEmbed(u){
-    // handles watch?v=, youtu.be/, /embed/, /shorts/, /live/, or a bare 11-char id
-    var m = u.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/);
-    var id = m ? m[1] : (/^[A-Za-z0-9_-]{11}$/.test(u.trim()) ? u.trim() : '');
-    return 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1';
-  }
-  function vimeoEmbed(u){
-    var m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-    return 'https://player.vimeo.com/video/'+(m?m[1]:'')+'?autoplay=1';
-  }
-  function igEmbed(u){
-    var m = u.match(/instagram\.com\/(reels?|p|tv)\/([A-Za-z0-9_-]+)/i);
-    var type = m ? (/^reels?$/i.test(m[1]) ? 'reel' : m[1]) : 'p';
-    return 'https://www.instagram.com/'+type+'/'+(m?m[2]:'')+'/embed/';
+  var reveals = document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){ if(entry.isIntersecting){ entry.target.classList.add("in"); revealObserver.unobserve(entry.target); } });
+    },{ threshold:.18 });
+    reveals.forEach(function(element){ revealObserver.observe(element); });
+  } else {
+    reveals.forEach(function(element){ element.classList.add("in"); });
   }
 
-  function openLightboxData(d){
-    var video = d.video || '';
-    var poster = d.poster || '';
-    var title = d.title || 'Preview';
-    var tag = d.tag || '';
-    var portrait = (d.orientation || 'landscape') === 'portrait';
-
-    lbTag.textContent = tag;
-    lbTitle.textContent = title;
-
-    var html = '';
-    if(video){
-      var fc = 'lb-media ' + (portrait ? 'portrait' : 'land');
-      if(isYouTube(video)){
-        html = '<div class="'+fc+'"><div class="frame"><iframe src="'+ytEmbed(video)+'" title="'+esc(title)+'" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div></div>';
-      } else if(isVimeo(video)){
-        html = '<div class="'+fc+'"><div class="frame"><iframe src="'+vimeoEmbed(video)+'" title="'+esc(title)+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>';
-      } else if(isInstagram(video)){
-        html = '<div class="lb-media ig-wrap"><div class="frame ig"><iframe src="'+igEmbed(video)+'" title="'+esc(title)+'" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" scrolling="no" allowfullscreen></iframe></div></div>';
-      } else if(isDirectVideo(video)){
-        html = '<div class="'+fc+'"><div class="frame"><video src="'+esc(video)+'" poster="'+esc(poster)+'" controls autoplay playsinline></video></div></div>';
-      } else {
-        // unknown host → don't risk a broken embed; show poster + open-in-new-tab
-        html =
-          '<div class="lb-fallback'+(portrait?' portrait':'')+'">'+
-            '<img src="'+esc(poster)+'" alt="'+esc(title)+' — preview poster" />'+
-            '<div class="lb-soon">'+
-              '<a class="lb-openbtn" href="'+esc(video)+'" target="_blank" rel="noopener">▶ Watch video ↗</a>'+
-              '<div class="sub">opens in a new tab</div>'+
-            '</div>'+
-          '</div>';
-      }
-    } else {
-      // No video yet → poster + tasteful "coming soon" overlay
-      html =
-        '<div class="lb-fallback'+(portrait?' portrait':'')+'">'+
-          '<img src="'+poster+'" alt="'+title+' — preview poster" />'+
-          '<div class="lb-soon">'+
-            '<div class="ring"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></div>'+
-            '<div class="msg">Preview coming soon</div>'+
-            '<div class="sub">video link to be added — paste a URL into data-video on this card</div>'+
-          '</div>'+
-        '</div>';
-    }
-    lbStage.innerHTML = html;
-    var proc = d.process;
-    if(proc){
-      var pEl = document.createElement('div');
-      pEl.className = 'lb-process';
-      pEl.innerHTML = '<span class="cy">// how it was made</span> &nbsp;' + esc(proc);
-      lbStage.appendChild(pEl);
-    }
-    lbStage.classList.toggle('is-portrait', portrait);
-
-    lastFocus = document.activeElement;
-    lb.classList.add('open');
-    lb.setAttribute('aria-hidden','false');
-    document.body.classList.add('no-scroll');
-    lbClose.focus();
-  }
-
-  function openLightbox(card){
-    openLightboxData({
-      video: card.getAttribute('data-video'), poster: card.getAttribute('data-poster'),
-      title: card.getAttribute('data-title'), tag: card.getAttribute('data-tag'),
-      orientation: card.getAttribute('data-orientation'), process: card.getAttribute('data-process')
-    });
-  }
-
-  function closeLightbox(){
-    lb.classList.remove('open');
-    lb.setAttribute('aria-hidden','true');
-    document.body.classList.remove('no-scroll');
-    // stop any playing media by clearing
-    setTimeout(function(){ lbStage.innerHTML = ''; }, 300);
-    if(lastFocus && lastFocus.focus) lastFocus.focus();
-  }
-
-  // open handlers on cards (click + Enter/Space)
-  cards.forEach(function(card){
-    card.addEventListener('click', function(){ openLightbox(card); });
-    card.addEventListener('keydown', function(e){
-      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openLightbox(card); }
-    });
-  });
-
-  // close handlers
-  lbClose.addEventListener('click', closeLightbox);
-  lb.addEventListener('click', function(e){ if(e.target === lb) closeLightbox(); });
-  document.addEventListener('keydown', function(e){
-    if(e.key==='Escape' && lb.classList.contains('open')) closeLightbox();
-    // minimal focus trap: keep Tab inside the dialog
-    if(e.key==='Tab' && lb.classList.contains('open')){
-      var f = lb.querySelectorAll('button, [href], iframe, video, [tabindex]:not([tabindex="-1"])');
-      if(!f.length) return;
-      var first = f[0], last = f[f.length-1];
-      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-    }
-  });
-
+  window.requestAnimationFrame(function(){ document.documentElement.classList.add("page-ready"); });
+  window.addEventListener("load",function(){ window.setTimeout(mountHeroMotion,900); },{once:true});
 })();
-</script>
-
-
-<!-- ==================== SPACE TRAVERSAL ENGINE ====================
-     Scroll = flying through the galaxy on the z-axis. The intro word is a
-     particle swarm that dissolves into stardust when you start moving; a
-     starfield cruise carries you to the landing at the work grid.
-     Fallback (no WebGL / CDN / reduced motion): the normal site, no canvas. -->
-<script type="module">
-const failSpace = () => {
-  document.documentElement.classList.add('no-traversal');
-  const j = document.getElementById('journey'); if(j) j.classList.add('fallback');
-  const s = document.getElementById('space');   if(s) s.style.display = 'none';
-};
-try{
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) throw 0;
-  const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js');
-
-  const space   = document.getElementById('space');
-  const canvas  = document.getElementById('cosmos');
-  const journey = document.getElementById('journey');
-
-  /* ---- journey geometry: world depth ↔ scroll length ---- */
-  const DEPTH = 100;
-  journey.style.height = '230vh';
-
-  const COARSE = matchMedia('(pointer: coarse)').matches;
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
-  if(!renderer.getContext()) throw 0;
-  renderer.setClearColor(0x000000, 0);
-
-  const scene  = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x05060a, 50, 300);
-  const camera = new THREE.PerspectiveCamera(58, 1, .1, 1600);
-  scene.add(camera);
-  scene.add(new THREE.AmbientLight(0xbfd4e8, .55));
-  const key = new THREE.DirectionalLight(0xffffff, 1.7);
-  key.position.set(-.6,.8,.35); scene.add(key);
-
-  const uniforms = { uT:{ value:0 }, uProj:{ value:1000 } };
-
-  /* =====================================================================
-     STARFIELD
-     ===================================================================== */
-  {
-    const SN = COARSE ? 4200 : 8600;
-    const p=new Float32Array(SN*3), c=new Float32Array(SN*3), s=new Float32Array(SN), ph=new Float32Array(SN);
-    const A=new THREE.Color('#cfe3f5'), B=new THREE.Color('#79edff'), C=new THREE.Color('#ff5cb8');
-    for(let i=0;i<SN;i++){
-      p[i*3]=(Math.random()-.5)*560; p[i*3+1]=(Math.random()-.5)*320;
-      p[i*3+2]=40-Math.random()*(DEPTH+320);
-      const r=Math.random(), col=r<.82?A:(r<.94?B:C);
-      c[i*3]=col.r; c[i*3+1]=col.g; c[i*3+2]=col.b;
-      s[i]=.5+Math.random()*1.5; ph[i]=Math.random()*6.28;
-    }
-    const g=new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.BufferAttribute(p,3));
-    g.setAttribute('aColor',   new THREE.BufferAttribute(c,3));
-    g.setAttribute('aSize',    new THREE.BufferAttribute(s,1));
-    g.setAttribute('aPhase',   new THREE.BufferAttribute(ph,1));
-    const m=new THREE.ShaderMaterial({
-      uniforms, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
-      vertexShader:`
-        attribute vec3 aColor; attribute float aSize; attribute float aPhase;
-        uniform float uT; uniform float uProj;
-        varying vec3 vC; varying float vA;
-        void main(){
-          vec4 mv=modelViewMatrix*vec4(position,1.);
-          vC=aColor;
-          vA=.3+.45*(0.5+0.5*sin(uT*1.4+aPhase));
-          gl_PointSize=max(1., aSize*uProj*.05/-mv.z);
-          gl_Position=projectionMatrix*mv;
-        }`,
-      fragmentShader:`
-        precision highp float; varying vec3 vC; varying float vA;
-        void main(){
-          vec2 uv=gl_PointCoord-.5; float d=dot(uv,uv);
-          if(d>.25) discard;
-          float a=smoothstep(.25,.02,d)*vA;
-          gl_FragColor=vec4(vC*a,a);
-        }`
-    });
-    const stars=new THREE.Points(g,m); stars.frustumCulled=false; scene.add(stars);
-  }
-
-  /* =====================================================================
-     INTRO WORD SWARM  ·  "welcome" / "explore" at z = -46
-     ===================================================================== */
-  const WORDS=['welcome','explore'];
-  const WZ=-46;
-  const N = COARSE ? 8000 : 15000;
-  const pos=new Float32Array(N*3), vel=new Float32Array(N*3), tgt=new Float32Array(N*3);
-  const stf=new Float32Array(N), spd=new Float32Array(N), col=new Float32Array(N*3),
-        siz=new Float32Array(N), phs=new Float32Array(N);
-  {
-    const CY=new THREE.Color('#79edff'), WH=new THREE.Color('#f0fdff'),
-          MG=new THREE.Color('#ff4db4'), VI=new THREE.Color('#b39bff');
-    for(let i=0;i<N;i++){
-      const r=Math.random(), cc=r<.38?WH:(r<.78?CY:(r<.9?MG:VI));
-      col[i*3]=cc.r; col[i*3+1]=cc.g; col[i*3+2]=cc.b;
-      siz[i]=1.5+Math.random()*1.8;
-      phs[i]=Math.random()*6.28;
-      stf[i]=.03+Math.random()*.024;
-      pos[i*3]=(Math.random()-.5)*140; pos[i*3+1]=(Math.random()-.5)*80; pos[i*3+2]=WZ+(Math.random()-.5)*30;
-    }
-  }
-  const wGeo=new THREE.BufferGeometry();
-  const aPos=new THREE.BufferAttribute(pos,3), aSpd=new THREE.BufferAttribute(spd,1);
-  wGeo.setAttribute('position',aPos);
-  wGeo.setAttribute('aSpeed',aSpd);
-  wGeo.setAttribute('aColor',new THREE.BufferAttribute(col,3));
-  wGeo.setAttribute('aSize',new THREE.BufferAttribute(siz,1));
-  wGeo.setAttribute('aPhase',new THREE.BufferAttribute(phs,1));
-  function wMat(scale,alphaMul,hotGate){
-    return new THREE.ShaderMaterial({
-      uniforms, transparent:true, depthTest:false, depthWrite:false, blending:THREE.AdditiveBlending,
-      vertexShader:`
-        attribute float aSpeed; attribute vec3 aColor; attribute float aSize; attribute float aPhase;
-        uniform float uT; uniform float uProj;
-        varying vec3 vC; varying float vA;
-        void main(){
-          vec4 mv=modelViewMatrix*vec4(position,1.);
-          float tw=.8+.2*sin(uT*2.2+aPhase);
-          float hot=clamp(aSpeed*1.4,0.,1.);
-          vC=mix(aColor,vec3(1.,.88,.96),hot*.85);
-          vC+=vec3(.15,.5,.6)*hot*.6;
-          float gate=mix(1.,.12+.88*hot,float(${hotGate}));
-          vA=(.68+.32*tw)*(.66+.34*hot)*gate*float(${alphaMul});
-          gl_PointSize=max(1., aSize*(1.+hot*1.8)*uProj*.05/-mv.z*float(${scale}));
-          gl_Position=projectionMatrix*mv;
-        }`,
-      fragmentShader:`
-        precision highp float; varying vec3 vC; varying float vA;
-        void main(){
-          vec2 uv=gl_PointCoord-.5; float d=dot(uv,uv);
-          if(d>.25) discard;
-          float a=smoothstep(.25,.03,d)*vA;
-          gl_FragColor=vec4(vC*a,a);
-        }`
-    });
-  }
-  const wCore=new THREE.Points(wGeo,wMat(1,1.3,0));
-  const wHalo=new THREE.Points(wGeo,wMat(3.2,.085,1));
-  wCore.frustumCulled=false; wHalo.frustumCulled=false;
-  wCore.renderOrder=3; wHalo.renderOrder=2;
-  scene.add(wHalo); scene.add(wCore);
-
-  /* word sampling: canvas pixels → world targets on the WZ plane */
-  const samp=document.createElement('canvas');
-  const sctx=samp.getContext('2d',{ willReadFrequently:true });
-  function poolFor(word){
-    const SW=1600, SH=460;
-    samp.width=SW; samp.height=SH;
-    sctx.clearRect(0,0,SW,SH);
-    let fs=380;
-    sctx.font=`800 ${fs}px "JetBrains Mono", monospace`;
-    fs=Math.min(380*(SW*.94)/sctx.measureText(word).width, 390);
-    sctx.font=`800 ${fs}px "JetBrains Mono", monospace`;
-    sctx.textAlign='center'; sctx.textBaseline='middle'; sctx.fillStyle='#fff';
-    sctx.fillText(word,SW/2,SH/2);
-    const drawnW=sctx.measureText(word).width;
-    const img=sctx.getImageData(0,0,SW,SH).data, out=[];
-    for(let y=0;y<SH;y+=2) for(let x=0;x<SW;x+=2)
-      if(img[(y*SW+x)*4+3]>140) out.push(x-SW/2, SH/2-y);
-    return { pts:out, drawnW, fs };
-  }
-  let pools=null, word=0, hold=0, released=false;
-  const HOLD=[5,4.2];
-
-  function planeDims(){
-    const dist=8-WZ;
-    const hh=Math.tan(camera.fov*Math.PI/360)*dist;
-    return { hh, hw:hh*camera.aspect, dist };
-  }
-  function setWordTargets(wi){
-    if(!pools) return;
-    const { pts, drawnW, fs }=pools[wi];
-    const { hh, hw }=planeDims();
-    const viewW=hw*2, viewH=hh*2;
-    const portrait=camera.aspect<.9;
-    const wantW=Math.min(viewW*(portrait?.94:.78),
-      WORDS[wi].length*Math.min(viewW*(portrait?.2:.13), viewH*(portrait?.5:.4)));
-    let s=wantW/drawnW;
-    const hCap=portrait?.5:.36;
-    if(fs*s>viewH*hCap) s=viewH*hCap/fs;
-    const cy=viewH*.07;
-    const n=pts.length/2;
-    const pxPerU=innerHeight/(viewH||1);
-    const areaPx=n*4*(s*pxPerU)*(s*pxPerU);
-    const activeN=Math.max(5000, Math.min(N, Math.round(areaPx/4.5)));
-    for(let i=0;i<activeN;i++){
-      const j=((i*7919)%n)|0;
-      tgt[i*3]  =pts[j*2]*s  +(Math.random()-.5)*.08;
-      tgt[i*3+1]=pts[j*2+1]*s+cy+(Math.random()-.5)*.08;
-      tgt[i*3+2]=WZ+(Math.random()-.5)*1.6;
-    }
-    for(let i=activeN;i<N;i++){
-      const a=phs[i]*7.3, R=Math.max(innerWidth,innerHeight)/pxPerU*(1.1+.5*Math.random());
-      tgt[i*3]=Math.cos(a)*R; tgt[i*3+1]=Math.sin(a)*R; tgt[i*3+2]=WZ+(Math.random()-.5)*24;
-    }
-  }
-  function burst(){
-    for(let i=0;i<N;i++){
-      const a=phs[i], m=.5+Math.random()*1.4;
-      vel[i*3]+=Math.cos(a)*m; vel[i*3+1]+=Math.sin(a)*m; vel[i*3+2]+=(Math.random()-.3)*1.1;
-    }
-  }
-
-  /* =====================================================================
-     SCROLL → CAMERA
-     ===================================================================== */
-  let camZ=8, swayX=0, swayY=0, px=0, py=0;
-
-  addEventListener('pointermove', e=>{
-    px=e.clientX/innerWidth-.5; py=e.clientY/innerHeight-.5;
-  }, { passive:true });
-
-  function resize(){
-    const w=innerWidth, h=innerHeight;
-    renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
-    renderer.setSize(w,h,false);
-    camera.aspect=w/h; camera.updateProjectionMatrix();
-    uniforms.uProj.value=h*renderer.getPixelRatio();
-    if(!released) setWordTargets(word);
-  }
-
-  /* ---- physics + flight loop ---- */
-  let raf=0, last=0, running=false, t=0;
-  function frame(now){
-    raf=requestAnimationFrame(frame);
-    const dt=Math.min((now-last)/1000,.05); last=now;
-    if(dt<=0) return;
-    t+=dt; uniforms.uT.value=t;
-
-    const sy=scrollY;
-    const jp=Math.max(1, journey.offsetHeight-innerHeight);
-
-    /* fade out at the landing: the content deck slides up over the live stars,
-       which dim away only as the card takes the viewport */
-    const fadeStart=jp-innerHeight*.25;
-    const op=sy<fadeStart?1:Math.max(0,1-(sy-fadeStart)/(innerHeight*1.0));
-    space.style.opacity=op;
-    space.style.visibility=op<=.02?'hidden':'visible';
-    space.style.pointerEvents=op>.9?'auto':'none';
-
-    /* camera travel with damping + pointer parallax */
-    const targetZ=8-Math.min(1,sy/jp)*DEPTH;
-    camZ+=(targetZ-camZ)*.07;
-    swayX+=(px*2.4-swayX)*.05;
-    swayY+=(-py*1.8-swayY)*.05;
-    camera.position.set(swayX,swayY,camZ);
-
-    /* word swarm state machine */
-    if(pools){
-      if(!released && sy>70){ released=true; burst(); }
-      else if(released && sy<25){ released=false; setWordTargets(word); }
-      if(!released){
-        hold+=dt;
-        if(hold>HOLD[word]){ hold=0; word=(word+1)%WORDS.length; setWordTargets(word); burst(); }
-      }
-      const wordVisible=camZ>WZ-40;
-      wCore.visible=wHalo.visible=wordVisible;
-      if(wordVisible){
-        const k=dt*60, dmp=Math.pow(released?.996:.88,k);
-        for(let i=0;i<N;i++){
-          const i3=i*3;
-          let vx=vel[i3], vy=vel[i3+1], vz=vel[i3+2];
-          if(!released){
-            vx+=(tgt[i3]-pos[i3])*stf[i]*k;
-            vy+=(tgt[i3+1]-pos[i3+1])*stf[i]*k;
-            vz+=(tgt[i3+2]-pos[i3+2])*stf[i]*k;
-            /* cursor repulsion on the word plane */
-            const { hh,hw }=planeDims();
-            const mx=px*2*hw, my=-py*2*hh;
-            const dx=pos[i3]-mx, dy=pos[i3+1]-my, d2=dx*dx+dy*dy;
-            if(d2<16&&d2>.001){
-              const d=Math.sqrt(d2), f=(1-d/4)*(1-d/4)*.5*k;
-              vx+=dx/d*f; vy+=dy/d*f;
-            }
-          }
-          vx*=dmp; vy*=dmp; vz*=dmp;
-          pos[i3]+=vx*k; pos[i3+1]+=vy*k; pos[i3+2]+=vz*k;
-          vel[i3]=vx; vel[i3+1]=vy; vel[i3+2]=vz;
-          spd[i]=Math.abs(vx)+Math.abs(vy)+Math.abs(vz);
-        }
-        aPos.needsUpdate=true; aSpd.needsUpdate=true;
-      }
-    }
-
-    if(op>.02) renderer.render(scene,camera);
-  }
-  function run(on){
-    if(on&&!running){ running=true; last=performance.now(); raf=requestAnimationFrame(frame); }
-    else if(!on&&running){ running=false; cancelAnimationFrame(raf); }
-  }
-
-  /* ---- boot ---- */
-  await document.fonts.load('800 100px "JetBrains Mono"').catch(()=>{});
-  resize();
-  pools=WORDS.map(poolFor);
-  setWordTargets(0);
-  run(true);
-  document.addEventListener('visibilitychange',()=>run(!document.hidden));
-  addEventListener('resize',resize);
-}catch(e){ failSpace(); }
 </script>
 </body>
 </html>
