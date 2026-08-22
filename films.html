@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Aniket Shaw | AI Filmmaker and Video Editor</title>
 <meta name="description" content="Films and edits by Aniket Shaw. AI cinema, music films, short-form editing, motion graphics and narrative work." />
 <meta name="color-scheme" content="dark" />
@@ -50,32 +50,50 @@
   font-display:swap;
 }
 
+/* ===========================================================================
+   TOKENS
+   =========================================================================== */
 :root{
   --bg:#0d0a09;
   --bg-deep:#080706;
-  --surface:#1a100d;
-  --surface-2:#24120f;
-  --wine:#2a1012;
+  --surface:#171110;
+  --surface-2:#211714;
+  --line:rgba(243,238,231,.15);
+  --line-soft:rgba(243,238,231,.07);
   --accent:#e44b2b;
   --accent-deep:#b5321f;
   --text:#f3eee7;
-  --text-soft:#c7bbb0;
-  --muted:#91857d;
-  --nav-h:68px;
-  --pad:clamp(18px,3.2vw,58px);
+  --text-soft:#c2b7ad;
+  --muted:#8d8079;
+
+  --nav-h:64px;
+  --pad:clamp(20px,4vw,72px);
+  --gap:clamp(16px,2.2vw,34px);
+  --plate:clamp(10px,1.5vw,26px);
+
   --font:"Archivo","Arial Narrow","Helvetica Neue",Arial,sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
   --ease-soft:cubic-bezier(.22,1,.36,1);
-  --ease-cinema:cubic-bezier(.65,0,.35,1);
+
+  /* Display type stays condensed and tight, but not so tight that words merge. */
+  --fs-display:clamp(52px,7.6vw,128px);
+  --fs-h2:clamp(40px,5.4vw,98px);
+  --fs-h3:clamp(21px,2.4vw,40px);
+  --track:-.032em;
+  --stretch:73%;
+
   --z-nav:20;
   --z-index:50;
   --z-viewer:70;
 }
 
+/* ===========================================================================
+   RESET / BASE
+   =========================================================================== */
 *{ box-sizing:border-box; margin:0; padding:0; }
 html{
   scroll-behavior:smooth;
-  scroll-padding-top:var(--nav-h);
+  scroll-snap-type:y proximity;
   scrollbar-gutter:stable;
   -webkit-text-size-adjust:100%;
   background:var(--bg);
@@ -96,940 +114,930 @@ main>section[id]{ scroll-margin-top:var(--nav-h); }
 button,a{ color:inherit; font:inherit; }
 button{ border:0; background:none; cursor:pointer; }
 a{ text-decoration:none; }
-img{ display:block; max-width:100%; }
+img,svg{ display:block; max-width:100%; }
 ::selection{ background:var(--accent); color:var(--bg-deep); }
-:focus-visible{ outline:3px solid var(--accent); outline-offset:4px; }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
 
 .skip-link{
-  position:fixed;
-  left:18px;
-  top:12px;
-  z-index:100;
+  position:fixed; left:18px; top:12px; z-index:100;
   padding:11px 15px;
-  background:var(--accent);
-  color:var(--bg-deep);
+  background:var(--accent); color:var(--bg-deep);
   font-weight:700;
   transform:translateY(-160%);
 }
 .skip-link:focus{ transform:translateY(0); }
 
+.section-label{
+  display:flex; align-items:center; gap:11px;
+  color:var(--accent);
+  font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+}
+.section-label::before{ content:""; flex:none; width:24px; height:2px; background:currentColor; }
+
+.display{
+  font-size:var(--fs-h2);
+  font-weight:790; font-stretch:var(--stretch);
+  letter-spacing:var(--track);
+  line-height:.9;
+  text-wrap:balance;
+}
+
+/* Shared play affordance: learned once, recognised on every clickable film. */
+.play-glyph{
+  display:grid; place-items:center;
+  width:clamp(42px,3.4vw,58px); aspect-ratio:1;
+  border:1.5px solid rgba(243,238,231,.55);
+  border-radius:50%;
+  background:rgba(8,7,6,.62);
+  color:var(--text);
+  opacity:0;
+  transform:scale(.8);
+  transition:opacity .3s ease,transform .44s var(--ease),background .22s ease,border-color .22s ease;
+}
+.play-glyph svg{ width:36%; margin-left:9%; fill:currentColor; }
+
+/* ===========================================================================
+   NAV
+   =========================================================================== */
 .site-nav{
-  position:fixed;
-  inset:0 0 auto;
-  z-index:var(--z-nav);
+  position:fixed; inset:0 0 auto; z-index:var(--z-nav);
   height:var(--nav-h);
   padding-inline:var(--pad);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:28px;
-  background:linear-gradient(180deg,rgba(8,7,6,.91),rgba(8,7,6,.48) 72%,transparent);
-}
-.wordmark{
-  flex:none;
-  font-size:13px;
-  font-weight:780;
-  font-stretch:112%;
-  letter-spacing:-.025em;
-}
-.wordmark span{ color:var(--text-soft); font-weight:370; font-stretch:90%; }
-.site-nav nav{ display:flex; align-items:center; gap:clamp(18px,2.4vw,38px); font-size:12px; font-weight:520; }
-.site-nav nav a{ color:var(--text-soft); transition:color .2s ease; }
-.site-nav nav a:hover,.site-nav nav a[aria-current="page"]{ color:var(--text); }
-.index-trigger{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 0 6px;
-  border-bottom:2px solid var(--accent);
+  display:flex; align-items:center; justify-content:space-between; gap:20px;
   color:var(--text);
-  white-space:nowrap;
-  transition:color .2s ease,transform .2s var(--ease);
+  transition:color .4s ease;
 }
-.index-trigger span{ color:var(--muted); font-variant-numeric:tabular-nums; }
-.index-trigger:hover{ color:var(--accent); transform:translateY(-1px); }
-.index-trigger:active{ transform:translateY(1px); }
+.site-nav::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(180deg,rgba(8,7,6,.9),rgba(8,7,6,.42) 68%,transparent);
+  transition:opacity .4s ease;
+}
+/* Over the orange contact block the dark scrim reads as grime — invert it. */
+.site-nav.on-accent{ color:var(--bg-deep); }
+.site-nav.on-accent::before{ opacity:0; }
+.site-nav.on-accent .nav-link{ color:rgba(8,7,6,.66); }
+.site-nav.on-accent .nav-link:hover,
+.site-nav.on-accent .nav-link.is-active{ color:var(--bg-deep); }
+.site-nav.on-accent .index-trigger{ border-color:var(--bg-deep); }
+.site-nav.on-accent .scroll-progress{ background:rgba(8,7,6,.2); }
+.site-nav.on-accent .scroll-progress i{ background:var(--bg-deep); }
 
-.cinema-stack{ position:relative; background:var(--bg); }
+.wordmark{ flex:none; font-size:13px; font-weight:790; font-stretch:112%; letter-spacing:-.02em; }
+.wordmark span{ opacity:.55; font-weight:400; font-stretch:90%; }
+
+.nav-set{
+  display:flex; align-items:center; gap:clamp(13px,2vw,32px);
+  font-size:12px; font-weight:560;
+}
+.nav-link{ position:relative; padding-block:6px; color:var(--text-soft); transition:color .2s ease; }
+.nav-link::after{
+  content:""; position:absolute; left:0; right:0; bottom:0;
+  height:1.5px; background:currentColor;
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .4s var(--ease);
+}
+.nav-link:hover{ color:var(--text); }
+.nav-link:hover::after,.nav-link.is-active::after{ transform:scaleX(1); }
+.nav-link.is-active{ color:var(--text); }
+
+.index-trigger{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:7px 0 5px;
+  border-bottom:2px solid var(--accent);
+  white-space:nowrap;
+  transition:transform .24s var(--ease),border-color .3s ease;
+}
+.index-trigger span{ opacity:.6; font-variant-numeric:tabular-nums; }
+.index-trigger:hover{ transform:translateY(-2px); }
+.index-trigger:active{ transform:translateY(0); }
+
+/* Orientation: how far through the page you are. */
+.scroll-progress{ position:absolute; left:0; right:0; bottom:0; height:2px; background:rgba(243,238,231,.12); }
+.scroll-progress i{ display:block; height:100%; background:var(--accent); transform:scaleX(var(--progress,0)); transform-origin:left; }
+
+/* ===========================================================================
+   CINEMA STACK
+   Chapters pin to the top and are covered by the next one. Every chapter is
+   fully opaque, so two films never bleed through one another; the outgoing
+   chapter recedes (scale + dim) instead of cross-dissolving.
+   =========================================================================== */
+.cinema-stack{ position:relative; z-index:1; background:var(--bg); }
+
 .film-chapter{
-  --scene:0;
-  position:sticky;
-  top:0;
-  z-index:calc(2 + var(--scene));
-  min-height:100dvh;
+  position:sticky; top:0;
+  /* One film per screen, one film per flick — the reel cadence. */
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  z-index:var(--scene,1);
+  height:100dvh;
   overflow:hidden;
   isolation:isolate;
-  background:var(--surface);
-  box-shadow:0 -24px 90px rgba(45,12,7,.42);
-  view-timeline-name:--chapter;
-  view-timeline-axis:block;
+  background:var(--bg-deep);
 }
-.film-ambient{
-  position:absolute;
-  inset:-12%;
-  z-index:-2;
-  overflow:hidden;
-  background:var(--surface);
+.chapter-bg{
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(120% 88% at 22% 24%,rgba(60,26,18,.5),transparent 62%),
+    radial-gradient(90% 70% at 84% 82%,rgba(120,38,22,.22),transparent 66%),
+    var(--bg-deep);
 }
-.film-ambient img{
-  width:100%;
+
+.chapter-stage{
+  position:relative; z-index:1;
   height:100%;
-  object-fit:cover;
-  opacity:.62;
-  filter:blur(52px) saturate(.74) brightness(.36);
-  transform:scale(1.13);
-  backface-visibility:hidden;
+  padding:calc(var(--nav-h) + clamp(16px,2.2vw,38px)) var(--pad) clamp(26px,4vh,54px);
+  /* --exit comes from JS: 0 while the chapter owns the screen, 1 once covered. */
+  transform:translate3d(0,calc(var(--exit,0) * -4%),0) scale(calc(1 - .07 * var(--exit,0)));
 }
 .film-chapter::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
+  content:""; position:absolute; inset:0; z-index:9;
   pointer-events:none;
-  background:linear-gradient(115deg,rgba(8,7,6,.62),rgba(8,7,6,.18) 52%,rgba(8,7,6,.52));
+  background:var(--bg-deep);
+  opacity:calc(var(--exit,0) * .62);
 }
-.chapter-stage{
-  position:relative;
-  z-index:1;
-  min-height:100dvh;
-  padding:calc(var(--nav-h) + 34px) var(--pad) 42px;
-}
-.film-visual{
-  position:relative;
-  overflow:hidden;
-  background:#060504;
-  box-shadow:0 38px 100px rgba(34,9,5,.42);
-  backface-visibility:hidden;
-}
-.film-poster{
-  width:100%;
+
+/* One grid for every chapter. Variants change only which columns the frame
+   and caption occupy, so nothing can drift out of alignment at any width. */
+.chapter-grid{
   height:100%;
-  object-fit:cover;
-  transform:scale(1.035);
-  backface-visibility:hidden;
-  transition:transform 1.45s var(--ease-soft),opacity .48s ease;
-}
-.film-chapter.is-current .film-poster{ transform:scale(1); }
-.film-copy{ position:relative; z-index:3; transition:opacity .55s ease,transform .75s var(--ease-soft); }
-.film-title{
-  max-width:12ch;
-  font-size:clamp(48px,7vw,116px);
-  font-weight:780;
-  font-stretch:70%;
-  letter-spacing:-.058em;
-  line-height:.85;
-  text-wrap:balance;
-  opacity:.48;
-  transform:translateY(20px);
-  transition:opacity 1s var(--ease-soft),transform 1s var(--ease-soft);
-}
-.film-chapter.is-current .film-title{ opacity:1; transform:none; }
-.film-detail{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  flex-wrap:wrap;
-  opacity:.64;
-  transform:translateY(12px);
-  transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft);
-}
-.film-chapter.is-current .film-detail{ opacity:1; transform:none; }
-.film-descriptor{
-  max-width:34ch;
-  color:var(--text-soft);
-  font-size:13px;
-  font-weight:450;
-  line-height:1.35;
-}
-.play-cta{
-  min-width:116px;
-  padding:14px 20px 13px;
-  background:var(--accent);
-  color:var(--bg-deep);
-  font-size:13px;
-  font-weight:750;
-  text-align:center;
-  white-space:nowrap;
-  transition:background .2s ease,transform .2s var(--ease);
-}
-.play-cta:hover{ background:var(--text); transform:translateY(-2px); }
-.play-cta:active{ transform:translateY(1px) scale(.985); }
-
-.media-loader{
-  position:absolute;
-  inset:0;
-  z-index:4;
-  pointer-events:none;
-  background:linear-gradient(100deg,var(--surface) 20%,#35201a 42%,var(--surface) 64%);
-  background-size:220% 100%;
-  opacity:1;
-  transition:opacity .3s ease;
-}
-.media-ready>.media-loader,.media-failed>.media-loader{ opacity:0; }
-.media-error{
-  position:absolute;
-  inset:0;
-  z-index:5;
-  display:none;
-  place-items:center;
-  padding:24px;
-  background:var(--surface);
-  color:var(--text-soft);
-  font-size:13px;
-  text-align:center;
-}
-.media-failed>.media-error{ display:grid; }
-
-/* Opening film: the film itself owns the viewport. */
-.layout-cover .film-ambient{ display:none; }
-.layout-cover .chapter-stage{ padding:0; }
-.layout-cover .film-visual{ position:absolute; inset:0; box-shadow:none; }
-.layout-cover .film-poster{ object-position:center center; }
-.layout-cover .film-visual::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  background:
-    linear-gradient(180deg,rgba(7,5,4,.28),transparent 34%),
-    linear-gradient(0deg,rgba(7,5,4,.92),rgba(7,5,4,.18) 48%,transparent 72%),
-    linear-gradient(90deg,rgba(7,5,4,.43),transparent 58%);
-}
-.layout-cover .film-copy{
-  position:absolute;
-  left:var(--pad);
-  right:var(--pad);
-  bottom:clamp(38px,6vh,72px);
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  align-items:end;
-  gap:30px;
-}
-.layout-cover .film-title{ max-width:8ch; color:var(--text); font-size:clamp(64px,9.5vw,164px); text-shadow:0 12px 50px rgba(0,0,0,.46); }
-.layout-cover .film-detail{ justify-content:flex-end; align-items:flex-end; flex-direction:column; }
-.layout-cover .film-descriptor{ color:var(--text); text-align:right; }
-.hero-motion{ position:absolute; inset:0; z-index:1; overflow:hidden; opacity:0; transition:opacity 1.35s ease; }
-.hero-motion.is-playing{ opacity:1; }
-.hero-motion iframe{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:max(100vw,177.78vh);
-  height:max(56.25vw,100vh);
-  border:0;
-  pointer-events:none;
-  transform:translate(-50%,-50%);
-}
-.opening-bar{ position:absolute; left:0; right:0; z-index:6; height:50.2%; background:var(--bg-deep); pointer-events:none; }
-.opening-bar.top{ top:0; transform-origin:top; }
-.opening-bar.bottom{ bottom:0; transform-origin:bottom; }
-
-/* Second film: a composed split title card. */
-.layout-split{ background:var(--wine); }
-.layout-split .chapter-stage{
-  display:grid;
-  grid-template-columns:minmax(270px,.72fr) minmax(0,1.28fr);
-  align-items:center;
-  gap:clamp(30px,5vw,94px);
-}
-.layout-split .chapter-stage::before{
-  content:"";
-  position:absolute;
-  right:2.5vw;
-  top:17vh;
-  width:57vw;
-  height:57vh;
-  z-index:-1;
-  background:var(--accent);
-  opacity:.88;
-}
-.layout-split .film-copy{ grid-column:1; grid-row:1; align-self:end; padding-bottom:clamp(30px,7vh,80px); }
-.layout-split .film-title{ margin-bottom:30px; }
-.layout-split .film-visual{ grid-column:2; grid-row:1; width:100%; aspect-ratio:16/9; }
-
-/* Third film: a wide frame held by a single color field. */
-.layout-letterbox{ background:var(--surface); }
-.layout-letterbox .chapter-stage{ display:flex; flex-direction:column; justify-content:center; }
-.layout-letterbox .chapter-stage::before{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  top:38%;
-  height:31%;
-  z-index:-1;
-  background:var(--accent-deep);
-}
-.layout-letterbox .film-visual{ width:min(84vw,110dvh,1500px); margin-inline:auto; aspect-ratio:16/9; }
-.layout-letterbox .film-copy{
-  width:min(84vw,110dvh,1500px);
-  max-width:1500px;
-  margin:24px auto 0;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  align-items:end;
-  gap:28px;
-}
-.layout-letterbox .film-title{ max-width:15ch; font-size:clamp(44px,5.1vw,86px); }
-.layout-letterbox .film-detail{ justify-content:flex-end; }
-.layout-letterbox .film-descriptor{ text-align:right; }
-
-/* Fourth film: the title block cuts into the image. */
-.layout-block{ background:var(--surface-2); }
-.layout-block .chapter-stage{ display:flex; align-items:center; }
-.layout-block .film-visual{ width:min(72vw,1240px); aspect-ratio:16/9; margin-left:1vw; }
-.layout-block .film-copy{
-  position:absolute;
-  right:var(--pad);
-  bottom:clamp(40px,8vh,90px);
-  width:min(43vw,650px);
-  padding:clamp(26px,3.4vw,56px);
-  background:var(--accent);
-  color:var(--bg-deep);
-}
-.layout-block .film-title{ max-width:10ch; margin-bottom:28px; color:var(--bg-deep); opacity:.6; }
-.layout-block.is-current .film-title{ opacity:1; }
-.layout-block .film-descriptor{ color:rgba(8,7,6,.72); }
-.layout-block .play-cta{ background:var(--bg-deep); color:var(--text); }
-.layout-block .play-cta:hover{ background:var(--text); color:var(--bg-deep); }
-
-/* Fifth film: image and type deliberately break alignment. */
-.layout-offset{ background:#0a0b0a; }
-.layout-offset .chapter-stage{ display:flex; align-items:center; justify-content:flex-end; }
-.layout-offset .chapter-stage::before{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:0;
-  width:33vw;
-  height:44vh;
-  z-index:-1;
-  background:var(--accent-deep);
-}
-.layout-offset .film-visual{ width:min(70vw,1260px); aspect-ratio:16/9; margin-right:1vw; }
-.layout-offset .film-copy{ position:absolute; left:var(--pad); top:18vh; width:min(44vw,680px); }
-.layout-offset .film-title{ margin-bottom:32px; text-shadow:0 14px 42px rgba(0,0,0,.58); }
-
-/* Sixth film: portrait work keeps its own frame. */
-.layout-portrait{ background:#15100d; }
-.layout-portrait .chapter-stage{ display:grid; place-items:center; }
-.layout-portrait .chapter-stage::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:min(32vw,470px);
-  height:72dvh;
-  background:var(--accent);
-  transform:translate(-42%,-46%);
-}
-.layout-portrait .film-visual{ height:76dvh; aspect-ratio:9/16; z-index:1; }
-.layout-portrait .film-poster{ object-fit:cover; }
-.layout-portrait .film-copy{ position:absolute; inset:0; z-index:3; }
-.layout-portrait .film-title{ position:absolute; left:var(--pad); bottom:10vh; width:min(36vw,560px); }
-.layout-portrait .film-detail{ position:absolute; right:var(--pad); bottom:12vh; width:min(27vw,380px); justify-content:flex-end; }
-.layout-portrait .film-descriptor{ text-align:right; }
-
-.reel-break{ position:relative; z-index:16; box-shadow:0 -30px 100px rgba(20,5,3,.62); }
-.vertical-cuts{ padding:clamp(100px,12vw,190px) var(--pad) clamp(110px,14vw,220px); background:#120d0b; }
-.section-heading{ max-width:980px; margin-bottom:clamp(52px,7vw,100px); }
-.section-heading h2{
-  max-width:13ch;
-  font-size:clamp(48px,7.3vw,122px);
-  font-weight:780;
-  font-stretch:68%;
-  letter-spacing:-.058em;
-  line-height:.88;
-  text-wrap:balance;
-}
-.section-heading p{ max-width:42ch; margin-top:22px; color:var(--text-soft); font-size:clamp(15px,1.35vw,19px); }
-.portrait-wall{ display:flex; width:100%; height:min(78dvh,860px); gap:6px; overflow:hidden; }
-.cut-item{
-  position:relative;
-  flex:1 1 0;
-  min-width:66px;
-  overflow:hidden;
-  background:var(--surface);
-  text-align:left;
-  transition:flex-grow .86s var(--ease-soft),transform .24s var(--ease);
-}
-.cut-item:first-child{ flex-grow:2.15; }
-.portrait-wall:has(.cut-item:hover) .cut-item:first-child,
-.portrait-wall:has(.cut-item:focus-visible) .cut-item:first-child{ flex-grow:1; }
-.cut-item:hover,.cut-item:focus-visible{ flex-grow:4.2; }
-.cut-item:active{ transform:scale(.992); }
-.cut-item img{ width:100%; height:100%; object-fit:cover; transform:scale(1.03); transition:transform .92s var(--ease-soft),filter .55s ease; }
-.cut-item:hover img,.cut-item:focus-visible img{ transform:scale(1); filter:saturate(1.08); }
-.cut-item::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  background:linear-gradient(0deg,rgba(7,5,4,.95),transparent 44%);
-}
-.cut-info{ position:absolute; left:18px; right:18px; bottom:19px; z-index:3; transform:translateY(8px); transition:transform .68s var(--ease-soft); }
-.cut-item:hover .cut-info,.cut-item:focus-visible .cut-info{ transform:none; }
-.cut-title{
-  display:block;
-  max-width:13ch;
-  color:var(--text);
-  font-size:clamp(18px,2vw,34px);
-  font-weight:720;
-  font-stretch:78%;
-  letter-spacing:-.038em;
-  line-height:.98;
-  transform-origin:left bottom;
-  transition:transform .72s var(--ease-soft),opacity .4s ease;
-}
-.cut-kind{ display:block; margin-top:9px; color:var(--text-soft); font-size:11px; transition:opacity .45s ease,transform .65s var(--ease-soft); }
-.cut-item:not(:hover):not(:focus-visible) .cut-title{ transform:scale(.72); opacity:.86; }
-.cut-item:not(:hover):not(:focus-visible) .cut-kind{ opacity:.58; transform:translateY(4px); }
-
-.wide-edits{ padding:clamp(100px,12vw,180px) var(--pad) clamp(120px,15vw,230px); background:var(--wine); overflow:hidden; }
-.wide-stage{ max-width:1580px; min-height:112dvh; margin-inline:auto; }
-.wide-film{ display:block; width:71%; color:var(--text); text-align:left; }
-.wide-film+.wide-film{ width:62%; margin-top:-3vw; margin-left:auto; }
-.wide-image{ position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:var(--surface); box-shadow:0 36px 90px rgba(25,5,3,.48); }
-.wide-image img{ width:100%; height:100%; object-fit:cover; transform:scale(1.025); transition:transform .95s var(--ease-soft),filter .5s ease; }
-.wide-film:hover .wide-image img,.wide-film:focus-visible .wide-image img{ transform:scale(1); filter:saturate(1.08); }
-.wide-caption{ display:flex; align-items:flex-end; justify-content:space-between; gap:26px; padding-top:18px; }
-.wide-title{ max-width:17ch; font-size:clamp(24px,3.1vw,52px); font-weight:720; font-stretch:75%; letter-spacing:-.047em; line-height:.95; }
-.wide-kind{ flex:none; color:var(--text-soft); font-size:12px; }
-
-.about{
-  position:relative;
-  z-index:17;
-  padding:clamp(80px,7.5vw,120px) var(--pad) clamp(110px,13vw,200px);
-  overflow:hidden;
-  background:#0f0b09;
-}
-.about::before{
-  content:"";
-  position:absolute;
-  left:-7vw;
-  top:31%;
-  width:38vw;
-  height:46dvh;
-  background:var(--accent-deep);
-  opacity:.84;
-}
-.about-scene{
-  position:relative;
-  max-width:1680px;
-  min-height:104dvh;
+  max-width:1780px;
   margin-inline:auto;
   display:grid;
   grid-template-columns:repeat(12,minmax(0,1fr));
-  grid-template-rows:auto 1fr;
+  grid-template-rows:minmax(0,1fr);
   align-items:center;
+  gap:0 var(--gap);
 }
-.section-name{ color:var(--accent); font-size:14px; font-weight:680; }
-.about .section-name{ grid-column:1/3; grid-row:1; align-self:start; z-index:6; padding-top:4px; }
-.about-reel{
+
+.film-frame{
   position:relative;
-  grid-column:1/8;
-  grid-row:1/3;
-  align-self:stretch;
-  min-height:100dvh;
-  margin-left:calc(var(--pad) * -1);
-}
-.about-frame{
-  position:absolute;
+  grid-row:1;
+  max-height:100%;
   overflow:hidden;
   background:var(--surface);
-  box-shadow:0 36px 100px rgba(25,5,3,.5);
+  box-shadow:var(--plate-x,var(--plate)) var(--plate) 0 0 var(--accent),0 40px 110px rgba(12,3,2,.6);
+  transform:translate3d(0,calc((1 - var(--enter,1)) * 34px),0);
 }
-.about-frame::after{
-  content:"";
-  position:absolute;
-  inset:0;
+.film-frame img{
+  width:100%; height:100%; object-fit:cover;
+  transform:scale(calc(1.07 - .07 * var(--enter,1)));
+  backface-visibility:hidden;
+}
+.frame-fill{ display:none; }
+.frame-no{
+  position:absolute; z-index:3; left:13px; top:11px;
+  font-size:11px; font-weight:700; letter-spacing:.14em;
+  font-variant-numeric:tabular-nums;
+  text-shadow:0 2px 12px rgba(0,0,0,.75);
+  opacity:.82;
+}
+
+.film-copy{
+  position:relative; z-index:2;
+  grid-row:1; align-self:center;
+  display:flex; flex-direction:column; align-items:flex-start; gap:clamp(13px,1.5vw,24px);
+  opacity:var(--copy-in,1);
+  transform:translate3d(0,calc((1 - var(--copy-in,1)) * 30px),0);
+}
+.film-kind{ color:var(--accent); font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+.film-title{
+  font-size:var(--fs-h2);
+  font-weight:790; font-stretch:var(--stretch);
+  letter-spacing:var(--track);
+  line-height:.88;
+  text-wrap:balance;
+  text-shadow:0 10px 44px rgba(0,0,0,.42);
+}
+.film-descriptor{ max-width:36ch; color:var(--text-soft); font-size:clamp(13px,1.05vw,16px); line-height:1.45; }
+
+.play-cta{
+  display:inline-flex; align-items:center; gap:11px;
+  padding:13px 22px 12px 16px;
+  background:var(--accent); color:var(--bg-deep);
+  font-size:13px; font-weight:760;
+  transition:transform .24s var(--ease),background .2s ease,box-shadow .3s ease;
+}
+.play-cta svg{ width:12px; fill:currentColor; }
+.play-cta:hover{ background:var(--text); transform:translateY(-2px); box-shadow:0 14px 34px rgba(0,0,0,.45); }
+.play-cta:active{ transform:translateY(0) scale(.985); }
+
+/* --- Variants: wide frames alternate side, portrait frames face their caption */
+.chapter-wide-left  .film-frame{ grid-column:1/9;  aspect-ratio:16/9; --plate-x:calc(var(--plate) * -1); }
+/* Side captions get their own step down the scale — display sizes overflow
+   a four-column measure. */
+.film-chapter:not(.chapter-cover) .film-title{ font-size:clamp(28px,3.3vw,58px); max-width:13ch; }
+.chapter-wide-left  .film-copy { grid-column:9/13; }
+.chapter-wide-right .film-frame{ grid-column:5/13; aspect-ratio:16/9; }
+.chapter-wide-right .film-copy { grid-column:1/5; }
+.chapter-tall-left  .film-copy { grid-column:7/12; }
+.chapter-tall-right .film-copy { grid-column:2/7; }
+.chapter-tall-left  .film-frame{ grid-column:2/6; --plate-x:calc(var(--plate) * -1); }
+.chapter-tall-right .film-frame{ grid-column:8/12; }
+/* Portrait frames are height-led so they never overflow a short viewport. */
+.chapter-tall-left .film-frame,
+.chapter-tall-right .film-frame{ height:min(100%,70dvh); width:auto; aspect-ratio:9/16; justify-self:center; }
+
+/* --- Opening chapter: the film owns the whole viewport -------------------- */
+.chapter-cover .chapter-stage{ padding:0; }
+.chapter-cover .chapter-grid{ display:block; max-width:none; }
+.chapter-cover .film-frame{ position:absolute; inset:0; aspect-ratio:auto; box-shadow:none; transform:none; }
+.chapter-cover .film-frame img{ transform:scale(1.05); transition:transform 12s linear; }
+.chapter-cover.is-live .film-frame img{ transform:scale(1); }
+.chapter-cover .frame-no{ display:none; }
+.chapter-cover .sound-toggle{ right:var(--pad); bottom:auto; top:calc(var(--nav-h) + 14px); }
+.chapter-cover .film-frame::after{
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(7,5,4,.78),rgba(7,5,4,.2) 18%,transparent 30%),
+    linear-gradient(0deg,rgba(7,5,4,.96),rgba(7,5,4,.66) 22%,rgba(7,5,4,.2) 48%,transparent 68%),
+    linear-gradient(90deg,rgba(7,5,4,.62),rgba(7,5,4,.12) 42%,transparent 60%);
+}
+.chapter-cover .film-copy{
+  position:absolute; z-index:3;
+  left:var(--pad); right:var(--pad); bottom:clamp(48px,7vh,86px);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"kind kind" "title meta";
+  align-items:end;
+  gap:clamp(14px,2vw,30px);
+}
+.chapter-cover .film-kind{ grid-area:kind; }
+.chapter-cover .film-title{ grid-area:title; max-width:11ch; font-size:var(--fs-display); }
+.chapter-cover .film-meta{ grid-area:meta; display:flex; flex-direction:column; align-items:flex-end; gap:16px; text-align:right; }
+.chapter-cover .film-descriptor{ color:var(--text); }
+
+.scroll-cue{
+  position:absolute; z-index:3; left:50%; bottom:16px;
+  display:flex; flex-direction:column; align-items:center; gap:7px;
+  color:var(--text-soft);
+  font-size:10px; font-weight:640; letter-spacing:.2em; text-transform:uppercase;
+  transform:translateX(-50%);
+  opacity:calc(1 - var(--exit,0) * 3);
   pointer-events:none;
-  background:linear-gradient(180deg,transparent 52%,rgba(7,5,4,.28));
 }
-.about-frame img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transform:scale(1.045);
-  transition:transform 1.25s var(--ease-soft),filter .6s ease;
+.scroll-cue i{ display:block; width:1px; height:32px; background:linear-gradient(180deg,currentColor,transparent); }
+
+/* --- Dwell preview -------------------------------------------------------
+   Rest on a film and it starts playing itself, muted, the way a thumbnail
+   does on YouTube mobile. The player is only revealed once it reports that
+   it is actually playing, so a buffering black frame never replaces the
+   poster.                                                                     */
+.frame-motion{
+  position:absolute; inset:0; z-index:2;
+  overflow:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .9s ease;
 }
-.about-frame.in img{ transform:scale(1); }
-.about-frame-a{ left:0; top:8%; z-index:1; width:87%; aspect-ratio:16/9; }
-.about-frame-b{ left:9%; bottom:7%; z-index:2; width:59%; aspect-ratio:16/9; transition-delay:.08s; }
-.about-frame-c{ right:-1%; bottom:0; z-index:3; width:31%; height:58%; box-shadow:0 0 0 10px #0f0b09,0 36px 100px rgba(25,5,3,.56); transition-delay:.16s; }
-.about-body{
-  position:relative;
-  grid-column:6/13;
-  grid-row:1/3;
-  align-self:center;
-  z-index:5;
-  margin-top:5vh;
-  padding:clamp(34px,5vw,80px);
-  background:rgba(8,7,6,.95);
-  box-shadow:0 46px 120px rgba(5,3,2,.58);
+.frame-motion.is-playing{ opacity:1; }
+.frame-motion iframe{ position:absolute; width:100%; height:100%; border:0; }
+/* Cover-fit the 16:9 stream inside frames that are not 16:9. */
+.chapter-cover .frame-motion iframe{
+  left:50%; top:50%;
+  width:max(100%,calc(100dvh * 16 / 9));
+  height:max(100%,calc(100vw * 9 / 16));
+  transform:translate(-50%,-50%);
 }
-.bio-lead{
-  max-width:13ch;
+.chapter-tall-left .frame-motion iframe,
+.chapter-tall-right .frame-motion iframe{
+  left:50%; top:0;
+  width:auto; height:100%; aspect-ratio:16/9;
+  transform:translateX(-50%);
+}
+
+.sound-toggle{
+  position:absolute; z-index:5; right:12px; top:12px;
+  display:none; align-items:center; gap:8px;
+  padding:9px 14px 9px 11px;
+  border:1px solid rgba(243,238,231,.34);
+  border-radius:999px;
+  background:rgba(8,7,6,.66);
   color:var(--text);
-  font-size:clamp(48px,5.6vw,96px);
-  font-weight:680;
-  font-stretch:77%;
-  line-height:.92;
-  letter-spacing:-.058em;
+  font-size:11px; font-weight:680; letter-spacing:.1em; text-transform:uppercase;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s var(--ease);
+}
+.is-previewing .sound-toggle{ display:inline-flex; }
+.sound-toggle svg{ width:15px; fill:currentColor; }
+.sound-toggle:hover{ background:var(--accent); border-color:var(--accent); color:var(--bg-deep); }
+.sound-toggle:active{ transform:scale(.95); }
+/* While a preview runs the still is redundant — let the motion carry it. */
+.is-previewing .frame-no{ opacity:0; transition:opacity .4s ease; }
+
+/* Media states ------------------------------------------------------------- */
+.media-loader{
+  position:absolute; inset:0; z-index:4; pointer-events:none;
+  background:linear-gradient(100deg,var(--surface) 20%,#31201b 42%,var(--surface) 64%);
+  background-size:220% 100%;
+  transition:opacity .35s ease;
+}
+.media-ready>.media-loader,.media-failed>.media-loader{ opacity:0; }
+.media-error{
+  position:absolute; inset:0; z-index:5;
+  display:none; place-items:center;
+  padding:24px;
+  background:var(--surface); color:var(--text-soft);
+  font-size:13px; text-align:center;
+}
+.media-failed>.media-error{ display:grid; }
+
+/* ===========================================================================
+   SHARED SECTION SHELL
+   =========================================================================== */
+.band{ position:relative; z-index:16; padding:clamp(84px,10vw,164px) var(--pad) clamp(92px,11vw,180px); }
+.band-dark{ background:#100c0a; box-shadow:0 -30px 90px rgba(14,4,2,.7); }
+.band-deep{ background:var(--bg-deep); }
+.band-head{
+  max-width:1780px; margin:0 auto clamp(44px,5.5vw,84px);
+  display:grid; grid-template-columns:minmax(0,1fr) auto;
+  align-items:end; gap:clamp(20px,3vw,48px);
+}
+.band-head h2{ max-width:15ch; margin-top:20px; }
+.band-head p{ max-width:44ch; margin-top:18px; color:var(--text-soft); font-size:clamp(14px,1.2vw,18px); line-height:1.55; }
+.band-count{ color:var(--muted); font-size:12px; font-weight:640; letter-spacing:.14em; font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+/* Reusable film card: one hover language for the rail and the wide grid. */
+.film-card{ display:block; width:100%; color:var(--text); text-align:left; }
+.card-frame{ position:relative; overflow:hidden; background:var(--surface); }
+.card-frame img{ width:100%; height:100%; object-fit:cover; transform:scale(1.03); transition:transform 1s var(--ease-soft),filter .45s ease; }
+.card-glyph{ position:absolute; z-index:3; left:50%; top:50%; transform:translate(-50%,-50%) scale(.8); }
+.film-card:hover .card-frame img,
+.film-card:focus-visible .card-frame img{ transform:scale(1.09); filter:saturate(1.06) brightness(.72); }
+.film-card:hover .play-glyph,
+.film-card:focus-visible .play-glyph{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+.film-card:hover .play-glyph{ background:var(--accent); border-color:var(--accent); color:var(--bg-deep); }
+.film-card:active .card-frame{ transform:scale(.99); }
+.card-frame{ transition:transform .2s var(--ease); }
+.card-meta{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding-top:14px; }
+.card-title{
+  font-size:var(--fs-h3);
+  font-weight:730; font-stretch:76%; letter-spacing:-.032em; line-height:1;
   text-wrap:balance;
 }
-.bio p:not(.bio-lead){ max-width:51ch; color:var(--text-soft); font-size:clamp(16px,1.3vw,20px); line-height:1.55; letter-spacing:-.015em; }
-.bio-lead+p{ margin-top:clamp(34px,4vw,58px); }
-.bio p:not(.bio-lead)+p:not(.bio-lead){ margin-top:18px; }
-.bio-experience{ color:var(--accent) !important; font-weight:680; }
-.bio-meta{ margin-top:34px !important; color:var(--muted) !important; font-size:12px !important; letter-spacing:0 !important; }
-.craft{
-  position:relative;
-  max-width:1680px;
-  margin:clamp(80px,10vw,150px) auto 0;
-  border-top:3px solid var(--accent);
-}
-.craft div{ display:grid; grid-template-columns:minmax(180px,.27fr) minmax(0,1fr); gap:30px; align-items:baseline; padding:22px 0; border-bottom:1px solid rgba(228,75,43,.25); }
-.craft dt{ color:var(--accent); font-size:clamp(20px,2vw,34px); font-weight:720; font-stretch:75%; letter-spacing:-.035em; }
-.craft dd{ max-width:72ch; color:var(--text-soft); font-size:clamp(14px,1.25vw,18px); line-height:1.6; }
+.card-kind{ flex:none; color:var(--muted); font-size:11px; font-weight:640; letter-spacing:.12em; text-transform:uppercase; }
 
-.contact{
-  position:relative;
-  z-index:17;
-  min-height:84dvh;
-  padding:clamp(92px,11vw,170px) var(--pad) clamp(72px,9vw,130px);
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  background:var(--accent);
-  color:var(--bg-deep);
+/* ===========================================================================
+   VERTICAL WALL
+   The expanding accordion is the section's signature: panels share the width
+   and the hovered one takes the room. Titles stay legible at rest because the
+   resting width is floored, and on touch it becomes a snap rail instead.
+   =========================================================================== */
+.rail-section{ padding-inline:0; }
+.rail-section .band-head{ padding-inline:var(--pad); }
+.rail{
+  display:flex; gap:6px;
+  height:min(76dvh,820px);
+  padding-inline:var(--pad);
+  overflow:hidden;
 }
-.contact-top{ display:grid; grid-template-columns:minmax(120px,.23fr) minmax(0,1fr); gap:clamp(36px,8vw,150px); }
-.contact .section-name{ color:var(--bg-deep); }
-.contact-body h2{ max-width:13ch; font-size:clamp(52px,8.2vw,142px); font-weight:820; font-stretch:67%; letter-spacing:-.064em; line-height:.84; text-wrap:balance; }
-.contact-actions{ margin-top:clamp(48px,7vw,88px); display:flex; flex-wrap:wrap; align-items:baseline; gap:20px 38px; }
-.contact-actions a{ padding-bottom:5px; border-bottom:2px solid currentColor; font-weight:650; transition:opacity .2s ease,transform .2s var(--ease); }
+.cut-item{
+  position:relative;
+  flex:1 1 0; min-width:0;
+  overflow:hidden;
+  background:var(--surface);
+  color:var(--text); text-align:left;
+  transition:flex-grow .82s var(--ease-soft),transform .24s var(--ease);
+}
+.cut-item:first-child{ flex-grow:1.9; }
+.rail:has(.cut-item:hover) .cut-item:first-child,
+.rail:has(.cut-item:focus-visible) .cut-item:first-child{ flex-grow:1; }
+.cut-item:hover,.cut-item:focus-visible{ flex-grow:3.6; }
+.cut-item:active{ transform:scale(.993); }
+.cut-item img{
+  width:100%; height:100%; object-fit:cover;
+  transform:scale(1.04);
+  transition:transform .9s var(--ease-soft),filter .5s ease;
+}
+.cut-item:hover img,.cut-item:focus-visible img{ transform:scale(1); filter:saturate(1.06); }
+.cut-item::after{
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:linear-gradient(0deg,rgba(7,5,4,.95),rgba(7,5,4,.24) 42%,transparent 62%);
+}
+.cut-info{
+  position:absolute; z-index:6; left:16px; right:16px; bottom:17px;
+  transform:translateY(6px);
+  transition:transform .66s var(--ease-soft);
+}
+.cut-item:hover .cut-info,.cut-item:focus-visible .cut-info{ transform:none; }
+.cut-title{
+  display:block;
+  font-size:clamp(17px,1.9vw,32px);
+  font-weight:730; font-stretch:78%; letter-spacing:-.032em; line-height:1;
+  transform-origin:left bottom;
+  transition:transform .7s var(--ease-soft),opacity .4s ease;
+}
+.cut-kind{
+  display:block; margin-top:8px;
+  color:var(--text-soft);
+  font-size:10px; font-weight:640; letter-spacing:.12em; text-transform:uppercase;
+  transition:opacity .45s ease,transform .6s var(--ease-soft);
+}
+.cut-item:not(:hover):not(:focus-visible) .cut-title{ transform:scale(.78); opacity:.9; }
+.cut-item:not(:hover):not(:focus-visible) .cut-kind{ opacity:.55; transform:translateY(4px); }
+.cut-item .play-glyph{ position:absolute; z-index:6; left:50%; top:50%; transform:translate(-50%,-50%) scale(.8); }
+.cut-item:hover .play-glyph,.cut-item:focus-visible .play-glyph{
+  opacity:1; transform:translate(-50%,-50%) scale(1);
+  background:var(--accent); border-color:var(--accent); color:var(--bg-deep);
+}
+
+/* ===========================================================================
+   WIDE GRID
+   Plain two-column grid with a staggered second column. No negative margins,
+   so captions can never collide with the next frame.
+   =========================================================================== */
+.wide-stage{
+  max-width:1780px; margin-inline:auto;
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(48px,6vw,110px) clamp(22px,3vw,54px);
+}
+.wide-stage .card-frame{ aspect-ratio:16/9; }
+.wide-stage .film-card:nth-child(even){ margin-top:clamp(34px,7vw,120px); }
+
+/* ===========================================================================
+   ABOUT
+   Rebuilt as a call sheet: a stat strip, prose set at reading size, a
+   full-bleed still strip and the craft table. Every element is grid-placed,
+   so nothing floats free the way the old collage did.
+   =========================================================================== */
+.about{ position:relative; z-index:17; background:#0f0b09; padding-block:clamp(84px,10vw,168px) 0; }
+.about-inner{ max-width:1780px; margin-inline:auto; padding-inline:var(--pad); }
+.about-top{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  align-items:start;
+  gap:clamp(34px,5vw,96px);
+}
+.bio-lead{
+  max-width:14ch;
+  margin-top:22px;
+  font-size:var(--fs-h2);
+  font-weight:720; font-stretch:75%;
+  letter-spacing:var(--track);
+  line-height:.92;
+  text-wrap:balance;
+}
+.bio-lead em{ color:var(--accent); font-style:normal; }
+.bio{ padding-top:clamp(8px,1.4vw,26px); }
+.bio p{ max-width:54ch; color:var(--text-soft); font-size:clamp(15px,1.22vw,19px); line-height:1.62; }
+.bio p+p{ margin-top:17px; }
+.bio p.bio-meta{ margin-top:26px; color:var(--muted); font-size:12px; letter-spacing:.02em; }
+
+.about-stats{
+  margin-top:clamp(48px,6vw,92px);
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  border-top:1px solid var(--line);
+}
+.about-stats div{ padding:22px 22px 24px 0; border-bottom:1px solid var(--line-soft); }
+.about-stats dt{
+  font-size:clamp(26px,3vw,50px); font-weight:740; font-stretch:74%;
+  letter-spacing:-.036em; line-height:1;
+  color:var(--text);
+}
+.about-stats dd{ margin-top:8px; color:var(--muted); font-size:11px; font-weight:640; letter-spacing:.14em; text-transform:uppercase; }
+
+
+.craft{ max-width:1780px; margin:clamp(56px,7vw,110px) auto 0; padding:0 var(--pad) clamp(92px,11vw,180px); }
+.craft dl{ border-top:2px solid var(--accent); }
+.craft div{
+  display:grid; grid-template-columns:minmax(160px,.24fr) minmax(0,1fr);
+  gap:28px; align-items:baseline;
+  padding:20px 0 22px;
+  border-bottom:1px solid rgba(228,75,43,.24);
+}
+.craft dt{ color:var(--accent); font-size:clamp(19px,1.9vw,32px); font-weight:730; font-stretch:75%; letter-spacing:-.032em; }
+.craft dd{ max-width:74ch; color:var(--text-soft); font-size:clamp(14px,1.2vw,17px); line-height:1.6; }
+
+/* ===========================================================================
+   CONTACT / FOOTER
+   =========================================================================== */
+.contact{
+  position:relative; z-index:17;
+  min-height:82dvh;
+  padding:clamp(92px,11vw,168px) var(--pad) clamp(56px,7vw,104px);
+  display:flex; flex-direction:column; justify-content:space-between; gap:60px;
+  background:var(--accent); color:var(--bg-deep);
+}
+.contact-top{ max-width:1780px; width:100%; margin-inline:auto; }
+.contact .section-label{ color:rgba(8,7,6,.7); }
+.contact-body h2{
+  max-width:13ch; margin-top:24px;
+  font-size:clamp(50px,7.8vw,136px);
+  font-weight:830; font-stretch:68%;
+  letter-spacing:-.04em; line-height:.86;
+  text-wrap:balance;
+}
+.contact-actions{ margin-top:clamp(42px,6vw,80px); display:flex; flex-wrap:wrap; align-items:baseline; gap:18px 36px; }
+.contact-actions a{
+  position:relative; padding-bottom:5px;
+  border-bottom:2px solid currentColor;
+  font-weight:660;
+  transition:opacity .2s ease,transform .24s var(--ease);
+}
 .contact-actions a:first-child{ font-size:clamp(18px,2vw,30px); }
-.contact-actions a:hover{ opacity:.62; transform:translateY(-2px); }
-.contact-bottom{ margin-top:80px; display:flex; align-items:flex-end; justify-content:space-between; gap:32px; }
-.social-links{ display:flex; flex-wrap:wrap; gap:18px 30px; font-size:13px; font-weight:620; }
+.contact-actions a:hover{ opacity:.64; transform:translateY(-2px); }
+.contact-bottom{ max-width:1780px; width:100%; margin-inline:auto; display:flex; align-items:flex-end; justify-content:space-between; gap:30px; }
+.social-links{ display:flex; flex-wrap:wrap; gap:16px 28px; font-size:13px; font-weight:640; }
+.social-links a{ transition:opacity .2s ease; }
 .social-links a:hover{ opacity:.6; }
-.contact-mark{ max-width:20ch; font-size:12px; text-align:right; }
+.contact-mark{ max-width:22ch; font-size:12px; text-align:right; opacity:.78; }
 
 .footer{
-  position:relative;
-  z-index:17;
-  padding:24px var(--pad);
-  display:flex;
-  justify-content:space-between;
-  gap:24px;
-  background:var(--bg-deep);
-  color:var(--muted);
+  position:relative; z-index:17;
+  padding:22px var(--pad);
+  display:flex; justify-content:space-between; gap:22px;
+  background:var(--bg-deep); color:var(--muted);
   font-size:11px;
 }
+.footer a{ transition:color .2s ease; }
 .footer a:hover{ color:var(--text); }
 
-.empty-state{ min-height:70dvh; display:grid; place-items:center; padding:40px; color:var(--text-soft); text-align:center; }
-.reveal{ opacity:0; transform:translateY(28px); transition:opacity 1s var(--ease-soft),transform 1s var(--ease-soft); }
+.empty-state{ min-height:60dvh; display:grid; place-items:center; padding:40px; color:var(--text-soft); text-align:center; }
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft); }
 .reveal.in{ opacity:1; transform:none; }
 
+/* ===========================================================================
+   FILM INDEX
+   =========================================================================== */
 .film-index{
-  position:fixed;
-  inset:0;
-  z-index:var(--z-index);
+  position:fixed; inset:0; z-index:var(--z-index);
   visibility:hidden;
-  display:grid;
-  grid-template-columns:minmax(320px,42vw) minmax(0,1fr);
-  background:var(--accent);
-  color:var(--bg-deep);
+  display:grid; grid-template-columns:minmax(300px,40vw) minmax(0,1fr);
+  background:var(--accent); color:var(--bg-deep);
   opacity:0;
   transform:translate3d(0,102%,0);
-  transition:transform .82s var(--ease-soft),opacity .42s ease,visibility .82s;
+  transition:transform .78s var(--ease-soft),opacity .4s ease,visibility .78s;
 }
 .film-index.open{ visibility:visible; opacity:1; transform:none; }
 .index-preview{
-  position:relative;
-  min-height:100dvh;
-  overflow:hidden;
-  background:var(--wine);
-  opacity:0;
-  transform:translate3d(0,24px,0) scale(.992);
-  transition:opacity .55s ease,transform .9s var(--ease-soft);
+  position:relative; min-height:100dvh; overflow:hidden; background:var(--surface-2);
+  opacity:0; transform:translate3d(0,22px,0);
+  transition:opacity .5s ease,transform .85s var(--ease-soft);
 }
-.film-index.open .index-preview{ opacity:1; transform:none; transition-delay:.14s; }
-.index-preview img{ width:100%; height:100%; object-fit:cover; filter:saturate(.82) contrast(1.04); transform:scale(1.025); transition:opacity .3s ease,transform .9s var(--ease-soft); }
+.film-index.open .index-preview{ opacity:1; transform:none; transition-delay:.12s; }
+.index-preview img{ width:100%; height:100%; object-fit:cover; filter:saturate(.85); transform:scale(1.02); transition:opacity .28s ease,transform .85s var(--ease-soft); }
 .film-index.open .index-preview img{ transform:scale(1); }
-.index-preview.is-changing img{ opacity:0; transform:scale(1.035); }
-.index-preview::after{ content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(8,7,6,.84),transparent 58%); pointer-events:none; }
-.index-preview-title{ position:absolute; left:clamp(22px,3vw,50px); right:clamp(22px,3vw,50px); bottom:34px; z-index:2; color:var(--text); font-size:clamp(32px,4vw,70px); font-weight:770; font-stretch:70%; letter-spacing:-.055em; line-height:.9; transition:opacity .26s ease,transform .45s var(--ease-soft); }
-.index-preview.is-changing .index-preview-title{ opacity:0; transform:translateY(12px); }
-.index-panel{ min-width:0; min-height:100dvh; padding:26px clamp(24px,4vw,72px) 42px; display:grid; grid-template-rows:auto auto minmax(0,1fr); }
-.index-top,.index-filters,.index-grid{ opacity:0; transform:translateY(20px); transition:opacity .52s ease,transform .72s var(--ease-soft); }
-.film-index.open .index-top,.film-index.open .index-filters,.film-index.open .index-grid{ opacity:1; transform:none; }
-.film-index.open .index-top{ transition-delay:.2s; }
-.film-index.open .index-filters{ transition-delay:.26s; }
-.film-index.open .index-grid{ transition-delay:.32s; }
-.index-top{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
-.index-top h2{ font-size:clamp(34px,4.7vw,78px); font-weight:810; font-stretch:66%; letter-spacing:-.055em; line-height:.9; }
-.index-close{ padding:9px 0 6px; border-bottom:2px solid currentColor; font-size:13px; font-weight:680; transition:opacity .2s ease; }
-.index-close:hover{ opacity:.58; }
-.index-filters{ padding:30px 0 26px; display:flex; flex-wrap:wrap; gap:10px 24px; }
-.index-filter{ padding:5px 0 3px; border-bottom:2px solid transparent; color:var(--bg-deep); font-size:12px; font-weight:650; }
-.index-filter:hover,.index-filter[aria-pressed="true"]{ border-color:var(--bg-deep); color:var(--bg-deep); }
-.index-grid{ min-height:0; overflow-y:auto; overscroll-behavior:contain; scroll-behavior:smooth; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-content:start; gap:11px 34px; padding-right:10px; scrollbar-color:var(--bg-deep) transparent; }
-.index-item{ min-width:0; padding:5px 0; color:var(--bg-deep); text-align:left; transition:color .18s ease,transform .25s var(--ease); }
-.index-item strong{ display:block; font-size:clamp(18px,1.65vw,28px); font-weight:710; font-stretch:78%; letter-spacing:-.035em; line-height:1.02; text-wrap:balance; }
-.index-item span{ display:block; margin-top:4px; color:var(--bg-deep); font-size:10px; opacity:1; }
-.index-item:hover,.index-item:focus-visible{ color:var(--text); transform:translateX(7px); }
-.index-empty{ padding-top:30px; font-weight:650; }
+.index-preview.is-changing img{ opacity:0; transform:scale(1.04); }
+.index-preview::after{ content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(8,7,6,.86),transparent 56%); pointer-events:none; }
+.index-preview-title{
+  position:absolute; z-index:2; left:clamp(22px,3vw,48px); right:clamp(22px,3vw,48px); bottom:32px;
+  color:var(--text);
+  font-size:clamp(30px,3.6vw,62px); font-weight:770; font-stretch:72%; letter-spacing:-.035em; line-height:.92;
+  transition:opacity .24s ease,transform .42s var(--ease-soft);
+}
+.index-preview.is-changing .index-preview-title{ opacity:0; transform:translateY(10px); }
 
+.index-panel{ min-width:0; min-height:100dvh; padding:24px clamp(24px,4vw,68px) 38px; display:grid; grid-template-rows:auto auto minmax(0,1fr); }
+.index-top,.index-filters,.index-grid{ opacity:0; transform:translateY(18px); transition:opacity .5s ease,transform .68s var(--ease-soft); }
+.film-index.open .index-top,.film-index.open .index-filters,.film-index.open .index-grid{ opacity:1; transform:none; }
+.film-index.open .index-top{ transition-delay:.18s; }
+.film-index.open .index-filters{ transition-delay:.24s; }
+.film-index.open .index-grid{ transition-delay:.3s; }
+.index-top{ display:flex; align-items:center; justify-content:space-between; gap:22px; }
+.index-top h2{ font-size:clamp(32px,4.4vw,72px); font-weight:830; font-stretch:67%; letter-spacing:-.04em; line-height:.92; }
+.index-close{ padding:8px 0 5px; border-bottom:2px solid currentColor; font-size:13px; font-weight:680; transition:opacity .2s ease; }
+.index-close:hover{ opacity:.6; }
+.index-filters{ padding:28px 0 24px; display:flex; flex-wrap:wrap; gap:9px 22px; }
+.index-filter{
+  display:inline-flex; align-items:baseline; gap:6px;
+  padding:5px 0 3px;
+  border-bottom:2px solid transparent;
+  font-size:12px; font-weight:660;
+  opacity:.62;
+  transition:opacity .2s ease,border-color .2s ease;
+}
+.index-filter b{ font-weight:660; font-variant-numeric:tabular-nums; font-size:10px; opacity:.7; }
+.index-filter:hover{ opacity:1; }
+.index-filter[aria-pressed="true"]{ opacity:1; border-color:var(--bg-deep); }
+.index-grid{
+  min-height:0; overflow-y:auto; overscroll-behavior:contain;
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  align-content:start; gap:9px 30px;
+  padding-right:8px;
+  scrollbar-color:rgba(8,7,6,.5) transparent;
+}
+.index-item{
+  min-width:0; padding:6px 0;
+  color:var(--bg-deep); text-align:left;
+  transition:transform .26s var(--ease),opacity .2s ease;
+}
+.index-item strong{ display:block; font-size:clamp(17px,1.55vw,26px); font-weight:720; font-stretch:78%; letter-spacing:-.032em; line-height:1.04; text-wrap:balance; }
+.index-item span{ display:block; margin-top:3px; font-size:10px; font-weight:640; letter-spacing:.12em; text-transform:uppercase; opacity:.62; }
+.index-item:hover,.index-item:focus-visible{ transform:translateX(8px); }
+.index-item:hover strong,.index-item:focus-visible strong{ text-decoration:underline; text-underline-offset:4px; text-decoration-thickness:2px; }
+.index-empty{ padding-top:28px; font-weight:660; }
+
+/* ===========================================================================
+   VIEWER
+   =========================================================================== */
 .viewer{
-  position:fixed;
-  inset:0;
-  z-index:var(--z-viewer);
-  visibility:hidden;
-  opacity:0;
-  display:grid;
-  grid-template-rows:62px minmax(0,1fr);
+  position:fixed; inset:0; z-index:var(--z-viewer);
+  visibility:hidden; opacity:0;
+  display:grid; grid-template-rows:60px minmax(0,1fr);
   background:rgba(6,5,4,.985);
-  transition:opacity .45s ease,visibility .55s;
+  transition:opacity .42s ease,visibility .5s;
 }
 .viewer.open{ visibility:visible; opacity:1; }
-.viewer-bar{ padding-inline:var(--pad); display:flex; align-items:center; justify-content:space-between; gap:24px; background:var(--accent); color:var(--bg-deep); font-size:13px; font-weight:670; transform:translateY(-100%); transition:transform .58s var(--ease-soft); }
+.viewer-bar{
+  padding-inline:var(--pad);
+  display:flex; align-items:center; justify-content:space-between; gap:22px;
+  background:var(--accent); color:var(--bg-deep);
+  font-size:13px; font-weight:680;
+  transform:translateY(-100%);
+  transition:transform .54s var(--ease-soft);
+}
 .viewer.open .viewer-bar{ transform:none; }
-.viewer-close{ padding:8px 0 5px; border-bottom:2px solid currentColor; }
-.viewer-close:hover{ opacity:.6; }
-.viewer-stage{ min-height:0; padding:18px; display:grid; place-items:center; opacity:0; transform:translate3d(0,18px,0) scale(.985); transition:opacity .42s ease,transform .58s var(--ease-soft); }
+.viewer-close{ padding:8px 0 5px; border-bottom:2px solid currentColor; transition:opacity .2s ease; }
+.viewer-close:hover{ opacity:.62; }
+.viewer-stage{
+  min-height:0; padding:18px;
+  display:grid; place-items:center;
+  opacity:0; transform:translate3d(0,16px,0) scale(.986);
+  transition:opacity .4s ease,transform .55s var(--ease-soft);
+}
 .viewer.open .viewer-stage{ opacity:1; transform:none; }
-.viewer-media{ width:min(96vw,calc((100dvh - 100px) * 1.7778)); aspect-ratio:16/9; background:#000; }
+.viewer-media{ position:relative; width:min(96vw,calc((100dvh - 100px) * 1.7778)); aspect-ratio:16/9; background:#000; }
 .viewer-media.portrait{ width:min(88vw,calc((100dvh - 100px) * .5625)); aspect-ratio:9/16; }
-.viewer-media iframe,.viewer-media video{ width:100%; height:100%; display:block; border:0; }
+.viewer-media iframe,.viewer-media video{ position:relative; z-index:1; width:100%; height:100%; display:block; border:0; }
+/* The player can take a beat to appear — say so instead of showing a void. */
+.viewer-loading{
+  position:absolute; inset:0; z-index:0;
+  display:grid; place-items:center; gap:14px;
+  align-content:center;
+  color:var(--muted);
+  font-size:11px; font-weight:640; letter-spacing:.16em; text-transform:uppercase;
+}
+.viewer-loading i{
+  width:26px; aspect-ratio:1;
+  border:2px solid rgba(243,238,231,.2);
+  border-top-color:var(--accent);
+  border-radius:50%;
+}
 .viewer-fallback{ max-width:680px; color:var(--text-soft); text-align:center; }
-.viewer-fallback img{ max-height:70dvh; margin:0 auto 24px; object-fit:contain; }
+.viewer-fallback img{ max-height:66dvh; margin:0 auto 22px; object-fit:contain; }
 .viewer-fallback a{ display:inline-block; padding-bottom:5px; border-bottom:2px solid var(--accent); color:var(--text); }
 
+/* ===========================================================================
+   MOTION
+   =========================================================================== */
 @media(prefers-reduced-motion:no-preference){
   .media-loader{ animation:loadingSweep 1.4s ease-in-out infinite; }
-  .page-ready .opening-bar.top{ animation:openTop 1.15s var(--ease-soft) .12s forwards; }
-  .page-ready .opening-bar.bottom{ animation:openBottom 1.15s var(--ease-soft) .12s forwards; }
-}
-
-@media(prefers-reduced-motion:no-preference) and (min-width:761px){
-  .film-chapter.is-passing .film-copy{
-    opacity:0 !important;
-    transform:translate3d(0,-18px,0) !important;
-    pointer-events:none;
-  }
-}
-
-@supports (animation-timeline:view()){
-  @media(prefers-reduced-motion:no-preference) and (min-width:761px){
-    .film-chapter:not(:first-child){
-      animation:chapterBlend linear both;
-      animation-timeline:view();
-      animation-range:entry 0% entry 88%;
-    }
-    .film-chapter:not(:first-child) .chapter-stage{
-      animation:chapterSettle linear both;
-      animation-timeline:--chapter;
-      animation-range:entry 0% entry 92%;
-    }
-    .film-chapter:not(:first-child) .film-ambient img{
-      animation:ambientDrift linear both;
-      animation-timeline:--chapter;
-      animation-range:entry 0% entry 100%;
-    }
-    .film-chapter:not(:first-child) .film-visual{
-      animation:frameSettle linear both;
-      animation-timeline:--chapter;
-      animation-range:entry 10% entry 90%;
-    }
-    .film-chapter:not(:first-child) .film-copy{
-      animation:copySettle linear both;
-      animation-timeline:--chapter;
-      animation-range:entry 22% entry 95%;
-    }
-  }
+  .viewer-loading i{ animation:spin 1s linear infinite; }
+  .scroll-cue i{ animation:cueDrop 2.1s var(--ease-soft) infinite; transform-origin:top; }
 }
 @keyframes loadingSweep{ to{ background-position:-120% 0; } }
-@keyframes openTop{ to{ transform:translateY(-102%); } }
-@keyframes openBottom{ to{ transform:translateY(102%); } }
-@keyframes chapterBlend{
-  from{ opacity:.24; }
-  72%{ opacity:.94; }
-  to{ opacity:1; }
-}
-@keyframes chapterSettle{
-  from{ opacity:.74; transform:translate3d(0,5dvh,0) scale(.988); }
-  to{ opacity:1; transform:none; }
-}
-@keyframes ambientDrift{
-  from{ transform:translate3d(0,2.5%,0) scale(1.19); }
-  to{ transform:translate3d(0,-1%,0) scale(1.13); }
-}
-@keyframes frameSettle{
-  from{ opacity:.72; transform:translate3d(0,3dvh,0) scale(.985); }
-  to{ opacity:1; transform:none; }
-}
-@keyframes copySettle{
-  from{ opacity:.28; transform:translate3d(0,28px,0); }
-  to{ opacity:1; transform:none; }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+@keyframes cueDrop{ 0%,100%{ transform:scaleY(.3); opacity:.4; } 50%{ transform:scaleY(1); opacity:1; } }
+@media(max-height:760px){ .scroll-cue{ display:none; } }
+
+/* ===========================================================================
+   RESPONSIVE
+   =========================================================================== */
+@media(max-width:1180px){
+  .chapter-wide-left  .film-frame{ grid-column:1/8; }
+  .chapter-wide-left  .film-copy { grid-column:8/13; }
+  .chapter-wide-right .film-frame{ grid-column:6/13; }
+  .chapter-wide-right .film-copy { grid-column:1/6; }
+  .chapter-tall-left  .film-frame{ grid-column:1/6; }
+  .chapter-tall-right .film-frame{ grid-column:8/13; }
+  .about-top{ grid-template-columns:1fr; gap:34px; }
+  .bio-lead{ max-width:18ch; }
 }
 
-@media(max-width:980px){
-  :root{ --nav-h:62px; }
-  .site-nav nav a[href="#about"]{ display:none; }
-  .layout-split .chapter-stage{ grid-template-columns:.82fr 1.18fr; gap:28px; }
-  .layout-split .chapter-stage::before{ width:60vw; }
-  .layout-block .film-copy{ width:48vw; }
-  .layout-offset .film-copy{ width:46vw; }
-  .portrait-wall{ height:70dvh; }
-  .wide-stage{ min-height:96dvh; }
-  .about-body{ grid-column:5/13; padding:clamp(32px,5vw,54px); }
-  .about-frame-a{ width:92%; }
-  .about-frame-c{ right:-5%; width:35%; }
-  .film-index{ grid-template-columns:36vw minmax(0,1fr); }
+@media(max-width:900px){
+  :root{ --nav-h:58px; }
+  .band-head{ grid-template-columns:1fr; align-items:start; }
+  .band-count{ order:-1; }
+  .wide-stage{ grid-template-columns:1fr; gap:clamp(46px,9vw,72px); }
+  .wide-stage .film-card:nth-child(even){ margin-top:0; }
+  .craft div{ grid-template-columns:1fr; gap:6px; padding:17px 0 19px; }
+  .film-index{ grid-template-columns:1fr; }
+  .index-preview{ display:none; }
+  .index-grid{ grid-template-columns:1fr; }
 }
 
 @media(max-width:760px){
-  :root{ --pad:18px; --nav-h:58px; }
-  .site-nav{ gap:16px; }
-  .site-nav nav{ gap:16px; }
-  .site-nav nav a[href="#work"],.site-nav nav a[href="#contact"]{ display:none; }
-  .wordmark{ font-size:12px; }
-  .index-trigger{ font-size:11px; }
-  .film-chapter{ position:relative; min-height:100dvh; box-shadow:none; }
-  .chapter-stage{ min-height:100dvh; padding:calc(var(--nav-h) + 24px) var(--pad) 34px; }
-  .film-title{ max-width:14ch; font-size:clamp(44px,15vw,78px); }
-  .film-detail{ align-items:flex-start; justify-content:space-between; }
+  :root{ --pad:18px; --nav-h:56px; --plate:8px; }
 
-  .layout-cover .chapter-stage{
-    padding:calc(var(--nav-h) + 24px) 0 34px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:32px;
-  }
-  .layout-cover .film-ambient{ display:block; }
-  .layout-cover .film-ambient img{ opacity:.9; filter:blur(42px) saturate(.9) brightness(.54); }
-  .layout-cover::after{ background:linear-gradient(180deg,rgba(8,7,6,.42),rgba(8,7,6,.72)); }
-  .layout-cover .film-visual{ position:relative; inset:auto; width:100%; height:auto; aspect-ratio:16/9; background:transparent; }
-  .layout-cover .film-poster{ object-fit:cover; }
-  .layout-cover .film-copy{ position:relative; inset:auto; width:100%; padding-inline:var(--pad); display:block; }
-  .layout-cover .film-title{ max-width:9ch; font-size:clamp(58px,20vw,94px); }
-  .layout-cover .film-detail{ margin-top:24px; align-items:center; flex-direction:row; justify-content:space-between; }
-  .layout-cover .film-descriptor{ text-align:left; }
-  .hero-motion{ display:none; }
+  /* Keep the whole nav reachable — the old build hid Work/About/Contact. */
+  .site-nav{ gap:10px; }
+  .nav-set{ gap:13px; font-size:11px; }
+  .wordmark{ font-size:11px; }
+  .wordmark span{ display:none; }
+  .index-trigger{ font-size:11px; gap:5px; }
 
-  .layout-split .chapter-stage,
-  .layout-letterbox .chapter-stage,
-  .layout-block .chapter-stage,
-  .layout-offset .chapter-stage,
-  .layout-portrait .chapter-stage{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:stretch;
-    gap:28px;
-  }
-  .layout-split .chapter-stage::before,
-  .layout-letterbox .chapter-stage::before,
-  .layout-block .chapter-stage::before,
-  .layout-offset .chapter-stage::before,
-  .layout-portrait .chapter-stage::before{
-    left:auto;
-    right:-8vw;
-    top:18vh;
-    bottom:auto;
-    width:65vw;
-    height:42dvh;
+  /* Chapters stop stacking: a sticky stack fights mobile URL-bar resizing.
+     Each film becomes a full-bleed plate with the caption over the image. */
+  .film-chapter{ position:relative; height:100dvh; }
+  .chapter-stage{ transform:none; filter:none; padding:0; }
+  .chapter-bg{ display:none; }
+  .chapter-grid{ display:block; height:auto; }
+
+  /* Every variant is listed: the desktop variant rules carry higher
+     specificity, so a bare .film-frame override loses to their aspect-ratio. */
+  .film-frame,
+  .chapter-wide-left .film-frame,
+  .chapter-wide-right .film-frame,
+  .chapter-tall-left .film-frame,
+  .chapter-tall-right .film-frame{
+    position:absolute; inset:0;
+    width:auto; height:auto;
+    grid-column:auto;
+    aspect-ratio:auto;
+    box-shadow:none;
     transform:none;
-    opacity:.86;
   }
-  .layout-split .film-visual,
-  .layout-letterbox .film-visual,
-  .layout-block .film-visual,
-  .layout-offset .film-visual{
-    order:1;
-    width:100%;
-    margin:0;
-    aspect-ratio:16/9;
+  .film-frame::after{
+    content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(0deg,rgba(7,5,4,.94),rgba(7,5,4,.34) 44%,rgba(7,5,4,.5));
   }
-  .layout-split .film-copy,
-  .layout-letterbox .film-copy,
-  .layout-block .film-copy,
-  .layout-offset .film-copy{
-    order:2;
-    position:relative;
-    inset:auto;
-    width:100%;
-    margin:0;
-    padding:0;
+  .film-frame img{ transform:none; }
+  /* Landscape films are letterboxed over a blurred fill of themselves — the
+     way a vertical feed carries horizontal footage. Cropping a 16:9 frame to
+     9:19 would throw the composition away. */
+  .film-frame .media-image{ position:relative; z-index:1; object-fit:contain; object-position:center 36%; }
+  .frame-fill{
     display:block;
-    background:transparent;
-    color:var(--text);
+    position:absolute; inset:0; z-index:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    opacity:.6;
+    filter:blur(26px) saturate(.8) brightness(.5);
+    transform:scale(1.2);
   }
-  .layout-split .film-title,
-  .layout-letterbox .film-title,
-  .layout-block .film-title,
-  .layout-offset .film-title{ max-width:14ch; margin:0 0 24px; color:var(--text); text-shadow:none; }
-  .layout-split .film-detail,
-  .layout-letterbox .film-detail,
-  .layout-block .film-detail,
-  .layout-offset .film-detail{ justify-content:space-between; }
-  .layout-split .film-descriptor,
-  .layout-letterbox .film-descriptor,
-  .layout-block .film-descriptor,
-  .layout-offset .film-descriptor{ color:var(--text-soft); text-align:left; }
-  .layout-block .play-cta{ background:var(--accent); color:var(--bg-deep); }
+  /* Portrait films already fill a phone screen. */
+  .chapter-tall-left .frame-fill,
+  .chapter-tall-right .frame-fill{ display:none; }
+  .chapter-tall-left .film-frame .media-image,
+  .chapter-tall-right .film-frame .media-image{ object-fit:cover; }
+  .frame-no{ left:14px; right:auto; top:calc(var(--nav-h) + 10px); }
+  .sound-toggle{ right:var(--pad); bottom:auto; top:calc(var(--nav-h) + 8px); }
 
-  .layout-portrait .film-visual{ order:1; width:min(64vw,360px); height:auto; margin-inline:auto; aspect-ratio:9/16; }
-  .layout-portrait .film-copy{ order:2; position:relative; inset:auto; }
-  .layout-portrait .film-title{ position:relative; inset:auto; width:100%; margin-bottom:24px; }
-  .layout-portrait .film-detail{ position:relative; inset:auto; width:100%; justify-content:space-between; }
-  .layout-portrait .film-descriptor{ text-align:left; }
+  .film-copy,
+  .chapter-cover .film-copy{
+    position:absolute; z-index:3;
+    left:var(--pad); right:var(--pad); bottom:clamp(30px,5vh,52px);
+    grid-column:auto;
+    display:flex; flex-direction:column; align-items:flex-start; gap:15px;
+    opacity:1; transform:none;
+  }
+  .film-title,.chapter-cover .film-title{ max-width:11ch; font-size:clamp(42px,13vw,68px); }
+  .chapter-cover .film-meta{ align-items:flex-start; text-align:left; gap:15px; }
+  .film-descriptor,.chapter-cover .film-descriptor{ color:var(--text-soft); }
+  .chapter-cover .film-frame img{ transform:none; transition:none; }
+  .scroll-cue{ bottom:10px; }
 
-  .vertical-cuts{ padding-inline:0; }
-  .vertical-cuts .section-heading{ padding-inline:var(--pad); }
-  .section-heading h2{ font-size:clamp(54px,17vw,90px); }
-  .portrait-wall{ height:70dvh; overflow-x:auto; gap:8px; padding-inline:var(--pad); scroll-snap-type:x mandatory; scrollbar-width:none; }
-  .portrait-wall::-webkit-scrollbar{ display:none; }
-  .cut-item,.cut-item:first-child,.cut-item:hover,.cut-item:focus-visible{ flex:0 0 74vw; min-width:0; scroll-snap-align:center; }
+  .band{ padding-block:clamp(66px,13vw,96px) clamp(72px,14vw,104px); }
+  .band-head h2{ max-width:12ch; }
+  .card-meta{ display:block; }
+  .card-kind{ display:block; margin-top:7px; }
+
+  /* Hover has no meaning on touch, so the accordion becomes a snap rail. */
+  .rail{
+    height:min(72dvh,620px);
+    gap:8px;
+    overflow-x:auto; overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:var(--pad);
+    scrollbar-width:none;
+  }
+  .rail::-webkit-scrollbar{ display:none; }
+  .cut-item,
+  .cut-item:first-child,
+  .cut-item:hover,
+  .cut-item:focus-visible{ flex:0 0 min(72vw,300px); scroll-snap-align:center; }
   .cut-info{ transform:none; }
-  .cut-item:not(:hover):not(:focus-visible) .cut-title{ transform:none; opacity:1; font-size:clamp(22px,7vw,38px); }
+  .cut-item:not(:hover):not(:focus-visible) .cut-title{ transform:none; opacity:1; font-size:clamp(20px,6vw,30px); }
+  .cut-item:not(:hover):not(:focus-visible) .cut-kind{ opacity:.7; transform:none; }
+  .cut-item .play-glyph{ display:none; }
 
-  .wide-stage{ min-height:auto; }
-  .wide-film,.wide-film+.wide-film{ width:100%; margin:0; }
-  .wide-film+.wide-film{ margin-top:72px; }
-  .wide-caption{ display:block; }
-  .wide-kind{ display:block; margin-top:10px; }
+  .about{ padding-block:clamp(66px,13vw,96px) 0; }
+  .about-stats{ grid-template-columns:repeat(2,1fr); }
+  .about-stats div{ padding-right:16px; }
+  /* An odd final cell would leave a half-width rule hanging. */
+  .about-stats div:last-child:nth-child(odd){ grid-column:1/-1; }
 
-  .about{ padding:82px var(--pad) 104px; }
-  .about::before{ left:-28vw; top:26%; width:88vw; height:42dvh; }
-  .about-scene{ min-height:auto; display:flex; flex-direction:column; align-items:stretch; }
-  .about .section-name{ order:1; padding:0 0 30px; }
-  .about-reel{ order:2; width:calc(100% + (var(--pad) * 2)); min-height:74dvh; margin:0 calc(var(--pad) * -1); }
-  .about-frame-a{ left:0; top:0; width:95%; }
-  .about-frame-b{ left:0; bottom:8%; width:74%; }
-  .about-frame-c{ right:3%; bottom:0; width:36%; height:54%; box-shadow:0 0 0 7px #0f0b09,0 30px 80px rgba(25,5,3,.5); }
-  .about-body{ order:3; align-self:flex-end; width:94%; margin:-64px 0 0; padding:34px 24px 38px; }
-  .bio-lead{ font-size:clamp(48px,14vw,76px); }
-  .bio p:not(.bio-lead){ font-size:16px; }
-  .craft{ margin-top:76px; }
-  .craft div{ grid-template-columns:1fr; gap:7px; padding:18px 0 20px; }
-  .craft dt{ font-size:26px; }
-  .contact-top{ grid-template-columns:1fr; gap:34px; }
-  .contact{ min-height:78dvh; }
-  .contact-body h2{ font-size:clamp(58px,18vw,96px); }
-  .contact-bottom{ align-items:flex-start; flex-direction:column; }
+  .contact{ min-height:auto; gap:52px; }
+  .contact-bottom{ flex-direction:column; align-items:flex-start; }
   .contact-mark{ text-align:left; }
-  .footer{ flex-direction:column; }
+  .footer{ flex-direction:column; gap:10px; }
 
-  .film-index{ grid-template-columns:1fr; }
-  .index-preview{ display:none; }
-  .index-panel{ min-height:100dvh; padding:22px var(--pad) 32px; }
-  .index-top h2{ font-size:50px; }
-  .index-filters{ padding-block:24px 20px; gap:8px 18px; }
-  .index-grid{ grid-template-columns:1fr; gap:10px; }
-  .index-item strong{ font-size:24px; }
+  .index-panel{ padding:20px var(--pad) 30px; }
+  .index-top h2{ font-size:44px; }
+  .index-item strong{ font-size:22px; }
+  .viewer{ grid-template-rows:54px minmax(0,1fr); }
   .viewer-stage{ padding:10px; }
+  .viewer-media{ width:min(96vw,calc((100dvh - 90px) * 1.7778)); }
+  .viewer-media.portrait{ width:min(94vw,calc((100dvh - 90px) * .5625)); }
 }
 
 @media(prefers-reduced-motion:reduce){
-  html{ scroll-behavior:auto; }
+  html{ scroll-behavior:auto; scroll-snap-type:none; }
   *,*::before,*::after{ animation:none !important; transition:none !important; }
   .reveal{ opacity:1; transform:none; }
-  .film-title{ opacity:1; transform:none; }
-  .opening-bar{ display:none; }
+  .frame-motion{ display:none; }
+  .chapter-stage{ transform:none; filter:none; }
+  .film-frame,.film-copy{ transform:none; opacity:1; }
+  .film-frame img{ transform:none; }
+  .scroll-cue{ display:none; }
 }
 </style>
 </head>
 <body>
 <a class="skip-link" href="#work">Skip to films</a>
 
-<header class="site-nav">
+<header class="site-nav" id="siteNav">
   <a class="wordmark" href="#work" aria-label="Aniket, film portfolio home">ANIKET <span>// ai_native</span></a>
-  <nav aria-label="Primary">
-    <a href="#work" aria-current="page">Work</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-    <a href="labs.html">Labs</a>
+  <nav class="nav-set" aria-label="Primary">
+    <a class="nav-link is-active" href="#work" data-nav="work">Work</a>
+    <a class="nav-link" href="#verticalCuts" data-nav="verticalCuts">Vertical</a>
+    <a class="nav-link" href="#about" data-nav="about">About</a>
+    <a class="nav-link" href="#contact" data-nav="contact">Contact</a>
+    <a class="nav-link" href="labs.html">Labs</a>
     <button class="index-trigger" id="indexOpen" type="button" aria-haspopup="dialog">Film index <span id="indexCount">15</span></button>
   </nav>
+  <div class="scroll-progress" aria-hidden="true"><i id="scrollBar"></i></div>
 </header>
 
 <main>
   <section class="cinema-stack" id="work" aria-label="Featured films">
     <div id="cinemaStack">
-      <article class="film-chapter layout-cover is-current" style="--scene:0">
-        <div class="film-visual media-ready">
-          <img class="film-poster" src="assets/posters/hero-nuvve-kada.webp" width="1280" height="720" alt="Nuvve Kada, a cinematic Telugu musical love story" fetchpriority="high" />
-          <span class="media-loader" aria-hidden="true"></span>
-          <span class="media-error">Preview unavailable</span>
-          <span class="opening-bar top" aria-hidden="true"></span>
-          <span class="opening-bar bottom" aria-hidden="true"></span>
-        </div>
-        <div class="film-copy">
-          <h1 class="film-title">Nuvve Kada</h1>
-          <div class="film-detail">
-            <p class="film-descriptor">Musical love story / 02:22</p>
-            <button class="play-cta" type="button" data-open-index="0">Play film</button>
+      <article class="film-chapter chapter-cover is-live" style="--scene:1">
+        <div class="chapter-grid">
+          <figure class="film-frame media-ready">
+            <img src="assets/posters/hero-nuvve-kada.webp" width="1280" height="720" alt="Nuvve Kada, a cinematic Telugu musical love story" fetchpriority="high" />
+            <span class="media-loader" aria-hidden="true"></span>
+            <span class="media-error">Preview unavailable</span>
+          </figure>
+          <div class="film-copy">
+            <p class="film-kind">AI cinema</p>
+            <h1 class="film-title">Nuvve Kada</h1>
+            <div class="film-meta">
+              <p class="film-descriptor">Musical love story / 02:22</p>
+              <button class="play-cta" type="button" data-open-index="0">
+                <svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>Play film
+              </button>
+            </div>
           </div>
         </div>
       </article>
     </div>
   </section>
 
-  <section class="vertical-cuts reel-break" id="verticalCuts" aria-labelledby="verticalTitle">
-    <div class="section-heading reveal">
-      <h2 id="verticalTitle">Made for the vertical frame.</h2>
-      <p>News edits, motion studies and narrative shorts that move at phone speed.</p>
+  <section class="band band-dark rail-section" id="verticalCuts" aria-labelledby="verticalTitle">
+    <div class="band-head reveal">
+      <div>
+        <p class="section-label">Vertical</p>
+        <h2 class="display" id="verticalTitle">Made for the vertical frame.</h2>
+        <p>News edits, motion studies and narrative shorts that move at phone speed.</p>
+      </div>
+      <p class="band-count" id="verticalCount"></p>
     </div>
-    <div class="portrait-wall" id="portraitWall" aria-label="Vertical films"></div>
+    <div class="rail" id="portraitWall" aria-label="Vertical films"></div>
   </section>
 
-  <section class="wide-edits" id="wideEdits" aria-labelledby="wideTitle">
-    <div class="section-heading reveal">
-      <h2 id="wideTitle">The wider cuts.</h2>
-      <p>Long-form and short-form edits where motion, real footage and generated shots share the frame.</p>
+  <section class="band band-deep" id="wideEdits" aria-labelledby="wideTitle">
+    <div class="band-head reveal">
+      <div>
+        <p class="section-label">Long &amp; wide</p>
+        <h2 class="display" id="wideTitle">The wider cuts.</h2>
+        <p>Long-form and short-form edits where motion, real footage and generated shots share the frame.</p>
+      </div>
+      <p class="band-count" id="wideCount"></p>
     </div>
     <div class="wide-stage" id="wideStage"></div>
   </section>
 
   <section class="about" id="about" aria-labelledby="aboutTitle">
-    <div class="about-scene">
-      <h2 class="section-name" id="aboutTitle">About</h2>
-      <div class="about-reel" id="aboutReel" aria-hidden="true">
-        <figure class="about-frame about-frame-a reveal"><img src="assets/posters/hero-nuvve-kada.webp" alt="" loading="lazy" decoding="async" /></figure>
-        <figure class="about-frame about-frame-b reveal"><img src="assets/posters/ai-cinematic-01.webp" alt="" loading="lazy" decoding="async" /></figure>
-        <figure class="about-frame about-frame-c reveal"><img src="assets/posters/ai-cinematic-05.webp" alt="" loading="lazy" decoding="async" /></figure>
-      </div>
-      <div class="about-body reveal">
-        <div class="bio" id="bio">
-          <p class="bio-lead">I'm Aniket, a video editor and AI filmmaker.</p>
+    <div class="about-inner">
+      <div class="about-top">
+        <div class="reveal">
+          <p class="section-label" id="aboutTitle">About</p>
+          <p class="bio-lead" id="bioLead">I'm Aniket, a video editor and <em>AI filmmaker</em>.</p>
+        </div>
+        <div class="bio reveal" id="bio">
           <p>I make music films, short-form edits and motion work, building shots with generative tools when the footage does not exist.</p>
-          <p class="bio-experience">3+ yrs editing / 1.5 yrs in GenAI</p>
           <p class="bio-meta">Based in Kolkata, IST / working in English and Hindi</p>
         </div>
       </div>
+      <dl class="about-stats reveal" id="aboutStats"></dl>
     </div>
-    <dl class="craft" id="craft">
-      <div><dt>Generative</dt><dd>Seedance, Kling, Veo, Higgsfield, Google Flow, Nano Banana, GPT Image</dd></div>
-      <div><dt>Edit and motion</dt><dd>Premiere Pro, After Effects</dd></div>
-      <div><dt>Code</dt><dd>Claude Code</dd></div>
-    </dl>
+    <div class="craft">
+      <dl id="craft">
+        <div><dt>Generative</dt><dd>Seedance, Kling, Veo, Higgsfield, Google Flow, Nano Banana, GPT Image</dd></div>
+        <div><dt>Edit and motion</dt><dd>Premiere Pro, After Effects</dd></div>
+        <div><dt>Code</dt><dd>Claude Code</dd></div>
+      </dl>
+    </div>
   </section>
 
   <section class="contact" id="contact" aria-labelledby="contactTitle">
     <div class="contact-top">
-      <p class="section-name">Contact</p>
-      <div class="contact-body reveal">
+      <p class="section-label">Contact</p>
+      <div class="contact-body">
         <h2 id="contactTitle">Have a film worth making?</h2>
         <div class="contact-actions">
           <a id="emailLink" href="mailto:aniketshaw748@gmail.com">aniketshaw748@gmail.com</a>
           <a id="calendarLink" href="https://calendly.com/aniketshaw748/let-s-meet" target="_blank" rel="noopener">Book a call</a>
+          <a href="resume.html">Resume</a>
         </div>
       </div>
     </div>
@@ -1038,7 +1046,7 @@ img{ display:block; max-width:100%; }
         <a id="instagramLink" href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener">Instagram</a>
         <a id="linkedinLink" href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener">LinkedIn</a>
         <a id="youtubeLink" href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener">YouTube</a>
-        <a href="resume.html">Resume</a>
+        <a href="labs.html">Labs</a>
       </nav>
       <p class="contact-mark">Editing, motion and AI filmmaking by Aniket Shaw.</p>
     </div>
@@ -1060,13 +1068,7 @@ img{ display:block; max-width:100%; }
       <h2 id="filmIndexTitle">Film index</h2>
       <button class="index-close" id="indexClose" type="button">Close</button>
     </div>
-    <div class="index-filters" id="indexFilters" aria-label="Filter films">
-      <button class="index-filter" type="button" data-filter="all" aria-pressed="true">All</button>
-      <button class="index-filter" type="button" data-filter="ai" aria-pressed="false">AI cinema</button>
-      <button class="index-filter" type="button" data-filter="shorts" aria-pressed="false">Shorts</button>
-      <button class="index-filter" type="button" data-filter="motion" aria-pressed="false">Motion</button>
-      <button class="index-filter" type="button" data-filter="narrative" aria-pressed="false">Narrative</button>
-    </div>
+    <div class="index-filters" id="indexFilters" aria-label="Filter films"></div>
     <div class="index-grid" id="indexGrid"></div>
   </div>
 </aside>
@@ -1079,7 +1081,7 @@ img{ display:block; max-width:100%; }
   <div class="viewer-stage" id="viewerStage"></div>
 </div>
 
-<script src="config.js?v=20260812-title-sequence"></script>
+<script src="config.js?v=20260822-rebuild"></script>
 <script>
 (function(){
   "use strict";
@@ -1092,6 +1094,10 @@ img{ display:block; max-width:100%; }
   var works = Array.isArray(CFG.works) && CFG.works.length ? CFG.works : FALLBACK;
   var indexFilter = "all";
   var lastFocus = null;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var PLAY_SVG = '<svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>';
+  var MUTED_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14zM10.2 5.4l1-1 4.4 4.4-1 1z"/><path d="M14.6 4.4l1 1L11.2 9.8l-1-1z"/></svg>';
+  var SOUND_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14z"/><path d="M9.6 4.5a4.6 4.6 0 010 7l-.9-1a3.3 3.3 0 000-5zM11.4 2.2a7.2 7.2 0 010 11.6l-.9-1a5.9 5.9 0 000-9.6z"/></svg>';
 
   var cinemaStack = document.getElementById("cinemaStack");
   var portraitWall = document.getElementById("portraitWall");
@@ -1110,16 +1116,19 @@ img{ display:block; max-width:100%; }
   var viewerStage = document.getElementById("viewerStage");
   var viewerTitle = document.getElementById("viewerTitle");
   var viewerClose = document.getElementById("viewerClose");
+  var siteNav = document.getElementById("siteNav");
+  var scrollBar = document.getElementById("scrollBar");
   var previewTimer = 0;
 
   function esc(value){
-    return String(value == null ? "" : value).replace(/[&<>\"]/g,function(char){
+    return String(value == null ? "" : value).replace(/[&<>"]/g,function(char){
       return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[char];
     });
   }
 
   function cleanText(value){
-    return String(value || "").replace(/[\u2014\u2013\u00b7]/g," / ").replace(/\s*\/\s*\/\s*/g," / ").trim();
+    return String(value || "").replace(/[—–·]/g," / ").replace(/\s*\/\s*\/\s*/g," / ")
+      .replace(/\s*\/\s*/g," / ").replace(/\s+/g," ").trim();
   }
 
   function posterFor(work){
@@ -1136,41 +1145,69 @@ img{ display:block; max-width:100%; }
     return text || kindFor(work.category);
   }
 
+  function pad2(n){ return (n < 10 ? "0" : "") + n; }
+
   function entriesWhere(test){
-    return works.map(function(work,index){ return { work:work, index:index }; }).filter(function(entry){ return test(entry.work,entry.index); });
+    return works.map(function(work,index){ return { work:work, index:index }; })
+      .filter(function(entry){ return test(entry.work,entry.index); });
   }
 
-  function mediaMarkup(work,priority){
-    var poster = posterFor(work);
+  function posterImg(work,priority,cls){
     var portrait = work.orientation === "portrait";
-    return '<img class="film-poster media-image" src="'+esc(poster)+'" width="'+(portrait?1080:1280)+'" height="'+(portrait?1920:720)+'" alt="'+esc(cleanText(work.alt||work.title))+'" decoding="async" '+(priority?'fetchpriority="high"':'loading="lazy"')+' />'+
+    return '<img class="media-image'+(cls?" "+cls:"")+'" src="'+esc(posterFor(work))+'" width="'+(portrait?1080:1280)+'" height="'+(portrait?1920:720)+'" alt="'+esc(cleanText(work.alt||work.title))+'" decoding="async" '+(priority?'fetchpriority="high"':'loading="lazy"')+' />'+
       '<span class="media-loader" aria-hidden="true"></span><span class="media-error">Preview unavailable</span>';
   }
 
+  /* --- Cinema chapters ---------------------------------------------------- */
   function renderCinema(){
     var entries = entriesWhere(function(work){ return work.category === "ai"; });
     if(!entries.length) entries = entriesWhere(function(work,index){ return index < 6; });
-    var layouts = ["layout-cover","layout-split","layout-letterbox","layout-block","layout-offset","layout-portrait"];
     if(!entries.length){
       cinemaStack.innerHTML = '<p class="empty-state">No films have been added yet.</p>';
       return;
     }
     cinemaStack.innerHTML = entries.map(function(entry,position){
       var work = entry.work;
-      var layout = layouts[Math.min(position,layouts.length-1)];
+      var portrait = work.orientation === "portrait";
+      var variant = position === 0
+        ? "chapter-cover"
+        : (portrait ? "chapter-tall-" : "chapter-wide-") + (position % 2 ? "right" : "left");
       var heading = position === 0 ? "h1" : "h2";
-      var heroMotion = position === 0 ? '<div class="hero-motion" id="heroMotion" aria-hidden="true"></div><span class="opening-bar top" aria-hidden="true"></span><span class="opening-bar bottom" aria-hidden="true"></span>' : "";
-      return '<article class="film-chapter '+layout+(position===0?' is-current':'')+'" style="--scene:'+position+'" data-work-index="'+entry.index+'">'+
-        '<div class="film-ambient" aria-hidden="true"><img src="'+esc(posterFor(work))+'" alt="" loading="lazy" /></div>'+
+      var cue = position === 0 ? '<div class="scroll-cue" aria-hidden="true"><i></i>Scroll</div>' : "";
+      return '<article class="film-chapter '+variant+'" style="--scene:'+(position+1)+'" data-chapter="'+position+'">'+
+        '<div class="chapter-bg" aria-hidden="true"></div>'+
         '<div class="chapter-stage">'+
-          '<div class="film-visual">'+mediaMarkup(work,position===0)+heroMotion+'</div>'+
-          '<div class="film-copy">'+
-            '<'+heading+' class="film-title">'+esc(cleanText(work.title))+'</'+heading+'>'+
-            '<div class="film-detail"><p class="film-descriptor">'+esc(descriptorFor(work))+'</p><button class="play-cta" type="button" data-open-index="'+entry.index+'">Play film</button></div>'+
+          '<div class="chapter-grid">'+
+            '<figure class="film-frame">'+
+              '<img class="frame-fill" src="'+esc(posterFor(work))+'" alt="" aria-hidden="true" loading="lazy" decoding="async" />'+
+              posterImg(work,position===0)+
+              '<div class="frame-motion" aria-hidden="true"></div>'+
+              '<button class="sound-toggle" type="button" aria-pressed="true">'+MUTED_SVG+'<span>Unmute</span></button>'+
+              '<span class="frame-no" aria-hidden="true">'+pad2(position+1)+' / '+pad2(entries.length)+'</span>'+
+            '</figure>'+
+            '<div class="film-copy">'+
+              '<p class="film-kind">'+esc(kindFor(work.category))+'</p>'+
+              '<'+heading+' class="film-title">'+esc(cleanText(work.title))+'</'+heading+'>'+
+              '<div class="film-meta">'+
+                '<p class="film-descriptor">'+esc(descriptorFor(work))+'</p>'+
+                '<button class="play-cta" type="button" data-open-index="'+entry.index+'">'+PLAY_SVG+'Play film</button>'+
+              '</div>'+
+            '</div>'+
           '</div>'+
         '</div>'+
+        cue+
       '</article>';
     }).join("");
+  }
+
+  function cardMarkup(entry,frameClass){
+    var work = entry.work;
+    return '<button class="film-card" type="button" data-open-index="'+entry.index+'" aria-label="Play '+esc(cleanText(work.title))+'">'+
+      '<span class="card-frame'+(frameClass?" "+frameClass:"")+'">'+posterImg(work,false)+
+        '<span class="play-glyph card-glyph" aria-hidden="true">'+PLAY_SVG+'</span>'+
+      '</span>'+
+      '<span class="card-meta"><strong class="card-title">'+esc(cleanText(work.title))+'</strong><span class="card-kind">'+esc(kindFor(work.category))+'</span></span>'+
+    '</button>';
   }
 
   function renderPortraits(){
@@ -1179,26 +1216,41 @@ img{ display:block; max-width:100%; }
     portraitWall.innerHTML = entries.map(function(entry){
       var work = entry.work;
       return '<button class="cut-item" type="button" data-open-index="'+entry.index+'" aria-label="Play '+esc(cleanText(work.title))+'">'+
-        '<img class="media-image" src="'+esc(posterFor(work))+'" width="1080" height="1920" alt="'+esc(cleanText(work.alt||work.title))+'" loading="lazy" decoding="async" />'+
-        '<span class="media-loader" aria-hidden="true"></span><span class="media-error">Preview unavailable</span>'+
-        '<span class="cut-info"><strong class="cut-title">'+esc(cleanText(work.title))+'</strong><span class="cut-kind">'+esc(kindFor(work.category))+'</span></span>'+
+        posterImg(work,false)+
+        '<span class="play-glyph" aria-hidden="true">'+PLAY_SVG+'</span>'+
+        '<span class="cut-info"><strong class="cut-title">'+esc(cleanText(work.title))+'</strong>'+
+        '<span class="cut-kind">'+esc(kindFor(work.category))+'</span></span>'+
       '</button>';
     }).join("");
+    document.getElementById("verticalCount").textContent = pad2(entries.length) + " films";
   }
 
   function renderWideEdits(){
     var entries = entriesWhere(function(work){ return work.orientation !== "portrait" && work.category !== "ai"; });
     if(!entries.length){ wideEdits.hidden = true; return; }
-    wideStage.innerHTML = entries.map(function(entry){
-      var work = entry.work;
-      return '<button class="wide-film" type="button" data-open-index="'+entry.index+'" aria-label="Play '+esc(cleanText(work.title))+'">'+
-        '<span class="wide-image">'+
-          '<img class="media-image" src="'+esc(posterFor(work))+'" width="1280" height="720" alt="'+esc(cleanText(work.alt||work.title))+'" loading="lazy" decoding="async" />'+
-          '<span class="media-loader" aria-hidden="true"></span><span class="media-error">Preview unavailable</span>'+
-        '</span>'+
-        '<span class="wide-caption"><strong class="wide-title">'+esc(cleanText(work.title))+'</strong><span class="wide-kind">'+esc(kindFor(work.category))+'</span></span>'+
-      '</button>';
-    }).join("");
+    wideStage.innerHTML = entries.map(function(entry){ return cardMarkup(entry); }).join("");
+    document.getElementById("wideCount").textContent = pad2(entries.length) + " films";
+  }
+
+  /* --- Film index --------------------------------------------------------- */
+  var FILTERS = [
+    { key:"all", label:"All" },
+    { key:"ai", label:"AI cinema" },
+    { key:"shorts", label:"Shorts" },
+    { key:"motion", label:"Motion" },
+    { key:"narrative", label:"Narrative" }
+  ];
+
+  function countFor(key){
+    return key === "all" ? works.length : works.filter(function(work){ return work.category === key; }).length;
+  }
+
+  function renderFilters(){
+    indexFilters.innerHTML = FILTERS.filter(function(filter){ return countFor(filter.key) > 0; })
+      .map(function(filter){
+        return '<button class="index-filter" type="button" data-filter="'+filter.key+'" aria-pressed="'+(filter.key===indexFilter)+'">'+
+          esc(filter.label)+' <b>'+pad2(countFor(filter.key))+'</b></button>';
+      }).join("");
   }
 
   function visibleIndexEntries(){
@@ -1227,7 +1279,8 @@ img{ display:block; max-width:100%; }
       return;
     }
     indexGrid.innerHTML = entries.map(function(entry){
-      return '<button class="index-item" type="button" data-index-item="'+entry.index+'"><strong>'+esc(cleanText(entry.work.title))+'</strong><span>'+esc(kindFor(entry.work.category))+'</span></button>';
+      return '<button class="index-item" type="button" data-index-item="'+entry.index+'"><strong>'+
+        esc(cleanText(entry.work.title))+'</strong><span>'+esc(kindFor(entry.work.category))+'</span></button>';
     }).join("");
     updateIndexPreview(entries[0].index);
   }
@@ -1247,28 +1300,25 @@ img{ display:block; max-width:100%; }
     if(restoreFocus !== false && lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
+  /* --- Viewer ------------------------------------------------------------- */
   function youtubeId(url){
     var match = String(url).match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/);
     return match ? match[1] : "";
   }
-
   function youtubeEmbed(url){
     var id = youtubeId(url);
     return id ? "https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0&playsinline=1" : "";
   }
-
   function vimeoEmbed(url){
     var match = String(url).match(/vimeo\.com\/(?:video\/)?(\d+)/);
     return match ? "https://player.vimeo.com/video/"+match[1]+"?autoplay=1" : "";
   }
-
   function instagramEmbed(url){
     var match = String(url).match(/instagram\.com\/(reels?|p|tv)\/([A-Za-z0-9_-]+)/i);
     if(!match) return "";
     var type = /^reels?$/i.test(match[1]) ? "reel" : match[1];
     return "https://www.instagram.com/"+type+"/"+match[2]+"/embed/";
   }
-
   function isDirectVideo(url){
     return /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(String(url));
   }
@@ -1279,12 +1329,13 @@ img{ display:block; max-width:100%; }
     var video = work.video || "";
     var portrait = work.orientation === "portrait";
     var mediaClass = "viewer-media" + (portrait ? " portrait" : "");
+    var loading = '<span class="viewer-loading"><i aria-hidden="true"></i>Loading film</span>';
     var src = youtubeEmbed(video) || vimeoEmbed(video) || instagramEmbed(video);
     var html = "";
     if(src){
-      html = '<div class="'+mediaClass+'"><iframe src="'+esc(src)+'" title="'+esc(cleanText(work.title))+'" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div>';
+      html = '<div class="'+mediaClass+'">'+loading+'<iframe src="'+esc(src)+'" title="'+esc(cleanText(work.title))+'" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div>';
     } else if(isDirectVideo(video)){
-      html = '<div class="'+mediaClass+'"><video src="'+esc(video)+'" poster="'+esc(posterFor(work))+'" controls autoplay playsinline></video></div>';
+      html = '<div class="'+mediaClass+'">'+loading+'<video src="'+esc(video)+'" poster="'+esc(posterFor(work))+'" controls autoplay playsinline></video></div>';
     } else {
       html = '<div class="viewer-fallback"><img src="'+esc(posterFor(work))+'" alt="'+esc(cleanText(work.alt||work.title))+'" />'+
         (video ? '<a href="'+esc(video)+'" target="_blank" rel="noopener">Open film</a>' : '<p>Film link coming soon.</p>')+'</div>';
@@ -1292,6 +1343,7 @@ img{ display:block; max-width:100%; }
     lastFocus = document.activeElement;
     viewerTitle.textContent = cleanText(work.title || "Film");
     viewerStage.innerHTML = html;
+    document.dispatchEvent(new Event("viewer:open"));
     viewer.classList.add("open");
     viewer.setAttribute("aria-hidden","false");
     document.body.classList.add("viewer-open");
@@ -1302,7 +1354,7 @@ img{ display:block; max-width:100%; }
     viewer.classList.remove("open");
     viewer.setAttribute("aria-hidden","true");
     document.body.classList.remove("viewer-open");
-    window.setTimeout(function(){ viewerStage.innerHTML = ""; },560);
+    window.setTimeout(function(){ viewerStage.innerHTML = ""; },520);
     if(lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
@@ -1316,49 +1368,33 @@ img{ display:block; max-width:100%; }
     });
   }
 
-  function mountHeroMotion(){
-    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.innerWidth < 761) return;
-    var host = document.getElementById("heroMotion");
-    var firstFilm = entriesWhere(function(work){ return work.category === "ai"; })[0];
-    if(!host || !firstFilm) return;
-    var id = youtubeId(firstFilm.work.video || "");
-    if(!id) return;
-    var iframe = document.createElement("iframe");
-    iframe.title = cleanText(firstFilm.work.title) + " silent preview";
-    iframe.tabIndex = -1;
-    iframe.setAttribute("allow","autoplay; encrypted-media");
-    iframe.src = "https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&mute=1&controls=0&loop=1&playlist="+id+"&playsinline=1&rel=0&modestbranding=1";
-    iframe.addEventListener("load",function(){ window.setTimeout(function(){ host.classList.add("is-playing"); },500); },{once:true});
-    host.appendChild(iframe);
-  }
-
+  /* --- About -------------------------------------------------------------- */
   function renderAbout(){
-    var aboutReel = document.getElementById("aboutReel");
-    var reelWorks = [];
-    function addReelWork(work){ if(work && reelWorks.indexOf(work) === -1) reelWorks.push(work); }
-    addReelWork(works[0]);
-    addReelWork(works.find(function(work,index){ return index > 0 && work.orientation !== "portrait"; }));
-    addReelWork(works.find(function(work){ return work.orientation === "portrait"; }));
-    works.forEach(function(work){ if(reelWorks.length < 3) addReelWork(work); });
-    if(aboutReel && reelWorks.length){
-      var frameClasses = ["about-frame-a","about-frame-b","about-frame-c"];
-      aboutReel.innerHTML = reelWorks.slice(0,3).map(function(work,index){
-        return '<figure class="about-frame '+frameClasses[index]+' reveal"><img src="'+esc(posterFor(work))+'" alt="" loading="lazy" decoding="async" /></figure>';
-      }).join("");
-    }
-    if(Array.isArray(CFG.bio) && CFG.bio.length){
-      var bioLines = CFG.bio.map(cleanText).filter(Boolean);
-      var lead = bioLines.shift() || "";
+    var bioLines = (Array.isArray(CFG.bio) && CFG.bio.length ? CFG.bio : []).map(cleanText).filter(Boolean);
+    if(bioLines.length){
+      var lead = bioLines.shift();
       var splitLead = lead.match(/^(.+?[.!?])\s+(.+)$/);
-      if(splitLead){
-        lead = splitLead[1];
-        bioLines.unshift(splitLead[2]);
-      }
-      document.getElementById("bio").innerHTML = '<p class="bio-lead">'+esc(lead)+'</p>'+
-        bioLines.map(function(text){ return '<p>'+esc(text)+'</p>'; }).join("")+
-        (CFG.experience ? '<p class="bio-experience">'+esc(cleanText(CFG.experience))+'</p>' : "")+
+      if(splitLead){ lead = splitLead[1]; bioLines.unshift(splitLead[2]); }
+      // Emphasise the role, not the whole sentence.
+      document.getElementById("bioLead").innerHTML = esc(lead)
+        .replace(/AI filmmaker/i,'<em>$&</em>');
+      document.getElementById("bio").innerHTML = bioLines.map(function(text){ return '<p>'+esc(text)+'</p>'; }).join("")+
         (CFG.bioMeta ? '<p class="bio-meta">'+esc(cleanText(CFG.bioMeta))+'</p>' : "");
     }
+
+    // Stat strip, derived from the same config the rest of the page uses.
+    var stats = [{ value:pad2(works.length), label:"Films and edits" }];
+    cleanText(CFG.experience || "").split("/").forEach(function(part){
+      var text = part.trim();
+      if(!text) return;
+      var match = text.match(/^([\d.+]+\s*\S+)\s+(.*)$/);
+      stats.push(match ? { value:match[1], label:match[2].replace(/^in\s+/i,"") } : { value:text, label:"" });
+    });
+    document.getElementById("aboutStats").innerHTML = stats.map(function(stat){
+      return '<div><dt>'+esc(stat.value)+'</dt><dd>'+esc(stat.label)+'</dd></div>';
+    }).join("");
+
+
     if(CFG.tools){
       var labels = {"AI STACK":"Generative","EDIT / MOTION":"Edit and motion","CODE":"Code"};
       document.getElementById("craft").innerHTML = Object.keys(CFG.tools).map(function(group){
@@ -1394,9 +1430,10 @@ img{ display:block; max-width:100%; }
     else if(!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
   }
 
+  /* --- Events ------------------------------------------------------------- */
   document.addEventListener("click",function(event){
     var opener = event.target.closest("[data-open-index]");
-    if(opener){ openViewer(works[Number(opener.dataset.openIndex)]); }
+    if(opener) openViewer(works[Number(opener.dataset.openIndex)]);
   });
   indexOpen.addEventListener("click",openIndex);
   indexClose.addEventListener("click",function(){ closeIndex(true); });
@@ -1404,7 +1441,9 @@ img{ display:block; max-width:100%; }
     var button = event.target.closest("[data-filter]");
     if(!button) return;
     indexFilter = button.dataset.filter;
-    indexFilters.querySelectorAll("[data-filter]").forEach(function(item){ item.setAttribute("aria-pressed",item===button?"true":"false"); });
+    indexFilters.querySelectorAll("[data-filter]").forEach(function(item){
+      item.setAttribute("aria-pressed",item === button ? "true" : "false");
+    });
     renderIndex();
   });
   indexGrid.addEventListener("pointerover",function(event){
@@ -1421,7 +1460,7 @@ img{ display:block; max-width:100%; }
     if(item) openViewer(works[Number(item.dataset.indexItem)]);
   });
   viewerClose.addEventListener("click",closeViewer);
-  viewer.addEventListener("click",function(event){ if(event.target===viewer || event.target===viewerStage) closeViewer(); });
+  viewer.addEventListener("click",function(event){ if(event.target === viewer || event.target === viewerStage) closeViewer(); });
   document.addEventListener("keydown",function(event){
     if(event.key === "Escape"){
       if(viewer.classList.contains("open")) closeViewer();
@@ -1434,41 +1473,246 @@ img{ display:block; max-width:100%; }
   renderCinema();
   renderPortraits();
   renderWideEdits();
+  renderFilters();
   renderIndex();
   renderAbout();
   renderContact();
   bindMediaStates();
-  document.getElementById("indexCount").textContent = works.length;
+  document.getElementById("indexCount").textContent = pad2(works.length);
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  var chapters = document.querySelectorAll(".film-chapter");
-  if("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
-    var chapterObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        var chapterIndex = Array.prototype.indexOf.call(chapters,entry.target);
-        var previous = chapterIndex > 0 ? chapters[chapterIndex-1] : null;
-        if(entry.isIntersecting && entry.intersectionRatio >= .18) entry.target.classList.add("is-current");
-        else if(!entry.isIntersecting) entry.target.classList.remove("is-current");
-        if(previous) previous.classList.toggle("is-passing",entry.isIntersecting && entry.intersectionRatio >= .08);
+  /* --- Dwell preview -------------------------------------------------------
+     Rest on a film and it starts playing itself, muted and looping, with a
+     sound toggle — the YouTube-mobile thumbnail mechanic. The opening film
+     skips the wait and starts on load. The player is only revealed once it
+     reports PLAYING, so a buffering black frame never replaces the poster
+     (the previous build did exactly that on the hero).                       */
+  (function dwellPreview(){
+    var DWELL = 1400;
+    var connection = navigator.connection || {};
+    if(reduceMotion || connection.saveData) return;
+
+    var chapters = Array.prototype.slice.call(document.querySelectorAll(".film-chapter"));
+    if(!chapters.length || !("IntersectionObserver" in window)) return;
+
+    var apiReady = null;
+    var timer = 0;
+    var active = null;   // { frame, host, player, toggle }
+
+    function loadApi(){
+      if(apiReady) return apiReady;
+      apiReady = new Promise(function(resolve){
+        if(window.YT && window.YT.Player) return resolve(window.YT);
+        var previous = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function(){
+          if(typeof previous === "function") previous();
+          resolve(window.YT);
+        };
+        var script = document.createElement("script");
+        script.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(script);
       });
-    },{ threshold:[0,.08,.18,.45,.72],rootMargin:"-8% 0px -8% 0px" });
-    chapters.forEach(function(chapter){ chapterObserver.observe(chapter); });
-  } else {
-    chapters.forEach(function(chapter){ chapter.classList.add("is-current"); });
-  }
+      return apiReady;
+    }
 
-  var reveals = document.querySelectorAll(".reveal");
-  if("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    function setToggle(toggle,muted){
+      toggle.setAttribute("aria-pressed",muted ? "true" : "false");
+      toggle.innerHTML = (muted ? MUTED_SVG : SOUND_SVG) + "<span>" + (muted ? "Unmute" : "Mute") + "</span>";
+    }
+
+    function stop(){
+      window.clearTimeout(timer);
+      if(!active) return;
+      var current = active;
+      active = null;
+      current.frame.classList.remove("is-previewing");
+      current.host.classList.remove("is-playing");
+      if(current.player && current.player.destroy) current.player.destroy();
+      current.host.innerHTML = "";
+    }
+
+    function start(chapter){
+      var index = Number(chapter.querySelector("[data-open-index]").dataset.openIndex);
+      var work = works[index];
+      var id = work && youtubeId(work.video || "");
+      if(!id) return;
+      var frame = chapter.querySelector(".film-frame");
+      var host = chapter.querySelector(".frame-motion");
+      var toggle = chapter.querySelector(".sound-toggle");
+      if(!frame || !host || !toggle) return;
+
+      loadApi().then(function(YT){
+        // The chapter may have scrolled away while the API was loading.
+        if(!chapter.classList.contains("is-resting")) return;
+        stop();
+        var mount = document.createElement("div");
+        host.appendChild(mount);
+        var entry = { frame:frame, host:host, toggle:toggle, player:null };
+        active = entry;
+        setToggle(toggle,true);
+        entry.player = new YT.Player(mount,{
+          videoId:id,
+          playerVars:{ autoplay:1, mute:1, controls:0, loop:1, playlist:id, playsinline:1,
+                       rel:0, modestbranding:1, disablekb:1, fs:0, iv_load_policy:3 },
+          events:{
+            onReady:function(event){ event.target.mute(); event.target.playVideo(); },
+            onStateChange:function(event){
+              if(active !== entry) return;
+              if(event.data === YT.PlayerState.PLAYING){
+                host.classList.add("is-playing");
+                frame.classList.add("is-previewing");
+              }
+            },
+            onError:function(){ if(active === entry) stop(); }
+          }
+        });
+      });
+    }
+
+    document.addEventListener("click",function(event){
+      var toggle = event.target.closest(".sound-toggle");
+      if(!toggle) return;
+      event.stopPropagation();          // never open the viewer from this control
+      if(!active || active.toggle !== toggle || !active.player) return;
+      var muted = active.player.isMuted();
+      if(muted){ active.player.unMute(); active.player.setVolume(70); }
+      else active.player.mute();
+      setToggle(toggle,!muted);
+    },true);
+
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var resting = entry.isIntersecting && entry.intersectionRatio >= .72;
+        entry.target.classList.toggle("is-resting",resting);
+        if(resting){
+          window.clearTimeout(timer);
+          // The opening film does not wait to be admired — it just runs.
+          var wait = entry.target === chapters[0] ? 0 : DWELL;
+          timer = window.setTimeout(function(){ start(entry.target); },wait);
+        } else if(active && active.frame.parentElement && entry.target.contains(active.frame)){
+          stop();
+        }
+      });
+    },{ threshold:[0,.72,.95] });
+    chapters.forEach(function(chapter){ observer.observe(chapter); });
+
+    // A full-size player in the viewer must never fight a muted preview.
+    document.addEventListener("viewer:open",stop);
+    document.addEventListener("visibilitychange",function(){ if(document.hidden) stop(); });
+  })();
+
+  /* --- Scroll-driven chapter motion ---------------------------------------
+     One rAF loop sets --enter / --exit / --copy-in per chapter. Doing this in
+     JS rather than scroll-driven CSS keeps every browser on the same timing
+     instead of splitting into a rich path and a dead one.                     */
+  (function chapterMotion(){
+    var chapters = Array.prototype.slice.call(document.querySelectorAll(".film-chapter"));
+    if(!chapters.length) return;
+    var afterStack = document.getElementById("verticalCuts");
+    var stacked = window.matchMedia("(min-width:761px)");
+    var queued = false;
+
+    function clamp(value){ return value < 0 ? 0 : value > 1 ? 1 : value; }
+    function ease(value){ return 1 - Math.pow(1 - value, 3); }
+
+    function reset(){
+      chapters.forEach(function(chapter){
+        chapter.settled = false;
+        ["--enter","--exit","--copy-in"].forEach(function(name){ chapter[name] = null; });
+        chapter.style.setProperty("--enter",1);
+        chapter.style.setProperty("--exit",0);
+        chapter.style.setProperty("--copy-in",1);
+      });
+    }
+
+    // Writing a custom property invalidates that chapter's whole subtree, so
+    // only write when the value actually moved.
+    function put(chapter,name,value){
+      var text = value.toFixed(3);
+      if(chapter[name] === text) return;
+      chapter[name] = text;
+      chapter.style.setProperty(name,text);
+    }
+
+    function update(){
+      queued = false;
+      var height = window.innerHeight;
+      var enters = chapters.map(function(chapter){
+        return clamp(1 - chapter.getBoundingClientRect().top / height);
+      });
+      var tail = afterStack ? clamp(1 - afterStack.getBoundingClientRect().top / height) : 0;
+      chapters.forEach(function(chapter,index){
+        var enter = enters[index];
+        var exit = clamp(index + 1 < chapters.length ? enters[index+1] : tail);
+        // Off-screen chapters are either untouched or fully covered; either
+        // way their values are already settled.
+        if((enter === 0 || exit === 1) && chapter.settled) return;
+        chapter.settled = enter === 0 || exit === 1;
+        put(chapter,"--enter",ease(enter));
+        put(chapter,"--exit",exit);
+        put(chapter,"--copy-in",clamp((enter - .22) * 2.4));
+      });
+      var scrollable = document.documentElement.scrollHeight - height;
+      scrollBar.style.setProperty("--progress",(scrollable > 0 ? clamp(window.scrollY / scrollable) : 0).toFixed(3));
+    }
+
+    function request(){
+      if(queued) return;
+      queued = true;
+      window.requestAnimationFrame(update);
+    }
+
+    function apply(){
+      if(reduceMotion || !stacked.matches){
+        reset();
+        // The progress bar is orientation, not decoration — keep it running.
+        window.requestAnimationFrame(function(){
+          var scrollable = document.documentElement.scrollHeight - window.innerHeight;
+          scrollBar.style.setProperty("--progress",(scrollable > 0 ? clamp(window.scrollY / scrollable) : 0).toFixed(4));
+        });
+      } else request();
+    }
+
+    window.addEventListener("scroll",apply,{ passive:true });
+    window.addEventListener("resize",apply);
+    if(stacked.addEventListener) stacked.addEventListener("change",apply);
+    apply();
+  })();
+
+  /* --- Section reveal + nav state ----------------------------------------- */
+  if("IntersectionObserver" in window && !reduceMotion){
     var revealObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){ if(entry.isIntersecting){ entry.target.classList.add("in"); revealObserver.unobserve(entry.target); } });
-    },{ threshold:.12,rootMargin:"0px 0px -8% 0px" });
-    reveals.forEach(function(element){ revealObserver.observe(element); });
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add("in"); revealObserver.unobserve(entry.target); }
+      });
+    },{ threshold:.1, rootMargin:"0px 0px -6% 0px" });
+    document.querySelectorAll(".reveal").forEach(function(element){ revealObserver.observe(element); });
   } else {
-    reveals.forEach(function(element){ element.classList.add("in"); });
+    document.querySelectorAll(".reveal").forEach(function(element){ element.classList.add("in"); });
   }
 
-  window.requestAnimationFrame(function(){ document.documentElement.classList.add("page-ready"); });
-  window.addEventListener("load",function(){ window.setTimeout(mountHeroMotion,900); },{once:true});
+  if("IntersectionObserver" in window){
+    var links = {};
+    document.querySelectorAll("[data-nav]").forEach(function(link){ links[link.dataset.nav] = link; });
+    var navObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        Object.keys(links).forEach(function(key){ links[key].classList.toggle("is-active",key === entry.target.id); });
+      });
+    },{ rootMargin:"-45% 0px -50% 0px" });
+    ["work","verticalCuts","about","contact"].forEach(function(id){
+      var section = document.getElementById(id);
+      if(section) navObserver.observe(section);
+    });
+
+    // Flip the nav to ink-on-orange while the contact block sits behind it.
+    var contact = document.getElementById("contact");
+    if(contact){
+      new IntersectionObserver(function(entries){
+        siteNav.classList.toggle("on-accent",entries[0].isIntersecting);
+      },{ rootMargin:"0px 0px -93% 0px" }).observe(contact);
+    }
+  }
 })();
 </script>
 </body>
