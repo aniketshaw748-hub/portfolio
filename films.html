@@ -10,7 +10,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 <link rel="preload" href="assets/fonts/Archivo-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="assets/posters/hero-nuvve-kada.webp" as="image" type="image/webp" fetchpriority="high" />
+<link rel="preload" href="assets/posters/anotherone.webp" as="image" type="image/webp" fetchpriority="high" />
 
 <meta property="og:title" content="Aniket Shaw | AI Filmmaker and Video Editor" />
 <meta property="og:description" content="AI cinema, music films, short-form editing, motion graphics and narrative work." />
@@ -216,6 +216,150 @@ img,svg{ display:block; max-width:100%; }
 .scroll-progress i{ display:block; height:100%; background:var(--accent); transform:scaleX(var(--progress,0)); transform-origin:left; }
 
 /* ===========================================================================
+   INTRO DECK
+   The opening card. Dragging it right deals it away and turns up About — the
+   page has already jumped there behind the card, so what gets revealed is the
+   real section rather than a copy of it.
+   =========================================================================== */
+.intro{
+  position:relative;
+  height:100dvh;
+  overflow:hidden;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  background:var(--bg-deep);
+}
+
+.intro-card{
+  position:absolute; inset:0; z-index:1;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:calc(var(--nav-h) + clamp(28px,5vh,64px)) var(--pad) clamp(26px,4vh,54px);
+  /* Opaque, so the card genuinely covers About until it has left. */
+  background:
+    radial-gradient(110% 80% at 18% 12%,rgba(72,30,20,.55),transparent 60%),
+    radial-gradient(90% 70% at 88% 88%,rgba(130,40,24,.24),transparent 64%),
+    var(--bg-deep);
+  touch-action:pan-y;              /* vertical scrolling stays native */
+  cursor:grab;
+  user-select:none;
+}
+.intro-card.is-dragging{ cursor:grabbing; }
+/* Promoted to fixed for the deal, so the scroll jump behind it is unseen.
+   Layers are raised here, one frame before anything moves, rather than at the
+   moment the flight starts. */
+.intro-card.is-flying{ position:fixed; inset:0; z-index:60; will-change:transform; }
+.intro-card.is-flying [data-cast],
+.intro-card.is-flying .cast-word{ will-change:transform,opacity; }
+.intro-card.is-gone{
+  transform:translate3d(130vw,0,0) rotate(13deg) !important;
+  transition:transform .5s cubic-bezier(.4,0,.2,1) .16s;
+}
+/* Each piece leaves on its own beat, ahead of the surface carrying it. */
+.cast-word{ display:inline-block; }
+.intro-card.is-gone [data-cast],
+.intro-card.is-gone .cast-word{
+  animation:castOff .44s cubic-bezier(.4,0,.2,1) both;
+  animation-delay:calc(var(--i,0) * 26ms);
+}
+@keyframes castOff{
+  to{ transform:translate3d(58vw,0,0) rotate(4deg); opacity:0; }
+}
+.intro-card.is-springing{ transition:transform .5s var(--ease); }
+.intro-card.no-anim{ transition:none !important; }
+/* Snapping must not drag the scroller off About while the card resettles. */
+html.is-dealing{ scroll-snap-type:none; }
+
+/* The copy is selectable and does not start a drag — only the open areas of
+   the card do. */
+.intro-inner{ max-width:1780px; width:100%; margin-inline:auto; cursor:auto; user-select:text; }
+.intro-hook{
+  max-width:16ch;
+  margin-top:clamp(18px,2.4vw,32px);
+  font-size:var(--fs-display);
+  font-weight:800; font-stretch:var(--stretch);
+  letter-spacing:var(--track);
+  line-height:.88;
+  text-wrap:balance;
+}
+.intro-blurb{
+  max-width:46ch;
+  margin-top:clamp(22px,2.6vw,36px);
+  color:var(--text-soft);
+  font-size:clamp(15px,1.32vw,21px); line-height:1.55;
+}
+.intro-meta{ margin-top:clamp(18px,2vw,26px); color:var(--muted); font-size:12px; letter-spacing:.02em; }
+
+.intro-actions{
+  max-width:1780px; width:100%; margin:auto auto 0;
+  padding-top:clamp(30px,5vh,60px);
+  display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+}
+.intro-action{
+  display:flex; align-items:center; gap:14px;
+  color:var(--text-soft);
+  text-align:left;
+  transition:color .2s ease,transform .3s var(--ease);
+}
+.intro-action:hover{ color:var(--text); }
+.act-up:hover{ transform:translateY(-4px); }
+.act-right:hover{ transform:translateX(5px); }
+.intro-action:active{ transform:scale(.98); }
+.act-icon{
+  display:grid; place-items:center;
+  width:46px; aspect-ratio:1; flex:none;
+  border:1px solid var(--line);
+  border-radius:50%;
+}
+.act-icon svg{ width:14px; fill:currentColor; }
+.act-right .act-icon{ border-color:var(--accent); background:var(--accent); color:var(--bg-deep); }
+.act-text{ display:flex; flex-direction:column; gap:3px; }
+.act-text b{ font-size:13px; font-weight:700; letter-spacing:.02em; color:var(--text); }
+.act-text i{ font-style:normal; font-size:11px; letter-spacing:.13em; text-transform:uppercase; opacity:.62; }
+.act-right .act-text{ align-items:flex-end; text-align:right; }
+.on-pointer{ display:none; }
+@media(hover:hover) and (pointer:fine){
+  .on-touch{ display:none; }
+  .on-pointer{ display:inline; }
+  .act-up .act-icon svg{ transform:rotate(180deg); }
+}
+
+/* Fades in with the drag, the way a stamp does on a swipe card. */
+.intro-stamp{
+  position:absolute; z-index:3;
+  left:clamp(20px,5vw,84px); top:calc(var(--nav-h) + clamp(20px,5vh,64px));
+  padding:9px 16px 8px;
+  border:3px solid var(--accent);
+  color:var(--accent);
+  font-size:clamp(15px,1.8vw,26px); font-weight:820; font-stretch:80%;
+  letter-spacing:.08em; text-transform:uppercase;
+  transform:rotate(-13deg);
+  opacity:var(--drag,0);
+  pointer-events:none;
+}
+
+/* The revealed section springs forward like the next card in the deck. */
+/* Reveal transitions would all run against the flight; the deal shows the
+   section outright and lets dealIn carry the entrance instead. */
+.about.is-dealt .reveal{ transition:none; }
+.about.is-dealt .about-inner,
+.about.is-dealt .craft{ animation:dealIn .5s var(--ease-soft) .2s both; }
+.about.is-dealt .craft{ animation-delay:.26s; }
+@keyframes dealIn{
+  from{ opacity:0; transform:translate3d(0,26px,0) scale(.99); }
+  to{ opacity:1; transform:none; }
+}
+
+@media(max-width:760px){
+  .intro-card{ padding:calc(var(--nav-h) + 24px) var(--pad) 26px; }
+  .intro-hook{ max-width:12ch; font-size:clamp(44px,13vw,72px); }
+  .intro-blurb{ font-size:15px; }
+  .intro-actions{ flex-direction:column; align-items:stretch; gap:16px; padding-top:30px; }
+  .act-right{ flex-direction:row-reverse; justify-content:flex-start; }
+  .act-right .act-text{ align-items:flex-start; text-align:left; }
+  .intro-stamp{ left:var(--pad); }
+}
+
+/* ===========================================================================
    CINEMA STACK
    Chapters pin to the top and are covered by the next one. Every chapter is
    fully opaque, so two films never bleed through one another; the outgoing
@@ -325,7 +469,7 @@ img,svg{ display:block; max-width:100%; }
 .chapter-wide-left  .film-frame{ grid-column:1/9;  aspect-ratio:16/9; --plate-x:calc(var(--plate) * -1); }
 /* Side captions get their own step down the scale — display sizes overflow
    a four-column measure. */
-.film-chapter:not(.chapter-cover) .film-title{ font-size:clamp(28px,3.3vw,58px); max-width:13ch; }
+.film-chapter .film-title{ font-size:clamp(28px,3.3vw,58px); max-width:13ch; }
 .chapter-wide-left  .film-copy { grid-column:9/13; }
 .chapter-wide-right .film-frame{ grid-column:5/13; aspect-ratio:16/9; }
 .chapter-wide-right .film-copy { grid-column:1/5; }
@@ -337,45 +481,7 @@ img,svg{ display:block; max-width:100%; }
 .chapter-tall-left .film-frame,
 .chapter-tall-right .film-frame{ height:min(100%,70dvh); width:auto; aspect-ratio:9/16; justify-self:center; }
 
-/* --- Opening chapter: the film owns the whole viewport -------------------- */
-.chapter-cover .chapter-stage{ padding:0; }
-.chapter-cover .chapter-grid{ display:block; max-width:none; }
-.chapter-cover .film-frame{ position:absolute; inset:0; aspect-ratio:auto; box-shadow:none; transform:none; }
-.chapter-cover .film-frame img{ transform:scale(1.05); transition:transform 12s linear; }
-.chapter-cover.is-live .film-frame img{ transform:scale(1); }
-.chapter-cover .frame-no{ display:none; }
-.chapter-cover .sound-toggle{ right:var(--pad); bottom:auto; top:calc(var(--nav-h) + 14px); }
-.chapter-cover .film-frame::after{
-  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
-  background:
-    linear-gradient(180deg,rgba(7,5,4,.78),rgba(7,5,4,.2) 18%,transparent 30%),
-    linear-gradient(0deg,rgba(7,5,4,.96),rgba(7,5,4,.66) 22%,rgba(7,5,4,.2) 48%,transparent 68%),
-    linear-gradient(90deg,rgba(7,5,4,.62),rgba(7,5,4,.12) 42%,transparent 60%);
-}
-.chapter-cover .film-copy{
-  position:absolute; z-index:3;
-  left:var(--pad); right:var(--pad); bottom:clamp(48px,7vh,86px);
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  grid-template-areas:"kind kind" "title meta";
-  align-items:end;
-  gap:clamp(14px,2vw,30px);
-}
-.chapter-cover .film-kind{ grid-area:kind; }
-.chapter-cover .film-title{ grid-area:title; max-width:11ch; font-size:var(--fs-display); }
-.chapter-cover .film-meta{ grid-area:meta; display:flex; flex-direction:column; align-items:flex-end; gap:16px; text-align:right; }
-.chapter-cover .film-descriptor{ color:var(--text); }
 
-.scroll-cue{
-  position:absolute; z-index:3; left:50%; bottom:16px;
-  display:flex; flex-direction:column; align-items:center; gap:7px;
-  color:var(--text-soft);
-  font-size:10px; font-weight:640; letter-spacing:.2em; text-transform:uppercase;
-  transform:translateX(-50%);
-  opacity:calc(1 - var(--exit,0) * 3);
-  pointer-events:none;
-}
-.scroll-cue i{ display:block; width:1px; height:32px; background:linear-gradient(180deg,currentColor,transparent); }
 
 /* --- Dwell preview -------------------------------------------------------
    Rest on a film and it starts playing itself, muted, the way a thumbnail
@@ -390,14 +496,11 @@ img,svg{ display:block; max-width:100%; }
   transition:opacity .9s ease;
 }
 .frame-motion.is-playing{ opacity:1; }
+/* Full playback happens in the frame itself, so its controls must be usable. */
+.is-live .frame-motion{ pointer-events:auto; }
+.is-live .sound-toggle{ display:none; }
 .frame-motion iframe{ position:absolute; width:100%; height:100%; border:0; }
 /* Cover-fit the 16:9 stream inside frames that are not 16:9. */
-.chapter-cover .frame-motion iframe{
-  left:50%; top:50%;
-  width:max(100%,calc(100dvh * 16 / 9));
-  height:max(100%,calc(100vw * 9 / 16));
-  transform:translate(-50%,-50%);
-}
 .chapter-tall-left .frame-motion iframe,
 .chapter-tall-right .frame-motion iframe{
   left:50%; top:0;
@@ -558,7 +661,7 @@ img,svg{ display:block; max-width:100%; }
    full-bleed still strip and the craft table. Every element is grid-placed,
    so nothing floats free the way the old collage did.
    =========================================================================== */
-.about{ position:relative; z-index:17; background:#0f0b09; padding-block:clamp(84px,10vw,168px) 0; }
+.about{ position:relative; z-index:17; scroll-snap-align:start; background:#0f0b09; padding-block:clamp(84px,10vw,168px) 0; }
 .about-inner{ max-width:1780px; margin-inline:auto; padding-inline:var(--pad); }
 .about-top{
   display:grid;
@@ -781,12 +884,9 @@ img,svg{ display:block; max-width:100%; }
 @media(prefers-reduced-motion:no-preference){
   .media-loader{ animation:loadingSweep 1.4s ease-in-out infinite; }
   .viewer-loading i{ animation:spin 1s linear infinite; }
-  .scroll-cue i{ animation:cueDrop 2.1s var(--ease-soft) infinite; transform-origin:top; }
 }
 @keyframes loadingSweep{ to{ background-position:-120% 0; } }
 @keyframes spin{ to{ transform:rotate(360deg); } }
-@keyframes cueDrop{ 0%,100%{ transform:scaleY(.3); opacity:.4; } 50%{ transform:scaleY(1); opacity:1; } }
-@media(max-height:760px){ .scroll-cue{ display:none; } }
 
 /* ===========================================================================
    RESPONSIVE
@@ -853,7 +953,8 @@ img,svg{ display:block; max-width:100%; }
   /* Landscape films are letterboxed over a blurred fill of themselves — the
      way a vertical feed carries horizontal footage. Cropping a 16:9 frame to
      9:19 would throw the composition away. */
-  .film-frame .media-image{ position:relative; z-index:1; object-fit:contain; object-position:center 36%; }
+  .film-frame .media-image{ position:relative; z-index:1; object-fit:contain; }
+  .frame-motion{ top:50%; bottom:auto; height:auto; aspect-ratio:16/9; }
   .frame-fill{
     display:block;
     position:absolute; inset:0; z-index:0;
@@ -871,19 +972,16 @@ img,svg{ display:block; max-width:100%; }
   .frame-no{ left:14px; right:auto; top:calc(var(--nav-h) + 10px); }
   .sound-toggle{ right:var(--pad); bottom:auto; top:calc(var(--nav-h) + 8px); }
 
-  .film-copy,
-  .chapter-cover .film-copy{
+  .film-copy{
     position:absolute; z-index:3;
     left:var(--pad); right:var(--pad); bottom:clamp(30px,5vh,52px);
     grid-column:auto;
     display:flex; flex-direction:column; align-items:flex-start; gap:15px;
     opacity:1; transform:none;
   }
-  .film-title,.chapter-cover .film-title{ max-width:11ch; font-size:clamp(42px,13vw,68px); }
-  .chapter-cover .film-meta{ align-items:flex-start; text-align:left; gap:15px; }
-  .film-descriptor,.chapter-cover .film-descriptor{ color:var(--text-soft); }
-  .chapter-cover .film-frame img{ transform:none; transition:none; }
-  .scroll-cue{ bottom:10px; }
+  .film-title{ max-width:11ch; font-size:clamp(42px,13vw,68px); }
+  .film-meta{ display:flex; flex-direction:column; align-items:flex-start; gap:15px; }
+  .film-descriptor{ color:var(--text-soft); }
 
   .band{ padding-block:clamp(66px,13vw,96px) clamp(72px,14vw,104px); }
   .band-head h2{ max-width:12ch; }
@@ -934,10 +1032,12 @@ img,svg{ display:block; max-width:100%; }
   *,*::before,*::after{ animation:none !important; transition:none !important; }
   .reveal{ opacity:1; transform:none; }
   .frame-motion{ display:none; }
+  .intro-card.is-gone{ transition:none; }
+  .intro-card.is-gone [data-cast],.intro-card.is-gone .cast-word{ animation:none; }
+  .about.is-dealt .about-inner,.about.is-dealt .craft{ animation:none; }
   .chapter-stage{ transform:none; filter:none; }
   .film-frame,.film-copy{ transform:none; opacity:1; }
   .film-frame img{ transform:none; }
-  .scroll-cue{ display:none; }
 }
 </style>
 </head>
@@ -945,9 +1045,9 @@ img,svg{ display:block; max-width:100%; }
 <a class="skip-link" href="#work">Skip to films</a>
 
 <header class="site-nav" id="siteNav">
-  <a class="wordmark" href="#work" aria-label="Aniket, film portfolio home">ANIKET <span>// ai_native</span></a>
+  <a class="wordmark" href="#intro" aria-label="Aniket, film portfolio home">ANIKET <span>// ai_native</span></a>
   <nav class="nav-set" aria-label="Primary">
-    <a class="nav-link is-active" href="#work" data-nav="work">Work</a>
+    <a class="nav-link" href="#work" data-nav="work">Work</a>
     <a class="nav-link" href="#verticalCuts" data-nav="verticalCuts">Vertical</a>
     <a class="nav-link" href="#about" data-nav="about">About</a>
     <a class="nav-link" href="#contact" data-nav="contact">Contact</a>
@@ -958,23 +1058,48 @@ img,svg{ display:block; max-width:100%; }
 </header>
 
 <main>
+  <!-- The deck: the opening card is dealt away to the right to turn up About. -->
+  <section class="intro" id="intro" aria-label="Introduction">
+    <article class="intro-card" id="introCard">
+      <div class="intro-inner">
+        <p class="section-label" data-cast id="introKicker">Aniket Shaw / AI filmmaker and video editor</p>
+        <h1 class="intro-hook" id="introHook">Let my work do the talking.</h1>
+        <p class="intro-blurb" data-cast id="introBlurb">I make music films, short-form edits and motion work, building shots with generative tools when the footage does not exist.</p>
+        <p class="intro-meta" data-cast id="introMeta">Based in Kolkata, IST</p>
+      </div>
+
+      <div class="intro-actions">
+        <button class="intro-action act-up" data-cast id="introUp" type="button">
+          <span class="act-icon"><svg viewBox="0 0 14 16" aria-hidden="true"><path d="M7 0l6 6-1.6 1.6L8.1 4.3V16H5.9V4.3L2.6 7.6 1 6z"/></svg></span>
+          <span class="act-text"><b><span class="on-touch">Swipe up</span><span class="on-pointer">Scroll down</span></b><i>See the work</i></span>
+        </button>
+        <button class="intro-action act-right" data-cast id="introRight" type="button">
+          <span class="act-text"><b><span class="on-touch">Swipe right</span><span class="on-pointer">Drag right</span></b><i>Know more about me</i></span>
+          <span class="act-icon"><svg viewBox="0 0 16 14" aria-hidden="true"><path d="M16 7l-6-6-1.6 1.6 3.3 3.3H0v2.2h11.7l-3.3 3.3L10 13z"/></svg></span>
+        </button>
+      </div>
+
+      <span class="intro-stamp" aria-hidden="true">About me</span>
+    </article>
+  </section>
+
   <section class="cinema-stack" id="work" aria-label="Featured films">
     <div id="cinemaStack">
-      <article class="film-chapter chapter-cover is-live" style="--scene:1">
-        <div class="chapter-grid">
-          <figure class="film-frame media-ready">
-            <img src="assets/posters/hero-nuvve-kada.webp" width="1280" height="720" alt="Nuvve Kada, a cinematic Telugu musical love story" fetchpriority="high" />
-            <span class="media-loader" aria-hidden="true"></span>
-            <span class="media-error">Preview unavailable</span>
-          </figure>
-          <div class="film-copy">
-            <p class="film-kind">AI cinema</p>
-            <h1 class="film-title">Nuvve Kada</h1>
-            <div class="film-meta">
-              <p class="film-descriptor">Musical love story / 02:22</p>
-              <button class="play-cta" type="button" data-open-index="0">
-                <svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>Play film
-              </button>
+      <article class="film-chapter chapter-wide-left" style="--scene:1">
+        <div class="chapter-bg" aria-hidden="true"></div>
+        <div class="chapter-stage">
+          <div class="chapter-grid">
+            <figure class="film-frame media-ready">
+              <img class="film-poster" src="assets/posters/anotherone.webp" width="1280" height="720" alt="Cinematic musical montage, a Telugu musical love story" fetchpriority="high" />
+              <span class="media-loader" aria-hidden="true"></span>
+              <span class="media-error">Preview unavailable</span>
+            </figure>
+            <div class="film-copy">
+              <p class="film-kind">AI cinema</p>
+              <h1 class="film-title">Cinematic musical montage</h1>
+              <div class="film-meta">
+                <p class="film-descriptor">Musical love story / 02:22</p>
+              </div>
             </div>
           </div>
         </div>
@@ -1060,8 +1185,8 @@ img,svg{ display:block; max-width:100%; }
 
 <aside class="film-index" id="filmIndex" role="dialog" aria-modal="true" aria-labelledby="filmIndexTitle" aria-hidden="true">
   <div class="index-preview" aria-hidden="true">
-    <img id="indexPoster" src="assets/posters/hero-nuvve-kada.webp" alt="" />
-    <p class="index-preview-title" id="indexPreviewTitle">Nuvve Kada</p>
+    <img id="indexPoster" src="assets/posters/anotherone.webp" alt="" />
+    <p class="index-preview-title" id="indexPreviewTitle">Cinematic musical montage</p>
   </div>
   <div class="index-panel">
     <div class="index-top">
@@ -1081,14 +1206,14 @@ img,svg{ display:block; max-width:100%; }
   <div class="viewer-stage" id="viewerStage"></div>
 </div>
 
-<script src="config.js?v=20260822-rebuild"></script>
+<script src="config.js?v=20260822-poster"></script>
 <script>
 (function(){
   "use strict";
 
   var CFG = window.PORTFOLIO_CONFIG || {};
   var FALLBACK = [
-    { category:"ai", orientation:"landscape", poster:"hero-nuvve-kada", title:"Nuvve Kada", foot:"musical love story / 02:22", video:"https://www.youtube.com/watch?v=3yY6CAn7Qeo", alt:"Nuvve Kada, a cinematic Telugu musical love story" },
+    { category:"ai", orientation:"landscape", poster:"anotherone", title:"Cinematic musical montage", foot:"musical love story / 02:22", video:"https://www.youtube.com/watch?v=3yY6CAn7Qeo", alt:"Cinematic musical montage, a Telugu musical love story" },
     { category:"ai", orientation:"landscape", poster:"ai-cinematic-01", title:"Cinematic AI Music Video", foot:"text-to-video", video:"https://youtu.be/xtJId7RjkWM", alt:"Cinematic AI music video" }
   ];
   var works = Array.isArray(CFG.works) && CFG.works.length ? CFG.works : FALLBACK;
@@ -1096,6 +1221,7 @@ img,svg{ display:block; max-width:100%; }
   var lastFocus = null;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var PLAY_SVG = '<svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>';
+  var CLOSE_SVG = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M10.6 0L12 1.4 7.4 6 12 10.6 10.6 12 6 7.4 1.4 12 0 10.6 4.6 6 0 1.4 1.4 0 6 4.6z"/></svg>';
   var MUTED_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14zM10.2 5.4l1-1 4.4 4.4-1 1z"/><path d="M14.6 4.4l1 1L11.2 9.8l-1-1z"/></svg>';
   var SOUND_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14z"/><path d="M9.6 4.5a4.6 4.6 0 010 7l-.9-1a3.3 3.3 0 000-5zM11.4 2.2a7.2 7.2 0 010 11.6l-.9-1a5.9 5.9 0 000-9.6z"/></svg>';
 
@@ -1169,11 +1295,8 @@ img,svg{ display:block; max-width:100%; }
     cinemaStack.innerHTML = entries.map(function(entry,position){
       var work = entry.work;
       var portrait = work.orientation === "portrait";
-      var variant = position === 0
-        ? "chapter-cover"
-        : (portrait ? "chapter-tall-" : "chapter-wide-") + (position % 2 ? "right" : "left");
+      var variant = (portrait ? "chapter-tall-" : "chapter-wide-") + (position % 2 ? "right" : "left");
       var heading = position === 0 ? "h1" : "h2";
-      var cue = position === 0 ? '<div class="scroll-cue" aria-hidden="true"><i></i>Scroll</div>' : "";
       return '<article class="film-chapter '+variant+'" style="--scene:'+(position+1)+'" data-chapter="'+position+'">'+
         '<div class="chapter-bg" aria-hidden="true"></div>'+
         '<div class="chapter-stage">'+
@@ -1190,12 +1313,11 @@ img,svg{ display:block; max-width:100%; }
               '<'+heading+' class="film-title">'+esc(cleanText(work.title))+'</'+heading+'>'+
               '<div class="film-meta">'+
                 '<p class="film-descriptor">'+esc(descriptorFor(work))+'</p>'+
-                '<button class="play-cta" type="button" data-open-index="'+entry.index+'">'+PLAY_SVG+'Play film</button>'+
+                '<button class="play-cta" type="button" data-play-inline="'+entry.index+'">'+PLAY_SVG+'Play film</button>'+
               '</div>'+
             '</div>'+
           '</div>'+
         '</div>'+
-        cue+
       '</article>';
     }).join("");
   }
@@ -1369,6 +1491,31 @@ img,svg{ display:block; max-width:100%; }
   }
 
   /* --- About -------------------------------------------------------------- */
+  /* The opening card reads from the same config as everything else, so there
+     is still one file to edit. */
+  function renderIntro(){
+    if(CFG.tagline) document.getElementById("introHook").textContent = cleanText(CFG.tagline);
+    var first = cleanText((CFG.bio || [])[0] || "");
+    // Drop the "I'm Aniket, a …" opener — the kicker already says who this is.
+    var rest = first.match(/^.+?[.!?]\s+(.+)$/);
+    if(rest) document.getElementById("introBlurb").textContent = rest[1];
+    else if(first) document.getElementById("introBlurb").textContent = first;
+    // Just the credential and the place — the full meta line belongs in About.
+    var where = cleanText(CFG.bioMeta || "").split(" / ")[0];
+    var meta = [cleanText(CFG.experience || ""),where].filter(Boolean).join("  ·  ");
+    if(meta) document.getElementById("introMeta").textContent = meta;
+
+    // The hook leaves a word at a time, so split it once the copy is final.
+    var hook = document.getElementById("introHook");
+    hook.innerHTML = hook.textContent.trim().split(/\s+/).map(function(word){
+      return '<span class="cast-word">' + esc(word) + '</span>';
+    }).join(" ");
+
+    // Number every piece in document order — that ordering is the cascade.
+    document.querySelectorAll(".intro-card [data-cast], .intro-card .cast-word")
+      .forEach(function(node,index){ node.style.setProperty("--i",index); });
+  }
+
   function renderAbout(){
     var bioLines = (Array.isArray(CFG.bio) && CFG.bio.length ? CFG.bio : []).map(cleanText).filter(Boolean);
     if(bioLines.length){
@@ -1475,6 +1622,7 @@ img,svg{ display:block; max-width:100%; }
   renderWideEdits();
   renderFilters();
   renderIndex();
+  renderIntro();
   renderAbout();
   renderContact();
   bindMediaStates();
@@ -1497,7 +1645,9 @@ img,svg{ display:block; max-width:100%; }
 
     var apiReady = null;
     var timer = 0;
-    var active = null;   // { frame, host, player, toggle }
+    var active = null;    // { chapter, frame, host, player, toggle, live }
+    var pending = null;   // host whose player is mid-flight
+    var suppressUntil = 0;// keeps the preview from re-arming right after a close
 
     function loadApi(){
       if(apiReady) return apiReady;
@@ -1520,47 +1670,93 @@ img,svg{ display:block; max-width:100%; }
       toggle.innerHTML = (muted ? MUTED_SVG : SOUND_SVG) + "<span>" + (muted ? "Unmute" : "Mute") + "</span>";
     }
 
+    function setCta(chapter,live){
+      var cta = chapter.querySelector(".play-cta");
+      if(cta) cta.innerHTML = live ? CLOSE_SVG + "Close film" : PLAY_SVG + "Play film";
+    }
+
     function stop(){
       window.clearTimeout(timer);
+      pending = null;
       if(!active) return;
       var current = active;
       active = null;
-      current.frame.classList.remove("is-previewing");
+      current.frame.classList.remove("is-previewing","is-live");
       current.host.classList.remove("is-playing");
-      if(current.player && current.player.destroy) current.player.destroy();
-      current.host.innerHTML = "";
+      setCta(current.chapter,false);
+      // A throwing destroy must not leave the frame half torn down.
+      try { if(current.player && current.player.destroy) current.player.destroy(); }
+      finally { current.host.innerHTML = ""; }
     }
 
-    function start(chapter){
-      var index = Number(chapter.querySelector("[data-open-index]").dataset.openIndex);
-      var work = works[index];
+    // Measured rather than read off a class, so this holds even before the
+    // observer has reported for the first time.
+    function inView(chapter){
+      var rect = chapter.getBoundingClientRect();
+      var height = window.innerHeight;
+      var shown = Math.min(rect.bottom,height) - Math.max(rect.top,0);
+      return shown > 0 && shown / Math.min(rect.height || height,height) >= .7;
+    }
+
+    // `live` is the full watch: sound on, controls on, no loop. Otherwise this
+    // is the muted dwell preview.
+    function start(chapter,live,resumeAt){
+      var opener = chapter.querySelector("[data-play-inline]");
+      if(!opener) return;
+      var work = works[Number(opener.dataset.playInline)];
       var id = work && youtubeId(work.video || "");
       if(!id) return;
       var frame = chapter.querySelector(".film-frame");
       var host = chapter.querySelector(".frame-motion");
       var toggle = chapter.querySelector(".sound-toggle");
       if(!frame || !host || !toggle) return;
+      // The observer can report the same chapter several times while the page
+      // settles; without these two guards each report mounts another player
+      // that tears the previous one down.
+      if(!live && active && active.host === host) return;
+      if(!live && pending === host) return;
+      pending = host;
 
       loadApi().then(function(YT){
         // The chapter may have scrolled away while the API was loading.
-        if(!chapter.classList.contains("is-resting")) return;
+        if(pending !== host) return;
+        if(!YT || !YT.Player || !inView(chapter)){ pending = null; return; }
         stop();
+        pending = host;
         var mount = document.createElement("div");
         host.appendChild(mount);
-        var entry = { frame:frame, host:host, toggle:toggle, player:null };
+        var entry = { chapter:chapter, frame:frame, host:host, toggle:toggle, player:null, live:!!live };
         active = entry;
+        pending = null;   // `active` guards this host from here on
         setToggle(toggle,true);
+        // A requested watch owns the frame straight away — its controls must be
+        // clickable even if the PLAYING event is slow or never arrives. Only
+        // the reveal itself waits for playback.
+        if(live){ frame.classList.add("is-live"); setCta(chapter,true); }
+        var vars = { autoplay:1, playsinline:1, rel:0, modestbranding:1, iv_load_policy:3,
+                     mute:live ? 0 : 1, controls:live ? 1 : 0, disablekb:live ? 0 : 1, fs:live ? 1 : 0 };
+        if(!live){ vars.loop = 1; vars.playlist = id; }
+        if(resumeAt > 1) vars.start = Math.floor(resumeAt);
         entry.player = new YT.Player(mount,{
           videoId:id,
-          playerVars:{ autoplay:1, mute:1, controls:0, loop:1, playlist:id, playsinline:1,
-                       rel:0, modestbranding:1, disablekb:1, fs:0, iv_load_policy:3 },
+          playerVars:vars,
           events:{
-            onReady:function(event){ event.target.mute(); event.target.playVideo(); },
+            onReady:function(event){
+              if(live){ event.target.unMute(); event.target.setVolume(80); }
+              else event.target.mute();
+              event.target.playVideo();
+            },
             onStateChange:function(event){
               if(active !== entry) return;
               if(event.data === YT.PlayerState.PLAYING){
                 host.classList.add("is-playing");
-                frame.classList.add("is-previewing");
+                if(!live) frame.classList.add("is-previewing");
+              }
+              // A finished watch hands the frame back to its poster; the muted
+              // preview loops instead (playlist looping occasionally misses).
+              if(event.data === YT.PlayerState.ENDED){
+                if(live) stop();
+                else { event.target.seekTo(0); event.target.playVideo(); }
               }
             },
             onError:function(){ if(active === entry) stop(); }
@@ -1580,21 +1776,46 @@ img,svg{ display:block; max-width:100%; }
       setToggle(toggle,!muted);
     },true);
 
+    // Play film swaps the muted preview for the real thing, in the same frame,
+    // picking up where the preview had got to.
+    document.addEventListener("click",function(event){
+      var cta = event.target.closest(".play-cta");
+      if(!cta) return;
+      var chapter = cta.closest(".film-chapter");
+      if(!chapter) return;
+      if(chapter.querySelector(".film-frame").classList.contains("is-live")){
+        suppressUntil = Date.now() + 1200;   // do not re-arm the preview at once
+        stop();
+        return;
+      }
+      var at = 0;
+      if(active && active.chapter === chapter && active.player && active.player.getCurrentTime){
+        try { at = active.player.getCurrentTime() || 0; } catch(e){ at = 0; }
+      }
+      start(chapter,true,at);
+    });
+
     var observer = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         var resting = entry.isIntersecting && entry.intersectionRatio >= .72;
         entry.target.classList.toggle("is-resting",resting);
         if(resting){
+          if(active && active.live) return;            // a real watch is running
+          if(Date.now() < suppressUntil) return;
           window.clearTimeout(timer);
           // The opening film does not wait to be admired — it just runs.
           var wait = entry.target === chapters[0] ? 0 : DWELL;
           timer = window.setTimeout(function(){ start(entry.target); },wait);
-        } else if(active && active.frame.parentElement && entry.target.contains(active.frame)){
+        } else if(active && entry.target.contains(active.host)){
           stop();
         }
       });
     },{ threshold:[0,.72,.95] });
     chapters.forEach(function(chapter){ observer.observe(chapter); });
+
+    // The opening film starts on load rather than waiting for the observer's
+    // first report, so the opening film is already running when the page settles.
+    if(inView(chapters[0])) start(chapters[0]);
 
     // A full-size player in the viewer must never fight a muted preview.
     document.addEventListener("viewer:open",stop);
@@ -1636,6 +1857,9 @@ img,svg{ display:block; max-width:100%; }
 
     function update(){
       queued = false;
+      // The deal jumps the scroll; recalculating six chapters against that is
+      // work the flight cannot afford.
+      if(document.documentElement.classList.contains("is-dealing")) return;
       var height = window.innerHeight;
       var enters = chapters.map(function(chapter){
         return clamp(1 - chapter.getBoundingClientRect().top / height);
@@ -1677,6 +1901,155 @@ img,svg{ display:block; max-width:100%; }
     window.addEventListener("resize",apply);
     if(stacked.addEventListener) stacked.addEventListener("change",apply);
     apply();
+  })();
+
+  /* --- Intro deck ----------------------------------------------------------
+     Two ways out of the opening card: up to the films, right to About.
+     The right-hand exit is a real card deal — the card is pinned, the page
+     jumps to About behind it, then the card flies off and uncovers it. That
+     way the reveal is the live About section, not a copy of it.              */
+  (function introDeck(){
+    var intro = document.getElementById("intro");
+    var card = document.getElementById("introCard");
+    var about = document.getElementById("about");
+    var work = document.getElementById("work");
+    if(!intro || !card || !about) return;
+
+    var THRESHOLD = 108;
+    var dealing = false;
+    var dragging = false;
+    var axis = null;
+    var startX = 0, startY = 0, shift = 0, pointer = null;
+
+    function navHeight(){
+      return parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h")) || 64;
+    }
+    function setDrag(value){ intro.style.setProperty("--drag",value.toFixed(3)); }
+    function paint(){
+      card.style.transform = "translate3d(" + shift + "px,0,0) rotate(" + (shift * .035) + "deg)";
+      setDrag(Math.min(Math.max(shift / THRESHOLD,0),1));
+    }
+
+    function release(){
+      dragging = false; axis = null;
+      card.classList.remove("is-dragging");
+      if(pointer !== null && card.releasePointerCapture){
+        try { card.releasePointerCapture(pointer); } catch(e){}
+      }
+      pointer = null;
+    }
+
+    function springBack(){
+      release();
+      card.classList.add("is-springing");
+      shift = 0;
+      card.style.transform = "";
+      setDrag(0);
+      window.setTimeout(function(){ card.classList.remove("is-springing"); },520);
+    }
+
+    function settle(){
+      // Reset without replaying the flight backwards on the way out.
+      card.classList.add("no-anim");
+      card.classList.remove("is-flying","is-gone","is-springing");
+      card.style.transform = "";
+      setDrag(0);
+      void card.offsetWidth;
+      card.classList.remove("no-anim");
+      dealing = false;
+      // Released here rather than on a later timer: leaving it set would keep
+      // snapping off and the chapter loop idle. The scroller is already sitting
+      // on About's snap start, so re-enabling moves nothing.
+      document.documentElement.classList.remove("is-dealing");
+      // That loop sat out the deal, so the progress bar is stale.
+      window.dispatchEvent(new Event("scroll"));
+      // Purely cosmetic, so this one can wait for the entrance to finish.
+      window.setTimeout(function(){ about.classList.remove("is-dealt"); },700);
+    }
+
+    function deal(){
+      if(dealing) return;
+      dealing = true;
+      release();
+
+      // About is about to be uncovered, so it must already be drawn. `is-dealt`
+      // also suppresses its reveal transitions — they would otherwise all run
+      // against the flight.
+      document.documentElement.classList.add("is-dealing");
+      about.classList.add("is-dealt");
+      about.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); });
+
+      card.classList.add("is-flying");             // pinned: the jump is unseen
+      card.classList.remove("is-springing");
+      window.scrollTo({ top:about.getBoundingClientRect().top + window.scrollY - navHeight(), behavior:"instant" });
+      about.setAttribute("tabindex","-1");
+      about.focus({ preventScroll:true });
+
+      if(reduceMotion){ settle(); return; }
+
+      // Jumping the scroll relayouts and repaints the whole revealed page. Doing
+      // that in the same frame the flight starts is what made it stutter, so let
+      // the browser finish that work first and only then animate.
+      var started = false;
+      function launch(){
+        if(started) return;
+        started = true;
+        card.classList.add("is-gone");
+        window.setTimeout(settle,760);
+      }
+      window.requestAnimationFrame(function(){ window.requestAnimationFrame(launch); });
+      window.setTimeout(launch,110);   // rAF is throttled in background tabs
+    }
+
+    function toWork(){
+      if(!work) return;
+      work.scrollIntoView({ behavior:reduceMotion ? "auto" : "smooth", block:"start" });
+    }
+
+    document.getElementById("introRight").addEventListener("click",deal);
+    document.getElementById("introUp").addEventListener("click",toWork);
+
+    card.addEventListener("pointerdown",function(event){
+      if(dealing || event.target.closest("button,a,.intro-inner")) return;
+      if(event.pointerType === "mouse" && event.button !== 0) return;
+      dragging = true; axis = null; shift = 0;
+      startX = event.clientX; startY = event.clientY;
+      pointer = event.pointerId;
+    });
+
+    card.addEventListener("pointermove",function(event){
+      if(!dragging) return;
+      var moveX = event.clientX - startX;
+      var moveY = event.clientY - startY;
+      if(!axis){
+        if(Math.abs(moveX) < 8 && Math.abs(moveY) < 8) return;
+        // A vertical intent belongs to the scroller, not to the card.
+        if(Math.abs(moveY) > Math.abs(moveX)){ release(); return; }
+        axis = "x";
+        card.classList.add("is-dragging");
+        if(card.setPointerCapture){ try { card.setPointerCapture(pointer); } catch(e){} }
+      }
+      shift = moveX < 0 ? moveX * .22 : moveX;   // resist the meaningless direction
+      paint();
+    });
+
+    function endDrag(){
+      if(!dragging) return;
+      if(axis === "x" && shift > THRESHOLD) deal();
+      else springBack();
+    }
+    card.addEventListener("pointerup",endDrag);
+    card.addEventListener("pointercancel",springBack);
+
+    document.addEventListener("keydown",function(event){
+      if(dealing || event.metaKey || event.ctrlKey || event.altKey) return;
+      if(document.body.classList.contains("viewer-open") || document.body.classList.contains("index-open")) return;
+      if(window.scrollY > window.innerHeight * .5) return;      // only on the card
+      var tag = (document.activeElement || {}).tagName;
+      if(tag === "INPUT" || tag === "TEXTAREA") return;
+      if(event.key === "ArrowRight"){ event.preventDefault(); deal(); }
+      else if(event.key === "ArrowDown"){ event.preventDefault(); toWork(); }
+    });
   })();
 
   /* --- Section reveal + nav state ----------------------------------------- */
