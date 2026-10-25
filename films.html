@@ -883,6 +883,8 @@ img{ display:block; max-width:100%; }
     var frame = first.querySelector(".slide-frame");
     var from = panelState(panel), cover = coverState(frame);
     reelOpen = true; morphing = true;
+    history.pushState({ reel:key },"");
+    reelEntry = true;
     current = first;
     document.body.classList.add("reel-open");
     reel.classList.add("open");
@@ -897,11 +899,28 @@ img{ display:block; max-width:100%; }
       var land = current || first;
       current = null;
       setCurrent(land);
+      if(closeWanted){ closeWanted = false; closeReel(); }   // Back was pressed mid-morph
     };
   }
 
+  /* Back and Close are the same move. Close asks the history to go back, and the
+     popstate that follows plays the morph home, so the history entry the reel
+     took is always given back and Back never leaves the site from a reel. */
+  var reelEntry = false, closeWanted = false, closing = false;
+  function requestClose(){
+    if(!reelOpen || closing) return;
+    if(reelEntry){ reelEntry = false; history.back(); } else closeReel();
+  }
+  window.addEventListener("popstate",function(){
+    if(!reelOpen) return;
+    reelEntry = false;
+    closeReel();
+  });
+
   function closeReel(){
-    if(!reelOpen || morphing) return;
+    if(!reelOpen || closing) return;
+    if(morphing){ closeWanted = true; return; }
+    closing = true;
     window.clearTimeout(slideTimer);
     hideHints();
     soundOn = false;
@@ -922,7 +941,7 @@ img{ display:block; max-width:100%; }
       reel.classList.remove("open");
       reel.setAttribute("aria-hidden","true");
       a.cancel(); b.cancel();
-      morphing = false; reelOpen = false; current = null;
+      morphing = false; reelOpen = false; closing = false; closeWanted = false; current = null;
       if(slideObserver) slideObserver.disconnect();
       feed.innerHTML = "";
       document.body.classList.remove("reel-open");
@@ -960,7 +979,7 @@ img{ display:block; max-width:100%; }
     var tab = event.target.closest("[data-poison]");
     if(tab) switchPoison(tab.dataset.poison);
   });
-  reelClose.addEventListener("click",closeReel);
+  reelClose.addEventListener("click",requestClose);
   reelHint.addEventListener("click",nextFilm);
   feed.addEventListener("scroll",function(){ if(reelHint.classList.contains("show")) hideHints(); },{ passive:true });
   feed.addEventListener("click",function(event){
@@ -988,7 +1007,7 @@ img{ display:block; max-width:100%; }
   }
   document.addEventListener("keydown",function(event){
     if(event.key === "Escape"){
-      if(reelOpen) closeReel();
+      requestClose();
       return;
     }
     if(!reelOpen) return;
