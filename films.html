@@ -294,10 +294,14 @@ img{ display:block; max-width:100%; }
 .slide.is-on .slide-copy > :nth-child(4){ transition-delay:.15s; }
 .slide.is-on .slide-copy > :nth-child(5){ transition-delay:.2s; }
 .slide.is-on .slide-copy > :nth-child(6){ transition-delay:.25s; }
+.slide.is-on .slide-copy > :nth-child(7){ transition-delay:.3s; }
 .slide-count{ color:var(--red); font-size:11px; font-weight:700; letter-spacing:.16em; }
 .slide-title{ margin-top:14px; font-size:clamp(34px,3.8vw,64px); font-weight:820; font-stretch:var(--cond); letter-spacing:-.035em; line-height:.94; text-wrap:balance; }
 .slide-desc{ margin-top:12px; color:var(--ink-soft); font-size:11px; font-weight:680; letter-spacing:.14em; text-transform:uppercase; }
 .slide-process{ margin-top:16px; max-width:40ch; color:var(--ink-soft); font-size:14px; }
+.slide-credit{ margin-top:10px; color:var(--ink-soft); font-size:13px; }
+.slide-credit a{ color:var(--red); border-bottom:1px solid rgba(208,90,96,.4); }
+.slide-credit a:hover{ border-color:var(--red); }
 .slide-play{ margin-top:26px; }
 .slide-play svg{ width:15px; }
 .slide-play[aria-pressed="true"]{ background:transparent; color:var(--red); }
@@ -450,6 +454,7 @@ img{ display:block; max-width:100%; }
 
 <footer class="foot">
   <span>© <span id="year">2026</span> Aniket Shaw</span>
+  <span>Hand lettering inspired by <a href="https://www.instagram.com/rossigan_art/" target="_blank" rel="noopener">Rossigan</a>’s style.</span>
   <span>Editing, motion and AI filmmaking. <a href="labs">Code portfolio →</a></span>
 </footer>
 
@@ -727,6 +732,8 @@ img{ display:block; max-width:100%; }
           '<p class="slide-count">'+pad2(n+1)+' / '+pad2(total)+'</p>'+
           '<h3 class="slide-title">'+esc(cleanText(work.title))+'</h3>'+
           '<p class="slide-desc">'+esc(descriptorFor(work))+'</p>'+
+          // The artist whose style the film follows, named where the film plays.
+          (work.credit ? '<p class="slide-credit">Inspired by '+(work.creditUrl ? '<a href="'+esc(work.creditUrl)+'" target="_blank" rel="noopener">'+esc(work.credit)+'</a>' : esc(work.credit))+'’s style</p>' : "")+
           (work.process ? '<p class="slide-process">'+esc(cleanText(work.process))+'</p>' : "")+
           (audio ? '<button class="btn btn-red slide-play" type="button" data-sound aria-pressed="false">'+SOUND_SVG+'Play with sound</button>' : "")+
           (n === total - 1 ? '<p class="slide-next">That’s the lot. Pick another poison up top.</p>' : "")+
