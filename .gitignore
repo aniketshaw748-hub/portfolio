@@ -6,6 +6,8 @@
 *.mkv
 *.avi
 *.webm
+# …except the web-sized portfolio films (≤25 MB each, made by C:\Claude\portfolio-films\encode.py)
+!assets/films/*.mp4
 
 # ── Personal working notes (kept private, not part of the site) ──────────
 mydetail.md

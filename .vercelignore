@@ -5,6 +5,7 @@
 *.mkv
 *.avi
 *.webm
+!assets/films/*.mp4
 mydetail.md
 Aniket_Shaw_Resume.*
 mockups

@@ -23,38 +23,64 @@ window.PORTFOLIO_CONFIG = {
   /* ── ABOUT / BIO ──────────────────────────────────────────────────────────
      Each line is one paragraph in the About section.                         */
   bio: [
-    "I'm Aniket, a video editor and AI filmmaker. I make music films, short-form edits and motion work, often building shots with generative tools when the footage does not exist.",
-    "My work starts with the cut: performance, pacing and rhythm. Then I shape the motion, sound and finish until the piece feels complete.",
+    "I'm Aniket, an AI filmmaker who builds films in code. I direct AI coding agents through every frame: hand-lettered type on springs, low-poly 3D and motion design, rendered straight from code.",
+    "I still cut by hand too: music films, short-form edits and narrative work for creators and brands. That work starts with performance, pacing and rhythm.",
     "I also build small tools and automations for my own production workflow."
   ],
   bioMeta: "Based in Kolkata, IST / working in English and Hindi",
-  experience: "3+ yrs editing · 1.5 yrs in GenAI",  // small credibility line under the bio
-  tagline: "Let my work do the talking.",           // shown near the contact CTAs
+  experience: "3+ yrs editing · 2.6M+ peak views",  // credibility line + the About stats
+  tagline: "Pick your poison.",                     // the hand-lettered greeting; its last word is red
+
+  /* ── PICK YOUR POISON ─────────────────────────────────────────────────────
+     The opening offers one door per style (the "category" of each film below):
+     big doors for the films written in code, a smaller row for the work cut by
+     hand. One line of description per style. Styles with no films are hidden. */
+  poisons: {
+    type:      "Hand-lettered words on springs that act out what they say.",
+    animation: "Low-poly 3D films and previs, staged, lit and cut in code.",
+    studies:   "Frame-by-frame studies of reels I admire, rebuilt in code and credited.",
+    ai:        "Music videos and shorts where every frame is generated and every cut is human.",
+    shorts:    "Fast-cut news shorts with animated captions, built for the scroll.",
+    motion:    "After Effects motion-graphics loops.",
+    narrative: "Story-led edits, long and short, mixing real footage, motion and AI b-roll."
+  },
 
   /* ── TOOLS (grouped) ──────────────────────────────────────────────────────
      Each "GROUP NAME": [ list of tools ]. Add/remove groups or tools freely. */
   tools: {
     "AI STACK":      ["Seedance", "Kling", "Veo", "Higgsfield", "Google Flow", "Nano Banana", "GPT Image", "ElevenLabs", "Suno", "Topaz"],
     "EDIT / MOTION": ["Premiere Pro", "After Effects"],
-    "CODE":          ["Claude Code"]
+    "CODE":          ["Claude Code", "HyperFrames", "Canvas 2D", "three.js", "Blender by script"]
   },
 
   /* ── WORK / VIDEOS ────────────────────────────────────────────────────────
-     One { ... } per film. The first AI item becomes the opening hero.
-     Later AI items become cinematic chapters in array order.
-     Portrait work becomes the vertical wall; other landscape work becomes
-     the wider-cuts section. Every item also appears in the film index.
+     One { ... } per film. Each film appears behind its style's door, in array
+     order; the first film of a style is that door's poster.
      To ADD a film: copy a line, change the values.
-        category    : "ai" | "shorts" | "motion" | "narrative"  (sets the filter)
-        orientation : "landscape" (16:9)  or  "portrait" (9:16)
+        category    : written in code: "type" | "animation" | "studies"
+                      cut by hand:     "ai" | "shorts" | "motion" | "narrative"
+        orientation : "landscape" (16:9), "portrait" (9:16) or "square" (1:1)
         poster      : image filename inside assets/posters/  (without ".webp")
-        title       : shown with the film and in the film index
-        foot        : short descriptor shown beside the play action
-        video       : paste a YouTube / Vimeo / .mp4 URL to publish ("" = "coming soon")
+        title       : shown with the film
+        foot        : short descriptor shown under the title
+        video       : a YouTube / Vimeo URL, or an .mp4 in assets/films/ ("" = "coming soon")
         alt         : description for accessibility
         process     : optional note about how the work was made
-     The film index and filter counts update automatically.                     */
+     Door counts update automatically.                                          */
   works: [
+    { category:"type", orientation:"landscape", poster:"sit-still", title:"Sit Still", foot:"kinetic type · two voices · 0:40", video:"assets/films/sit-still.mp4", alt:"Hand-lettered red and blue words bouncing on a black ground", process:"A writer tells the words to sit still and do their one job. The words won't, and each one acts out its meaning. Every letter is a hand-drawn stroke on its own spring, written in code, with two AI voices." },
+    { category:"type", orientation:"landscape", poster:"dessa-03", title:"Dessa 03", foot:"kinetic type · voice call · 1:55", video:"assets/films/dessa-03.mp4", alt:"Hand-lettered words of a call between a couple, in red and blue on black", process:"A recorded call between a couple, set word by word in hand-drawn type. Each word acts out what it says, timed to the voice." },
+    { category:"type", orientation:"landscape", poster:"two-voices", title:"Two Voices", foot:"kinetic type · silent · 0:22", video:"assets/films/two-voices.mp4", alt:"Two hand-lettered voices in red and blue trading words on black", process:"A silent conversation between two lettered voices. A style study after rossigan_art's lettering reels, with my own words." },
+    { category:"type", orientation:"landscape", poster:"claude-showreel", title:"Claude Showreel", foot:"code motion design · 0:15", video:"assets/films/claude-showreel.mp4", alt:"A motion-design showreel card titled Claude, Motion Designer", process:"Fifteen seconds of kinetic type, shape morphs, 3D depth and data in motion, every frame written in code." },
+
+    { category:"animation", orientation:"landscape", poster:"halfway-to-paris", title:"Halfway to Paris", foot:"low-poly 3D · 2:00", video:"assets/films/halfway-to-paris.mp4", alt:"A low-poly 3D bedroom at night, lit by fairy lights", process:"A long-distance couple on a call, and a Paris trip she doesn't see coming. Low-poly 3D, staged, lit and cut in code." },
+    { category:"animation", orientation:"landscape", poster:"crossing", title:"Crossing", foot:"Blender previs · 0:26", video:"assets/films/crossing.mp4", alt:"A low-poly 3D city crossing", process:"A 3D previs, staged, lit and animated in Blender by script." },
+
+    { category:"studies", orientation:"square", poster:"study-one-circle", title:"One Circle", foot:"original film · silent · 0:42", video:"assets/films/study-one-circle.mp4", alt:"A red circle on paper, handed from shot to shot", process:"An original film built on the cut points of an oxime.fx reel: one circle handed on through match cuts, a pictogram per line, drawn on twos with print grain. Shown silent." },
+    { category:"studies", orientation:"square", poster:"study-yellow-daisy", title:"Yellow Paper Daisy", foot:"study after oxime.fx · silent · 0:21", video:"assets/films/study-yellow-daisy.mp4", alt:"Paper-cut letters and a daisy in purple and yellow", process:"A shot-for-shot study of a reel by oxime.fx, every frame rebuilt from scratch in code with SVG, canvas and three.js. The original design is oxime.fx's. Shown silent." },
+    { category:"studies", orientation:"landscape", poster:"study-daisy", title:"Daisy", foot:"study after oxime.fx · silent · 0:21", video:"assets/films/study-daisy.mp4", alt:"A white daisy on a blue ground", process:"A study of oxime.fx's reel “Daisy”: its timing, framing and match cuts, with every frame and illustration drawn from scratch in code. Shown silent." },
+    { category:"studies", orientation:"square", poster:"study-techniques", title:"Technique Study", foot:"eight finishes · silent · 0:34", video:"assets/films/study-techniques.mp4", alt:"A paper house and simple shapes under halftone light", process:"Eight of oxime.fx's finishes rebuilt on neutral subjects: print grain, dry-brush edges, mosaic reveal, draining fill, glitch type morph, scribble knot, boiling lines and halftone light." },
+
     { category:"ai", orientation:"landscape", poster:"anotherone", title:"Cinematic musical montage", foot:"hero film · musical love story · 02:22", video:"https://www.youtube.com/watch?v=3yY6CAn7Qeo", alt:"Cinematic musical montage, a Telugu musical love story", process:"A cinematic musical love story shaped as a complete film, from visual direction through edit and final finish." },
     { category:"ai", orientation:"landscape", poster:"ai-cinematic-01", title:"Cinematic AI Music Video", foot:"reel_001 · text-to-video", video:"https://youtu.be/xtJId7RjkWM", alt:"Cinematic AI music video created with generative video tools", process:"script + shot list → text-to-video generations, style-matched shot by shot → assembled, graded and sound-designed in Premiere Pro. Every frame generated; every cut human." },
     { category:"ai", orientation:"landscape", poster:"ai-cinematic-02", title:"Cinematic Motion Launch Trailer", foot:"reel_002 · text-to-video", video:"https://youtu.be/KSdsuyZ9HKw", alt:"Cinematic AI short — moody office scene rendered entirely with AI tools", process:"script + shot list → text-to-video generations, style-matched shot by shot → assembled, graded and sound-designed in Premiere Pro. Every frame generated; every cut human." },

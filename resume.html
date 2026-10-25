@@ -24,20 +24,32 @@
   font-display:swap;
 }
 :root{
-  --bg:#0d0a09;
-  --surface:#171110;
-  --line:rgba(243,238,231,.15);
-  --line-soft:rgba(243,238,231,.07);
-  --accent:#e44b2b;
-  --text:#f3eee7;
-  --text-soft:#c2b7ad;
-  --muted:#8d8079;
+  /* The portfolio's palette (the Sit Still films): red speaks for the films, blue for the code. */
+  --bg:#0a0908;
+  --surface:#181514;
+  --line:rgba(243,238,232,.16);
+  --line-soft:rgba(243,238,232,.08);
+  --accent:#d05a60;
+  --blue:#7c76cc;
+  --text:#f3eee8;
+  --text-soft:#bfb7ae;
+  --muted:#867d75;
   --pad:clamp(20px,4vw,72px);
   --font:"Archivo","Arial Narrow","Helvetica Neue",Arial,sans-serif;
   --stretch:73%;
   --track:-.032em;
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
+html{ background:var(--bg); }
+body::after{
+  content:""; position:fixed; inset:-50%; z-index:50; pointer-events:none; opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:boil 1s steps(12) infinite;
+}
+@keyframes boil{
+  0%{ transform:translate(0,0); } 25%{ transform:translate(-7%,4%); } 50%{ transform:translate(5%,-6%); } 75%{ transform:translate(-3%,-8%); } 100%{ transform:translate(6%,5%); }
+}
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 body{
   min-height:100dvh;
   background:var(--bg);
@@ -63,11 +75,11 @@ b{ color:var(--text); font-weight:650; }
 .bar nav a{ color:var(--text-soft); }
 .bar nav a:hover{ color:var(--text); }
 .bar nav .pdf{
-  color:#fff; background:var(--accent); border-radius:999px; padding:9px 16px; font-weight:650;
+  color:#160a0a; background:var(--accent); border-radius:999px; padding:9px 16px; font-weight:650;
 }
-.bar nav .pdf:hover{ color:#fff; filter:brightness(1.08); }
+.bar nav .pdf:hover{ color:#160a0a; filter:brightness(1.08); }
 
-.sheet{ max-width:960px; margin:0 auto; padding:clamp(40px,7vw,88px) var(--pad) 96px; }
+.sheet{ max-width:960px; margin:0 auto; padding:clamp(40px,7vw,88px) var(--pad) 96px; overflow-x:clip; }
 
 .section-label{
   display:flex; align-items:center; gap:11px;
@@ -76,14 +88,8 @@ b{ color:var(--text); font-weight:650; }
 }
 .section-label::before{ content:""; flex:none; width:24px; height:2px; background:currentColor; }
 
-/* header */
-h1{
-  margin-top:18px;
-  font-size:clamp(52px,8vw,104px);
-  line-height:.92;
-  font-weight:790; font-stretch:var(--stretch);
-  letter-spacing:var(--track);
-}
+/* header: the name is hand-lettered by loose-type.js; the text stays for readers and print */
+.loose{ position:relative; display:block; width:100%; margin-top:18px; }
 .role{ margin-top:14px; font-size:clamp(19px,2.2vw,24px); font-weight:650; font-stretch:85%; color:var(--accent); }
 .contact{ margin-top:16px; display:flex; flex-wrap:wrap; gap:6px 18px; font-size:14px; color:var(--text-soft); }
 .summary{ margin-top:32px; max-width:62ch; font-size:17px; line-height:1.6; color:var(--text-soft); }
@@ -114,6 +120,7 @@ li::before{ content:""; position:absolute; left:0; top:.72em; width:12px; height
 .proj-name{ font-size:22px; line-height:1.1; font-weight:760; font-stretch:80%; letter-spacing:-.015em; }
 .proj-tag{ font-size:12px; color:var(--muted); }
 a.proj-tag{ color:var(--accent); }
+.code-voice .section-label,.code-voice a.proj-tag{ color:var(--blue); }
 .proj p{ margin-top:10px; font-size:15px; color:var(--text-soft); }
 .proj .stack{ margin-top:auto; padding-top:14px; font-size:12.5px; color:var(--muted); }
 
@@ -142,6 +149,9 @@ a.proj-tag{ color:var(--accent); }
   .bar, .foot{ display:none; }
   .sheet{ padding:0; max-width:none; }
   .proj{ border-color:var(--line); break-inside:avoid; }
+  body::after,.loose canvas{ display:none; }
+  .loose{ height:auto !important; }
+  .loose .sr{ position:static; width:auto; height:auto; clip:auto; font-size:30px; font-weight:800; }
 }
 </style>
 </head>
@@ -159,7 +169,7 @@ a.proj-tag{ color:var(--accent); }
 <main class="sheet">
 
   <p class="section-label">Résumé</p>
-  <h1>Aniket Shaw</h1>
+  <h1 class="loose" id="nameTitle"><span class="sr">Aniket Shaw</span></h1>
   <p class="role">AI Filmmaker &amp; Product Builder</p>
   <p class="contact">
     <span>Kolkata, India (IST)</span>
@@ -213,7 +223,7 @@ a.proj-tag{ color:var(--accent); }
     </div>
   </section>
 
-  <section>
+  <section class="code-voice">
     <p class="section-label">Selected projects</p>
     <div class="projects">
 
@@ -295,5 +305,9 @@ a.proj-tag{ color:var(--accent); }
   </footer>
 
 </main>
+<script src="assets/js/loose-type.js?v=20261025"></script>
+<script>
+  if(window.LooseType) window.LooseType.mount(document.getElementById("nameTitle"),[["ANIKET ","#F3EEE8"],["SHAW","#D05A60"]],{ max:120, lines:2 });
+</script>
 </body>
 </html>

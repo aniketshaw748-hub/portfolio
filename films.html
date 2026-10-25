@@ -3,42 +3,24 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Aniket Shaw | AI Filmmaker and Video Editor</title>
-<meta name="description" content="Films and edits by Aniket Shaw. AI cinema, music films, short-form editing, motion graphics and narrative work." />
+<title>Aniket Shaw | AI Films Written in Code</title>
+<meta name="description" content="Films by Aniket Shaw, written in code: hand-lettered kinetic type, low-poly 3D and code-built studies, plus edits cut by hand. Pick your poison." />
 <meta name="color-scheme" content="dark" />
-<link rel="canonical" href="https://aniket-portfolio.vercel.app/films" />
+<link rel="canonical" href="https://aniket748-portfolio.vercel.app/films" />
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 <link rel="preload" href="assets/fonts/Archivo-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="assets/posters/anotherone.webp" as="image" type="image/webp" fetchpriority="high" />
 
-<meta property="og:title" content="Aniket Shaw | AI Filmmaker and Video Editor" />
-<meta property="og:description" content="AI cinema, music films, short-form editing, motion graphics and narrative work." />
+<meta property="og:title" content="Aniket Shaw | AI Films Written in Code" />
+<meta property="og:description" content="Pick your poison: kinetic type, low-poly 3D and code-built studies, or edits cut by hand." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://aniket-portfolio.vercel.app/films" />
-<meta property="og:image" content="https://aniket-portfolio.vercel.app/assets/og-image.jpg" />
+<meta property="og:url" content="https://aniket748-portfolio.vercel.app/films" />
+<meta property="og:image" content="https://aniket748-portfolio.vercel.app/assets/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Aniket Shaw | AI Filmmaker and Video Editor" />
-<meta name="twitter:description" content="AI cinema, music films, short-form editing, motion graphics and narrative work." />
-<meta name="twitter:image" content="https://aniket-portfolio.vercel.app/assets/og-image.jpg" />
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Aniket Shaw",
-  "url": "https://aniket-portfolio.vercel.app/films",
-  "jobTitle": "AI Filmmaker and Video Editor",
-  "sameAs": [
-    "https://www.instagram.com/aniikettt_3/",
-    "https://www.linkedin.com/in/aniket-shaw-a10478368/",
-    "https://www.youtube.com/@KavyaanYT",
-    "https://github.com/aniketshaw748-hub"
-  ]
-}
-</script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 
 <style>
 @font-face{
@@ -52,1151 +34,441 @@
 
 /* ===========================================================================
    TOKENS
+   The palette of the Sit Still films: a black ground, bone ink and two voices.
+   Red speaks for the films, blue for the code.
    =========================================================================== */
 :root{
-  --bg:#0d0a09;
-  --bg-deep:#080706;
-  --surface:#171110;
-  --surface-2:#211714;
-  --line:rgba(243,238,231,.15);
-  --line-soft:rgba(243,238,231,.07);
-  --accent:#e44b2b;
-  --accent-deep:#b5321f;
-  --text:#f3eee7;
-  --text-soft:#c2b7ad;
-  --muted:#8d8079;
-
-  --nav-h:64px;
-  --pad:clamp(20px,4vw,72px);
-  --gap:clamp(16px,2.2vw,34px);
-  --plate:clamp(10px,1.5vw,26px);
-
+  --bg:#0a0908;
+  --bg-2:#110f0e;
+  --surface:#181514;
+  --line:rgba(243,238,232,.16);
+  --line-soft:rgba(243,238,232,.08);
+  --ink:#f3eee8;
+  --ink-soft:#bfb7ae;
+  --muted:#867d75;
+  --red:#d05a60;
+  --blue:#7c76cc;
   --font:"Archivo","Arial Narrow","Helvetica Neue",Arial,sans-serif;
-  --ease:cubic-bezier(.16,1,.3,1);
-  --ease-soft:cubic-bezier(.22,1,.36,1);
-
-  /* Display type stays condensed and tight, but not so tight that words merge. */
-  --fs-display:clamp(52px,7.6vw,128px);
-  --fs-h2:clamp(40px,5.4vw,98px);
-  --fs-h3:clamp(21px,2.4vw,40px);
-  --track:-.032em;
-  --stretch:73%;
-
-  --z-nav:20;
-  --z-index:50;
-  --z-viewer:70;
+  --cond:72%;
+  --pad:clamp(20px,4vw,72px);
+  --nav-h:64px;
+  --spring:cubic-bezier(.34,1.56,.64,1);   /* overshoots, then settles */
+  --out:cubic-bezier(.16,1,.3,1);
 }
-
-/* ===========================================================================
-   RESET / BASE
-   =========================================================================== */
 *{ box-sizing:border-box; margin:0; padding:0; }
-html{
-  scroll-behavior:smooth;
-  scroll-snap-type:y proximity;
-  scrollbar-gutter:stable;
-  -webkit-text-size-adjust:100%;
-  background:var(--bg);
-}
+html{ scroll-behavior:smooth; scrollbar-gutter:stable; background:var(--bg); }
 body{
   min-height:100dvh;
   overflow-x:hidden;
   background:var(--bg);
-  color:var(--text);
+  color:var(--ink);
   font-family:var(--font);
   font-size:16px;
-  line-height:1.45;
+  line-height:1.5;
   -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
 }
-body.viewer-open,body.index-open{ overflow:hidden; }
-main>section[id]{ scroll-margin-top:var(--nav-h); }
-button,a{ color:inherit; font:inherit; }
-button{ border:0; background:none; cursor:pointer; }
-a{ text-decoration:none; }
-img,svg{ display:block; max-width:100%; }
-::selection{ background:var(--accent); color:var(--bg-deep); }
-:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
-
-.skip-link{
-  position:fixed; left:18px; top:12px; z-index:100;
-  padding:11px 15px;
-  background:var(--accent); color:var(--bg-deep);
-  font-weight:700;
-  transform:translateY(-160%);
+body.reel-open,body.viewer-open{ overflow:hidden; }
+/* Grain that boils on twos, like the pencil films. It sits under the reel and
+   the player so it never dirties a film. */
+body::after{
+  content:""; position:fixed; inset:-50%; z-index:50; pointer-events:none;
+  opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:boil 1s steps(12) infinite;
 }
-.skip-link:focus{ transform:translateY(0); }
+@keyframes boil{
+  0%{ transform:translate(0,0); } 25%{ transform:translate(-7%,4%); } 50%{ transform:translate(5%,-6%); } 75%{ transform:translate(-3%,-8%); } 100%{ transform:translate(6%,5%); }
+}
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+img{ display:block; max-width:100%; }
+:focus-visible{ outline:2px solid var(--red); outline-offset:3px; }
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.skip{ position:fixed; left:12px; top:10px; z-index:300; transform:translateY(-200%); padding:8px 12px; border-radius:4px; background:var(--ink); color:var(--bg); font-size:13px; font-weight:650; }
+.skip:focus{ transform:none; }
 
-.section-label{
+.label{
   display:flex; align-items:center; gap:11px;
-  color:var(--accent);
+  color:var(--red);
   font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
 }
-.section-label::before{ content:""; flex:none; width:24px; height:2px; background:currentColor; }
+.label::before{ content:""; flex:none; width:24px; height:2px; background:currentColor; }
+/* Hand-lettered headings: the canvas is drawn by loose-type.js, the text stays for readers. */
+.loose{ position:relative; display:block; width:100%; }
 
-.display{
-  font-size:var(--fs-h2);
-  font-weight:790; font-stretch:var(--stretch);
-  letter-spacing:var(--track);
-  line-height:.9;
-  text-wrap:balance;
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:13px 20px;
+  border:1px solid var(--line); border-radius:999px;
+  font-size:13px; font-weight:680;
+  transition:transform .5s var(--spring),background .25s ease,border-color .25s ease;
 }
-
-/* Shared play affordance: learned once, recognised on every clickable film. */
-.play-glyph{
-  display:grid; place-items:center;
-  width:clamp(42px,3.4vw,58px); aspect-ratio:1;
-  border:1.5px solid rgba(243,238,231,.55);
-  border-radius:50%;
-  background:rgba(8,7,6,.62);
-  color:var(--text);
-  opacity:0;
-  transform:scale(.8);
-  transition:opacity .3s ease,transform .44s var(--ease),background .22s ease,border-color .22s ease;
-}
-.play-glyph svg{ width:36%; margin-left:9%; fill:currentColor; }
+.btn:hover{ transform:translateY(-3px); border-color:var(--ink-soft); }
+.btn svg{ width:10px; fill:currentColor; }
+.btn-red{ background:var(--red); border-color:var(--red); color:#160a0a; }
+.btn-red:hover{ border-color:var(--red); background:#dc6b70; }
 
 /* ===========================================================================
    NAV
    =========================================================================== */
-.site-nav{
-  position:fixed; inset:0 0 auto; z-index:var(--z-nav);
-  height:var(--nav-h);
-  padding-inline:var(--pad);
+.nav{
+  position:fixed; inset:0 0 auto; z-index:30;
+  height:var(--nav-h); padding:0 var(--pad);
   display:flex; align-items:center; justify-content:space-between; gap:20px;
-  color:var(--text);
-  transition:color .4s ease;
+  background:linear-gradient(180deg,rgba(10,9,8,.94),rgba(10,9,8,0));
 }
-.site-nav::before{
-  content:""; position:absolute; inset:0; z-index:-1;
-  background:linear-gradient(180deg,rgba(8,7,6,.9),rgba(8,7,6,.42) 68%,transparent);
-  transition:opacity .4s ease;
-}
-/* Over the orange contact block the dark scrim reads as grime — invert it. */
-.site-nav.on-accent{ color:var(--bg-deep); }
-.site-nav.on-accent::before{ opacity:0; }
-.site-nav.on-accent .nav-link{ color:rgba(8,7,6,.66); }
-.site-nav.on-accent .nav-link:hover,
-.site-nav.on-accent .nav-link.is-active{ color:var(--bg-deep); }
-.site-nav.on-accent .index-trigger{ border-color:var(--bg-deep); }
-.site-nav.on-accent .scroll-progress{ background:rgba(8,7,6,.2); }
-.site-nav.on-accent .scroll-progress i{ background:var(--bg-deep); }
-
 .wordmark{ flex:none; font-size:13px; font-weight:790; font-stretch:112%; letter-spacing:-.02em; }
 .wordmark span{ opacity:.55; font-weight:400; font-stretch:90%; }
-
-.nav-set{
-  display:flex; align-items:center; gap:clamp(13px,2vw,32px);
-  font-size:12px; font-weight:560;
-}
-.nav-link{ position:relative; padding-block:6px; color:var(--text-soft); transition:color .2s ease; }
-.nav-link::after{
-  content:""; position:absolute; left:0; right:0; bottom:0;
-  height:1.5px; background:currentColor;
-  transform:scaleX(0); transform-origin:left;
-  transition:transform .4s var(--ease);
-}
-.nav-link:hover{ color:var(--text); }
-.nav-link:hover::after,.nav-link.is-active::after{ transform:scaleX(1); }
-.nav-link.is-active{ color:var(--text); }
-
-.index-trigger{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:7px 0 5px;
-  border-bottom:2px solid var(--accent);
-  white-space:nowrap;
-  transition:transform .24s var(--ease),border-color .3s ease;
-}
-.index-trigger span{ opacity:.6; font-variant-numeric:tabular-nums; }
-.index-trigger:hover{ transform:translateY(-2px); }
-.index-trigger:active{ transform:translateY(0); }
-
-/* Orientation: how far through the page you are. */
-.scroll-progress{ position:absolute; left:0; right:0; bottom:0; height:2px; background:rgba(243,238,231,.12); }
-.scroll-progress i{ display:block; height:100%; background:var(--accent); transform:scaleX(var(--progress,0)); transform-origin:left; }
+.nav-links{ display:flex; align-items:center; gap:clamp(14px,2vw,30px); font-size:12px; font-weight:580; }
+.nav-links a{ color:var(--ink-soft); transition:color .2s ease; }
+.nav-links a:hover{ color:var(--ink); }
+.nav-links .cta{ padding:8px 14px; border-radius:999px; background:var(--ink); color:var(--bg); font-weight:680; transition:transform .5s var(--spring); }
+.nav-links .cta:hover{ color:var(--bg); transform:translateY(-2px); }
 
 /* ===========================================================================
-   INTRO DECK
-   The opening card. Dragging it right deals it away and turns up About — the
-   page has already jumped there behind the card, so what gets revealed is the
-   real section rather than a copy of it.
+   PICK YOUR POISON
+   Tilted panels on black, like the comic collages in the Bunk-o-Meter film:
+   big doors for the films written in code, a smaller row for the work cut by
+   hand. The panel under the cursor straightens and lifts; the others fall out
+   of focus, so there is only ever one subject.
    =========================================================================== */
-.intro{
+/* The lettering canvases bleed past their box so overshoot is never cut off;
+   clipping sideways keeps that from widening the page on phones. */
+.pick,.section{ overflow-x:clip; }
+.pick{
   position:relative;
-  height:100dvh;
-  overflow:hidden;
-  scroll-snap-align:start;
-  scroll-snap-stop:always;
-  background:var(--bg-deep);
+  min-height:100dvh;
+  display:flex; flex-direction:column;
+  padding:calc(var(--nav-h) + clamp(12px,3vh,40px)) var(--pad) clamp(18px,3vh,34px);
 }
-
-.intro-card{
-  position:absolute; inset:0; z-index:1;
-  display:flex; flex-direction:column; justify-content:center;
-  padding:calc(var(--nav-h) + clamp(28px,5vh,64px)) var(--pad) clamp(26px,4vh,54px);
-  /* Opaque, so the card genuinely covers About until it has left. */
-  background:
-    radial-gradient(110% 80% at 18% 12%,rgba(72,30,20,.55),transparent 60%),
-    radial-gradient(90% 70% at 88% 88%,rgba(130,40,24,.24),transparent 64%),
-    var(--bg-deep);
-  touch-action:pan-y;              /* vertical scrolling stays native */
-  cursor:grab;
-  user-select:none;
-}
-.intro-card.is-dragging{ cursor:grabbing; }
-/* Promoted to fixed for the deal, so the scroll jump behind it is unseen.
-   Layers are raised here, one frame before anything moves, rather than at the
-   moment the flight starts. */
-.intro-card.is-flying{ position:fixed; inset:0; z-index:60; will-change:transform; }
-.intro-card.is-flying [data-cast],
-.intro-card.is-flying .cast-word{ will-change:transform,opacity; }
-.intro-card.is-gone{
-  transform:translate3d(130vw,0,0) rotate(13deg) !important;
-  transition:transform .5s cubic-bezier(.4,0,.2,1) .16s;
-}
-/* Each piece leaves on its own beat, ahead of the surface carrying it. */
-.cast-word{ display:inline-block; }
-.intro-card.is-gone [data-cast],
-.intro-card.is-gone .cast-word{
-  animation:castOff .44s cubic-bezier(.4,0,.2,1) both;
-  animation-delay:calc(var(--i,0) * 26ms);
-}
-@keyframes castOff{
-  to{ transform:translate3d(58vw,0,0) rotate(4deg); opacity:0; }
-}
-.intro-card.is-springing{ transition:transform .5s var(--ease); }
-.intro-card.no-anim{ transition:none !important; }
-/* Snapping must not drag the scroller off About while the card resettles. */
-html.is-dealing{ scroll-snap-type:none; }
-
-/* The copy is selectable and does not start a drag — only the open areas of
-   the card do. */
-.intro-inner{ max-width:1780px; width:100%; margin-inline:auto; cursor:auto; user-select:text; }
-.intro-hook{
-  max-width:16ch;
-  margin-top:clamp(18px,2.4vw,32px);
-  font-size:var(--fs-display);
-  font-weight:800; font-stretch:var(--stretch);
-  letter-spacing:var(--track);
-  line-height:.88;
-  text-wrap:balance;
-}
-.intro-blurb{
-  max-width:46ch;
-  margin-top:clamp(22px,2.6vw,36px);
-  color:var(--text-soft);
-  font-size:clamp(15px,1.32vw,21px); line-height:1.55;
-}
-.intro-meta{ margin-top:clamp(18px,2vw,26px); color:var(--muted); font-size:12px; letter-spacing:.02em; }
-
-.intro-actions{
-  max-width:1780px; width:100%; margin:auto auto 0;
-  padding-top:clamp(30px,5vh,60px);
-  display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
-}
-.intro-action{
-  display:flex; align-items:center; gap:14px;
-  color:var(--text-soft);
+.pick-head,.doors,.pick-foot{ width:100%; max-width:1500px; margin-inline:auto; }
+.pick-head .loose{ margin-top:clamp(14px,2.4vh,28px); }
+.doors{ flex:1; display:flex; flex-direction:column; margin-top:clamp(18px,3.4vh,40px); }
+.tier{ display:flex; align-items:center; gap:10px; margin-bottom:12px; color:var(--muted); font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+.tier b{ color:var(--red); font-weight:700; }
+.poisons{ display:grid; gap:clamp(12px,1.7vw,28px); }
+.poisons.code{ flex:1; min-height:220px; max-height:480px; grid-template-columns:repeat(3,minmax(0,1fr)); }
+.hand-row{ margin-top:clamp(16px,2.6vh,30px); }
+.poisons.hand{ height:clamp(78px,11vh,112px); grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(10px,1.2vw,18px); }
+.poison{
+  --tilt:0deg; --ty:0px;
+  position:relative; overflow:hidden; isolation:isolate;
+  display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-start;
+  padding:clamp(14px,1.4vw,22px);
+  border:2px solid rgba(243,238,232,.86); border-radius:5px;
+  background:var(--surface);
   text-align:left;
-  transition:color .2s ease,transform .3s var(--ease);
+  box-shadow:0 22px 60px rgba(0,0,0,.5);
+  transform:translateY(var(--ty)) rotate(var(--tilt));
+  transition:transform .65s var(--spring),opacity .45s ease,filter .45s ease,border-color .3s ease;
 }
-.intro-action:hover{ color:var(--text); }
-.act-up:hover{ transform:translateY(-4px); }
-.act-right:hover{ transform:translateX(5px); }
-.intro-action:active{ transform:scale(.98); }
-.act-icon{
-  display:grid; place-items:center;
-  width:46px; aspect-ratio:1; flex:none;
-  border:1px solid var(--line);
-  border-radius:50%;
+.code .poison:nth-child(1){ --tilt:-2.2deg; --ty:4px; }
+.code .poison:nth-child(2){ --tilt:1.5deg; --ty:16px; }
+.code .poison:nth-child(3){ --tilt:-1.3deg; --ty:-2px; }
+.hand .poison:nth-child(odd){ --tilt:-.9deg; }
+.hand .poison:nth-child(even){ --tilt:.8deg; --ty:4px; }
+.poison:hover,.poison:focus-visible{ z-index:2; border-color:var(--red); transform:translateY(-10px) rotate(0deg) scale(1.035); }
+.doors:hover .poison:not(:hover),
+.doors:has(.poison:focus-visible) .poison:not(:focus-visible){ opacity:.45; filter:saturate(.45) blur(1.5px); }
+/* The hand-cut row is the quieter tier: smaller, lower contrast until picked. */
+.hand .poison{ justify-content:center; padding:10px 14px; border-width:1.5px; border-color:rgba(243,238,232,.5); box-shadow:0 12px 30px rgba(0,0,0,.45); }
+.hand .poison::after{ background:linear-gradient(90deg,rgba(10,9,8,.92) 20%,rgba(10,9,8,.45)); }
+.hand .poison-name{ font-size:clamp(18px,1.6vw,26px); }
+.hand .poison-num{ display:none; }
+.hand .poison-count{ top:50%; transform:translateY(-50%); }
+.hand .poison-line,.hand .poison-go{ display:none; }
+.poison-media{ position:absolute; inset:0; z-index:-2; overflow:hidden; }
+.poison-media img{ width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--out); }
+.poison:hover .poison-media img{ transform:scale(1.07); }
+.poison::after{
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  /* Deep enough at the foot that a poster's own captions never sit under the name. */
+  background:linear-gradient(0deg,rgba(10,9,8,.97) 0%,rgba(10,9,8,.9) 30%,rgba(10,9,8,.35) 62%,rgba(10,9,8,.1));
 }
-.act-icon svg{ width:14px; fill:currentColor; }
-.act-right .act-icon{ border-color:var(--accent); background:var(--accent); color:var(--bg-deep); }
-.act-text{ display:flex; flex-direction:column; gap:3px; }
-.act-text b{ font-size:13px; font-weight:700; letter-spacing:.02em; color:var(--text); }
-.act-text i{ font-style:normal; font-size:11px; letter-spacing:.13em; text-transform:uppercase; opacity:.62; }
-.act-right .act-text{ align-items:flex-end; text-align:right; }
-.on-pointer{ display:none; }
-@media(hover:hover) and (pointer:fine){
-  .on-touch{ display:none; }
-  .on-pointer{ display:inline; }
-  .act-up .act-icon svg{ transform:rotate(180deg); }
+.poison-num,.poison-count{
+  position:absolute; top:12px;
+  padding:4px 8px 3px; border-radius:999px;
+  background:rgba(10,9,8,.72);
+  font-size:11px; letter-spacing:.1em;
 }
+.poison-num{ left:12px; color:var(--red); font-weight:760; }
+.poison-count{ right:12px; color:var(--ink-soft); font-weight:650; text-transform:uppercase; }
+.poison-name{ font-size:clamp(26px,2.7vw,48px); font-weight:820; font-stretch:var(--cond); letter-spacing:-.035em; line-height:.92; }
+.poison-line{ margin-top:9px; max-width:30ch; font-size:13px; line-height:1.4; color:var(--ink-soft); }
+.poison-go{
+  margin-top:12px;
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--red); font-size:11px; font-weight:740; letter-spacing:.14em; text-transform:uppercase;
+  opacity:0; transform:translateX(-8px);
+  transition:opacity .25s ease,transform .55s var(--spring);
+}
+.poison:hover .poison-go,.poison:focus-visible .poison-go{ opacity:1; transform:none; }
 
-/* Fades in with the drag, the way a stamp does on a swipe card. */
-.intro-stamp{
-  position:absolute; z-index:3;
-  left:clamp(20px,5vw,84px); top:calc(var(--nav-h) + clamp(20px,5vh,64px));
-  padding:9px 16px 8px;
-  border:3px solid var(--accent);
-  color:var(--accent);
-  font-size:clamp(15px,1.8vw,26px); font-weight:820; font-stretch:80%;
-  letter-spacing:.08em; text-transform:uppercase;
-  transform:rotate(-13deg);
-  opacity:var(--drag,0);
-  pointer-events:none;
-}
+/* A muted preview is mounted here and only shown once it is really playing,
+   so a buffering black frame never replaces the poster. */
+.vid{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.vid iframe{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:0; opacity:0; transition:opacity .5s ease; }
+.vid video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .5s ease; }
+.vid.is-playing iframe,.vid.is-playing video{ opacity:1; }
 
-/* The revealed section springs forward like the next card in the deck. */
-/* Reveal transitions would all run against the flight; the deal shows the
-   section outright and lets dealIn carry the entrance instead. */
-.about.is-dealt .reveal{ transition:none; }
-.about.is-dealt .about-inner,
-.about.is-dealt .craft{ animation:dealIn .5s var(--ease-soft) .2s both; }
-.about.is-dealt .craft{ animation-delay:.26s; }
-@keyframes dealIn{
-  from{ opacity:0; transform:translate3d(0,26px,0) scale(.99); }
-  to{ opacity:1; transform:none; }
+.pick-foot{
+  margin-top:clamp(24px,3.4vh,40px);
+  display:flex; align-items:center; justify-content:space-between; gap:12px 24px; flex-wrap:wrap;
+  font-size:12px; color:var(--muted);
 }
-
-@media(max-width:760px){
-  .intro-card{ padding:calc(var(--nav-h) + 24px) var(--pad) 26px; }
-  .intro-hook{ max-width:12ch; font-size:clamp(44px,13vw,72px); }
-  .intro-blurb{ font-size:15px; }
-  .intro-actions{ flex-direction:column; align-items:stretch; gap:16px; padding-top:30px; }
-  .act-right{ flex-direction:row-reverse; justify-content:flex-start; }
-  .act-right .act-text{ align-items:flex-start; text-align:left; }
-  .intro-stamp{ left:var(--pad); }
-}
+.scroll-cue{ display:inline-flex; align-items:center; gap:10px; color:var(--ink-soft); font-weight:620; }
+.scroll-cue i{ font-style:normal; display:inline-block; animation:nudge 1.6s var(--spring) infinite; }
+@keyframes nudge{ 0%,55%,100%{ transform:none; } 70%{ transform:translateY(5px); } }
 
 /* ===========================================================================
-   CINEMA STACK
-   Chapters pin to the top and are covered by the next one. Every chapter is
-   fully opaque, so two films never bleed through one another; the outgoing
-   chapter recedes (scale + dim) instead of cross-dissolving.
+   THE REEL
+   Opening a style is one continuous move: the panel grows to fill the screen
+   while its poster shrinks into the first film's frame. No fade, no reset.
    =========================================================================== */
-.cinema-stack{ position:relative; z-index:1; background:var(--bg); }
-
-.film-chapter{
-  position:sticky; top:0;
-  /* One film per screen, one film per flick — the reel cadence. */
-  scroll-snap-align:start;
-  scroll-snap-stop:always;
-  z-index:var(--scene,1);
-  height:100dvh;
-  overflow:hidden;
-  isolation:isolate;
-  background:var(--bg-deep);
+.reel{ position:fixed; inset:0; z-index:60; visibility:hidden; background:var(--bg); transform-origin:50% 50%; }
+.reel.open{ visibility:visible; }
+.reel-feed{ position:absolute; inset:0; overflow-y:auto; overscroll-behavior:contain; scroll-snap-type:y mandatory; scrollbar-width:none; }
+.reel-feed::-webkit-scrollbar{ display:none; }
+.reel-bar{
+  position:absolute; z-index:4; inset:0 0 auto;
+  height:var(--nav-h); padding:0 var(--pad);
+  display:flex; align-items:center; gap:24px;
+  background:linear-gradient(180deg,rgba(10,9,8,.88),rgba(10,9,8,0));
+  opacity:0; transform:translateY(-16px);
+  transition:opacity .3s ease,transform .6s var(--spring);
 }
-.chapter-bg{
-  position:absolute; inset:0; z-index:0;
-  background:
-    radial-gradient(120% 88% at 22% 24%,rgba(60,26,18,.5),transparent 62%),
-    radial-gradient(90% 70% at 84% 82%,rgba(120,38,22,.22),transparent 66%),
-    var(--bg-deep);
-}
+.reel.settled .reel-bar{ opacity:1; transform:none; }
+.reel-name{ flex:none; color:var(--red); font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+.reel-tabs{ flex:1; min-width:0; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+.reel-tabs::-webkit-scrollbar{ display:none; }
+.reel-tab{ flex:none; padding:7px 12px; border:1px solid transparent; border-radius:999px; color:var(--ink-soft); font-size:12px; font-weight:640; transition:color .2s ease,border-color .2s ease; }
+.reel-tab b{ margin-left:5px; font-size:10px; font-weight:640; opacity:.6; }
+.reel-gap{ flex:none; width:1px; margin:6px 8px; background:var(--line); }
+.reel-tab:hover{ color:var(--ink); }
+.reel-tab[aria-pressed="true"]{ color:var(--ink); border-color:var(--line); background:rgba(243,238,232,.06); }
+.reel-close{ flex:none; padding:8px 0 5px; border-bottom:2px solid currentColor; font-size:13px; font-weight:680; }
+.reel-close:hover{ color:var(--red); }
 
-.chapter-stage{
+.slide{ position:relative; height:100%; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; }
+.slide-bg{
+  position:absolute; inset:-60px; width:calc(100% + 120px); height:calc(100% + 120px); max-width:none;
+  object-fit:cover; filter:blur(30px) brightness(.3) saturate(1.2);
+}
+.slide-body{
   position:relative; z-index:1;
-  height:100%;
-  padding:calc(var(--nav-h) + clamp(16px,2.2vw,38px)) var(--pad) clamp(26px,4vh,54px);
-  /* --exit comes from JS: 0 while the chapter owns the screen, 1 once covered. */
-  transform:translate3d(0,calc(var(--exit,0) * -4%),0) scale(calc(1 - .07 * var(--exit,0)));
+  height:100%; max-width:1500px; margin:0 auto;
+  display:grid; grid-template-columns:minmax(0,1.7fr) minmax(250px,1fr); align-items:center; gap:clamp(24px,4vw,64px);
+  padding:calc(var(--nav-h) + 16px) var(--pad) 40px;
 }
-.film-chapter::after{
-  content:""; position:absolute; inset:0; z-index:9;
-  pointer-events:none;
-  background:var(--bg-deep);
-  opacity:calc(var(--exit,0) * .62);
+.slide.is-portrait .slide-body,.slide.is-square .slide-body{ grid-template-columns:auto minmax(250px,420px); justify-content:center; }
+.slide-frame{
+  position:relative; overflow:hidden; justify-self:center;
+  width:min(100%,calc((100dvh - 150px) * 16 / 9)); aspect-ratio:16/9;
+  border-radius:6px; background:#000;
+  /* A faint edge, so a film shot on black still reads as a frame on the black reel. */
+  box-shadow:0 0 0 1px var(--line-soft),0 40px 90px rgba(0,0,0,.55);
+  transform-origin:0 0;
+  cursor:pointer;
 }
-
-/* One grid for every chapter. Variants change only which columns the frame
-   and caption occupy, so nothing can drift out of alignment at any width. */
-.chapter-grid{
-  height:100%;
-  max-width:1780px;
-  margin-inline:auto;
-  display:grid;
-  grid-template-columns:repeat(12,minmax(0,1fr));
-  grid-template-rows:minmax(0,1fr);
-  align-items:center;
-  gap:0 var(--gap);
-}
-
-.film-frame{
-  position:relative;
-  grid-row:1;
-  max-height:100%;
-  overflow:hidden;
-  background:var(--surface);
-  box-shadow:var(--plate-x,var(--plate)) var(--plate) 0 0 var(--accent),0 40px 110px rgba(12,3,2,.6);
-  transform:translate3d(0,calc((1 - var(--enter,1)) * 34px),0);
-}
-.film-frame img{
-  width:100%; height:100%; object-fit:cover;
-  transform:scale(calc(1.07 - .07 * var(--enter,1)));
-  backface-visibility:hidden;
-}
-.frame-fill{ display:none; }
-.frame-no{
-  position:absolute; z-index:3; left:13px; top:11px;
-  font-size:11px; font-weight:700; letter-spacing:.14em;
-  font-variant-numeric:tabular-nums;
-  text-shadow:0 2px 12px rgba(0,0,0,.75);
-  opacity:.82;
-}
-
-.film-copy{
-  position:relative; z-index:2;
-  grid-row:1; align-self:center;
-  display:flex; flex-direction:column; align-items:flex-start; gap:clamp(13px,1.5vw,24px);
-  opacity:var(--copy-in,1);
-  transform:translate3d(0,calc((1 - var(--copy-in,1)) * 30px),0);
-}
-.film-kind{ color:var(--accent); font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
-.film-title{
-  font-size:var(--fs-h2);
-  font-weight:790; font-stretch:var(--stretch);
-  letter-spacing:var(--track);
-  line-height:.88;
-  text-wrap:balance;
-  text-shadow:0 10px 44px rgba(0,0,0,.42);
-}
-.film-descriptor{ max-width:36ch; color:var(--text-soft); font-size:clamp(13px,1.05vw,16px); line-height:1.45; }
-
-.play-cta{
-  display:inline-flex; align-items:center; gap:11px;
-  padding:13px 22px 12px 16px;
-  background:var(--accent); color:var(--bg-deep);
-  font-size:13px; font-weight:760;
-  transition:transform .24s var(--ease),background .2s ease,box-shadow .3s ease;
-}
-.play-cta svg{ width:12px; fill:currentColor; }
-.play-cta:hover{ background:var(--text); transform:translateY(-2px); box-shadow:0 14px 34px rgba(0,0,0,.45); }
-.play-cta:active{ transform:translateY(0) scale(.985); }
-
-/* --- Variants: wide frames alternate side, portrait frames face their caption */
-.chapter-wide-left  .film-frame{ grid-column:1/9;  aspect-ratio:16/9; --plate-x:calc(var(--plate) * -1); }
-/* Side captions get their own step down the scale — display sizes overflow
-   a four-column measure. */
-.film-chapter .film-title{ font-size:clamp(28px,3.3vw,58px); max-width:13ch; }
-.chapter-wide-left  .film-copy { grid-column:9/13; }
-.chapter-wide-right .film-frame{ grid-column:5/13; aspect-ratio:16/9; }
-.chapter-wide-right .film-copy { grid-column:1/5; }
-.chapter-tall-left  .film-copy { grid-column:7/12; }
-.chapter-tall-right .film-copy { grid-column:2/7; }
-.chapter-tall-left  .film-frame{ grid-column:2/6; --plate-x:calc(var(--plate) * -1); }
-.chapter-tall-right .film-frame{ grid-column:8/12; }
-/* Portrait frames are height-led so they never overflow a short viewport. */
-.chapter-tall-left .film-frame,
-.chapter-tall-right .film-frame{ height:min(100%,70dvh); width:auto; aspect-ratio:9/16; justify-self:center; }
-
-
-
-/* --- Dwell preview -------------------------------------------------------
-   Rest on a film and it starts playing itself, muted, the way a thumbnail
-   does on YouTube mobile. The player is only revealed once it reports that
-   it is actually playing, so a buffering black frame never replaces the
-   poster.                                                                     */
-.frame-motion{
-  position:absolute; inset:0; z-index:2;
-  overflow:hidden;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .9s ease;
-}
-.frame-motion.is-playing{ opacity:1; }
-/* Full playback happens in the frame itself, so its controls must be usable. */
-.is-live .frame-motion{ pointer-events:auto; }
-.is-live .sound-toggle{ display:none; }
-.frame-motion iframe{ position:absolute; width:100%; height:100%; border:0; }
-/* Cover-fit the 16:9 stream inside frames that are not 16:9. */
-.chapter-tall-left .frame-motion iframe,
-.chapter-tall-right .frame-motion iframe{
-  left:50%; top:0;
-  width:auto; height:100%; aspect-ratio:16/9;
-  transform:translateX(-50%);
-}
-
-.sound-toggle{
-  position:absolute; z-index:5; right:12px; top:12px;
-  display:none; align-items:center; gap:8px;
-  padding:9px 14px 9px 11px;
-  border:1px solid rgba(243,238,231,.34);
-  border-radius:999px;
-  background:rgba(8,7,6,.66);
-  color:var(--text);
-  font-size:11px; font-weight:680; letter-spacing:.1em; text-transform:uppercase;
-  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s var(--ease);
-}
-.is-previewing .sound-toggle{ display:inline-flex; }
-.sound-toggle svg{ width:15px; fill:currentColor; }
-.sound-toggle:hover{ background:var(--accent); border-color:var(--accent); color:var(--bg-deep); }
-.sound-toggle:active{ transform:scale(.95); }
-/* While a preview runs the still is redundant — let the motion carry it. */
-.is-previewing .frame-no{ opacity:0; transition:opacity .4s ease; }
-
-/* Media states ------------------------------------------------------------- */
-.media-loader{
-  position:absolute; inset:0; z-index:4; pointer-events:none;
-  background:linear-gradient(100deg,var(--surface) 20%,#31201b 42%,var(--surface) 64%);
-  background-size:220% 100%;
-  transition:opacity .35s ease;
-}
-.media-ready>.media-loader,.media-failed>.media-loader{ opacity:0; }
-.media-error{
-  position:absolute; inset:0; z-index:5;
-  display:none; place-items:center;
-  padding:24px;
-  background:var(--surface); color:var(--text-soft);
-  font-size:13px; text-align:center;
-}
-.media-failed>.media-error{ display:grid; }
-
-/* ===========================================================================
-   SHARED SECTION SHELL
-   =========================================================================== */
-.band{ position:relative; z-index:16; padding:clamp(84px,10vw,164px) var(--pad) clamp(92px,11vw,180px); }
-.band-dark{ background:#100c0a; box-shadow:0 -30px 90px rgba(14,4,2,.7); }
-.band-deep{ background:var(--bg-deep); }
-.band-head{
-  max-width:1780px; margin:0 auto clamp(44px,5.5vw,84px);
-  display:grid; grid-template-columns:minmax(0,1fr) auto;
-  align-items:end; gap:clamp(20px,3vw,48px);
-}
-.band-head h2{ max-width:15ch; margin-top:20px; }
-.band-head p{ max-width:44ch; margin-top:18px; color:var(--text-soft); font-size:clamp(14px,1.2vw,18px); line-height:1.55; }
-.band-count{ color:var(--muted); font-size:12px; font-weight:640; letter-spacing:.14em; font-variant-numeric:tabular-nums; white-space:nowrap; }
-
-/* Reusable film card: one hover language for the rail and the wide grid. */
-.film-card{ display:block; width:100%; color:var(--text); text-align:left; }
-.card-frame{ position:relative; overflow:hidden; background:var(--surface); }
-.card-frame img{ width:100%; height:100%; object-fit:cover; transform:scale(1.03); transition:transform 1s var(--ease-soft),filter .45s ease; }
-.card-glyph{ position:absolute; z-index:3; left:50%; top:50%; transform:translate(-50%,-50%) scale(.8); }
-.film-card:hover .card-frame img,
-.film-card:focus-visible .card-frame img{ transform:scale(1.09); filter:saturate(1.06) brightness(.72); }
-.film-card:hover .play-glyph,
-.film-card:focus-visible .play-glyph{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-.film-card:hover .play-glyph{ background:var(--accent); border-color:var(--accent); color:var(--bg-deep); }
-.film-card:active .card-frame{ transform:scale(.99); }
-.card-frame{ transition:transform .2s var(--ease); }
-.card-meta{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding-top:14px; }
-.card-title{
-  font-size:var(--fs-h3);
-  font-weight:730; font-stretch:76%; letter-spacing:-.032em; line-height:1;
-  text-wrap:balance;
-}
-.card-kind{ flex:none; color:var(--muted); font-size:11px; font-weight:640; letter-spacing:.12em; text-transform:uppercase; }
-
-/* ===========================================================================
-   VERTICAL WALL
-   The expanding accordion is the section's signature: panels share the width
-   and the hovered one takes the room. Titles stay legible at rest because the
-   resting width is floored, and on touch it becomes a snap rail instead.
-   =========================================================================== */
-.rail-section{ padding-inline:0; }
-.rail-section .band-head{ padding-inline:var(--pad); }
-.rail{
-  display:flex; gap:6px;
-  height:min(76dvh,820px);
-  padding-inline:var(--pad);
-  overflow:hidden;
-}
-.cut-item{
-  position:relative;
-  flex:1 1 0; min-width:0;
-  overflow:hidden;
-  background:var(--surface);
-  color:var(--text); text-align:left;
-  transition:flex-grow .82s var(--ease-soft),transform .24s var(--ease);
-}
-.cut-item:first-child{ flex-grow:1.9; }
-.rail:has(.cut-item:hover) .cut-item:first-child,
-.rail:has(.cut-item:focus-visible) .cut-item:first-child{ flex-grow:1; }
-.cut-item:hover,.cut-item:focus-visible{ flex-grow:3.6; }
-.cut-item:active{ transform:scale(.993); }
-.cut-item img{
-  width:100%; height:100%; object-fit:cover;
-  transform:scale(1.04);
-  transition:transform .9s var(--ease-soft),filter .5s ease;
-}
-.cut-item:hover img,.cut-item:focus-visible img{ transform:scale(1); filter:saturate(1.06); }
-.cut-item::after{
-  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
-  background:linear-gradient(0deg,rgba(7,5,4,.95),rgba(7,5,4,.24) 42%,transparent 62%);
-}
-.cut-info{
-  position:absolute; z-index:6; left:16px; right:16px; bottom:17px;
-  transform:translateY(6px);
-  transition:transform .66s var(--ease-soft);
-}
-.cut-item:hover .cut-info,.cut-item:focus-visible .cut-info{ transform:none; }
-.cut-title{
-  display:block;
-  font-size:clamp(17px,1.9vw,32px);
-  font-weight:730; font-stretch:78%; letter-spacing:-.032em; line-height:1;
-  transform-origin:left bottom;
-  transition:transform .7s var(--ease-soft),opacity .4s ease;
-}
-.cut-kind{
-  display:block; margin-top:8px;
-  color:var(--text-soft);
-  font-size:10px; font-weight:640; letter-spacing:.12em; text-transform:uppercase;
-  transition:opacity .45s ease,transform .6s var(--ease-soft);
-}
-.cut-item:not(:hover):not(:focus-visible) .cut-title{ transform:scale(.78); opacity:.9; }
-.cut-item:not(:hover):not(:focus-visible) .cut-kind{ opacity:.55; transform:translateY(4px); }
-.cut-item .play-glyph{ position:absolute; z-index:6; left:50%; top:50%; transform:translate(-50%,-50%) scale(.8); }
-.cut-item:hover .play-glyph,.cut-item:focus-visible .play-glyph{
-  opacity:1; transform:translate(-50%,-50%) scale(1);
-  background:var(--accent); border-color:var(--accent); color:var(--bg-deep);
-}
-
-/* ===========================================================================
-   WIDE GRID
-   Plain two-column grid with a staggered second column. No negative margins,
-   so captions can never collide with the next frame.
-   =========================================================================== */
-.wide-stage{
-  max-width:1780px; margin-inline:auto;
-  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:clamp(48px,6vw,110px) clamp(22px,3vw,54px);
-}
-.wide-stage .card-frame{ aspect-ratio:16/9; }
-.wide-stage .film-card:nth-child(even){ margin-top:clamp(34px,7vw,120px); }
-
-/* ===========================================================================
-   ABOUT
-   Rebuilt as a call sheet: a stat strip, prose set at reading size, a
-   full-bleed still strip and the craft table. Every element is grid-placed,
-   so nothing floats free the way the old collage did.
-   =========================================================================== */
-.about{ position:relative; z-index:17; scroll-snap-align:start; background:#0f0b09; padding-block:clamp(84px,10vw,168px) 0; }
-.about-inner{ max-width:1780px; margin-inline:auto; padding-inline:var(--pad); }
-.about-top{
-  display:grid;
-  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
-  align-items:start;
-  gap:clamp(34px,5vw,96px);
-}
-.bio-lead{
-  max-width:14ch;
-  margin-top:22px;
-  font-size:var(--fs-h2);
-  font-weight:720; font-stretch:75%;
-  letter-spacing:var(--track);
-  line-height:.92;
-  text-wrap:balance;
-}
-.bio-lead em{ color:var(--accent); font-style:normal; }
-.bio{ padding-top:clamp(8px,1.4vw,26px); }
-.bio p{ max-width:54ch; color:var(--text-soft); font-size:clamp(15px,1.22vw,19px); line-height:1.62; }
-.bio p+p{ margin-top:17px; }
-.bio p.bio-meta{ margin-top:26px; color:var(--muted); font-size:12px; letter-spacing:.02em; }
-
-.about-stats{
-  margin-top:clamp(48px,6vw,92px);
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  border-top:1px solid var(--line);
-}
-.about-stats div{ padding:22px 22px 24px 0; border-bottom:1px solid var(--line-soft); }
-.about-stats dt{
-  font-size:clamp(26px,3vw,50px); font-weight:740; font-stretch:74%;
-  letter-spacing:-.036em; line-height:1;
-  color:var(--text);
-}
-.about-stats dd{ margin-top:8px; color:var(--muted); font-size:11px; font-weight:640; letter-spacing:.14em; text-transform:uppercase; }
-
-
-.craft{ max-width:1780px; margin:clamp(56px,7vw,110px) auto 0; padding:0 var(--pad) clamp(92px,11vw,180px); }
-.craft dl{ border-top:2px solid var(--accent); }
-.craft div{
-  display:grid; grid-template-columns:minmax(160px,.24fr) minmax(0,1fr);
-  gap:28px; align-items:baseline;
-  padding:20px 0 22px;
-  border-bottom:1px solid rgba(228,75,43,.24);
-}
-.craft dt{ color:var(--accent); font-size:clamp(19px,1.9vw,32px); font-weight:730; font-stretch:75%; letter-spacing:-.032em; }
-.craft dd{ max-width:74ch; color:var(--text-soft); font-size:clamp(14px,1.2vw,17px); line-height:1.6; }
-
-/* ===========================================================================
-   CONTACT / FOOTER
-   =========================================================================== */
-.contact{
-  position:relative; z-index:17;
-  min-height:82dvh;
-  padding:clamp(92px,11vw,168px) var(--pad) clamp(56px,7vw,104px);
-  display:flex; flex-direction:column; justify-content:space-between; gap:60px;
-  background:var(--accent); color:var(--bg-deep);
-}
-.contact-top{ max-width:1780px; width:100%; margin-inline:auto; }
-.contact .section-label{ color:rgba(8,7,6,.7); }
-.contact-body h2{
-  max-width:13ch; margin-top:24px;
-  font-size:clamp(50px,7.8vw,136px);
-  font-weight:830; font-stretch:68%;
-  letter-spacing:-.04em; line-height:.86;
-  text-wrap:balance;
-}
-.contact-actions{ margin-top:clamp(42px,6vw,80px); display:flex; flex-wrap:wrap; align-items:baseline; gap:18px 36px; }
-.contact-actions a{
-  position:relative; padding-bottom:5px;
-  border-bottom:2px solid currentColor;
-  font-weight:660;
-  transition:opacity .2s ease,transform .24s var(--ease);
-}
-.contact-actions a:first-child{ font-size:clamp(18px,2vw,30px); }
-.contact-actions a:hover{ opacity:.64; transform:translateY(-2px); }
-.contact-bottom{ max-width:1780px; width:100%; margin-inline:auto; display:flex; align-items:flex-end; justify-content:space-between; gap:30px; }
-.social-links{ display:flex; flex-wrap:wrap; gap:16px 28px; font-size:13px; font-weight:640; }
-.social-links a{ transition:opacity .2s ease; }
-.social-links a:hover{ opacity:.6; }
-.contact-mark{ max-width:22ch; font-size:12px; text-align:right; opacity:.78; }
-
-.footer{
-  position:relative; z-index:17;
-  padding:22px var(--pad);
-  display:flex; justify-content:space-between; gap:22px;
-  background:var(--bg-deep); color:var(--muted);
-  font-size:11px;
-}
-.footer a{ transition:color .2s ease; }
-.footer a:hover{ color:var(--text); }
-
-.empty-state{ min-height:60dvh; display:grid; place-items:center; padding:40px; color:var(--text-soft); text-align:center; }
-.reveal{ opacity:0; transform:translateY(26px); transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft); }
-.reveal.in{ opacity:1; transform:none; }
-
-/* ===========================================================================
-   FILM INDEX
-   =========================================================================== */
-.film-index{
-  position:fixed; inset:0; z-index:var(--z-index);
-  visibility:hidden;
-  display:grid; grid-template-columns:minmax(300px,40vw) minmax(0,1fr);
-  background:var(--accent); color:var(--bg-deep);
-  opacity:0;
-  transform:translate3d(0,102%,0);
-  transition:transform .78s var(--ease-soft),opacity .4s ease,visibility .78s;
-}
-.film-index.open{ visibility:visible; opacity:1; transform:none; }
-.index-preview{
-  position:relative; min-height:100dvh; overflow:hidden; background:var(--surface-2);
-  opacity:0; transform:translate3d(0,22px,0);
-  transition:opacity .5s ease,transform .85s var(--ease-soft);
-}
-.film-index.open .index-preview{ opacity:1; transform:none; transition-delay:.12s; }
-.index-preview img{ width:100%; height:100%; object-fit:cover; filter:saturate(.85); transform:scale(1.02); transition:opacity .28s ease,transform .85s var(--ease-soft); }
-.film-index.open .index-preview img{ transform:scale(1); }
-.index-preview.is-changing img{ opacity:0; transform:scale(1.04); }
-.index-preview::after{ content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(8,7,6,.86),transparent 56%); pointer-events:none; }
-.index-preview-title{
-  position:absolute; z-index:2; left:clamp(22px,3vw,48px); right:clamp(22px,3vw,48px); bottom:32px;
-  color:var(--text);
-  font-size:clamp(30px,3.6vw,62px); font-weight:770; font-stretch:72%; letter-spacing:-.035em; line-height:.92;
-  transition:opacity .24s ease,transform .42s var(--ease-soft);
-}
-.index-preview.is-changing .index-preview-title{ opacity:0; transform:translateY(10px); }
-
-.index-panel{ min-width:0; min-height:100dvh; padding:24px clamp(24px,4vw,68px) 38px; display:grid; grid-template-rows:auto auto minmax(0,1fr); }
-.index-top,.index-filters,.index-grid{ opacity:0; transform:translateY(18px); transition:opacity .5s ease,transform .68s var(--ease-soft); }
-.film-index.open .index-top,.film-index.open .index-filters,.film-index.open .index-grid{ opacity:1; transform:none; }
-.film-index.open .index-top{ transition-delay:.18s; }
-.film-index.open .index-filters{ transition-delay:.24s; }
-.film-index.open .index-grid{ transition-delay:.3s; }
-.index-top{ display:flex; align-items:center; justify-content:space-between; gap:22px; }
-.index-top h2{ font-size:clamp(32px,4.4vw,72px); font-weight:830; font-stretch:67%; letter-spacing:-.04em; line-height:.92; }
-.index-close{ padding:8px 0 5px; border-bottom:2px solid currentColor; font-size:13px; font-weight:680; transition:opacity .2s ease; }
-.index-close:hover{ opacity:.6; }
-.index-filters{ padding:28px 0 24px; display:flex; flex-wrap:wrap; gap:9px 22px; }
-.index-filter{
-  display:inline-flex; align-items:baseline; gap:6px;
-  padding:5px 0 3px;
-  border-bottom:2px solid transparent;
-  font-size:12px; font-weight:660;
-  opacity:.62;
-  transition:opacity .2s ease,border-color .2s ease;
-}
-.index-filter b{ font-weight:660; font-variant-numeric:tabular-nums; font-size:10px; opacity:.7; }
-.index-filter:hover{ opacity:1; }
-.index-filter[aria-pressed="true"]{ opacity:1; border-color:var(--bg-deep); }
-.index-grid{
-  min-height:0; overflow-y:auto; overscroll-behavior:contain;
-  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
-  align-content:start; gap:9px 30px;
-  padding-right:8px;
-  scrollbar-color:rgba(8,7,6,.5) transparent;
-}
-.index-item{
-  min-width:0; padding:6px 0;
-  color:var(--bg-deep); text-align:left;
-  transition:transform .26s var(--ease),opacity .2s ease;
-}
-.index-item strong{ display:block; font-size:clamp(17px,1.55vw,26px); font-weight:720; font-stretch:78%; letter-spacing:-.032em; line-height:1.04; text-wrap:balance; }
-.index-item span{ display:block; margin-top:3px; font-size:10px; font-weight:640; letter-spacing:.12em; text-transform:uppercase; opacity:.62; }
-.index-item:hover,.index-item:focus-visible{ transform:translateX(8px); }
-.index-item:hover strong,.index-item:focus-visible strong{ text-decoration:underline; text-underline-offset:4px; text-decoration-thickness:2px; }
-.index-empty{ padding-top:28px; font-weight:660; }
+.slide.is-portrait .slide-frame{ width:auto; height:min(calc(100dvh - 150px),780px); aspect-ratio:9/16; }
+.slide.is-square .slide-frame{ width:auto; height:min(calc(100dvh - 150px),720px); aspect-ratio:1/1; }
+.slide-frame > img{ width:100%; height:100%; object-fit:cover; }
+/* Copy rises on its beat each time a film becomes the current one. */
+.slide-copy > *{ opacity:0; transform:translateY(28px); transition:opacity .35s ease,transform .8s var(--spring); }
+.slide.is-on .slide-copy > *{ opacity:1; transform:none; }
+.slide.is-on .slide-copy > :nth-child(2){ transition-delay:.05s; }
+.slide.is-on .slide-copy > :nth-child(3){ transition-delay:.1s; }
+.slide.is-on .slide-copy > :nth-child(4){ transition-delay:.15s; }
+.slide.is-on .slide-copy > :nth-child(5){ transition-delay:.2s; }
+.slide.is-on .slide-copy > :nth-child(6){ transition-delay:.25s; }
+.slide-count{ color:var(--red); font-size:11px; font-weight:700; letter-spacing:.16em; }
+.slide-title{ margin-top:14px; font-size:clamp(34px,3.8vw,64px); font-weight:820; font-stretch:var(--cond); letter-spacing:-.035em; line-height:.94; text-wrap:balance; }
+.slide-desc{ margin-top:12px; color:var(--ink-soft); font-size:11px; font-weight:680; letter-spacing:.14em; text-transform:uppercase; }
+.slide-process{ margin-top:16px; max-width:40ch; color:var(--ink-soft); font-size:14px; }
+.slide-play{ margin-top:26px; }
+.slide-next{ margin-top:28px; color:var(--muted); font-size:12px; }
 
 /* ===========================================================================
    VIEWER
    =========================================================================== */
 .viewer{
-  position:fixed; inset:0; z-index:var(--z-viewer);
+  position:fixed; inset:0; z-index:90;
   visibility:hidden; opacity:0;
-  display:grid; grid-template-rows:60px minmax(0,1fr);
-  background:rgba(6,5,4,.985);
-  transition:opacity .42s ease,visibility .5s;
+  display:grid; grid-template-rows:56px minmax(0,1fr);
+  background:rgba(6,5,4,.97);
+  transition:opacity .3s ease,visibility .35s;
 }
 .viewer.open{ visibility:visible; opacity:1; }
-.viewer-bar{
-  padding-inline:var(--pad);
-  display:flex; align-items:center; justify-content:space-between; gap:22px;
-  background:var(--accent); color:var(--bg-deep);
-  font-size:13px; font-weight:680;
-  transform:translateY(-100%);
-  transition:transform .54s var(--ease-soft);
-}
-.viewer.open .viewer-bar{ transform:none; }
-.viewer-close{ padding:8px 0 5px; border-bottom:2px solid currentColor; transition:opacity .2s ease; }
-.viewer-close:hover{ opacity:.62; }
-.viewer-stage{
-  min-height:0; padding:18px;
-  display:grid; place-items:center;
-  opacity:0; transform:translate3d(0,16px,0) scale(.986);
-  transition:opacity .4s ease,transform .55s var(--ease-soft);
-}
-.viewer.open .viewer-stage{ opacity:1; transform:none; }
-.viewer-media{ position:relative; width:min(96vw,calc((100dvh - 100px) * 1.7778)); aspect-ratio:16/9; background:#000; }
-.viewer-media.portrait{ width:min(88vw,calc((100dvh - 100px) * .5625)); aspect-ratio:9/16; }
-.viewer-media iframe,.viewer-media video{ position:relative; z-index:1; width:100%; height:100%; display:block; border:0; }
-/* The player can take a beat to appear — say so instead of showing a void. */
-.viewer-loading{
-  position:absolute; inset:0; z-index:0;
-  display:grid; place-items:center; gap:14px;
-  align-content:center;
-  color:var(--muted);
-  font-size:11px; font-weight:640; letter-spacing:.16em; text-transform:uppercase;
-}
-.viewer-loading i{
-  width:26px; aspect-ratio:1;
-  border:2px solid rgba(243,238,231,.2);
-  border-top-color:var(--accent);
-  border-radius:50%;
-}
-.viewer-fallback{ max-width:680px; color:var(--text-soft); text-align:center; }
-.viewer-fallback img{ max-height:66dvh; margin:0 auto 22px; object-fit:contain; }
-.viewer-fallback a{ display:inline-block; padding-bottom:5px; border-bottom:2px solid var(--accent); color:var(--text); }
+.viewer-bar{ padding:0 var(--pad); display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line-soft); font-size:13px; font-weight:680; }
+.viewer-close{ padding:8px 0 5px; border-bottom:2px solid currentColor; }
+.viewer-close:hover{ color:var(--red); }
+.viewer-stage{ min-height:0; padding:16px; display:grid; place-items:center; transform:translateY(24px); transition:transform .7s var(--spring); }
+.viewer.open .viewer-stage{ transform:none; }
+.viewer-media{ position:relative; width:min(96vw,calc((100dvh - 90px) * 1.7778)); aspect-ratio:16/9; background:#000; }
+.viewer-media.portrait{ width:min(92vw,calc((100dvh - 90px) * .5625)); aspect-ratio:9/16; }
+.viewer-media.square{ width:min(92vw,calc(100dvh - 90px)); aspect-ratio:1/1; }
+.viewer-media iframe,.viewer-media video{ display:block; width:100%; height:100%; border:0; }
+.viewer-fallback{ display:grid; justify-items:center; gap:18px; }
+.viewer-fallback img{ max-height:70dvh; border-radius:6px; }
 
 /* ===========================================================================
-   MOTION
+   SECTIONS
    =========================================================================== */
-@media(prefers-reduced-motion:no-preference){
-  .media-loader{ animation:loadingSweep 1.4s ease-in-out infinite; }
-  .viewer-loading i{ animation:spin 1s linear infinite; }
-}
-@keyframes loadingSweep{ to{ background-position:-120% 0; } }
-@keyframes spin{ to{ transform:rotate(360deg); } }
+.section{ position:relative; padding:clamp(96px,12vw,180px) var(--pad); }
+.wrap{ max-width:1300px; margin:0 auto; }
+.section .loose{ margin-top:22px; }
+.rise{ opacity:0; transform:translateY(36px); transition:opacity .6s ease,transform 1s var(--spring); }
+.rise.in{ opacity:1; transform:none; }
+
+.about-grid{ margin-top:clamp(36px,5vw,64px); display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:clamp(32px,6vw,96px); align-items:start; }
+.bio-lead{ font-size:clamp(24px,2.6vw,38px); font-weight:650; font-stretch:85%; line-height:1.16; letter-spacing:-.015em; }
+.bio-lead em{ font-style:normal; color:var(--red); }
+.bio p + p{ margin-top:16px; }
+.bio p:not(.bio-lead){ color:var(--ink-soft); font-size:17px; }
+.bio .bio-meta{ color:var(--muted); font-size:13px; }
+.stats{ display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--line-soft); }
+.stat{ padding:22px 0; border-bottom:1px solid var(--line-soft); }
+.stat:nth-child(odd){ padding-right:20px; }
+.stat:nth-child(even){ padding-left:20px; border-left:1px solid var(--line-soft); }
+.stat dt{ font-size:clamp(44px,5.4vw,76px); font-weight:820; font-stretch:var(--cond); letter-spacing:-.04em; line-height:1; }
+.stat dd{ margin-top:10px; color:var(--muted); font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+/* Numbers land like a slot reel, as in the investor films. */
+.roll-row{ display:flex; align-items:flex-end; white-space:pre; }
+.roll{ display:inline-block; height:1em; overflow:hidden; }
+.roll b{ display:block; font-weight:inherit; transition:transform 1.5s var(--spring); transition-delay:var(--delay,0s); }
+.roll b span{ display:block; height:1em; }
+.stats.in .roll b{ transform:translateY(calc(var(--to) * -1em)); }
+.unit{ font-size:.4em; font-stretch:90%; letter-spacing:0; padding:0 0 .12em .1em; color:var(--ink-soft); }
+.craft{ margin-top:clamp(40px,5vw,72px); padding-top:24px; border-top:1px solid var(--line-soft); display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.craft dt{ color:var(--red); font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+.craft dd{ margin-top:8px; color:var(--ink-soft); font-size:15px; }
+
+.contact-line{ margin-top:26px; color:var(--ink-soft); font-size:clamp(22px,2.4vw,34px); font-weight:650; font-stretch:85%; }
+.email{ display:inline-block; margin-top:22px; padding-bottom:4px; border-bottom:3px solid var(--red); font-size:clamp(24px,3.4vw,52px); font-weight:780; font-stretch:80%; letter-spacing:-.025em; transition:color .2s ease; }
+.email:hover{ color:var(--red); }
+.contact-btns{ margin-top:30px; display:flex; flex-wrap:wrap; gap:12px; }
+.socials{ margin-top:44px; display:flex; flex-wrap:wrap; gap:10px 26px; color:var(--ink-soft); font-size:13px; font-weight:620; }
+.socials a:hover{ color:var(--ink); }
+.foot{ padding:28px var(--pad) 34px; border-top:1px solid var(--line-soft); display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px 20px; color:var(--muted); font-size:12px; }
+.foot a{ color:var(--ink-soft); }
+.foot a:hover{ color:var(--ink); }
 
 /* ===========================================================================
-   RESPONSIVE
+   SMALL SCREENS
    =========================================================================== */
-@media(max-width:1180px){
-  .chapter-wide-left  .film-frame{ grid-column:1/8; }
-  .chapter-wide-left  .film-copy { grid-column:8/13; }
-  .chapter-wide-right .film-frame{ grid-column:6/13; }
-  .chapter-wide-right .film-copy { grid-column:1/6; }
-  .chapter-tall-left  .film-frame{ grid-column:1/6; }
-  .chapter-tall-right .film-frame{ grid-column:8/13; }
-  .about-top{ grid-template-columns:1fr; gap:34px; }
-  .bio-lead{ max-width:18ch; }
-}
-
-@media(max-width:900px){
-  :root{ --nav-h:58px; }
-  .band-head{ grid-template-columns:1fr; align-items:start; }
-  .band-count{ order:-1; }
-  .wide-stage{ grid-template-columns:1fr; gap:clamp(46px,9vw,72px); }
-  .wide-stage .film-card:nth-child(even){ margin-top:0; }
-  .craft div{ grid-template-columns:1fr; gap:6px; padding:17px 0 19px; }
-  .film-index{ grid-template-columns:1fr; }
-  .index-preview{ display:none; }
-  .index-grid{ grid-template-columns:1fr; }
-}
-
 @media(max-width:760px){
-  :root{ --pad:18px; --nav-h:56px; --plate:8px; }
-
-  /* Keep the whole nav reachable — the old build hid Work/About/Contact. */
-  .site-nav{ gap:10px; }
-  .nav-set{ gap:13px; font-size:11px; }
-  .wordmark{ font-size:11px; }
+  .nav-links .hide-s{ display:none; }
   .wordmark span{ display:none; }
-  .index-trigger{ font-size:11px; gap:5px; }
-
-  /* Chapters stop stacking: a sticky stack fights mobile URL-bar resizing.
-     Each film becomes a full-bleed plate with the caption over the image. */
-  .film-chapter{ position:relative; height:100dvh; }
-  .chapter-stage{ transform:none; filter:none; padding:0; }
-  .chapter-bg{ display:none; }
-  .chapter-grid{ display:block; height:auto; }
-
-  /* Every variant is listed: the desktop variant rules carry higher
-     specificity, so a bare .film-frame override loses to their aspect-ratio. */
-  .film-frame,
-  .chapter-wide-left .film-frame,
-  .chapter-wide-right .film-frame,
-  .chapter-tall-left .film-frame,
-  .chapter-tall-right .film-frame{
-    position:absolute; inset:0;
-    width:auto; height:auto;
-    grid-column:auto;
-    aspect-ratio:auto;
-    box-shadow:none;
-    transform:none;
-  }
-  .film-frame::after{
-    content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
-    background:linear-gradient(0deg,rgba(7,5,4,.94),rgba(7,5,4,.34) 44%,rgba(7,5,4,.5));
-  }
-  .film-frame img{ transform:none; }
-  /* Landscape films are letterboxed over a blurred fill of themselves — the
-     way a vertical feed carries horizontal footage. Cropping a 16:9 frame to
-     9:19 would throw the composition away. */
-  .film-frame .media-image{ position:relative; z-index:1; object-fit:contain; }
-  .frame-motion{ top:50%; bottom:auto; height:auto; aspect-ratio:16/9; }
-  .frame-fill{
-    display:block;
-    position:absolute; inset:0; z-index:0;
-    width:100%; height:100%;
-    object-fit:cover;
-    opacity:.6;
-    filter:blur(26px) saturate(.8) brightness(.5);
-    transform:scale(1.2);
-  }
-  /* Portrait films already fill a phone screen. */
-  .chapter-tall-left .frame-fill,
-  .chapter-tall-right .frame-fill{ display:none; }
-  .chapter-tall-left .film-frame .media-image,
-  .chapter-tall-right .film-frame .media-image{ object-fit:cover; }
-  .frame-no{ left:14px; right:auto; top:calc(var(--nav-h) + 10px); }
-  .sound-toggle{ right:var(--pad); bottom:auto; top:calc(var(--nav-h) + 8px); }
-
-  .film-copy{
-    position:absolute; z-index:3;
-    left:var(--pad); right:var(--pad); bottom:clamp(30px,5vh,52px);
-    grid-column:auto;
-    display:flex; flex-direction:column; align-items:flex-start; gap:15px;
-    opacity:1; transform:none;
-  }
-  .film-title{ max-width:11ch; font-size:clamp(42px,13vw,68px); }
-  .film-meta{ display:flex; flex-direction:column; align-items:flex-start; gap:15px; }
-  .film-descriptor{ color:var(--text-soft); }
-
-  .band{ padding-block:clamp(66px,13vw,96px) clamp(72px,14vw,104px); }
-  .band-head h2{ max-width:12ch; }
-  .card-meta{ display:block; }
-  .card-kind{ display:block; margin-top:7px; }
-
-  /* Hover has no meaning on touch, so the accordion becomes a snap rail. */
-  .rail{
-    height:min(72dvh,620px);
-    gap:8px;
-    overflow-x:auto; overscroll-behavior-x:contain;
-    scroll-snap-type:x mandatory;
-    scroll-padding-inline:var(--pad);
-    scrollbar-width:none;
-  }
-  .rail::-webkit-scrollbar{ display:none; }
-  .cut-item,
-  .cut-item:first-child,
-  .cut-item:hover,
-  .cut-item:focus-visible{ flex:0 0 min(72vw,300px); scroll-snap-align:center; }
-  .cut-info{ transform:none; }
-  .cut-item:not(:hover):not(:focus-visible) .cut-title{ transform:none; opacity:1; font-size:clamp(20px,6vw,30px); }
-  .cut-item:not(:hover):not(:focus-visible) .cut-kind{ opacity:.7; transform:none; }
-  .cut-item .play-glyph{ display:none; }
-
-  .about{ padding-block:clamp(66px,13vw,96px) 0; }
-  .about-stats{ grid-template-columns:repeat(2,1fr); }
-  .about-stats div{ padding-right:16px; }
-  /* An odd final cell would leave a half-width rule hanging. */
-  .about-stats div:last-child:nth-child(odd){ grid-column:1/-1; }
-
-  .contact{ min-height:auto; gap:52px; }
-  .contact-bottom{ flex-direction:column; align-items:flex-start; }
-  .contact-mark{ text-align:left; }
-  .footer{ flex-direction:column; gap:10px; }
-
-  .index-panel{ padding:20px var(--pad) 30px; }
-  .index-top h2{ font-size:44px; }
-  .index-item strong{ font-size:22px; }
-  .viewer{ grid-template-rows:54px minmax(0,1fr); }
-  .viewer-stage{ padding:10px; }
-  .viewer-media{ width:min(96vw,calc((100dvh - 90px) * 1.7778)); }
-  .viewer-media.portrait{ width:min(94vw,calc((100dvh - 90px) * .5625)); }
+  .poisons.code{ flex:none; min-height:0; max-height:none; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .code .poison{ min-height:clamp(130px,20dvh,200px); padding:12px; }
+  .code .poison:first-child{ grid-column:1 / -1; min-height:clamp(150px,24dvh,240px); }
+  .code .poison:nth-child(1){ --tilt:-1.2deg; --ty:0px; }
+  .code .poison:nth-child(2){ --tilt:1.3deg; --ty:6px; }
+  .code .poison:nth-child(3){ --tilt:-1deg; --ty:2px; }
+  .poisons.hand{ height:auto; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .hand .poison{ min-height:58px; }
+  .poison-num{ top:8px; left:8px; }
+  .code .poison-count{ top:8px; right:8px; }
+  .poison-line,.poison-go{ display:none; }
+  .slide-body,.slide.is-portrait .slide-body,.slide.is-square .slide-body{ grid-template-columns:1fr; justify-items:center; align-content:center; gap:18px; padding:calc(var(--nav-h) + 8px) var(--pad) 28px; }
+  .slide-frame{ width:100%; }
+  .slide.is-portrait .slide-frame{ height:min(56dvh,560px); }
+  .slide.is-square .slide-frame{ width:100%; height:auto; max-width:56dvh; }
+  .slide-copy{ width:100%; }
+  .slide-title{ margin-top:10px; font-size:clamp(28px,8vw,40px); }
+  .slide-process,.slide-next,.reel-name{ display:none; }
+  .slide-play{ margin-top:18px; }
+  .about-grid{ grid-template-columns:1fr; }
+  .craft{ grid-template-columns:1fr; }
 }
 
 @media(prefers-reduced-motion:reduce){
-  html{ scroll-behavior:auto; scroll-snap-type:none; }
+  html{ scroll-behavior:auto; }
   *,*::before,*::after{ animation:none !important; transition:none !important; }
-  .reveal{ opacity:1; transform:none; }
-  .frame-motion{ display:none; }
-  .intro-card.is-gone{ transition:none; }
-  .intro-card.is-gone [data-cast],.intro-card.is-gone .cast-word{ animation:none; }
-  .about.is-dealt .about-inner,.about.is-dealt .craft{ animation:none; }
-  .chapter-stage{ transform:none; filter:none; }
-  .film-frame,.film-copy{ transform:none; opacity:1; }
-  .film-frame img{ transform:none; }
+  .rise,.slide-copy > *,.reel-bar{ opacity:1; transform:none; }
 }
 </style>
 </head>
 <body>
-<a class="skip-link" href="#work">Skip to films</a>
+<a class="skip" href="#pick">Skip to the films</a>
 
-<header class="site-nav" id="siteNav">
-  <a class="wordmark" href="#intro" aria-label="Aniket, film portfolio home">ANIKET <span>// ai_native</span></a>
-  <nav class="nav-set" aria-label="Primary">
-    <a class="nav-link" href="#work" data-nav="work">Work</a>
-    <a class="nav-link" href="#verticalCuts" data-nav="verticalCuts">Vertical</a>
-    <a class="nav-link" href="#about" data-nav="about">About</a>
-    <a class="nav-link" href="#contact" data-nav="contact">Contact</a>
-    <a class="nav-link" href="labs.html">Labs</a>
-    <button class="index-trigger" id="indexOpen" type="button" aria-haspopup="dialog">Film index <span id="indexCount">15</span></button>
+<header class="nav">
+  <a class="wordmark" href="#pick" aria-label="Aniket, film portfolio home">ANIKET <span>// ai_native</span></a>
+  <nav class="nav-links" aria-label="Primary">
+    <a class="hide-s" href="#pick">Films</a>
+    <a class="hide-s" href="#about">About</a>
+    <a href="resume">Résumé</a>
+    <a href="labs">Labs</a>
+    <a class="cta" href="#contact">Say hi</a>
   </nav>
-  <div class="scroll-progress" aria-hidden="true"><i id="scrollBar"></i></div>
 </header>
 
 <main>
-  <!-- The deck: the opening card is dealt away to the right to turn up About. -->
-  <section class="intro" id="intro" aria-label="Introduction">
-    <article class="intro-card" id="introCard">
-      <div class="intro-inner">
-        <p class="section-label" data-cast id="introKicker">Aniket Shaw / AI filmmaker and video editor</p>
-        <h1 class="intro-hook" id="introHook">Let my work do the talking.</h1>
-        <p class="intro-blurb" data-cast id="introBlurb">I make music films, short-form edits and motion work, building shots with generative tools when the footage does not exist.</p>
-        <p class="intro-meta" data-cast id="introMeta">Based in Kolkata, IST</p>
+  <section class="pick" id="pick" aria-labelledby="pickTitle">
+    <div class="pick-head">
+      <p class="label">Aniket Shaw / AI films written in code</p>
+      <h1 class="loose" id="pickTitle"><span class="sr" id="pickText">Pick your poison.</span></h1>
+    </div>
+    <div class="doors" id="poisons">
+      <p class="tier" id="tierCode"><b>Written in code</b></p>
+      <div class="poisons code" id="poisonsCode" role="group" aria-labelledby="tierCode"></div>
+      <div class="hand-row">
+        <p class="tier" id="tierHand">Cut by hand</p>
+        <div class="poisons hand" id="poisonsHand" role="group" aria-labelledby="tierHand"></div>
       </div>
-
-      <div class="intro-actions">
-        <button class="intro-action act-up" data-cast id="introUp" type="button">
-          <span class="act-icon"><svg viewBox="0 0 14 16" aria-hidden="true"><path d="M7 0l6 6-1.6 1.6L8.1 4.3V16H5.9V4.3L2.6 7.6 1 6z"/></svg></span>
-          <span class="act-text"><b><span class="on-touch">Swipe up</span><span class="on-pointer">Scroll down</span></b><i>See the work</i></span>
-        </button>
-        <button class="intro-action act-right" data-cast id="introRight" type="button">
-          <span class="act-text"><b><span class="on-touch">Swipe right</span><span class="on-pointer">Drag right</span></b><i>Know more about me</i></span>
-          <span class="act-icon"><svg viewBox="0 0 16 14" aria-hidden="true"><path d="M16 7l-6-6-1.6 1.6 3.3 3.3H0v2.2h11.7l-3.3 3.3L10 13z"/></svg></span>
-        </button>
-      </div>
-
-      <span class="intro-stamp" aria-hidden="true">About me</span>
-    </article>
-  </section>
-
-  <section class="cinema-stack" id="work" aria-label="Featured films">
-    <div id="cinemaStack">
-      <article class="film-chapter chapter-wide-left" style="--scene:1">
-        <div class="chapter-bg" aria-hidden="true"></div>
-        <div class="chapter-stage">
-          <div class="chapter-grid">
-            <figure class="film-frame media-ready">
-              <img class="film-poster" src="assets/posters/anotherone.webp" width="1280" height="720" alt="Cinematic musical montage, a Telugu musical love story" fetchpriority="high" />
-              <span class="media-loader" aria-hidden="true"></span>
-              <span class="media-error">Preview unavailable</span>
-            </figure>
-            <div class="film-copy">
-              <p class="film-kind">AI cinema</p>
-              <h1 class="film-title">Cinematic musical montage</h1>
-              <div class="film-meta">
-                <p class="film-descriptor">Musical love story / 02:22</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+    </div>
+    <div class="pick-foot">
+      <p id="pickMeta">3+ yrs editing / 1.5 yrs in GenAI / Kolkata, IST</p>
+      <a class="scroll-cue" href="#about">Or scroll for the story <i aria-hidden="true">↓</i></a>
     </div>
   </section>
 
-  <section class="band band-dark rail-section" id="verticalCuts" aria-labelledby="verticalTitle">
-    <div class="band-head reveal">
-      <div>
-        <p class="section-label">Vertical</p>
-        <h2 class="display" id="verticalTitle">Made for the vertical frame.</h2>
-        <p>News edits, motion studies and narrative shorts that move at phone speed.</p>
+  <section class="section about" id="about" aria-labelledby="aboutTitle">
+    <div class="wrap">
+      <p class="label">About</p>
+      <h2 class="loose" id="aboutTitle"><span class="sr">Hi, I'm Aniket.</span></h2>
+      <div class="about-grid">
+        <div class="bio rise" id="bio"></div>
+        <dl class="stats rise" id="stats"></dl>
       </div>
-      <p class="band-count" id="verticalCount"></p>
-    </div>
-    <div class="rail" id="portraitWall" aria-label="Vertical films"></div>
-  </section>
-
-  <section class="band band-deep" id="wideEdits" aria-labelledby="wideTitle">
-    <div class="band-head reveal">
-      <div>
-        <p class="section-label">Long &amp; wide</p>
-        <h2 class="display" id="wideTitle">The wider cuts.</h2>
-        <p>Long-form and short-form edits where motion, real footage and generated shots share the frame.</p>
-      </div>
-      <p class="band-count" id="wideCount"></p>
-    </div>
-    <div class="wide-stage" id="wideStage"></div>
-  </section>
-
-  <section class="about" id="about" aria-labelledby="aboutTitle">
-    <div class="about-inner">
-      <div class="about-top">
-        <div class="reveal">
-          <p class="section-label" id="aboutTitle">About</p>
-          <p class="bio-lead" id="bioLead">I'm Aniket, a video editor and <em>AI filmmaker</em>.</p>
-        </div>
-        <div class="bio reveal" id="bio">
-          <p>I make music films, short-form edits and motion work, building shots with generative tools when the footage does not exist.</p>
-          <p class="bio-meta">Based in Kolkata, IST / working in English and Hindi</p>
-        </div>
-      </div>
-      <dl class="about-stats reveal" id="aboutStats"></dl>
-    </div>
-    <div class="craft">
-      <dl id="craft">
-        <div><dt>Generative</dt><dd>Seedance, Kling, Veo, Higgsfield, Google Flow, Nano Banana, GPT Image</dd></div>
-        <div><dt>Edit and motion</dt><dd>Premiere Pro, After Effects</dd></div>
-        <div><dt>Code</dt><dd>Claude Code</dd></div>
-      </dl>
+      <dl class="craft rise" id="craft"></dl>
     </div>
   </section>
 
-  <section class="contact" id="contact" aria-labelledby="contactTitle">
-    <div class="contact-top">
-      <p class="section-label">Contact</p>
-      <div class="contact-body">
-        <h2 id="contactTitle">Have a film worth making?</h2>
-        <div class="contact-actions">
-          <a id="emailLink" href="mailto:aniketshaw748@gmail.com">aniketshaw748@gmail.com</a>
-          <a id="calendarLink" href="https://calendly.com/aniketshaw748/let-s-meet" target="_blank" rel="noopener">Book a call</a>
-          <a href="resume.html">Resume</a>
-        </div>
+  <section class="section contact" id="contact" aria-labelledby="contactTitle">
+    <div class="wrap">
+      <p class="label">Contact</p>
+      <h2 class="loose" id="contactTitle"><span class="sr">Say hi.</span></h2>
+      <p class="contact-line rise">Have a film worth making?</p>
+      <a class="email rise" id="emailLink" href="mailto:aniketshaw748@gmail.com">aniketshaw748@gmail.com</a>
+      <div class="contact-btns rise">
+        <a class="btn btn-red" id="calendarLink" href="https://calendly.com/aniketshaw748/let-s-meet" target="_blank" rel="noopener">Book a call</a>
+        <a class="btn" href="resume">Résumé</a>
       </div>
-    </div>
-    <div class="contact-bottom">
-      <nav class="social-links" aria-label="Social links">
+      <nav class="socials rise" aria-label="Social links">
         <a id="instagramLink" href="https://www.instagram.com/aniikettt_3/" target="_blank" rel="noopener">Instagram</a>
         <a id="linkedinLink" href="https://www.linkedin.com/in/aniket-shaw-a10478368/" target="_blank" rel="noopener">LinkedIn</a>
         <a id="youtubeLink" href="https://www.youtube.com/@KavyaanYT" target="_blank" rel="noopener">YouTube</a>
-        <a href="labs.html">Labs</a>
+        <a id="githubLink" href="https://github.com/aniketshaw748-hub" target="_blank" rel="noopener">GitHub</a>
       </nav>
-      <p class="contact-mark">Editing, motion and AI filmmaking by Aniket Shaw.</p>
     </div>
   </section>
 </main>
 
-<footer class="footer">
+<footer class="foot">
   <span>© <span id="year">2026</span> Aniket Shaw</span>
-  <a href="labs.html">Code portfolio</a>
+  <span>Editing, motion and AI filmmaking. <a href="labs">Code portfolio →</a></span>
 </footer>
 
-<aside class="film-index" id="filmIndex" role="dialog" aria-modal="true" aria-labelledby="filmIndexTitle" aria-hidden="true">
-  <div class="index-preview" aria-hidden="true">
-    <img id="indexPoster" src="assets/posters/anotherone.webp" alt="" />
-    <p class="index-preview-title" id="indexPreviewTitle">Cinematic musical montage</p>
+<div class="reel" id="reel" role="dialog" aria-modal="true" aria-labelledby="reelTitle" aria-hidden="true">
+  <h2 class="sr" id="reelTitle">Films</h2>
+  <div class="reel-feed" id="reelFeed"></div>
+  <div class="reel-bar">
+    <p class="reel-name">Your poison</p>
+    <div class="reel-tabs" id="reelTabs" role="group" aria-label="Switch style"></div>
+    <button class="reel-close" id="reelClose" type="button">Close</button>
   </div>
-  <div class="index-panel">
-    <div class="index-top">
-      <h2 id="filmIndexTitle">Film index</h2>
-      <button class="index-close" id="indexClose" type="button">Close</button>
-    </div>
-    <div class="index-filters" id="indexFilters" aria-label="Filter films"></div>
-    <div class="index-grid" id="indexGrid"></div>
-  </div>
-</aside>
+</div>
 
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" aria-hidden="true">
   <div class="viewer-bar">
@@ -1206,449 +478,88 @@ html.is-dealing{ scroll-snap-type:none; }
   <div class="viewer-stage" id="viewerStage"></div>
 </div>
 
-<script src="config.js?v=20260822-poster"></script>
+<script src="config.js?v=20261025-poison"></script>
+<script src="assets/js/loose-type.js?v=20261025"></script>
 <script>
 (function(){
   "use strict";
-
   var CFG = window.PORTFOLIO_CONFIG || {};
-  var FALLBACK = [
-    { category:"ai", orientation:"landscape", poster:"anotherone", title:"Cinematic musical montage", foot:"musical love story / 02:22", video:"https://www.youtube.com/watch?v=3yY6CAn7Qeo", alt:"Cinematic musical montage, a Telugu musical love story" },
-    { category:"ai", orientation:"landscape", poster:"ai-cinematic-01", title:"Cinematic AI Music Video", foot:"text-to-video", video:"https://youtu.be/xtJId7RjkWM", alt:"Cinematic AI music video" }
-  ];
-  var works = Array.isArray(CFG.works) && CFG.works.length ? CFG.works : FALLBACK;
-  var indexFilter = "all";
-  var lastFocus = null;
+  var works = Array.isArray(CFG.works) ? CFG.works : [];
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+  var INK = "#F3EEE8", RED = "#D05A60", BLUE = "#7C76CC";
   var PLAY_SVG = '<svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>';
-  var CLOSE_SVG = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M10.6 0L12 1.4 7.4 6 12 10.6 10.6 12 6 7.4 1.4 12 0 10.6 4.6 6 0 1.4 1.4 0 6 4.6z"/></svg>';
-  var MUTED_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14zM10.2 5.4l1-1 4.4 4.4-1 1z"/><path d="M14.6 4.4l1 1L11.2 9.8l-1-1z"/></svg>';
-  var SOUND_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14z"/><path d="M9.6 4.5a4.6 4.6 0 010 7l-.9-1a3.3 3.3 0 000-5zM11.4 2.2a7.2 7.2 0 010 11.6l-.9-1a5.9 5.9 0 000-9.6z"/></svg>';
+  // Films written in code lead; the work cut by hand follows in its own row.
+  var STYLES = [
+    { key:"type", label:"Type & motion", tier:"code" },
+    { key:"animation", label:"3D & animation", tier:"code" },
+    { key:"studies", label:"Studies", tier:"code" },
+    { key:"ai", label:"AI cinema", tier:"hand" },
+    { key:"shorts", label:"Shorts", tier:"hand" },
+    { key:"motion", label:"Motion graphics", tier:"hand" },
+    { key:"narrative", label:"Narrative", tier:"hand" }
+  ];
 
-  var cinemaStack = document.getElementById("cinemaStack");
-  var portraitWall = document.getElementById("portraitWall");
-  var wideStage = document.getElementById("wideStage");
-  var wideEdits = document.getElementById("wideEdits");
-  var verticalCuts = document.getElementById("verticalCuts");
-  var indexOpen = document.getElementById("indexOpen");
-  var indexClose = document.getElementById("indexClose");
-  var filmIndex = document.getElementById("filmIndex");
-  var indexGrid = document.getElementById("indexGrid");
-  var indexFilters = document.getElementById("indexFilters");
-  var indexPreview = filmIndex.querySelector(".index-preview");
-  var indexPoster = document.getElementById("indexPoster");
-  var indexPreviewTitle = document.getElementById("indexPreviewTitle");
-  var viewer = document.getElementById("viewer");
-  var viewerStage = document.getElementById("viewerStage");
-  var viewerTitle = document.getElementById("viewerTitle");
-  var viewerClose = document.getElementById("viewerClose");
-  var siteNav = document.getElementById("siteNav");
-  var scrollBar = document.getElementById("scrollBar");
-  var previewTimer = 0;
-
+  /* --- Helpers ------------------------------------------------------------ */
   function esc(value){
     return String(value == null ? "" : value).replace(/[&<>"]/g,function(char){
       return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[char];
     });
   }
-
   function cleanText(value){
     return String(value || "").replace(/[—–·]/g," / ").replace(/\s*\/\s*\/\s*/g," / ")
       .replace(/\s*\/\s*/g," / ").replace(/\s+/g," ").trim();
   }
-
   function posterFor(work){
     return /[\/.]/.test(work.poster || "") ? work.poster : "assets/posters/" + (work.poster || "") + ".webp";
   }
-
-  function kindFor(category){
-    return { ai:"AI cinema", shorts:"Short-form", motion:"Motion", narrative:"Narrative" }[category] || "Film";
-  }
-
   function descriptorFor(work){
-    var text = cleanText(work.foot || kindFor(work.category));
-    text = text.replace(/^reel_?\d+\s*\/?\s*/i,"").replace(/^hero film\s*\/?\s*/i,"");
-    return text || kindFor(work.category);
+    var text = cleanText(work.foot || "");
+    return text.replace(/^reel_?\d+\s*\/?\s*/i,"").replace(/^hero film\s*\/?\s*/i,"");
   }
-
   function pad2(n){ return (n < 10 ? "0" : "") + n; }
-
-  function entriesWhere(test){
+  function filmsOf(key){
     return works.map(function(work,index){ return { work:work, index:index }; })
-      .filter(function(entry){ return test(entry.work,entry.index); });
+      .filter(function(entry){ return entry.work.category === key; });
   }
+  var POISONS = STYLES.filter(function(style){ return filmsOf(style.key).length; });
+  var POISON_KEYS = POISONS.map(function(style){ return style.key; });
 
-  function posterImg(work,priority,cls){
-    var portrait = work.orientation === "portrait";
-    return '<img class="media-image'+(cls?" "+cls:"")+'" src="'+esc(posterFor(work))+'" width="'+(portrait?1080:1280)+'" height="'+(portrait?1920:720)+'" alt="'+esc(cleanText(work.alt||work.title))+'" decoding="async" '+(priority?'fetchpriority="high"':'loading="lazy"')+' />'+
-      '<span class="media-loader" aria-hidden="true"></span><span class="media-error">Preview unavailable</span>';
-  }
-
-  /* --- Cinema chapters ---------------------------------------------------- */
-  function renderCinema(){
-    var entries = entriesWhere(function(work){ return work.category === "ai"; });
-    if(!entries.length) entries = entriesWhere(function(work,index){ return index < 6; });
-    if(!entries.length){
-      cinemaStack.innerHTML = '<p class="empty-state">No films have been added yet.</p>';
-      return;
-    }
-    cinemaStack.innerHTML = entries.map(function(entry,position){
-      var work = entry.work;
-      var portrait = work.orientation === "portrait";
-      var variant = (portrait ? "chapter-tall-" : "chapter-wide-") + (position % 2 ? "right" : "left");
-      var heading = position === 0 ? "h1" : "h2";
-      return '<article class="film-chapter '+variant+'" style="--scene:'+(position+1)+'" data-chapter="'+position+'">'+
-        '<div class="chapter-bg" aria-hidden="true"></div>'+
-        '<div class="chapter-stage">'+
-          '<div class="chapter-grid">'+
-            '<figure class="film-frame">'+
-              '<img class="frame-fill" src="'+esc(posterFor(work))+'" alt="" aria-hidden="true" loading="lazy" decoding="async" />'+
-              posterImg(work,position===0)+
-              '<div class="frame-motion" aria-hidden="true"></div>'+
-              '<button class="sound-toggle" type="button" aria-pressed="true">'+MUTED_SVG+'<span>Unmute</span></button>'+
-              '<span class="frame-no" aria-hidden="true">'+pad2(position+1)+' / '+pad2(entries.length)+'</span>'+
-            '</figure>'+
-            '<div class="film-copy">'+
-              '<p class="film-kind">'+esc(kindFor(work.category))+'</p>'+
-              '<'+heading+' class="film-title">'+esc(cleanText(work.title))+'</'+heading+'>'+
-              '<div class="film-meta">'+
-                '<p class="film-descriptor">'+esc(descriptorFor(work))+'</p>'+
-                '<button class="play-cta" type="button" data-play-inline="'+entry.index+'">'+PLAY_SVG+'Play film</button>'+
-              '</div>'+
-            '</div>'+
-          '</div>'+
-        '</div>'+
-      '</article>';
-    }).join("");
-  }
-
-  function cardMarkup(entry,frameClass){
-    var work = entry.work;
-    return '<button class="film-card" type="button" data-open-index="'+entry.index+'" aria-label="Play '+esc(cleanText(work.title))+'">'+
-      '<span class="card-frame'+(frameClass?" "+frameClass:"")+'">'+posterImg(work,false)+
-        '<span class="play-glyph card-glyph" aria-hidden="true">'+PLAY_SVG+'</span>'+
-      '</span>'+
-      '<span class="card-meta"><strong class="card-title">'+esc(cleanText(work.title))+'</strong><span class="card-kind">'+esc(kindFor(work.category))+'</span></span>'+
-    '</button>';
-  }
-
-  function renderPortraits(){
-    var entries = entriesWhere(function(work){ return work.orientation === "portrait" && work.category !== "ai"; });
-    if(!entries.length){ verticalCuts.hidden = true; return; }
-    portraitWall.innerHTML = entries.map(function(entry){
-      var work = entry.work;
-      return '<button class="cut-item" type="button" data-open-index="'+entry.index+'" aria-label="Play '+esc(cleanText(work.title))+'">'+
-        posterImg(work,false)+
-        '<span class="play-glyph" aria-hidden="true">'+PLAY_SVG+'</span>'+
-        '<span class="cut-info"><strong class="cut-title">'+esc(cleanText(work.title))+'</strong>'+
-        '<span class="cut-kind">'+esc(kindFor(work.category))+'</span></span>'+
-      '</button>';
-    }).join("");
-    document.getElementById("verticalCount").textContent = pad2(entries.length) + " films";
-  }
-
-  function renderWideEdits(){
-    var entries = entriesWhere(function(work){ return work.orientation !== "portrait" && work.category !== "ai"; });
-    if(!entries.length){ wideEdits.hidden = true; return; }
-    wideStage.innerHTML = entries.map(function(entry){ return cardMarkup(entry); }).join("");
-    document.getElementById("wideCount").textContent = pad2(entries.length) + " films";
-  }
-
-  /* --- Film index --------------------------------------------------------- */
-  var FILTERS = [
-    { key:"all", label:"All" },
-    { key:"ai", label:"AI cinema" },
-    { key:"shorts", label:"Shorts" },
-    { key:"motion", label:"Motion" },
-    { key:"narrative", label:"Narrative" }
-  ];
-
-  function countFor(key){
-    return key === "all" ? works.length : works.filter(function(work){ return work.category === key; }).length;
-  }
-
-  function renderFilters(){
-    indexFilters.innerHTML = FILTERS.filter(function(filter){ return countFor(filter.key) > 0; })
-      .map(function(filter){
-        return '<button class="index-filter" type="button" data-filter="'+filter.key+'" aria-pressed="'+(filter.key===indexFilter)+'">'+
-          esc(filter.label)+' <b>'+pad2(countFor(filter.key))+'</b></button>';
-      }).join("");
-  }
-
-  function visibleIndexEntries(){
-    return entriesWhere(function(work){ return indexFilter === "all" || work.category === indexFilter; });
-  }
-
-  function updateIndexPreview(index){
-    var work = works[index];
-    if(!work) return;
-    var nextPoster = posterFor(work);
-    var nextTitle = cleanText(work.title);
-    if(indexPoster.getAttribute("src") === nextPoster && indexPreviewTitle.textContent === nextTitle) return;
-    window.clearTimeout(previewTimer);
-    indexPreview.classList.add("is-changing");
-    previewTimer = window.setTimeout(function(){
-      indexPoster.src = nextPoster;
-      indexPreviewTitle.textContent = nextTitle;
-      window.requestAnimationFrame(function(){ indexPreview.classList.remove("is-changing"); });
-    },180);
-  }
-
-  function renderIndex(){
-    var entries = visibleIndexEntries();
-    if(!entries.length){
-      indexGrid.innerHTML = '<p class="index-empty">No films in this category yet.</p>';
-      return;
-    }
-    indexGrid.innerHTML = entries.map(function(entry){
-      return '<button class="index-item" type="button" data-index-item="'+entry.index+'"><strong>'+
-        esc(cleanText(entry.work.title))+'</strong><span>'+esc(kindFor(entry.work.category))+'</span></button>';
-    }).join("");
-    updateIndexPreview(entries[0].index);
-  }
-
-  function openIndex(){
-    lastFocus = document.activeElement;
-    filmIndex.classList.add("open");
-    filmIndex.setAttribute("aria-hidden","false");
-    document.body.classList.add("index-open");
-    indexClose.focus();
-  }
-
-  function closeIndex(restoreFocus){
-    filmIndex.classList.remove("open");
-    filmIndex.setAttribute("aria-hidden","true");
-    document.body.classList.remove("index-open");
-    if(restoreFocus !== false && lastFocus && lastFocus.focus) lastFocus.focus();
-  }
-
-  /* --- Viewer ------------------------------------------------------------- */
   function youtubeId(url){
     var match = String(url).match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/);
     return match ? match[1] : "";
   }
   function youtubeEmbed(url){
     var id = youtubeId(url);
-    return id ? "https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0&playsinline=1" : "";
+    return id ? "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1" : "";
   }
   function vimeoEmbed(url){
     var match = String(url).match(/vimeo\.com\/(?:video\/)?(\d+)/);
-    return match ? "https://player.vimeo.com/video/"+match[1]+"?autoplay=1" : "";
+    return match ? "https://player.vimeo.com/video/" + match[1] + "?autoplay=1&title=0&byline=0&portrait=0" : "";
   }
-  function instagramEmbed(url){
-    var match = String(url).match(/instagram\.com\/(reels?|p|tv)\/([A-Za-z0-9_-]+)/i);
-    if(!match) return "";
-    var type = /^reels?$/i.test(match[1]) ? "reel" : match[1];
-    return "https://www.instagram.com/"+type+"/"+match[2]+"/embed/";
+  function isDirectVideo(url){ return /\.(mp4|webm|mov)(\?|#|$)/i.test(String(url)); }
+
+  /* --- Hand-lettered headings -------------------------------------------- */
+  function letter(id,segments,opts){
+    var el = document.getElementById(id);
+    if(el && window.LooseType) window.LooseType.mount(el,segments,opts);
   }
-  function isDirectVideo(url){
-    return /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(String(url));
-  }
+  var tagline = cleanText(CFG.tagline || "Pick your poison.");
+  document.getElementById("pickText").textContent = tagline;
+  var taglineWords = tagline.split(" ");
+  var lastWord = taglineWords.pop();
+  // The greeting shares the first screen with the doors, so it is capped by height too.
+  letter("pickTitle",[[taglineWords.join(" ") + " ",INK],[lastWord,RED]],{ max:function(){ return Math.min(150,window.innerHeight * .15); }, lines:2 });
+  letter("aboutTitle",[["HI, I'M ",INK],["ANIKET.",RED]],{ max:120, lines:2 });
+  letter("contactTitle",[["SAY ",INK],["HI.",RED]],{ max:170, lines:1 });
 
-  function openViewer(work){
-    if(!work) return;
-    if(filmIndex.classList.contains("open")) closeIndex(false);
-    var video = work.video || "";
-    var portrait = work.orientation === "portrait";
-    var mediaClass = "viewer-media" + (portrait ? " portrait" : "");
-    var loading = '<span class="viewer-loading"><i aria-hidden="true"></i>Loading film</span>';
-    var src = youtubeEmbed(video) || vimeoEmbed(video) || instagramEmbed(video);
-    var html = "";
-    if(src){
-      html = '<div class="'+mediaClass+'">'+loading+'<iframe src="'+esc(src)+'" title="'+esc(cleanText(work.title))+'" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div>';
-    } else if(isDirectVideo(video)){
-      html = '<div class="'+mediaClass+'">'+loading+'<video src="'+esc(video)+'" poster="'+esc(posterFor(work))+'" controls autoplay playsinline></video></div>';
-    } else {
-      html = '<div class="viewer-fallback"><img src="'+esc(posterFor(work))+'" alt="'+esc(cleanText(work.alt||work.title))+'" />'+
-        (video ? '<a href="'+esc(video)+'" target="_blank" rel="noopener">Open film</a>' : '<p>Film link coming soon.</p>')+'</div>';
-    }
-    lastFocus = document.activeElement;
-    viewerTitle.textContent = cleanText(work.title || "Film");
-    viewerStage.innerHTML = html;
-    document.dispatchEvent(new Event("viewer:open"));
-    viewer.classList.add("open");
-    viewer.setAttribute("aria-hidden","false");
-    document.body.classList.add("viewer-open");
-    viewerClose.focus();
-  }
-
-  function closeViewer(){
-    viewer.classList.remove("open");
-    viewer.setAttribute("aria-hidden","true");
-    document.body.classList.remove("viewer-open");
-    window.setTimeout(function(){ viewerStage.innerHTML = ""; },520);
-    if(lastFocus && lastFocus.focus) lastFocus.focus();
-  }
-
-  function bindMediaStates(){
-    document.querySelectorAll(".media-image").forEach(function(image){
-      var frame = image.parentElement;
-      function ready(){ frame.classList.add("media-ready"); }
-      function failed(){ frame.classList.add("media-failed"); }
-      if(image.complete){ image.naturalWidth ? ready() : failed(); }
-      else { image.addEventListener("load",ready,{once:true}); image.addEventListener("error",failed,{once:true}); }
-    });
-  }
-
-  /* --- About -------------------------------------------------------------- */
-  /* The opening card reads from the same config as everything else, so there
-     is still one file to edit. */
-  function renderIntro(){
-    if(CFG.tagline) document.getElementById("introHook").textContent = cleanText(CFG.tagline);
-    var first = cleanText((CFG.bio || [])[0] || "");
-    // Drop the "I'm Aniket, a …" opener — the kicker already says who this is.
-    var rest = first.match(/^.+?[.!?]\s+(.+)$/);
-    if(rest) document.getElementById("introBlurb").textContent = rest[1];
-    else if(first) document.getElementById("introBlurb").textContent = first;
-    // Just the credential and the place — the full meta line belongs in About.
-    var where = cleanText(CFG.bioMeta || "").split(" / ")[0];
-    var meta = [cleanText(CFG.experience || ""),where].filter(Boolean).join("  ·  ");
-    if(meta) document.getElementById("introMeta").textContent = meta;
-
-    // The hook leaves a word at a time, so split it once the copy is final.
-    var hook = document.getElementById("introHook");
-    hook.innerHTML = hook.textContent.trim().split(/\s+/).map(function(word){
-      return '<span class="cast-word">' + esc(word) + '</span>';
-    }).join(" ");
-
-    // Number every piece in document order — that ordering is the cascade.
-    document.querySelectorAll(".intro-card [data-cast], .intro-card .cast-word")
-      .forEach(function(node,index){ node.style.setProperty("--i",index); });
-  }
-
-  function renderAbout(){
-    var bioLines = (Array.isArray(CFG.bio) && CFG.bio.length ? CFG.bio : []).map(cleanText).filter(Boolean);
-    if(bioLines.length){
-      var lead = bioLines.shift();
-      var splitLead = lead.match(/^(.+?[.!?])\s+(.+)$/);
-      if(splitLead){ lead = splitLead[1]; bioLines.unshift(splitLead[2]); }
-      // Emphasise the role, not the whole sentence.
-      document.getElementById("bioLead").innerHTML = esc(lead)
-        .replace(/AI filmmaker/i,'<em>$&</em>');
-      document.getElementById("bio").innerHTML = bioLines.map(function(text){ return '<p>'+esc(text)+'</p>'; }).join("")+
-        (CFG.bioMeta ? '<p class="bio-meta">'+esc(cleanText(CFG.bioMeta))+'</p>' : "");
-    }
-
-    // Stat strip, derived from the same config the rest of the page uses.
-    var stats = [{ value:pad2(works.length), label:"Films and edits" }];
-    cleanText(CFG.experience || "").split("/").forEach(function(part){
-      var text = part.trim();
-      if(!text) return;
-      var match = text.match(/^([\d.+]+\s*\S+)\s+(.*)$/);
-      stats.push(match ? { value:match[1], label:match[2].replace(/^in\s+/i,"") } : { value:text, label:"" });
-    });
-    document.getElementById("aboutStats").innerHTML = stats.map(function(stat){
-      return '<div><dt>'+esc(stat.value)+'</dt><dd>'+esc(stat.label)+'</dd></div>';
-    }).join("");
-
-
-    if(CFG.tools){
-      var labels = {"AI STACK":"Generative","EDIT / MOTION":"Edit and motion","CODE":"Code"};
-      document.getElementById("craft").innerHTML = Object.keys(CFG.tools).map(function(group){
-        return '<div><dt>'+esc(labels[group]||cleanText(group))+'</dt><dd>'+esc((CFG.tools[group]||[]).join(", "))+'</dd></div>';
-      }).join("");
-    }
-  }
-
-  function renderContact(){
-    if(CFG.email){
-      var email = document.getElementById("emailLink");
-      email.href = "mailto:"+CFG.email;
-      email.textContent = CFG.email;
-    }
-    if(typeof CFG.calendly === "string"){
-      var calendar = document.getElementById("calendarLink");
-      if(CFG.calendly) calendar.href = CFG.calendly;
-      else calendar.hidden = true;
-    }
-    var socials = CFG.socials || {};
-    if(socials.instagram) document.getElementById("instagramLink").href = socials.instagram;
-    if(socials.linkedin) document.getElementById("linkedinLink").href = socials.linkedin;
-    if(socials.youtube) document.getElementById("youtubeLink").href = socials.youtube;
-  }
-
-  function trapFocus(event,container){
-    if(event.key !== "Tab") return;
-    var focusable = container.querySelectorAll("button,[href],iframe,video,[tabindex]:not([tabindex='-1'])");
-    if(!focusable.length) return;
-    var first = focusable[0];
-    var last = focusable[focusable.length-1];
-    if(event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
-    else if(!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
-  }
-
-  /* --- Events ------------------------------------------------------------- */
-  document.addEventListener("click",function(event){
-    var opener = event.target.closest("[data-open-index]");
-    if(opener) openViewer(works[Number(opener.dataset.openIndex)]);
-  });
-  indexOpen.addEventListener("click",openIndex);
-  indexClose.addEventListener("click",function(){ closeIndex(true); });
-  indexFilters.addEventListener("click",function(event){
-    var button = event.target.closest("[data-filter]");
-    if(!button) return;
-    indexFilter = button.dataset.filter;
-    indexFilters.querySelectorAll("[data-filter]").forEach(function(item){
-      item.setAttribute("aria-pressed",item === button ? "true" : "false");
-    });
-    renderIndex();
-  });
-  indexGrid.addEventListener("pointerover",function(event){
-    if(event.pointerType === "touch") return;
-    var item = event.target.closest("[data-index-item]");
-    if(item) updateIndexPreview(Number(item.dataset.indexItem));
-  });
-  indexGrid.addEventListener("focusin",function(event){
-    var item = event.target.closest("[data-index-item]");
-    if(item) updateIndexPreview(Number(item.dataset.indexItem));
-  });
-  indexGrid.addEventListener("click",function(event){
-    var item = event.target.closest("[data-index-item]");
-    if(item) openViewer(works[Number(item.dataset.indexItem)]);
-  });
-  viewerClose.addEventListener("click",closeViewer);
-  viewer.addEventListener("click",function(event){ if(event.target === viewer || event.target === viewerStage) closeViewer(); });
-  document.addEventListener("keydown",function(event){
-    if(event.key === "Escape"){
-      if(viewer.classList.contains("open")) closeViewer();
-      else if(filmIndex.classList.contains("open")) closeIndex(true);
-    }
-    if(viewer.classList.contains("open")) trapFocus(event,viewer);
-    else if(filmIndex.classList.contains("open")) trapFocus(event,filmIndex);
-  });
-
-  renderCinema();
-  renderPortraits();
-  renderWideEdits();
-  renderFilters();
-  renderIndex();
-  renderIntro();
-  renderAbout();
-  renderContact();
-  bindMediaStates();
-  document.getElementById("indexCount").textContent = pad2(works.length);
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  /* --- Dwell preview -------------------------------------------------------
-     Rest on a film and it starts playing itself, muted and looping, with a
-     sound toggle — the YouTube-mobile thumbnail mechanic. The opening film
-     skips the wait and starts on load. The player is only revealed once it
-     reports PLAYING, so a buffering black frame never replaces the poster
-     (the previous build did exactly that on the hero).                       */
-  (function dwellPreview(){
-    var DWELL = 1400;
+  /* --- Muted previews ------------------------------------------------------
+     One player at a time. It is revealed only once YouTube reports PLAYING,
+     so a buffering black frame never covers the poster.                    */
+  var Preview = (function(){
     var connection = navigator.connection || {};
-    if(reduceMotion || connection.saveData) return;
-
-    var chapters = Array.prototype.slice.call(document.querySelectorAll(".film-chapter"));
-    if(!chapters.length || !("IntersectionObserver" in window)) return;
-
-    var apiReady = null;
-    var timer = 0;
-    var active = null;    // { chapter, frame, host, player, toggle, live }
-    var pending = null;   // host whose player is mid-flight
-    var suppressUntil = 0;// keeps the preview from re-arming right after a close
-
+    var allowed = !reduceMotion && !connection.saveData;
+    var apiReady = null, active = null, pending = null;
     function loadApi(){
       if(apiReady) return apiReady;
       apiReady = new Promise(function(resolve){
@@ -1664,428 +575,484 @@ html.is-dealing{ scroll-snap-type:none; }
       });
       return apiReady;
     }
-
-    function setToggle(toggle,muted){
-      toggle.setAttribute("aria-pressed",muted ? "true" : "false");
-      toggle.innerHTML = (muted ? MUTED_SVG : SOUND_SVG) + "<span>" + (muted ? "Unmute" : "Mute") + "</span>";
-    }
-
-    function setCta(chapter,live){
-      var cta = chapter.querySelector(".play-cta");
-      if(cta) cta.innerHTML = live ? CLOSE_SVG + "Close film" : PLAY_SVG + "Play film";
-    }
-
     function stop(){
-      window.clearTimeout(timer);
       pending = null;
       if(!active) return;
       var current = active;
       active = null;
-      current.frame.classList.remove("is-previewing","is-live");
+      window.clearTimeout(current.reveal);
+      if(current.video){ current.video.pause(); current.video.removeAttribute("src"); current.video.load(); }
+      try { if(current.player && current.player.destroy) current.player.destroy(); } catch(e){}
       current.host.classList.remove("is-playing");
-      setCta(current.chapter,false);
-      // A throwing destroy must not leave the frame half torn down.
-      try { if(current.player && current.player.destroy) current.player.destroy(); }
-      finally { current.host.innerHTML = ""; }
+      current.host.innerHTML = "";
     }
-
-    // Measured rather than read off a class, so this holds even before the
-    // observer has reported for the first time.
-    function inView(chapter){
-      var rect = chapter.getBoundingClientRect();
-      var height = window.innerHeight;
-      var shown = Math.min(rect.bottom,height) - Math.max(rect.top,0);
-      return shown > 0 && shown / Math.min(rect.height || height,height) >= .7;
-    }
-
-    // `live` is the full watch: sound on, controls on, no loop. Otherwise this
-    // is the muted dwell preview.
-    function start(chapter,live,resumeAt){
-      var opener = chapter.querySelector("[data-play-inline]");
-      if(!opener) return;
-      var work = works[Number(opener.dataset.playInline)];
-      var id = work && youtubeId(work.video || "");
-      if(!id) return;
-      var frame = chapter.querySelector(".film-frame");
-      var host = chapter.querySelector(".frame-motion");
-      var toggle = chapter.querySelector(".sound-toggle");
-      if(!frame || !host || !toggle) return;
-      // The observer can report the same chapter several times while the page
-      // settles; without these two guards each report mounts another player
-      // that tears the previous one down.
-      if(!live && active && active.host === host) return;
-      if(!live && pending === host) return;
-      pending = host;
-
-      loadApi().then(function(YT){
-        // The chapter may have scrolled away while the API was loading.
-        if(pending !== host) return;
-        if(!YT || !YT.Player || !inView(chapter)){ pending = null; return; }
+    function start(host,work){
+      if(!allowed || !host || !work) return;
+      var direct = isDirectVideo(work.video || "");
+      var id = direct ? "" : youtubeId(work.video || "");
+      if(!direct && !id) return;
+      if((active && active.host === host) || pending === host) return;
+      // Films hosted with the site play natively: no player chrome to wait out.
+      if(direct){
         stop();
-        pending = host;
+        var video = document.createElement("video");
+        video.muted = true; video.loop = true; video.playsInline = true; video.preload = "auto";
+        video.setAttribute("muted",""); video.setAttribute("playsinline","");
+        video.src = work.video;
+        var clip = { host:host, video:video, reveal:0 };
+        active = clip;
+        video.addEventListener("playing",function(){ if(active === clip) host.classList.add("is-playing"); });
+        video.addEventListener("waiting",function(){ host.classList.remove("is-playing"); });
+        host.appendChild(video);
+        var played = video.play();
+        if(played && played.catch) played.catch(function(){ if(active === clip) stop(); });
+        return;
+      }
+      pending = host;
+      loadApi().then(function(YT){
+        if(pending !== host || !YT || !YT.Player) return;
+        stop();
+        var w = host.clientWidth, h = host.clientHeight;
+        if(!w || !h) return;
+        // Cover the host, then grow by YouTube's title and control bars so both
+        // fall outside the clip and only the picture is left.
+        var ratio = work.orientation === "portrait" ? 9 / 16 : work.orientation === "square" ? 1 : 16 / 9;
+        var ih = Math.max(w / h > ratio ? w / ratio : h, h + 130);
         var mount = document.createElement("div");
         host.appendChild(mount);
-        var entry = { chapter:chapter, frame:frame, host:host, toggle:toggle, player:null, live:!!live };
+        var entry = { host:host, player:null, reveal:0 };
         active = entry;
-        pending = null;   // `active` guards this host from here on
-        setToggle(toggle,true);
-        // A requested watch owns the frame straight away — its controls must be
-        // clickable even if the PLAYING event is slow or never arrives. Only
-        // the reveal itself waits for playback.
-        if(live){ frame.classList.add("is-live"); setCta(chapter,true); }
-        var vars = { autoplay:1, playsinline:1, rel:0, modestbranding:1, iv_load_policy:3,
-                     mute:live ? 0 : 1, controls:live ? 1 : 0, disablekb:live ? 0 : 1, fs:live ? 1 : 0 };
-        if(!live){ vars.loop = 1; vars.playlist = id; }
-        if(resumeAt > 1) vars.start = Math.floor(resumeAt);
         entry.player = new YT.Player(mount,{
-          videoId:id,
-          playerVars:vars,
+          videoId:id, width:Math.ceil(ih * ratio) + 2, height:Math.ceil(ih) + 2,
+          playerVars:{ autoplay:1, mute:1, controls:0, disablekb:1, fs:0, playsinline:1, rel:0, modestbranding:1, iv_load_policy:3, loop:1, playlist:id },
           events:{
-            onReady:function(event){
-              if(live){ event.target.unMute(); event.target.setVolume(80); }
-              else event.target.mute();
-              event.target.playVideo();
-            },
+            onReady:function(event){ event.target.mute(); event.target.playVideo(); },
             onStateChange:function(event){
               if(active !== entry) return;
-              if(event.data === YT.PlayerState.PLAYING){
-                host.classList.add("is-playing");
-                if(!live) frame.classList.add("is-previewing");
-              }
-              // A finished watch hands the frame back to its poster; the muted
-              // preview loops instead (playlist looping occasionally misses).
-              if(event.data === YT.PlayerState.ENDED){
-                if(live) stop();
-                else { event.target.seekTo(0); event.target.playVideo(); }
-              }
+              window.clearTimeout(entry.reveal);
+              // Shown only after a few seconds of real playback (YouTube's start-up
+              // controls have gone by then); a pause or stall hands back to the poster.
+              if(event.data === YT.PlayerState.PLAYING)
+                entry.reveal = window.setTimeout(function(){ if(active === entry) host.classList.add("is-playing"); },2600);
+              else host.classList.remove("is-playing");
+              if(event.data === YT.PlayerState.ENDED){ event.target.seekTo(0); event.target.playVideo(); }
             },
             onError:function(){ if(active === entry) stop(); }
           }
         });
       });
     }
+    return { start:start, stop:stop, owns:function(host){ return !!active && active.host === host; } };
+  })();
 
-    document.addEventListener("click",function(event){
-      var toggle = event.target.closest(".sound-toggle");
-      if(!toggle) return;
-      event.stopPropagation();          // never open the viewer from this control
-      if(!active || active.toggle !== toggle || !active.player) return;
-      var muted = active.player.isMuted();
-      if(muted){ active.player.unMute(); active.player.setVolume(70); }
-      else active.player.mute();
-      setToggle(toggle,!muted);
-    },true);
+  /* --- Pick your poison ---------------------------------------------------- */
+  var poisonsEl = document.getElementById("poisons");
+  var pick = document.getElementById("pick");
+  var dwellTimer = 0;
 
-    // Play film swaps the muted preview for the real thing, in the same frame,
-    // picking up where the preview had got to.
-    document.addEventListener("click",function(event){
-      var cta = event.target.closest(".play-cta");
-      if(!cta) return;
-      var chapter = cta.closest(".film-chapter");
-      if(!chapter) return;
-      if(chapter.querySelector(".film-frame").classList.contains("is-live")){
-        suppressUntil = Date.now() + 1200;   // do not re-arm the preview at once
-        stop();
-        return;
-      }
-      var at = 0;
-      if(active && active.chapter === chapter && active.player && active.player.getCurrentTime){
-        try { at = active.player.getCurrentTime() || 0; } catch(e){ at = 0; }
-      }
-      start(chapter,true,at);
+  function doorMarkup(style,n){
+    var lines = CFG.poisons || {};
+    var films = filmsOf(style.key), lead = films[0];
+    return '<button class="poison" type="button" data-poison="'+style.key+'" data-work="'+lead.index+'">'+
+      '<span class="poison-media"><img src="'+esc(posterFor(lead.work))+'" alt="" decoding="async" /><span class="vid"></span></span>'+
+      '<span class="poison-num">'+pad2(n+1)+'</span>'+
+      '<span class="poison-count">'+pad2(films.length)+(films.length === 1 ? " film" : " films")+'</span>'+
+      '<span class="poison-name">'+esc(style.label)+'</span>'+
+      (lines[style.key] ? '<span class="poison-line">'+esc(cleanText(lines[style.key]))+'</span>' : "")+
+      '<span class="poison-go" aria-hidden="true">Pick →</span>'+
+    '</button>';
+  }
+  function codeCount(){
+    return works.filter(function(work){
+      return POISONS.some(function(style){ return style.tier === "code" && style.key === work.category; });
+    }).length;
+  }
+  function renderPoisons(){
+    ["code","hand"].forEach(function(tier){
+      var doors = POISONS.filter(function(style){ return style.tier === tier; });
+      document.getElementById(tier === "code" ? "poisonsCode" : "poisonsHand").innerHTML = doors.map(doorMarkup).join("");
     });
+    var meta = [pad2(codeCount()) + " films written in code",cleanText(CFG.experience || "").split(" / ")[0],cleanText(CFG.bioMeta || "").split(" / ")[0].replace(/^Based in /,"")];
+    document.getElementById("pickMeta").textContent = meta.filter(Boolean).join(" / ");
+  }
 
-    var observer = new IntersectionObserver(function(entries){
+  function previewPanel(panel){
+    if(panel) Preview.start(panel.querySelector(".vid"),works[Number(panel.dataset.work)]);
+  }
+  function panelFor(key){ return poisonsEl.querySelector('[data-poison="'+key+'"]'); }
+
+  // Rest on a panel and its film starts playing inside it, muted.
+  poisonsEl.addEventListener("pointerover",function(event){
+    if(event.pointerType !== "mouse") return;
+    var panel = event.target.closest(".poison");
+    if(!panel) return;
+    window.clearTimeout(dwellTimer);
+    dwellTimer = window.setTimeout(function(){ if(!reelOpen) previewPanel(panel); },650);
+  });
+  poisonsEl.addEventListener("pointerleave",function(){ window.clearTimeout(dwellTimer); });
+  poisonsEl.addEventListener("click",function(event){
+    var panel = event.target.closest(".poison");
+    if(panel) openReel(panel.dataset.poison,panel);
+  });
+
+  /* --- The reel ------------------------------------------------------------ */
+  var reel = document.getElementById("reel");
+  var feed = document.getElementById("reelFeed");
+  var reelTabs = document.getElementById("reelTabs");
+  var reelClose = document.getElementById("reelClose");
+  var reelTitle = document.getElementById("reelTitle");
+  var reelOpen = false, morphing = false, reelKey = null, current = null;
+  var slideObserver = null, slideTimer = 0, lastFocus = null;
+  var MORPH = { duration:reduceMotion ? 0 : 780, easing:"cubic-bezier(.65,0,.35,1)", fill:"both" };
+
+  function slideMarkup(entry,n,total){
+    var work = entry.work, poster = esc(posterFor(work));
+    var shape = work.orientation === "portrait" ? " is-portrait" : work.orientation === "square" ? " is-square" : "";
+    return '<article class="slide'+shape+'" data-work="'+entry.index+'">'+
+      '<img class="slide-bg" src="'+poster+'" alt="" decoding="async"'+(n > 1 ? ' loading="lazy"' : "")+' />'+
+      '<div class="slide-body">'+
+        '<div class="slide-frame" role="button" tabindex="0" aria-label="Play '+esc(cleanText(work.title))+' with sound">'+
+          '<img src="'+poster+'" alt="'+esc(cleanText(work.alt || work.title))+'" decoding="async"'+(n > 1 ? ' loading="lazy"' : "")+' /><span class="vid"></span></div>'+
+        '<div class="slide-copy">'+
+          '<p class="slide-count">'+pad2(n+1)+' / '+pad2(total)+'</p>'+
+          '<h3 class="slide-title">'+esc(cleanText(work.title))+'</h3>'+
+          '<p class="slide-desc">'+esc(descriptorFor(work))+'</p>'+
+          (work.process ? '<p class="slide-process">'+esc(cleanText(work.process))+'</p>' : "")+
+          '<button class="btn btn-red slide-play" type="button" data-play="'+entry.index+'">'+PLAY_SVG+'Play with sound</button>'+
+          '<p class="slide-next">'+(n < total - 1 ? "Scroll for the next one ↓" : "That’s the lot. Pick another poison up top.")+'</p>'+
+        '</div>'+
+      '</div>'+
+    '</article>';
+  }
+
+  function renderReel(key){
+    reelKey = key;
+    current = null;
+    var films = filmsOf(key);
+    var style = POISONS.filter(function(item){ return item.key === key; })[0];
+    reelTitle.textContent = style.label + " films";
+    reelTabs.innerHTML = POISONS.map(function(item,n){
+      var gap = n && item.tier !== POISONS[n - 1].tier ? '<span class="reel-gap" aria-hidden="true"></span>' : "";
+      return gap + '<button class="reel-tab" type="button" data-poison="'+item.key+'" aria-pressed="'+(item.key === key)+'">'+
+        esc(item.label)+'<b>'+pad2(filmsOf(item.key).length)+'</b></button>';
+    }).join("");
+    feed.innerHTML = films.map(function(entry,n){ return slideMarkup(entry,n,films.length); }).join("");
+    feed.scrollTop = 0;
+    if(slideObserver) slideObserver.disconnect();
+    slideObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        var resting = entry.isIntersecting && entry.intersectionRatio >= .72;
-        entry.target.classList.toggle("is-resting",resting);
-        if(resting){
-          if(active && active.live) return;            // a real watch is running
-          if(Date.now() < suppressUntil) return;
-          window.clearTimeout(timer);
-          // The opening film does not wait to be admired — it just runs.
-          var wait = entry.target === chapters[0] ? 0 : DWELL;
-          timer = window.setTimeout(function(){ start(entry.target); },wait);
-        } else if(active && entry.target.contains(active.host)){
-          stop();
+        if(entry.isIntersecting && entry.intersectionRatio >= .6) setCurrent(entry.target);
+        else if(entry.intersectionRatio < .25){
+          entry.target.classList.remove("is-on");
+          if(Preview.owns(entry.target.querySelector(".vid"))) Preview.stop();
         }
       });
-    },{ threshold:[0,.72,.95] });
-    chapters.forEach(function(chapter){ observer.observe(chapter); });
+    },{ root:feed, threshold:[0,.25,.6] });
+    feed.querySelectorAll(".slide").forEach(function(slide){ slideObserver.observe(slide); });
+  }
 
-    // The opening film starts on load rather than waiting for the observer's
-    // first report, so the opening film is already running when the page settles.
-    if(inView(chapters[0])) start(chapters[0]);
+  // The film in view rises into place, and after a short rest starts playing muted.
+  function setCurrent(slide){
+    if(current === slide && slide.classList.contains("is-on")) return;
+    current = slide;
+    if(morphing) return;               // the morph hands over when it lands
+    slide.classList.add("is-on");
+    window.clearTimeout(slideTimer);
+    slideTimer = window.setTimeout(resumePreview,450);
+  }
+  function resumePreview(){
+    if(reelOpen && !morphing && current && !viewerIsOpen())
+      Preview.start(current.querySelector(".vid"),works[Number(current.dataset.work)]);
+  }
 
-    // A full-size player in the viewer must never fight a muted preview.
-    document.addEventListener("viewer:open",stop);
-    document.addEventListener("visibilitychange",function(){ if(document.hidden) stop(); });
-  })();
+  /* Where the panel sits right now, written as a transform and clip on the
+     full-screen reel. Measured while the reel is untransformed. */
+  function panelState(panel){
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var box = panel.getBoundingClientRect();
+    var css = getComputedStyle(panel).transform;
+    var m = new DOMMatrixReadOnly(css === "none" ? undefined : css);
+    var scale = Math.hypot(m.a,m.b) || 1, rot = Math.atan2(m.b,m.a) * 180 / Math.PI;
+    var pw = panel.offsetWidth * scale, ph = panel.offsetHeight * scale;
+    var s = Math.max(pw / vw,ph / vh);
+    var ix = (vw - pw / s) / 2, iy = (vh - ph / s) / 2, r = 5 / s;
+    return {
+      transform:"translate("+(box.left + box.width / 2 - vw / 2)+"px,"+(box.top + box.height / 2 - vh / 2)+"px) rotate("+rot+"deg) scale("+s+")",
+      clipPath:"inset("+iy+"px "+ix+"px "+iy+"px "+ix+"px round "+r+"px)"
+    };
+  }
+  // The frame scaled up until it covers the screen, the same crop the panel shows.
+  function coverState(frame){
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var box = frame.getBoundingClientRect();
+    var k = Math.max(vw / box.width,vh / box.height);
+    return { transform:"translate("+(vw / 2 - box.width * k / 2 - box.left)+"px,"+(vh / 2 - box.height * k / 2 - box.top)+"px) scale("+k+")" };
+  }
+  var REST_REEL = { transform:"translate(0px,0px) rotate(0deg) scale(1)", clipPath:"inset(0px 0px 0px 0px round 0px)" };
+  var REST_FRAME = { transform:"translate(0px,0px) scale(1)" };
 
-  /* --- Scroll-driven chapter motion ---------------------------------------
-     One rAF loop sets --enter / --exit / --copy-in per chapter. Doing this in
-     JS rather than scroll-driven CSS keeps every browser on the same timing
-     instead of splitting into a rich path and a dead one.                     */
-  (function chapterMotion(){
-    var chapters = Array.prototype.slice.call(document.querySelectorAll(".film-chapter"));
-    if(!chapters.length) return;
-    var afterStack = document.getElementById("verticalCuts");
-    var stacked = window.matchMedia("(min-width:761px)");
-    var queued = false;
+  function openReel(key,panel){
+    if(reelOpen || morphing || !panel) return;
+    window.clearTimeout(dwellTimer);
+    Preview.stop();
+    lastFocus = document.activeElement;
+    renderReel(key);
+    var first = feed.querySelector(".slide");
+    var frame = first.querySelector(".slide-frame");
+    var from = panelState(panel), cover = coverState(frame);
+    reelOpen = true; morphing = true;
+    current = first;
+    document.body.classList.add("reel-open");
+    reel.classList.add("open");
+    reel.setAttribute("aria-hidden","false");
+    var a = reel.animate([from,REST_REEL],MORPH);
+    var b = frame.animate([cover,REST_FRAME],MORPH);
+    reelClose.focus({ preventScroll:true });
+    a.onfinish = function(){
+      a.cancel(); b.cancel();
+      morphing = false;
+      reel.classList.add("settled");
+      var land = current || first;
+      current = null;
+      setCurrent(land);
+    };
+  }
 
-    function clamp(value){ return value < 0 ? 0 : value > 1 ? 1 : value; }
-    function ease(value){ return 1 - Math.pow(1 - value, 3); }
+  function closeReel(){
+    if(!reelOpen || morphing) return;
+    window.clearTimeout(slideTimer);
+    Preview.stop();
+    var slide = current || feed.querySelector(".slide");
+    var panel = panelFor(reelKey);
+    // The panel now shows the last film looked at, so the morph lands on the same picture.
+    panel.dataset.work = slide.dataset.work;
+    panel.querySelector(".poison-media img").src = posterFor(works[Number(slide.dataset.work)]);
+    var frame = slide.querySelector(".slide-frame");
+    var cover = coverState(frame), to = panelState(panel);
+    morphing = true;
+    reel.classList.remove("settled");
+    slide.classList.remove("is-on");
+    var a = reel.animate([REST_REEL,to],MORPH);
+    var b = frame.animate([REST_FRAME,cover],MORPH);
+    a.onfinish = function(){
+      reel.classList.remove("open");
+      reel.setAttribute("aria-hidden","true");
+      a.cancel(); b.cancel();
+      morphing = false; reelOpen = false; current = null;
+      if(slideObserver) slideObserver.disconnect();
+      feed.innerHTML = "";
+      document.body.classList.remove("reel-open");
+      if(lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll:true });
+    };
+  }
 
-    function reset(){
-      chapters.forEach(function(chapter){
-        chapter.settled = false;
-        ["--enter","--exit","--copy-in"].forEach(function(name){ chapter[name] = null; });
-        chapter.style.setProperty("--enter",1);
-        chapter.style.setProperty("--exit",0);
-        chapter.style.setProperty("--copy-in",1);
-      });
+  /* Switching styles is a whip pan: the feed leaves accelerating, blur peaking
+     with its speed, and the next one arrives from the same direction at that
+     speed and settles. */
+  function switchPoison(key){
+    if(key === reelKey || morphing) return;
+    window.clearTimeout(slideTimer);
+    Preview.stop();
+    var dir = POISON_KEYS.indexOf(key) > POISON_KEYS.indexOf(reelKey) ? 1 : -1;
+    var out = feed.animate([
+      { transform:"translateX(0)", filter:"blur(0px)" },
+      { transform:"translateX("+(-dir * 16)+"vw)", filter:"blur(16px)" }
+    ],{ duration:reduceMotion ? 0 : 230, easing:"cubic-bezier(.55,0,1,.45)", fill:"forwards" });
+    out.onfinish = function(){
+      renderReel(key);
+      feed.animate([
+        { transform:"translateX("+(dir * 16)+"vw)", filter:"blur(16px)" },
+        { transform:"translateX(0)", filter:"blur(0px)" }
+      ],{ duration:reduceMotion ? 0 : 460, easing:"cubic-bezier(0,.55,.45,1)" });
+      out.cancel();
+      var tab = reelTabs.querySelector('[aria-pressed="true"]');
+      if(tab) tab.focus({ preventScroll:true });
+    };
+  }
+
+  reelTabs.addEventListener("click",function(event){
+    var tab = event.target.closest("[data-poison]");
+    if(tab) switchPoison(tab.dataset.poison);
+  });
+  reelClose.addEventListener("click",closeReel);
+  feed.addEventListener("click",function(event){
+    var button = event.target.closest("[data-play]");
+    var frame = event.target.closest(".slide-frame");
+    if(button) openViewer(works[Number(button.dataset.play)]);
+    else if(frame) openViewer(works[Number(frame.closest(".slide").dataset.work)]);
+  });
+  feed.addEventListener("keydown",function(event){
+    var frame = event.target.closest(".slide-frame");
+    if(frame && (event.key === "Enter" || event.key === " ")){
+      event.preventDefault();
+      openViewer(works[Number(frame.closest(".slide").dataset.work)]);
     }
+  });
 
-    // Writing a custom property invalidates that chapter's whole subtree, so
-    // only write when the value actually moved.
-    function put(chapter,name,value){
-      var text = value.toFixed(3);
-      if(chapter[name] === text) return;
-      chapter[name] = text;
-      chapter.style.setProperty(name,text);
+  /* --- Viewer -------------------------------------------------------------- */
+  var viewer = document.getElementById("viewer");
+  var viewerStage = document.getElementById("viewerStage");
+  var viewerTitle = document.getElementById("viewerTitle");
+  var viewerClose = document.getElementById("viewerClose");
+  var viewerFocus = null;
+  function viewerIsOpen(){ return viewer.classList.contains("open"); }
+
+  function openViewer(work){
+    if(!work) return;
+    Preview.stop();
+    window.clearTimeout(slideTimer);
+    var video = work.video || "";
+    var mediaClass = "viewer-media" + (work.orientation === "portrait" ? " portrait" : work.orientation === "square" ? " square" : "");
+    var src = youtubeEmbed(video) || vimeoEmbed(video);
+    var html;
+    if(src){
+      html = '<div class="'+mediaClass+'"><iframe src="'+esc(src)+'" title="'+esc(cleanText(work.title))+'" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div>';
+    } else if(isDirectVideo(video)){
+      html = '<div class="'+mediaClass+'"><video src="'+esc(video)+'" poster="'+esc(posterFor(work))+'" controls autoplay playsinline></video></div>';
+    } else {
+      html = '<div class="viewer-fallback"><img src="'+esc(posterFor(work))+'" alt="'+esc(cleanText(work.alt || work.title))+'" />'+
+        (video ? '<a class="btn btn-red" href="'+esc(video)+'" target="_blank" rel="noopener">Open film</a>' : "<p>Film link coming soon.</p>")+'</div>';
     }
+    viewerFocus = document.activeElement;
+    viewerTitle.textContent = cleanText(work.title || "Film");
+    viewerStage.innerHTML = html;
+    viewer.classList.add("open");
+    viewer.setAttribute("aria-hidden","false");
+    document.body.classList.add("viewer-open");
+    viewerClose.focus();
+  }
+  function closeViewer(){
+    viewer.classList.remove("open");
+    viewer.setAttribute("aria-hidden","true");
+    document.body.classList.remove("viewer-open");
+    window.setTimeout(function(){ if(!viewerIsOpen()) viewerStage.innerHTML = ""; },400);
+    if(viewerFocus && viewerFocus.focus) viewerFocus.focus({ preventScroll:true });
+    window.setTimeout(resumePreview,500);
+  }
+  viewerClose.addEventListener("click",closeViewer);
+  viewer.addEventListener("click",function(event){ if(event.target === viewer || event.target === viewerStage) closeViewer(); });
 
-    function update(){
-      queued = false;
-      // The deal jumps the scroll; recalculating six chapters against that is
-      // work the flight cannot afford.
-      if(document.documentElement.classList.contains("is-dealing")) return;
-      var height = window.innerHeight;
-      var enters = chapters.map(function(chapter){
-        return clamp(1 - chapter.getBoundingClientRect().top / height);
-      });
-      var tail = afterStack ? clamp(1 - afterStack.getBoundingClientRect().top / height) : 0;
-      chapters.forEach(function(chapter,index){
-        var enter = enters[index];
-        var exit = clamp(index + 1 < chapters.length ? enters[index+1] : tail);
-        // Off-screen chapters are either untouched or fully covered; either
-        // way their values are already settled.
-        if((enter === 0 || exit === 1) && chapter.settled) return;
-        chapter.settled = enter === 0 || exit === 1;
-        put(chapter,"--enter",ease(enter));
-        put(chapter,"--exit",exit);
-        put(chapter,"--copy-in",clamp((enter - .22) * 2.4));
-      });
-      var scrollable = document.documentElement.scrollHeight - height;
-      scrollBar.style.setProperty("--progress",(scrollable > 0 ? clamp(window.scrollY / scrollable) : 0).toFixed(3));
+  /* --- Keyboard ------------------------------------------------------------ */
+  function trapFocus(event,container){
+    if(event.key !== "Tab") return;
+    var focusable = Array.prototype.filter.call(
+      container.querySelectorAll("button,[href],iframe,video,[tabindex]:not([tabindex='-1'])"),
+      function(el){ return el.offsetParent !== null || el === document.activeElement; });
+    if(!focusable.length) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if(event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
+    else if(!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
+  }
+  document.addEventListener("keydown",function(event){
+    if(event.key === "Escape"){
+      if(viewerIsOpen()) closeViewer();
+      else if(reelOpen) closeReel();
+      return;
     }
+    if(viewerIsOpen()){ trapFocus(event,viewer); return; }
+    if(!reelOpen) return;
+    trapFocus(event,reel);
+    var down = event.key === "ArrowDown" || event.key === "PageDown";
+    var up = event.key === "ArrowUp" || event.key === "PageUp";
+    if(!down && !up) return;
+    event.preventDefault();
+    var slides = Array.prototype.slice.call(feed.querySelectorAll(".slide"));
+    var next = slides[Math.max(0,Math.min(slides.length - 1,slides.indexOf(current) + (down ? 1 : -1)))];
+    if(next) feed.scrollTo({ top:next.offsetTop, behavior:reduceMotion ? "auto" : "smooth" });
+  });
 
-    function request(){
-      if(queued) return;
-      queued = true;
-      window.requestAnimationFrame(update);
-    }
-
-    function apply(){
-      if(reduceMotion || !stacked.matches){
-        reset();
-        // The progress bar is orientation, not decoration — keep it running.
-        window.requestAnimationFrame(function(){
-          var scrollable = document.documentElement.scrollHeight - window.innerHeight;
-          scrollBar.style.setProperty("--progress",(scrollable > 0 ? clamp(window.scrollY / scrollable) : 0).toFixed(4));
-        });
-      } else request();
-    }
-
-    window.addEventListener("scroll",apply,{ passive:true });
-    window.addEventListener("resize",apply);
-    if(stacked.addEventListener) stacked.addEventListener("change",apply);
-    apply();
-  })();
-
-  /* --- Intro deck ----------------------------------------------------------
-     Two ways out of the opening card: up to the films, right to About.
-     The right-hand exit is a real card deal — the card is pinned, the page
-     jumps to About behind it, then the card flies off and uncovers it. That
-     way the reveal is the live About section, not a copy of it.              */
-  (function introDeck(){
-    var intro = document.getElementById("intro");
-    var card = document.getElementById("introCard");
-    var about = document.getElementById("about");
-    var work = document.getElementById("work");
-    if(!intro || !card || !about) return;
-
-    var THRESHOLD = 108;
-    var dealing = false;
-    var dragging = false;
-    var axis = null;
-    var startX = 0, startY = 0, shift = 0, pointer = null;
-
-    function navHeight(){
-      return parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h")) || 64;
-    }
-    function setDrag(value){ intro.style.setProperty("--drag",value.toFixed(3)); }
-    function paint(){
-      card.style.transform = "translate3d(" + shift + "px,0,0) rotate(" + (shift * .035) + "deg)";
-      setDrag(Math.min(Math.max(shift / THRESHOLD,0),1));
-    }
-
-    function release(){
-      dragging = false; axis = null;
-      card.classList.remove("is-dragging");
-      if(pointer !== null && card.releasePointerCapture){
-        try { card.releasePointerCapture(pointer); } catch(e){}
+  /* --- About, numbers, contact --------------------------------------------- */
+  function rollMarkup(value){
+    var digit = 0;
+    return '<span class="sr">'+esc(value)+'</span><span class="roll-row" aria-hidden="true">'+value.split("").map(function(ch){
+      if(/\d/.test(ch)){
+        var strip = "";
+        for(var k = 0; k < 20; k++) strip += "<span>"+(k % 10)+"</span>";
+        return '<span class="roll"><b style="--to:'+(10 + Number(ch))+';--delay:'+(digit++ * .09)+'s">'+strip+"</b></span>";
       }
-      pointer = null;
+      return /[a-z ]/.test(ch) ? '<span class="unit">'+esc(ch)+"</span>" : "<span>"+esc(ch)+"</span>";
+    }).join("")+"</span>";
+  }
+
+  function renderAbout(){
+    var lines = (Array.isArray(CFG.bio) ? CFG.bio : []).map(cleanText).filter(Boolean);
+    var html = "";
+    if(lines.length){
+      var split = lines[0].match(/^(.+?[.!?])\s+(.+)$/);
+      var lead = (split ? split[1] : lines[0]).replace(/^I'm Aniket,\s*/i,"");
+      var rest = (split ? [split[2]] : []).concat(lines.slice(1));
+      html += '<p class="bio-lead">'+esc(lead.charAt(0).toUpperCase() + lead.slice(1)).replace(/in code/i,"<em>$&</em>")+"</p>";
+      html += rest.map(function(text){ return "<p>"+esc(text)+"</p>"; }).join("");
     }
+    if(CFG.bioMeta) html += '<p class="bio-meta">'+esc(cleanText(CFG.bioMeta))+"</p>";
+    document.getElementById("bio").innerHTML = html;
 
-    function springBack(){
-      release();
-      card.classList.add("is-springing");
-      shift = 0;
-      card.style.transform = "";
-      setDrag(0);
-      window.setTimeout(function(){ card.classList.remove("is-springing"); },520);
-    }
-
-    function settle(){
-      // Reset without replaying the flight backwards on the way out.
-      card.classList.add("no-anim");
-      card.classList.remove("is-flying","is-gone","is-springing");
-      card.style.transform = "";
-      setDrag(0);
-      void card.offsetWidth;
-      card.classList.remove("no-anim");
-      dealing = false;
-      // Released here rather than on a later timer: leaving it set would keep
-      // snapping off and the chapter loop idle. The scroller is already sitting
-      // on About's snap start, so re-enabling moves nothing.
-      document.documentElement.classList.remove("is-dealing");
-      // That loop sat out the deal, so the progress bar is stale.
-      window.dispatchEvent(new Event("scroll"));
-      // Purely cosmetic, so this one can wait for the entrance to finish.
-      window.setTimeout(function(){ about.classList.remove("is-dealt"); },700);
-    }
-
-    function deal(){
-      if(dealing) return;
-      dealing = true;
-      release();
-
-      // About is about to be uncovered, so it must already be drawn. `is-dealt`
-      // also suppresses its reveal transitions — they would otherwise all run
-      // against the flight.
-      document.documentElement.classList.add("is-dealing");
-      about.classList.add("is-dealt");
-      about.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); });
-
-      card.classList.add("is-flying");             // pinned: the jump is unseen
-      card.classList.remove("is-springing");
-      window.scrollTo({ top:about.getBoundingClientRect().top + window.scrollY - navHeight(), behavior:"instant" });
-      about.setAttribute("tabindex","-1");
-      about.focus({ preventScroll:true });
-
-      if(reduceMotion){ settle(); return; }
-
-      // Jumping the scroll relayouts and repaints the whole revealed page. Doing
-      // that in the same frame the flight starts is what made it stutter, so let
-      // the browser finish that work first and only then animate.
-      var started = false;
-      function launch(){
-        if(started) return;
-        started = true;
-        card.classList.add("is-gone");
-        window.setTimeout(settle,760);
-      }
-      window.requestAnimationFrame(function(){ window.requestAnimationFrame(launch); });
-      window.setTimeout(launch,110);   // rAF is throttled in background tabs
-    }
-
-    function toWork(){
-      if(!work) return;
-      work.scrollIntoView({ behavior:reduceMotion ? "auto" : "smooth", block:"start" });
-    }
-
-    document.getElementById("introRight").addEventListener("click",deal);
-    document.getElementById("introUp").addEventListener("click",toWork);
-
-    card.addEventListener("pointerdown",function(event){
-      if(dealing || event.target.closest("button,a,.intro-inner")) return;
-      if(event.pointerType === "mouse" && event.button !== 0) return;
-      dragging = true; axis = null; shift = 0;
-      startX = event.clientX; startY = event.clientY;
-      pointer = event.pointerId;
+    var stats = [{ value:String(works.length), label:"Films and edits" },{ value:String(codeCount()), label:"Written in code" }];
+    cleanText(CFG.experience || "").split("/").forEach(function(part){
+      var text = part.trim();
+      if(!text) return;
+      var match = text.match(/^([\d.+]+\s*\S+)\s+(.*)$/);
+      stats.push(match ? { value:match[1], label:match[2].replace(/^in\s+/i,"") } : { value:text, label:"" });
     });
+    document.getElementById("stats").innerHTML = stats.map(function(stat){
+      return '<div class="stat"><dt>'+rollMarkup(stat.value)+"</dt><dd>"+esc(stat.label)+"</dd></div>";
+    }).join("");
 
-    card.addEventListener("pointermove",function(event){
-      if(!dragging) return;
-      var moveX = event.clientX - startX;
-      var moveY = event.clientY - startY;
-      if(!axis){
-        if(Math.abs(moveX) < 8 && Math.abs(moveY) < 8) return;
-        // A vertical intent belongs to the scroller, not to the card.
-        if(Math.abs(moveY) > Math.abs(moveX)){ release(); return; }
-        axis = "x";
-        card.classList.add("is-dragging");
-        if(card.setPointerCapture){ try { card.setPointerCapture(pointer); } catch(e){} }
-      }
-      shift = moveX < 0 ? moveX * .22 : moveX;   // resist the meaningless direction
-      paint();
-    });
+    var labels = { "AI STACK":"Generative", "EDIT / MOTION":"Edit and motion", "CODE":"Code" };
+    document.getElementById("craft").innerHTML = Object.keys(CFG.tools || {}).map(function(group){
+      return "<div><dt>"+esc(labels[group] || cleanText(group))+"</dt><dd>"+esc((CFG.tools[group] || []).join(", "))+"</dd></div>";
+    }).join("");
+  }
 
-    function endDrag(){
-      if(!dragging) return;
-      if(axis === "x" && shift > THRESHOLD) deal();
-      else springBack();
+  function renderContact(){
+    if(CFG.email){
+      var email = document.getElementById("emailLink");
+      email.href = "mailto:" + CFG.email;
+      email.textContent = CFG.email;
     }
-    card.addEventListener("pointerup",endDrag);
-    card.addEventListener("pointercancel",springBack);
-
-    document.addEventListener("keydown",function(event){
-      if(dealing || event.metaKey || event.ctrlKey || event.altKey) return;
-      if(document.body.classList.contains("viewer-open") || document.body.classList.contains("index-open")) return;
-      if(window.scrollY > window.innerHeight * .5) return;      // only on the card
-      var tag = (document.activeElement || {}).tagName;
-      if(tag === "INPUT" || tag === "TEXTAREA") return;
-      if(event.key === "ArrowRight"){ event.preventDefault(); deal(); }
-      else if(event.key === "ArrowDown"){ event.preventDefault(); toWork(); }
+    if(typeof CFG.calendly === "string"){
+      var calendar = document.getElementById("calendarLink");
+      if(CFG.calendly) calendar.href = CFG.calendly;
+      else calendar.hidden = true;
+    }
+    var socials = CFG.socials || {};
+    ["instagram","linkedin","youtube","github"].forEach(function(name){
+      var link = document.getElementById(name + "Link");
+      if(socials[name]) link.href = socials[name];
     });
-  })();
+  }
 
-  /* --- Section reveal + nav state ----------------------------------------- */
+  renderPoisons();
+  renderAbout();
+  renderContact();
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* --- Reveals and the opening film -------------------------------------- */
   if("IntersectionObserver" in window && !reduceMotion){
-    var revealObserver = new IntersectionObserver(function(entries){
+    var revealer = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if(entry.isIntersecting){ entry.target.classList.add("in"); revealObserver.unobserve(entry.target); }
+        if(entry.isIntersecting){ entry.target.classList.add("in"); revealer.unobserve(entry.target); }
       });
-    },{ threshold:.1, rootMargin:"0px 0px -6% 0px" });
-    document.querySelectorAll(".reveal").forEach(function(element){ revealObserver.observe(element); });
+    },{ threshold:.2, rootMargin:"0px 0px -8% 0px" });
+    document.querySelectorAll(".rise").forEach(function(el){ revealer.observe(el); });
+
+    // The opening film does not wait to be admired: the first door plays as the
+    // page loads, and the doors go quiet once they scroll away. Phones keep the
+    // posters here (the player's overlay swamps a small door); the reel still plays.
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(reelOpen) return;
+        if(entry.isIntersecting){
+          var first = poisonsEl.querySelector(".poison");
+          if(first && (finePointer || isDirectVideo((works[Number(first.dataset.work)] || {}).video || ""))) previewPanel(first);
+        }
+        else { window.clearTimeout(dwellTimer); Preview.stop(); }
+      });
+    },{ threshold:.3 }).observe(pick);
   } else {
-    document.querySelectorAll(".reveal").forEach(function(element){ element.classList.add("in"); });
+    document.querySelectorAll(".rise").forEach(function(el){ el.classList.add("in"); });
   }
-
-  if("IntersectionObserver" in window){
-    var links = {};
-    document.querySelectorAll("[data-nav]").forEach(function(link){ links[link.dataset.nav] = link; });
-    var navObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(!entry.isIntersecting) return;
-        Object.keys(links).forEach(function(key){ links[key].classList.toggle("is-active",key === entry.target.id); });
-      });
-    },{ rootMargin:"-45% 0px -50% 0px" });
-    ["work","verticalCuts","about","contact"].forEach(function(id){
-      var section = document.getElementById(id);
-      if(section) navObserver.observe(section);
-    });
-
-    // Flip the nav to ink-on-orange while the contact block sits behind it.
-    var contact = document.getElementById("contact");
-    if(contact){
-      new IntersectionObserver(function(entries){
-        siteNav.classList.toggle("on-accent",entries[0].isIntersecting);
-      },{ rootMargin:"0px 0px -93% 0px" }).observe(contact);
-    }
-  }
+  document.addEventListener("visibilitychange",function(){ if(document.hidden) Preview.stop(); });
 })();
 </script>
 </body>
