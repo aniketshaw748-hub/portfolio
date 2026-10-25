@@ -67,7 +67,7 @@ body{
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
 }
-body.reel-open,body.viewer-open{ overflow:hidden; }
+body.reel-open{ overflow:hidden; }
 /* Grain that boils on twos, like the pencil films. It sits under the reel and
    the player so it never dirties a film. */
 body::after{
@@ -248,6 +248,19 @@ img{ display:block; max-width:100%; }
 .reel-tab[aria-pressed="true"]{ color:var(--ink); border-color:var(--line); background:rgba(243,238,232,.06); }
 .reel-close{ flex:none; padding:8px 0 5px; border-bottom:2px solid currentColor; font-size:13px; font-weight:680; }
 .reel-close:hover{ color:var(--red); }
+/* Five seconds into a film, if more wait in this style, a hint rises to say so. */
+.reel-hint{
+  position:absolute; z-index:5; left:50%; bottom:calc(22px + env(safe-area-inset-bottom,0px));
+  display:flex; align-items:center; gap:9px;
+  padding:10px 17px; border:1px solid var(--line); border-radius:999px;
+  background:rgba(10,9,8,.8); color:var(--ink);
+  font-size:12px; font-weight:650; letter-spacing:.02em; white-space:nowrap;
+  opacity:0; pointer-events:none; transform:translate(-50%,26px);
+  transition:opacity .3s ease,transform .7s var(--spring);
+}
+.reel-hint.show{ opacity:1; pointer-events:auto; transform:translate(-50%,0); }
+.reel-hint b{ color:var(--red); font-weight:720; }
+.reel-hint i{ display:inline-block; color:var(--red); font-style:normal; animation:nudge 1.6s var(--spring) infinite; }
 
 .slide{ position:relative; height:100%; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; }
 .slide-bg{
@@ -286,30 +299,10 @@ img{ display:block; max-width:100%; }
 .slide-desc{ margin-top:12px; color:var(--ink-soft); font-size:11px; font-weight:680; letter-spacing:.14em; text-transform:uppercase; }
 .slide-process{ margin-top:16px; max-width:40ch; color:var(--ink-soft); font-size:14px; }
 .slide-play{ margin-top:26px; }
+.slide-play svg{ width:15px; }
+.slide-play[aria-pressed="true"]{ background:transparent; color:var(--red); }
+.slide-frame:not(.has-sound){ cursor:default; }
 .slide-next{ margin-top:28px; color:var(--muted); font-size:12px; }
-
-/* ===========================================================================
-   VIEWER
-   =========================================================================== */
-.viewer{
-  position:fixed; inset:0; z-index:90;
-  visibility:hidden; opacity:0;
-  display:grid; grid-template-rows:56px minmax(0,1fr);
-  background:rgba(6,5,4,.97);
-  transition:opacity .3s ease,visibility .35s;
-}
-.viewer.open{ visibility:visible; opacity:1; }
-.viewer-bar{ padding:0 var(--pad); display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line-soft); font-size:13px; font-weight:680; }
-.viewer-close{ padding:8px 0 5px; border-bottom:2px solid currentColor; }
-.viewer-close:hover{ color:var(--red); }
-.viewer-stage{ min-height:0; padding:16px; display:grid; place-items:center; transform:translateY(24px); transition:transform .7s var(--spring); }
-.viewer.open .viewer-stage{ transform:none; }
-.viewer-media{ position:relative; width:min(96vw,calc((100dvh - 90px) * 1.7778)); aspect-ratio:16/9; background:#000; }
-.viewer-media.portrait{ width:min(92vw,calc((100dvh - 90px) * .5625)); aspect-ratio:9/16; }
-.viewer-media.square{ width:min(92vw,calc(100dvh - 90px)); aspect-ratio:1/1; }
-.viewer-media iframe,.viewer-media video{ display:block; width:100%; height:100%; border:0; }
-.viewer-fallback{ display:grid; justify-items:center; gap:18px; }
-.viewer-fallback img{ max-height:70dvh; border-radius:6px; }
 
 /* ===========================================================================
    SECTIONS
@@ -468,14 +461,7 @@ img{ display:block; max-width:100%; }
     <div class="reel-tabs" id="reelTabs" role="group" aria-label="Switch style"></div>
     <button class="reel-close" id="reelClose" type="button">Close</button>
   </div>
-</div>
-
-<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" aria-hidden="true">
-  <div class="viewer-bar">
-    <span id="viewerTitle">Film</span>
-    <button class="viewer-close" id="viewerClose" type="button">Close</button>
-  </div>
-  <div class="viewer-stage" id="viewerStage"></div>
+  <button class="reel-hint" id="reelHint" type="button" aria-hidden="true" tabindex="-1"></button>
 </div>
 
 <script src="config.js?v=20261025-poison"></script>
@@ -488,7 +474,8 @@ img{ display:block; max-width:100%; }
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
   var INK = "#F3EEE8", RED = "#D05A60", BLUE = "#7C76CC";
-  var PLAY_SVG = '<svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>';
+  var SOUND_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14z"/><path d="M9.6 4.5a4.6 4.6 0 010 7l-.9-1a3.3 3.3 0 000-5zM11.4 2.2a7.2 7.2 0 010 11.6l-.9-1a5.9 5.9 0 000-9.6z"/></svg>';
+  var MUTED_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14zM10.2 5.4l1-1 4.4 4.4-1 1z"/><path d="M14.6 4.4l1 1L11.2 9.8l-1-1z"/></svg>';
   // Films written in code lead; the work cut by hand follows in its own row.
   var STYLES = [
     { key:"type", label:"Type & motion", tier:"code" },
@@ -528,14 +515,6 @@ img{ display:block; max-width:100%; }
   function youtubeId(url){
     var match = String(url).match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/);
     return match ? match[1] : "";
-  }
-  function youtubeEmbed(url){
-    var id = youtubeId(url);
-    return id ? "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1" : "";
-  }
-  function vimeoEmbed(url){
-    var match = String(url).match(/vimeo\.com\/(?:video\/)?(\d+)/);
-    return match ? "https://player.vimeo.com/video/" + match[1] + "?autoplay=1&title=0&byline=0&portrait=0" : "";
   }
   function isDirectVideo(url){ return /\.(mp4|webm|mov)(\?|#|$)/i.test(String(url)); }
 
@@ -586,8 +565,9 @@ img{ display:block; max-width:100%; }
       current.host.classList.remove("is-playing");
       current.host.innerHTML = "";
     }
-    function start(host,work){
-      if(!allowed || !host || !work) return;
+    // `sound` is the visitor's own request, so it plays even where previews are off.
+    function start(host,work,sound){
+      if((!allowed && !sound) || !host || !work) return;
       var direct = isDirectVideo(work.video || "");
       var id = direct ? "" : youtubeId(work.video || "");
       if(!direct && !id) return;
@@ -596,16 +576,25 @@ img{ display:block; max-width:100%; }
       if(direct){
         stop();
         var video = document.createElement("video");
-        video.muted = true; video.loop = true; video.playsInline = true; video.preload = "auto";
-        video.setAttribute("muted",""); video.setAttribute("playsinline","");
+        video.muted = !sound; video.loop = true; video.playsInline = true; video.preload = "auto";
+        if(!sound) video.setAttribute("muted","");
+        video.setAttribute("playsinline","");
         video.src = work.video;
-        var clip = { host:host, video:video, reveal:0 };
+        var clip = { host:host, video:video, reveal:0, sound:!!sound };
         active = clip;
         video.addEventListener("playing",function(){ if(active === clip) host.classList.add("is-playing"); });
         video.addEventListener("waiting",function(){ host.classList.remove("is-playing"); });
         host.appendChild(video);
         var played = video.play();
-        if(played && played.catch) played.catch(function(){ if(active === clip) stop(); });
+        if(played && played.catch) played.catch(function(){
+          if(active !== clip) return;
+          // A browser that refuses sound still gets the picture, muted.
+          if(!video.muted){
+            video.muted = true; clip.sound = false;
+            document.dispatchEvent(new Event("preview:muted"));
+            video.play().catch(function(){ if(active === clip) stop(); });
+          } else stop();
+        });
         return;
       }
       pending = host;
@@ -620,13 +609,17 @@ img{ display:block; max-width:100%; }
         var ih = Math.max(w / h > ratio ? w / ratio : h, h + 130);
         var mount = document.createElement("div");
         host.appendChild(mount);
-        var entry = { host:host, player:null, reveal:0 };
+        var entry = { host:host, player:null, reveal:0, sound:!!sound, ready:false };
         active = entry;
         entry.player = new YT.Player(mount,{
           videoId:id, width:Math.ceil(ih * ratio) + 2, height:Math.ceil(ih) + 2,
           playerVars:{ autoplay:1, mute:1, controls:0, disablekb:1, fs:0, playsinline:1, rel:0, modestbranding:1, iv_load_policy:3, loop:1, playlist:id },
           events:{
-            onReady:function(event){ event.target.mute(); event.target.playVideo(); },
+            onReady:function(event){
+              entry.ready = true;
+              if(entry.sound){ event.target.unMute(); event.target.setVolume(80); } else event.target.mute();
+              event.target.playVideo();
+            },
             onStateChange:function(event){
               if(active !== entry) return;
               window.clearTimeout(entry.reveal);
@@ -642,7 +635,19 @@ img{ display:block; max-width:100%; }
         });
       });
     }
-    return { start:start, stop:stop, owns:function(host){ return !!active && active.host === host; } };
+    // Turns sound on or off for the film already playing in `host`; false if none is.
+    function setSound(host,on){
+      if(!active || active.host !== host) return false;
+      active.sound = on;
+      if(active.video){
+        active.video.muted = !on;
+        if(on && active.video.paused) active.video.play().catch(function(){});
+      } else if(active.ready){
+        try { if(on){ active.player.unMute(); active.player.setVolume(80); } else active.player.mute(); } catch(e){}
+      }
+      return true;
+    }
+    return { start:start, stop:stop, setSound:setSound, owns:function(host){ return !!active && active.host === host; } };
   })();
 
   /* --- Pick your poison ---------------------------------------------------- */
@@ -680,6 +685,11 @@ img{ display:block; max-width:100%; }
     if(panel) Preview.start(panel.querySelector(".vid"),works[Number(panel.dataset.work)]);
   }
   function panelFor(key){ return poisonsEl.querySelector('[data-poison="'+key+'"]'); }
+  var heroInView = false;
+  function heroPreview(){
+    var first = poisonsEl.querySelector(".poison");
+    if(first && (finePointer || isDirectVideo((works[Number(first.dataset.work)] || {}).video || ""))) previewPanel(first);
+  }
 
   // Rest on a panel and its film starts playing inside it, muted.
   poisonsEl.addEventListener("pointerover",function(event){
@@ -706,20 +716,20 @@ img{ display:block; max-width:100%; }
   var MORPH = { duration:reduceMotion ? 0 : 780, easing:"cubic-bezier(.65,0,.35,1)", fill:"both" };
 
   function slideMarkup(entry,n,total){
-    var work = entry.work, poster = esc(posterFor(work));
+    var work = entry.work, poster = esc(posterFor(work)), audio = hasAudio(work);
     var shape = work.orientation === "portrait" ? " is-portrait" : work.orientation === "square" ? " is-square" : "";
     return '<article class="slide'+shape+'" data-work="'+entry.index+'">'+
       '<img class="slide-bg" src="'+poster+'" alt="" decoding="async"'+(n > 1 ? ' loading="lazy"' : "")+' />'+
       '<div class="slide-body">'+
-        '<div class="slide-frame" role="button" tabindex="0" aria-label="Play '+esc(cleanText(work.title))+' with sound">'+
+        '<div class="slide-frame'+(audio ? ' has-sound" role="button" tabindex="0" aria-label="Play '+esc(cleanText(work.title))+' with sound"' : '"')+'>'+
           '<img src="'+poster+'" alt="'+esc(cleanText(work.alt || work.title))+'" decoding="async"'+(n > 1 ? ' loading="lazy"' : "")+' /><span class="vid"></span></div>'+
         '<div class="slide-copy">'+
           '<p class="slide-count">'+pad2(n+1)+' / '+pad2(total)+'</p>'+
           '<h3 class="slide-title">'+esc(cleanText(work.title))+'</h3>'+
           '<p class="slide-desc">'+esc(descriptorFor(work))+'</p>'+
           (work.process ? '<p class="slide-process">'+esc(cleanText(work.process))+'</p>' : "")+
-          '<button class="btn btn-red slide-play" type="button" data-play="'+entry.index+'">'+PLAY_SVG+'Play with sound</button>'+
-          '<p class="slide-next">'+(n < total - 1 ? "Scroll for the next one ↓" : "That’s the lot. Pick another poison up top.")+'</p>'+
+          (audio ? '<button class="btn btn-red slide-play" type="button" data-sound aria-pressed="false">'+SOUND_SVG+'Play with sound</button>' : "")+
+          (n === total - 1 ? '<p class="slide-next">That’s the lot. Pick another poison up top.</p>' : "")+
         '</div>'+
       '</div>'+
     '</article>';
@@ -757,13 +767,78 @@ img{ display:block; max-width:100%; }
     current = slide;
     if(morphing) return;               // the morph hands over when it lands
     slide.classList.add("is-on");
+    syncSoundButton(slide);
     window.clearTimeout(slideTimer);
     slideTimer = window.setTimeout(resumePreview,450);
+    queueHint(reelHint);
+  }
+
+  /* --- "More below" hint ----------------------------------------------------
+     Five seconds into a film, if more films wait in this style, a hint says so.
+     Clicking it carries straight on to the next film.                         */
+  var reelHint = document.getElementById("reelHint");
+  var hintTimer = 0, advancing = false;
+  function filmsLeft(){
+    if(!reelOpen || !current) return 0;
+    var slides = Array.prototype.slice.call(feed.querySelectorAll(".slide"));
+    return slides.length - 1 - slides.indexOf(current);
+  }
+  function hideHints(){
+    window.clearTimeout(hintTimer);
+    reelHint.classList.remove("show");
+    reelHint.setAttribute("aria-hidden","true");
+  }
+  function queueHint(hint){
+    hideHints();
+    if(filmsLeft() < 1) return;
+    var slide = current;
+    hintTimer = window.setTimeout(function(){
+      var left = filmsLeft();
+      if(!left || current !== slide || morphing) return;
+      hint.innerHTML = (finePointer ? "Scroll" : "Swipe up")+' for <b>'+left+' more</b> <i aria-hidden="true">↓</i>';
+      hint.classList.add("show");
+      hint.removeAttribute("aria-hidden");
+    },5000);
+  }
+  function nextFilm(){
+    var next = current && current.nextElementSibling;
+    if(!next || advancing) return;
+    advancing = true;                       // one gesture moves one film, however long the wheel spins
+    hideHints();
+    feed.scrollTo({ top:next.offsetTop, behavior:reduceMotion ? "auto" : "smooth" });
+    window.setTimeout(function(){ advancing = false; },900);
   }
   function resumePreview(){
-    if(reelOpen && !morphing && current && !viewerIsOpen())
-      Preview.start(current.querySelector(".vid"),works[Number(current.dataset.work)]);
+    if(!reelOpen || morphing || !current) return;
+    var work = works[Number(current.dataset.work)];
+    Preview.start(current.querySelector(".vid"),work,soundOn && hasAudio(work));
   }
+
+  /* --- Sound ----------------------------------------------------------------
+     Films play muted until asked. "Play with sound" unmutes the film right where
+     it plays; from then on every film with a soundtrack keeps its sound as the
+     visitor scrolls, until they mute it or close the reel. Silent films get no
+     button at all.                                                            */
+  var soundOn = false;
+  function hasAudio(work){ return !!work && work.audio !== false; }
+  function syncSoundButton(slide){
+    var button = slide && slide.querySelector("[data-sound]");
+    if(!button) return;
+    button.setAttribute("aria-pressed",soundOn ? "true" : "false");
+    button.innerHTML = soundOn ? MUTED_SVG + "Mute" : SOUND_SVG + "Play with sound";
+  }
+  function toggleSound(slide){
+    var work = slide && works[Number(slide.dataset.work)];
+    if(!hasAudio(work)) return;
+    soundOn = !soundOn;
+    var host = slide.querySelector(".vid");
+    if(!Preview.setSound(host,soundOn)){
+      window.clearTimeout(slideTimer);
+      Preview.start(host,work,soundOn);
+    }
+    syncSoundButton(slide);
+  }
+  document.addEventListener("preview:muted",function(){ soundOn = false; syncSoundButton(current); });
 
   /* Where the panel sits right now, written as a transform and clip on the
      full-screen reel. Measured while the reel is untransformed. */
@@ -821,6 +896,8 @@ img{ display:block; max-width:100%; }
   function closeReel(){
     if(!reelOpen || morphing) return;
     window.clearTimeout(slideTimer);
+    hideHints();
+    soundOn = false;
     Preview.stop();
     var slide = current || feed.querySelector(".slide");
     var panel = panelFor(reelKey);
@@ -843,6 +920,7 @@ img{ display:block; max-width:100%; }
       feed.innerHTML = "";
       document.body.classList.remove("reel-open");
       if(lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll:true });
+      if(heroInView) heroPreview();      // back on the doors, the opening film picks up again
     };
   }
 
@@ -852,6 +930,7 @@ img{ display:block; max-width:100%; }
   function switchPoison(key){
     if(key === reelKey || morphing) return;
     window.clearTimeout(slideTimer);
+    hideHints();
     Preview.stop();
     var dir = POISON_KEYS.indexOf(key) > POISON_KEYS.indexOf(reelKey) ? 1 : -1;
     var out = feed.animate([
@@ -875,62 +954,19 @@ img{ display:block; max-width:100%; }
     if(tab) switchPoison(tab.dataset.poison);
   });
   reelClose.addEventListener("click",closeReel);
+  reelHint.addEventListener("click",nextFilm);
+  feed.addEventListener("scroll",function(){ if(reelHint.classList.contains("show")) hideHints(); },{ passive:true });
   feed.addEventListener("click",function(event){
-    var button = event.target.closest("[data-play]");
-    var frame = event.target.closest(".slide-frame");
-    if(button) openViewer(works[Number(button.dataset.play)]);
-    else if(frame) openViewer(works[Number(frame.closest(".slide").dataset.work)]);
+    var target = event.target.closest("[data-sound],.slide-frame.has-sound");
+    if(target) toggleSound(target.closest(".slide"));
   });
   feed.addEventListener("keydown",function(event){
-    var frame = event.target.closest(".slide-frame");
+    var frame = event.target.closest(".slide-frame.has-sound");
     if(frame && (event.key === "Enter" || event.key === " ")){
       event.preventDefault();
-      openViewer(works[Number(frame.closest(".slide").dataset.work)]);
+      toggleSound(frame.closest(".slide"));
     }
   });
-
-  /* --- Viewer -------------------------------------------------------------- */
-  var viewer = document.getElementById("viewer");
-  var viewerStage = document.getElementById("viewerStage");
-  var viewerTitle = document.getElementById("viewerTitle");
-  var viewerClose = document.getElementById("viewerClose");
-  var viewerFocus = null;
-  function viewerIsOpen(){ return viewer.classList.contains("open"); }
-
-  function openViewer(work){
-    if(!work) return;
-    Preview.stop();
-    window.clearTimeout(slideTimer);
-    var video = work.video || "";
-    var mediaClass = "viewer-media" + (work.orientation === "portrait" ? " portrait" : work.orientation === "square" ? " square" : "");
-    var src = youtubeEmbed(video) || vimeoEmbed(video);
-    var html;
-    if(src){
-      html = '<div class="'+mediaClass+'"><iframe src="'+esc(src)+'" title="'+esc(cleanText(work.title))+'" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div>';
-    } else if(isDirectVideo(video)){
-      html = '<div class="'+mediaClass+'"><video src="'+esc(video)+'" poster="'+esc(posterFor(work))+'" controls autoplay playsinline></video></div>';
-    } else {
-      html = '<div class="viewer-fallback"><img src="'+esc(posterFor(work))+'" alt="'+esc(cleanText(work.alt || work.title))+'" />'+
-        (video ? '<a class="btn btn-red" href="'+esc(video)+'" target="_blank" rel="noopener">Open film</a>' : "<p>Film link coming soon.</p>")+'</div>';
-    }
-    viewerFocus = document.activeElement;
-    viewerTitle.textContent = cleanText(work.title || "Film");
-    viewerStage.innerHTML = html;
-    viewer.classList.add("open");
-    viewer.setAttribute("aria-hidden","false");
-    document.body.classList.add("viewer-open");
-    viewerClose.focus();
-  }
-  function closeViewer(){
-    viewer.classList.remove("open");
-    viewer.setAttribute("aria-hidden","true");
-    document.body.classList.remove("viewer-open");
-    window.setTimeout(function(){ if(!viewerIsOpen()) viewerStage.innerHTML = ""; },400);
-    if(viewerFocus && viewerFocus.focus) viewerFocus.focus({ preventScroll:true });
-    window.setTimeout(resumePreview,500);
-  }
-  viewerClose.addEventListener("click",closeViewer);
-  viewer.addEventListener("click",function(event){ if(event.target === viewer || event.target === viewerStage) closeViewer(); });
 
   /* --- Keyboard ------------------------------------------------------------ */
   function trapFocus(event,container){
@@ -945,11 +981,9 @@ img{ display:block; max-width:100%; }
   }
   document.addEventListener("keydown",function(event){
     if(event.key === "Escape"){
-      if(viewerIsOpen()) closeViewer();
-      else if(reelOpen) closeReel();
+      if(reelOpen) closeReel();
       return;
     }
-    if(viewerIsOpen()){ trapFocus(event,viewer); return; }
     if(!reelOpen) return;
     trapFocus(event,reel);
     var down = event.key === "ArrowDown" || event.key === "PageDown";
@@ -1041,18 +1075,21 @@ img{ display:block; max-width:100%; }
     // posters here (the player's overlay swamps a small door); the reel still plays.
     new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
+        heroInView = entry.isIntersecting;
         if(reelOpen) return;
-        if(entry.isIntersecting){
-          var first = poisonsEl.querySelector(".poison");
-          if(first && (finePointer || isDirectVideo((works[Number(first.dataset.work)] || {}).video || ""))) previewPanel(first);
-        }
+        if(entry.isIntersecting) heroPreview();
         else { window.clearTimeout(dwellTimer); Preview.stop(); }
       });
     },{ threshold:.3 }).observe(pick);
   } else {
     document.querySelectorAll(".rise").forEach(function(el){ el.classList.add("in"); });
   }
-  document.addEventListener("visibilitychange",function(){ if(document.hidden) Preview.stop(); });
+  // Leaving the tab pauses everything; coming back picks up where the visitor was.
+  document.addEventListener("visibilitychange",function(){
+    if(document.hidden){ Preview.stop(); return; }
+    if(reelOpen) resumePreview();
+    else if(heroInView) heroPreview();
+  });
 })();
 </script>
 </body>
