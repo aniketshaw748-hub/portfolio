@@ -107,7 +107,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var items = [];
   var pointer = { x: -1e4, y: -1e4, moved: 0 };
-  var running = false, frame = 0, last = 0;
+  var running = false, frame = 0, last = 0, paused = false;
 
   function rand(seed) { var x = Math.sin(seed * 12.9898) * 43758.5453; return x - Math.floor(x); }
 
@@ -287,7 +287,7 @@
     var any = false;
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
-      if (!it.visible) continue;
+      if (!it.visible || paused) continue;
       any = true;
       if (!it.started) it.begin(now);
       var active = it.step(now, dt);
@@ -318,6 +318,8 @@
   });
 
   window.LooseType = {
+    // While something covers the headings (the film reel), stop drawing them.
+    pause: function (on) { paused = !!on; if (!paused) wake(); },
     mount: function (el, segments, opts) {
       var it = new Loose(el, segments, opts);
       items.push(it);

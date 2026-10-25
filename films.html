@@ -81,6 +81,7 @@ body::after{
 }
 a{ color:inherit; text-decoration:none; }
 button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+button,a{ -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
 img{ display:block; max-width:100%; }
 :focus-visible{ outline:2px solid var(--red); outline-offset:3px; }
 .sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
@@ -167,9 +168,12 @@ img{ display:block; max-width:100%; }
 .code .poison:nth-child(3){ --tilt:-1.3deg; --ty:-2px; }
 .hand .poison:nth-child(odd){ --tilt:-.9deg; }
 .hand .poison:nth-child(even){ --tilt:.8deg; --ty:4px; }
-.poison:hover,.poison:focus-visible{ z-index:2; border-color:var(--red); transform:translateY(-10px) rotate(0deg) scale(1.035); }
-.doors:hover .poison:not(:hover),
+.poison:focus-visible{ z-index:2; border-color:var(--red); transform:translateY(-10px) rotate(0deg) scale(1.035); }
 .doors:has(.poison:focus-visible) .poison:not(:focus-visible){ opacity:.45; filter:saturate(.45) blur(1.5px); }
+@media(hover:hover) and (pointer:fine){
+  .poison:hover{ z-index:2; border-color:var(--red); transform:translateY(-10px) rotate(0deg) scale(1.035); }
+  .doors:hover .poison:not(:hover){ opacity:.45; filter:saturate(.45) blur(1.5px); }
+}
 /* The hand-cut row is the quieter tier: smaller, lower contrast until picked. */
 .hand .poison{ justify-content:center; padding:10px 14px; border-width:1.5px; border-color:rgba(243,238,232,.5); box-shadow:0 12px 30px rgba(0,0,0,.45); }
 .hand .poison::after{ background:linear-gradient(90deg,rgba(10,9,8,.92) 20%,rgba(10,9,8,.45)); }
@@ -379,6 +383,25 @@ img{ display:block; max-width:100%; }
   .craft{ grid-template-columns:1fr; }
 }
 
+/* ===========================================================================
+   TOUCH SCREENS: the light build
+   No grain layer, no blur or greyed-out doors, no blurred film backdrops, and
+   short, snappy timings. The hand lettering keeps its full motion.
+   =========================================================================== */
+html.lite body::after{ display:none; animation:none; }
+.lite .slide-bg{ display:none; }
+.lite .slide{ background:radial-gradient(130% 70% at 50% 16%,#1c1715,var(--bg) 72%); }
+.lite .slide-frame{ box-shadow:0 0 0 1px var(--line-soft); }
+.lite .poison{ box-shadow:0 10px 26px rgba(0,0,0,.45); transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .15s ease; }
+.lite .poison:active{ transform:translateY(var(--ty)) rotate(var(--tilt)) scale(.97); }
+.lite .poison-media img{ transition:none; }
+.lite .slide-copy > *{ transition:opacity .16s ease,transform .26s cubic-bezier(.2,.8,.2,1); transition-delay:0s !important; }
+.lite .rise{ transition:opacity .25s ease,transform .4s cubic-bezier(.2,.8,.2,1); }
+.lite .reel-bar{ transition:opacity .12s ease,transform .22s cubic-bezier(.2,.8,.2,1); }
+.lite .reel-hint{ transition:opacity .16s ease,transform .26s cubic-bezier(.2,.8,.2,1); }
+.lite .btn{ transition:transform .15s ease,background .15s ease; }
+.lite .vid iframe,.lite .vid video{ transition:opacity .2s ease; }
+
 @media(prefers-reduced-motion:reduce){
   html{ scroll-behavior:auto; }
   *,*::before,*::after{ animation:none !important; transition:none !important; }
@@ -469,7 +492,7 @@ img{ display:block; max-width:100%; }
 </div>
 
 <script src="config.js?v=20261025-poison"></script>
-<script src="assets/js/loose-type.js?v=20261025"></script>
+<script src="assets/js/loose-type.js?v=20261026"></script>
 <script>
 (function(){
   "use strict";
@@ -477,6 +500,11 @@ img{ display:block; max-width:100%; }
   var works = Array.isArray(CFG.works) ? CFG.works : [];
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+  // Touch screens get the light build: quick fades and zooms instead of the
+  // clipped morphs, and none of the blur or grain layers (see the CSS).
+  var lite = window.matchMedia("(hover:none), (pointer:coarse)").matches;
+  if(lite) document.documentElement.classList.add("lite");
+  function lettering(on){ if(window.LooseType && window.LooseType.pause) window.LooseType.pause(!on); }
   var INK = "#F3EEE8", RED = "#D05A60", BLUE = "#7C76CC";
   var SOUND_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14z"/><path d="M9.6 4.5a4.6 4.6 0 010 7l-.9-1a3.3 3.3 0 000-5zM11.4 2.2a7.2 7.2 0 010 11.6l-.9-1a5.9 5.9 0 000-9.6z"/></svg>';
   var MUTED_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2L3.6 5H1v6h2.6L7 14zM10.2 5.4l1-1 4.4 4.4-1 1z"/><path d="M14.6 4.4l1 1L11.2 9.8l-1-1z"/></svg>';
@@ -775,7 +803,7 @@ img{ display:block; max-width:100%; }
     slide.classList.add("is-on");
     syncSoundButton(slide);
     window.clearTimeout(slideTimer);
-    slideTimer = window.setTimeout(resumePreview,450);
+    slideTimer = window.setTimeout(resumePreview,lite ? 150 : 450);
     queueHint(reelHint);
   }
 
@@ -881,7 +909,7 @@ img{ display:block; max-width:100%; }
     renderReel(key);
     var first = feed.querySelector(".slide");
     var frame = first.querySelector(".slide-frame");
-    var from = panelState(panel), cover = coverState(frame);
+    var from = lite ? null : panelState(panel), cover = lite ? null : coverState(frame);
     reelOpen = true; morphing = true;
     history.pushState({ reel:key },"");
     reelEntry = true;
@@ -889,11 +917,21 @@ img{ display:block; max-width:100%; }
     document.body.classList.add("reel-open");
     reel.classList.add("open");
     reel.setAttribute("aria-hidden","false");
-    var a = reel.animate([from,REST_REEL],MORPH);
-    var b = frame.animate([cover,REST_FRAME],MORPH);
+    var a, b = null;
+    if(lite){
+      var box = panel.getBoundingClientRect();
+      reel.style.transformOrigin = (box.left + box.width / 2) + "px " + (box.top + box.height / 2) + "px";
+      a = reel.animate([{ opacity:0, transform:"scale(.9)" },{ opacity:1, transform:"scale(1)" }],
+        { duration:reduceMotion ? 0 : 240, easing:"cubic-bezier(.2,.8,.2,1)", fill:"both" });
+    } else {
+      a = reel.animate([from,REST_REEL],MORPH);
+      b = frame.animate([cover,REST_FRAME],MORPH);
+    }
+    lettering(false);                    // the headings sit under the reel now; stop drawing them
     reelClose.focus({ preventScroll:true });
     a.onfinish = function(){
-      a.cancel(); b.cancel();
+      a.cancel(); if(b) b.cancel();
+      reel.style.transformOrigin = "";
       morphing = false;
       reel.classList.add("settled");
       var land = current || first;
@@ -931,16 +969,22 @@ img{ display:block; max-width:100%; }
     panel.dataset.work = slide.dataset.work;
     panel.querySelector(".poison-media img").src = posterFor(works[Number(slide.dataset.work)]);
     var frame = slide.querySelector(".slide-frame");
-    var cover = coverState(frame), to = panelState(panel);
     morphing = true;
     reel.classList.remove("settled");
     slide.classList.remove("is-on");
-    var a = reel.animate([REST_REEL,to],MORPH);
-    var b = frame.animate([REST_FRAME,cover],MORPH);
+    var a, b = null;
+    if(lite){
+      a = reel.animate([{ opacity:1 },{ opacity:0 }],{ duration:reduceMotion ? 0 : 160, easing:"ease-out", fill:"both" });
+    } else {
+      var cover = coverState(frame), to = panelState(panel);
+      a = reel.animate([REST_REEL,to],MORPH);
+      b = frame.animate([REST_FRAME,cover],MORPH);
+    }
     a.onfinish = function(){
       reel.classList.remove("open");
       reel.setAttribute("aria-hidden","true");
-      a.cancel(); b.cancel();
+      a.cancel(); if(b) b.cancel();
+      lettering(true);
       morphing = false; reelOpen = false; closing = false; closeWanted = false; current = null;
       if(slideObserver) slideObserver.disconnect();
       feed.innerHTML = "";
@@ -959,16 +1003,14 @@ img{ display:block; max-width:100%; }
     hideHints();
     Preview.stop();
     var dir = POISON_KEYS.indexOf(key) > POISON_KEYS.indexOf(reelKey) ? 1 : -1;
-    var out = feed.animate([
-      { transform:"translateX(0)", filter:"blur(0px)" },
-      { transform:"translateX("+(-dir * 16)+"vw)", filter:"blur(16px)" }
-    ],{ duration:reduceMotion ? 0 : 230, easing:"cubic-bezier(.55,0,1,.45)", fill:"forwards" });
+    var far = lite ? 8 : 16;
+    function whip(x,on){ return lite ? { transform:"translateX("+x+"vw)", opacity:on ? 1 : 0 } : { transform:"translateX("+x+"vw)", filter:"blur("+(on ? 0 : 16)+"px)" }; }
+    var out = feed.animate([whip(0,true),whip(-dir * far,false)],
+      { duration:reduceMotion ? 0 : (lite ? 110 : 230), easing:"cubic-bezier(.55,0,1,.45)", fill:"forwards" });
     out.onfinish = function(){
       renderReel(key);
-      feed.animate([
-        { transform:"translateX("+(dir * 16)+"vw)", filter:"blur(16px)" },
-        { transform:"translateX(0)", filter:"blur(0px)" }
-      ],{ duration:reduceMotion ? 0 : 460, easing:"cubic-bezier(0,.55,.45,1)" });
+      feed.animate([whip(dir * far,false),whip(0,true)],
+        { duration:reduceMotion ? 0 : (lite ? 200 : 460), easing:"cubic-bezier(0,.55,.45,1)" });
       out.cancel();
       var tab = reelTabs.querySelector('[aria-pressed="true"]');
       if(tab) tab.focus({ preventScroll:true });
