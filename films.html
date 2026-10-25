@@ -148,11 +148,9 @@ img{ display:block; max-width:100%; }
 .tier{ display:flex; align-items:center; gap:10px; margin-bottom:12px; color:var(--muted); font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
 .tier b{ color:var(--red); font-weight:700; }
 .poisons{ display:grid; gap:clamp(12px,1.7vw,28px); }
-/* Two doors side by side, then Experiments as one wide panel across both.
-   Film-like proportions, so a door's name sits under its poster, not on it. */
-.poisons.code{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-.code .poison{ aspect-ratio:2 / 1; }
-.code .poison:nth-child(3){ grid-column:1 / -1; aspect-ratio:3 / 1; }
+/* Three doors side by side, filling the hero's height like a row of comic panels.
+   Phones stack them two over one (see the max-width:760px block). */
+.poisons.code{ flex:1; min-height:220px; max-height:480px; grid-template-columns:repeat(3,minmax(0,1fr)); }
 .hand-row{ margin-top:clamp(16px,2.6vh,30px); }
 .poisons.hand{ height:clamp(78px,11vh,112px); grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(10px,1.2vw,18px); }
 .poison{
@@ -167,9 +165,9 @@ img{ display:block; max-width:100%; }
   transform:translateY(var(--ty)) rotate(var(--tilt));
   transition:transform .65s var(--spring),opacity .45s ease,filter .45s ease,border-color .3s ease;
 }
-.code .poison:nth-child(1){ --tilt:-1.6deg; --ty:4px; }
-.code .poison:nth-child(2){ --tilt:1.3deg; --ty:12px; }
-.code .poison:nth-child(3){ --tilt:-.5deg; --ty:4px; }   /* a wide panel shows a small tilt as a steep slope */
+.code .poison:nth-child(1){ --tilt:-2.2deg; --ty:4px; }
+.code .poison:nth-child(2){ --tilt:1.5deg; --ty:16px; }
+.code .poison:nth-child(3){ --tilt:-1.3deg; --ty:-2px; }
 .hand .poison:nth-child(odd){ --tilt:-.9deg; }
 .hand .poison:nth-child(even){ --tilt:.8deg; --ty:4px; }
 .poison:focus-visible{ z-index:2; border-color:var(--red); transform:translateY(-10px) rotate(0deg) scale(1.035); }
@@ -364,10 +362,9 @@ img{ display:block; max-width:100%; }
 @media(max-width:760px){
   .nav-links .hide-s{ display:none; }
   .wordmark span{ display:none; }
-  .poisons.code{ flex:none; min-height:0; max-height:none; grid-template-rows:none; gap:12px; }
-  .code .poison,.code .poison:nth-child(3){ aspect-ratio:auto; }
+  .poisons.code{ flex:none; min-height:0; max-height:none; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
   .code .poison{ min-height:clamp(140px,22dvh,220px); padding:12px; }
-  .code .poison:nth-child(3){ min-height:clamp(130px,19dvh,190px); }
+  .code .poison:nth-child(3){ grid-column:1 / -1; min-height:clamp(130px,19dvh,190px); }
   .code .poison:nth-child(1){ --tilt:-1.2deg; --ty:0px; }
   .code .poison:nth-child(2){ --tilt:1.2deg; --ty:6px; }
   .code .poison:nth-child(3){ --tilt:-.6deg; --ty:4px; }
