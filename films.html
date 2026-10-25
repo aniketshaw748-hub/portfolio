@@ -454,7 +454,6 @@ img{ display:block; max-width:100%; }
 
 <footer class="foot">
   <span>© <span id="year">2026</span> Aniket Shaw</span>
-  <span>Hand lettering inspired by <a href="https://www.instagram.com/rossigan_art/" target="_blank" rel="noopener">Rossigan</a>’s style.</span>
   <span>Editing, motion and AI filmmaking. <a href="labs">Code portfolio →</a></span>
 </footer>
 
@@ -805,6 +804,7 @@ img{ display:block; max-width:100%; }
       hint.innerHTML = (finePointer ? "Scroll" : "Swipe up")+' for <b>'+left+' more</b> <i aria-hidden="true">↓</i>';
       hint.classList.add("show");
       hint.removeAttribute("aria-hidden");
+      hintTimer = window.setTimeout(hideHints,4000);   // says its piece, then gets out of the film's way
     },5000);
   }
   function nextFilm(){
